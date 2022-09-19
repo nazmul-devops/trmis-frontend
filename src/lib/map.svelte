@@ -51,7 +51,7 @@
 </script>
 
 <main>
-	<div class="t-h-[500px] t-w-[1000px]" bind:this={mapElement} />
+	<div class="t-h-[500px] t-w-100" bind:this={mapElement} />
 </main>
 
 <style>

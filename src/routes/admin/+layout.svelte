@@ -13,6 +13,7 @@
 		SkipToContent,
 		Content
 	} from 'carbon-components-svelte';
+	import { store } from '$lib/store/hooks/auth';
 
 	let isSideNavOpen = false;
 </script>
@@ -23,31 +24,33 @@
 	</svelte:fragment>
 </Header>
 
-<SideNav bind:isOpen={isSideNavOpen}>
-	<SideNavItems>
-		<SideNavLink>
-			<a href="/admin">DashBoard</a>
-		</SideNavLink>
-		<SideNavLink>
-			<a href="/admin/trainers">Traininers</a>
-		</SideNavLink>
-		<SideNavLink>
-					<a href="/admin/courses">Courses</a>
-		</SideNavLink>
-		<SideNavLink>
-			<a href="menu2">Menu 2</a>
-		</SideNavLink>
-		<SideNavMenu text="Menu 3">
+{#if $store != null}
+	<SideNav bind:isOpen={isSideNavOpen}>
+		<SideNavItems>
 			<SideNavLink>
-				<a href="submenu1">Submenu 1</a>
+				<a href="/admin">DashBoard</a>
 			</SideNavLink>
 			<SideNavLink>
-				<a href="submenu2">Submenu 2</a>
+				<a href="/admin/trainers">Traininers</a>
 			</SideNavLink>
-		</SideNavMenu>
-		<SideNavDivider />
-	</SideNavItems>
-</SideNav>
+			<SideNavLink>
+				<a href="/admin/courses">Courses</a>
+			</SideNavLink>
+			<SideNavLink>
+				<a href="menu2">Menu 2</a>
+			</SideNavLink>
+			<SideNavMenu text="Menu 3">
+				<SideNavLink>
+					<a href="submenu1">Submenu 1</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="submenu2">Submenu 2</a>
+				</SideNavLink>
+			</SideNavMenu>
+			<SideNavDivider />
+		</SideNavItems>
+	</SideNav>
+{/if}
 
 <Content>
 	<slot />

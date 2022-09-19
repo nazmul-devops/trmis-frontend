@@ -2,16 +2,16 @@
 	import Chart from './Chart.svelte';
 	import Count from './Count.svelte';
 	import Map from '$lib/map.svelte';
+	import { store } from '$lib/store/hooks/auth';
+	import LoginPage from './login/+page.svelte';
 </script>
 
-<div class="t-grid t-grid-cols-2 t-gap-4 t-content-center">
-	<div class="">
-		<Chart />
-	</div>
-	<div class="">
+<div>
+	{#if $store != null}
 		<Count />
-	</div>
-	<div>
+		<Chart />
 		<Map />
-	</div>
+	{:else}
+		<LoginPage />
+	{/if}
 </div>
