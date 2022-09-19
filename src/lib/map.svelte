@@ -18,8 +18,6 @@
 		});
 	}
 
-	
-
 	onMount(async () => {
 		if (browser) {
 			const leaflet = await import('leaflet');
@@ -36,9 +34,10 @@
 			addMarkerToMap();
 
 			setTimeout(() => {
-				markers = [...markers, [51.5, -0.15]];
+				markers = [];
+				markers = [...markers, [51.5, -0.15], [51.5, -0.17]];
 				addMarkerToMap();
-			}, 1000);
+			}, 2000);
 		}
 	});
 
