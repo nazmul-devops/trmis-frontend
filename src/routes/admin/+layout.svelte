@@ -13,6 +13,7 @@
 		SkipToContent,
 		Content
 	} from 'carbon-components-svelte';
+	import { store } from '$lib/store/hooks/auth';
 
 	let isSideNavOpen = false;
 </script>
@@ -32,7 +33,10 @@
 			<a href="/admin/trainers">Traininers</a>
 		</SideNavLink>
 		<SideNavLink>
-					<a href="/admin/courses">Courses</a>
+			<a href="/admin/courses">Courses</a>
+		</SideNavLink>
+		<SideNavLink>
+			<a href="/admin/training-calendar">Training Calender</a>
 		</SideNavLink>
 		<SideNavLink>
 			<a href="menu2">Menu 2</a>
