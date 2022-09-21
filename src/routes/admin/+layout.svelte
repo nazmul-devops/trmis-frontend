@@ -24,33 +24,34 @@
 	</svelte:fragment>
 </Header>
 
-{#if $store != null}
-	<SideNav bind:isOpen={isSideNavOpen}>
-		<SideNavItems>
+<SideNav bind:isOpen={isSideNavOpen}>
+	<SideNavItems>
+		<SideNavLink>
+			<a href="/admin">DashBoard</a>
+		</SideNavLink>
+		<SideNavLink>
+			<a href="/admin/trainers">Traininers</a>
+		</SideNavLink>
+		<SideNavLink>
+			<a href="/admin/courses">Courses</a>
+		</SideNavLink>
+		<SideNavLink>
+			<a href="/admin/training-calendar">Training Calender</a>
+		</SideNavLink>
+		<SideNavLink>
+			<a href="menu2">Menu 2</a>
+		</SideNavLink>
+		<SideNavMenu text="Menu 3">
 			<SideNavLink>
-				<a href="/admin">DashBoard</a>
+				<a href="submenu1">Submenu 1</a>
 			</SideNavLink>
 			<SideNavLink>
-				<a href="/admin/trainers">Traininers</a>
+				<a href="submenu2">Submenu 2</a>
 			</SideNavLink>
-			<SideNavLink>
-				<a href="/admin/courses">Courses</a>
-			</SideNavLink>
-			<SideNavLink>
-				<a href="menu2">Menu 2</a>
-			</SideNavLink>
-			<SideNavMenu text="Menu 3">
-				<SideNavLink>
-					<a href="submenu1">Submenu 1</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="submenu2">Submenu 2</a>
-				</SideNavLink>
-			</SideNavMenu>
-			<SideNavDivider />
-		</SideNavItems>
-	</SideNav>
-{/if}
+		</SideNavMenu>
+		<SideNavDivider />
+	</SideNavItems>
+</SideNav>
 
 <Content>
 	<slot />

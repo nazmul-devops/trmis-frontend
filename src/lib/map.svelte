@@ -6,15 +6,16 @@
 	let mapElement;
 	let map;
 
-	let markers = [
-		[51.5, -0.09],
-		[51.5, -0.11],
-		[51.5, -0.13]
-	];
+	let markers = [];
 
-	function addMarkerToMap() {
-		markers.forEach((item) => {
-			L.marker(item).addTo(map);
+	let markerObjes = [];
+
+	$: {
+		markerObjes.forEach((item) => {
+			map.removeLayer(item);
+		});
+		markerObjes = markers.map((marker) => {
+			return L.marker(marker).addTo(map);
 		});
 	}
 
@@ -31,13 +32,19 @@
 				})
 				.addTo(map);
 
-			addMarkerToMap();
+			setTimeout(() => {
+				markers = [
+					[51.5, -0.15],
+					[51.5, -0.17]
+				];
+			}, 2000);
 
 			setTimeout(() => {
-				markers = [];
-				markers = [...markers, [51.5, -0.15], [51.5, -0.17]];
-				addMarkerToMap();
-			}, 2000);
+				markers = [
+					[51.5, -0.13],
+					[51.5, -0.11]
+				];
+			}, 3000);
 		}
 	});
 
