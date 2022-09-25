@@ -7,7 +7,7 @@
 	let trainerData;
 
 	function edit(event) {
-		console.log('edit', event.detail);
+		// console.log('edit', event.detail);		
 	}
 
 	onMount(async () => {

@@ -8,8 +8,10 @@
 		NumberInput,
 		Button
 	} from 'carbon-components-svelte';
+	import * as yup from 'yup';
+	import { createForm } from 'svelte-forms-lib';
 	import { createEventDispatcher } from 'svelte';
-
+	import { onMount } from 'svelte';
 	type FormType = 'edit' | 'create';
 
 	const dispatch = createEventDispatcher();
@@ -44,24 +46,42 @@
 
 	$: if (formType == 'edit') {
 		trainer = initialData;
+		$form = initialData;
 	}
 
-	function submitHandler() {
-		if (formType == 'edit') {
-			dispatch('edit', trainer);
-		} else if (formType == 'create') {
-			dispatch('create', trainer);
+	const { form, errors, handleSubmit } = createForm({
+		initialValues: trainer,
+		validationSchema: yup.object().shape({
+			name: yup.string().required(),
+			organization: yup.string().required(),
+			gender: yup.string().oneOf(['Male', 'Female']).required(),
+			venue: yup.string().required(),
+			date: yup.date().required(),
+			duration: yup.number().required(),
+			subject: yup.string().required(),
+			remarks: yup.string().required()
+		}),
+		onSubmit: (values) => {
+			console.log(values);
+			if (formType == 'edit') {
+				dispatch('edit', trainer);
+			} else if (formType == 'create') {
+				dispatch('create', trainer);
+			}
 		}
-	}
+	});
 </script>
 
-<form on:submit|preventDefault={submitHandler}>
+<form on:submit={handleSubmit}>
 	<div class="t-grid t-grid-cols-4 t-gap-4">
 		<div>
-			<TextInput bind:value={trainer.name} labelText="User name" placeholder="Enter user name..." />
+			<TextInput bind:value={$form.name} labelText="User name" placeholder="Enter user name..." />
+			{#if $errors.name}
+				<small>{$errors.name}</small>
+			{/if}
 		</div>
 		<div>
-			<Select bind:selected={trainer.organization} labelText="Organization">
+			<Select bind:selected={$form.organization} labelText="Organization">
 				<SelectItem value="a" disabled hidden />
 				<SelectItem value="b" />
 				<SelectItem value="c" />
@@ -70,25 +90,25 @@
 			</Select>
 		</div>
 		<div>
-			<Select bind:selected={trainer.gender} labelText="Gender">
+			<Select bind:selected={$form.gender} labelText="Gender">
 				<SelectItem value="Male" />
 				<SelectItem value="Female" />
 			</Select>
 		</div>
 		<div>
-			<Select bind:selected={trainer.venue} labelText="Venue">
+			<Select bind:selected={$form.venue} labelText="Venue">
 				<SelectItem value="Dhaka" />
 				<SelectItem value="Noakhali" />
 			</Select>
 		</div>
 		<div>
-			<DatePicker bind:selected={trainer.date} datePickerType="single">
+			<DatePicker bind:value={$form.date} datePickerType="single">
 				<DatePickerInput labelText="Meeting date" placeholder="mm/dd/yyyy" />
 			</DatePicker>
 		</div>
 		<div>
 			<NumberInput
-				bind:value={trainer.duration}
+				bind:value={$form.duration}
 				min={0}
 				max={20}
 				invalidText="Number must be between 4 and 20."
@@ -97,10 +117,10 @@
 			/>
 		</div>
 		<div>
-			<TextInput bind:value={trainer.subject} labelText="Subject" placeholder="Enter Subject..." />
+			<TextInput bind:value={$form.subject} labelText="Subject" placeholder="Enter Subject..." />
 		</div>
 		<div>
-			<TextInput bind:value={trainer.remarks} labelText="Remarks" placeholder="Remarks..." />
+			<TextInput bind:value={$form.remarks} labelText="Remarks" placeholder="Remarks..." />
 		</div>
 		<div>
 			<Button type="submit">
@@ -113,3 +133,4 @@
 		</div>
 	</div>
 </form>
+<!-- { JSON.stringify($form = initialData )} -->
