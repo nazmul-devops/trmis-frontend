@@ -1,5 +1,4 @@
 <script lang="ts">
-	// import Logo from '../assets/Logo.png';
 
 	interface Menu {
 		label: string;
@@ -57,40 +56,41 @@
 	];
 </script>
 
-<header>
-	<div class="t-flex t-justify-center">
-		<div>
+<header class="t-shadow-md t-shadow-[#d1fae5] t-bg-white">
+
+	<div class=" t-flex t-justify-evenly t-items-center">
+		<div class="t-flex t-items-center">
 			<div>
-				<div class="t-h-52 t-w-52 t-m-auto">
-					<!-- <img src={Logo} alt="" /> -->
-				</div>
+				<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-h-fit t-py-4"/>
 			</div>
-			<div class="t-text-center t-mb-5 t-border-red-500">
-				<h1 class="t-text-6xl">TrMIS</h1>
+			<div>
+				<h1 class="t-text-3xl t-px-2 t-font-bold t-text-[#22c55e]">TrMIS</h1>
 			</div>
+		</div>
+		<div>
 			<nav>
-				<ul class="t-flex t-space-x-12 t-text-xl">
+				<ul class="t-flex">
 					{#each menu as item}
 						{#if item.children == null}
-							<li class="t-bg-green-500 t-rounded-md ">
-								<a class="t-rounded-lg t-px-5 t-text-white" href={item.link}>{item.label}</a>
+							<li class=" t-rounded-md">
+								<a class="t-rounded-lg t-px-5 t-text-[#44403c] " href={item.link}>{item.label}</a>
 							</li>
 						{:else}
-							<li class=" t-relative t-bg-green-500 t-rounded-md ">
-								<span class="t-peer t-cursor-pointer t-px-5 t-text-white">{item.label}</span>
+							<li class=" t-relative  t-rounded-md ">
+								<span class="t-peer t-cursor-pointer t-px-5 ">{item.label}</span>
 								<ul
-									class="t-hidden t-bg-green-500 t-py-1  t-rounded-md t-absolute t--bottom-15 t-left-1 peer-hover:t-flex hover:t-flex t-flex-col"
+									class="t-hidden  t-py-1 t-rounded-md t-absolute t--bottom-15 t-left-2 peer-hover:t-flex hover:t-flex t-flex-col"
 								>
 									{#each item.children as subMenu}
 										{#if subMenu.children == null}
-											<li>
-												<a class=" t-bg-green-400 t-px-5 t-text-white" href={subMenu.link}>
+											<li class=" t-bg-green-400 t-px-3 t-py-3">
+												<a  href={subMenu.link}>
 													{subMenu.label}
 												</a>
 											</li>
 										{:else}
-											<li class="t-relative">
-												<span class="t-peer t-cursor-pointer t-bg-green-400 t-px-5 t-text-white">
+											<li class=" t-bg-green-400 t-relative t-px-3 t-py-3">
+												<span class="t-peer t-cursor-pointer t-text-white ">
 													{subMenu.label}
 												</span>
 												<ul
@@ -114,5 +114,7 @@
 				</ul>
 			</nav>
 		</div>
+		
 	</div>
+	
 </header>
