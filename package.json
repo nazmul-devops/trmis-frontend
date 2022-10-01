@@ -12,6 +12,7 @@
 		"format": "prettier --write ."
 	},
 	"devDependencies": {
+		"@felte/validator-yup": "^1.0.10",
 		"@sveltejs/adapter-auto": "next",
 		"@sveltejs/adapter-static": "1.0.0-next.43",
 		"@sveltejs/kit": "next",
@@ -21,6 +22,7 @@
 		"carbon-components-svelte": "^0.70.1",
 		"carbon-icons-svelte": "^11.2.0",
 		"chart.js": "^3.9.1",
+		"felte": "^1.2.5",
 		"leaflet": "^1.8.0",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",
@@ -35,8 +37,5 @@
 		"vite": "^3.0.4",
 		"yup": "^0.32.11"
 	},
-	"type": "module",
-	"dependencies": {
-		"svelte-forms-lib": "^2.0.1"
-	}
+	"type": "module"
 }
