@@ -34,5 +34,8 @@
 		"vite": "^3.0.4",
 		"yup": "^0.32.11"
 	},
-	"type": "module"
+	"type": "module",
+	"dependencies": {
+		"felte": "^1.2.5"
+	}
 }
