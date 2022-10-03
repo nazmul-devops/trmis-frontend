@@ -3,9 +3,9 @@
 	import Footer from '$lib/Footer.svelte';
 </script>
 
-<div>
+<div class="t-container t-items-center">
 	<Header />
-	<main class=" t-min-h-[50vh] ">
+	<main class=" t-min-h-[100vh] t-container t-flex t-justify-center">
 		<slot />
 	</main>
 	<Footer />

@@ -64,7 +64,7 @@
 	<Arrow on:click={toNext} />
 </header>
 
-<div class="t-grid t-grid-cols-7 t-text-right">
+<div class="t-grid t-grid-cols-7 t-text-right t-gap-1">
 	{#each labels as txt, idx (txt)}
 		<span class="t-text-semibold t-text-center t-uppercase t-mb-5 "
 			>{labels[(idx + offset) % 7]}</span
@@ -76,7 +76,7 @@
 			{#each { length: 7 } as d, idxd (idxd)}
 				{#if current[idxw][idxd] != 0}
 					<span
-						class="t-h-28 t-text-lg  t-border-solid t-border-2 t-border-gray-400 t-pr-2 t-text-semibold "
+						class="t-h-28 t-text-lg  t-border-solid t-border t-border-gray-400 t-pr-2 t-text-semibold "
 						class:today={isToday(current[idxw][idxd])}
 					>
 						{current[idxw][idxd]}

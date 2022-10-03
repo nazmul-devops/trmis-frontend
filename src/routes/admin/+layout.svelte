@@ -13,7 +13,6 @@
 		SkipToContent,
 		Content
 	} from 'carbon-components-svelte';
-	import { store } from '$lib/store/hooks/auth';
 
 	let isSideNavOpen = false;
 </script>

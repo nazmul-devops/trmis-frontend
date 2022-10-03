@@ -1101,7 +1101,6 @@
 			"remarks": "Western Tansymustard"
 		}
 	],
-
 	"trainingCourses": [
 		{
 			"id": 1,
@@ -1552,6 +1551,15 @@
 			"sourceOfFund": "darbepoetin alfa",
 			"coordinator": "Maxi Pahler",
 			"isActive": false
+		}
+	],
+	"users": [
+		{
+			"email": "exp@exp.com",
+			"password": "$2a$10$Ui0.kmWSJ0Xz2t8BcDukkeczEmUtXN9jBRqfo4JwssvcfjcSsini.",
+			"username": "arif",
+			"id": 1,
+			"pass": "12345"
 		}
 	]
 }

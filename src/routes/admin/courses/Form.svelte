@@ -1,5 +1,5 @@
 <script lang="ts">
-import { getTrainers } from '$lib/service/service';
+	import { getTrainers } from '$lib/service/service';
 
 	import { trainers } from '$lib/store/trainer';
 	import {
@@ -60,8 +60,6 @@ import { getTrainers } from '$lib/service/service';
 	onMount(async () => {
 		trainers.getTrainers();
 	});
-
-	
 </script>
 
 <form on:submit|preventDefault={submitHandler}>
@@ -110,13 +108,7 @@ import { getTrainers } from '$lib/service/service';
 		</div>
 		<div>
 			<TextInput bind:value={courses.remarks} labelText="Remarks" placeholder="Remarks..." />
-		</div>
-		<div>
-			<Select labelText="trainerList">
-				<SelectItem value="Dhaka" />
-				<SelectItem value="Noakhali" />
-			</Select>
-		</div>
+		</div>	
 		<div>
 			<Button type="submit">
 				{#if formType == 'edit'}
@@ -126,7 +118,5 @@ import { getTrainers } from '$lib/service/service';
 				{/if}
 			</Button>
 		</div>
-		<!-- <input type="text" bind:value={$trainers} /> -->
-		<h1>{JSON.stringify($trainers.data)}</h1>
 	</div>
 </form>
