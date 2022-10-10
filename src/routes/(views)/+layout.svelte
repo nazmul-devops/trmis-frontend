@@ -3,10 +3,10 @@
 	import Footer from '$lib/Footer.svelte';
 </script>
 
-<div class="t-container t-items-center">
-	<Header />
-	<main class=" t-min-h-[100vh] t-container t-flex t-justify-center">
+<Header />
+<main class="t-bg-[#ECFDF1]">
+	<div class=" t-min-h-[100vh]   ">
 		<slot />
-	</main>
-	<Footer />
-</div>
+	</div>
+</main>
+<Footer />
