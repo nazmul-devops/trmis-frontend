@@ -1,6 +1,5 @@
 <script lang="ts">
 	import { trainers } from '$lib/store/trainer';
-
 	import {
 		DataTable,
 		Toolbar,

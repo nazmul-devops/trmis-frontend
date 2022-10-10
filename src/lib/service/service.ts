@@ -1,8 +1,9 @@
-import axios from 'axios';
+import { http } from '$lib/service/auth';
+
 
 export async function getTrainers() {
 	try {
-		let { data } = await axios.get('http://localhost:3000/trainers/');
+		let { data } = await http.get('trainers');
 		return {
 			status: 200,
 			data: data
@@ -18,7 +19,7 @@ export async function getTrainers() {
 export async function getTrainer(id) {
 	console.log(id);
 	try {
-		let { data } = await axios.get(`http://localhost:3000/trainers/${id}`);
+		let { data } = await http.get(`trainers/${id}`);
 		return {
 			status: 200,
 			data: data

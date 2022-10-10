@@ -23,6 +23,8 @@
 		"carbon-icons-svelte": "^11.2.0",
 		"chart.js": "^3.9.1",
 		"felte": "^1.2.5",
+		"json-server": "^0.17.0",
+		"json-server-auth": "^2.1.0",
 		"leaflet": "^1.8.0",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",

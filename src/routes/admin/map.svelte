@@ -1,4 +1,5 @@
 <script>
+	import 'leaflet/dist/leaflet.css';
 	import { onMount, onDestroy } from 'svelte';
 	import L from 'leaflet';
 	import { browser } from '$app/environment';
@@ -60,6 +61,6 @@
 	<div class="t-h-[500px] t-w-100" bind:this={mapElement} />
 </main>
 
-<style>
-	@import 'leaflet/dist/leaflet.css';
-</style>
+<!-- <style>
+	/* @import 'leaflet/dist/leaflet.css'; */
+</style> -->
