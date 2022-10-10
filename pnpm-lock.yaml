@@ -28,9 +28,6 @@ specifiers:
   vite: ^3.0.4
   yup: ^0.32.11
 
-dependencies:
-  felte: 1.2.5_svelte@3.50.1
-
 devDependencies:
   '@felte/validator-yup': 1.0.10_yup@0.32.11
   '@sveltejs/adapter-auto': 1.0.0-next.80
@@ -42,6 +39,7 @@ devDependencies:
   carbon-components-svelte: 0.70.1
   carbon-icons-svelte: 11.2.0
   chart.js: 3.9.1
+  felte: 1.2.5_svelte@3.50.1
   json-server: 0.17.0
   json-server-auth: 2.1.0_json-server@0.17.0
   leaflet: 1.8.0
@@ -101,13 +99,14 @@ packages:
   /@felte/common/1.1.3:
     resolution: {integrity: sha512-47OJYohloUT9FOgXRxEIaSkaveDB70/eRv3+6MfYDZbc44XfojHJLiUOz3uSWRwfl8f2wonhkhIPCYkzIUltTg==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
+    dev: true
 
   /@felte/core/1.3.5:
     resolution: {integrity: sha512-PaHZKw6ihIGyjF9tj5IJrRfzzxGfBT7gypEr49/paHSX+axWx4My2PZZOXRce8Hq8SSH4MBK+2HxzjFhAKvdYQ==}
     engines: {node: ^12.20.0 || ^14.13.1 || >=16.0.0}
     dependencies:
       '@felte/common': 1.1.3
-    dev: false
+    dev: true
 
   /@felte/validator-yup/1.0.10_yup@0.32.11:
     resolution: {integrity: sha512-Ps7HN/ZI+OMJkYlxf84qG4g1mzd0PZt8yXbs9t/yS2kiJQ3XywPDDF/uJ0hAL7qutCLrL/nIPDztlxskwKIP/A==}
@@ -1491,7 +1490,7 @@ packages:
     dependencies:
       '@felte/core': 1.3.5
       svelte: 3.50.1
-    dev: false
+    dev: true
 
   /fetch-blob/3.2.0:
     resolution: {integrity: sha512-7yAQpD2UMJzLi1Dqv7qFYnPbaPx7ZfFK6PiIxQ4PfkGPyNyl2Ugx+a/umUonmKqjhM4DnfbMvdX6otXq83soQQ==}
@@ -3016,6 +3015,7 @@ packages:
   /svelte/3.50.1:
     resolution: {integrity: sha512-bS4odcsdj5D5jEg6riZuMg5NKelzPtmsCbD9RG+8umU03TeNkdWnP6pqbCm0s8UQNBkqk29w/Bdubn3C+HWSwA==}
     engines: {node: '>= 8'}
+    dev: true
 
   /tailwindcss/3.1.8:
     resolution: {integrity: sha512-YSneUCZSFDYMwk+TGq8qYFdCA3yfBRdBlS7txSq0LUmzyeqRe3a8fBQzbz9M3WS/iFT4BNf/nmw9mEzrnSaC0g==}

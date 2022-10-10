@@ -7,6 +7,7 @@
 	import { createForm } from 'felte';
 	import { login } from '$lib/service/auth';
 	import { goto } from '$app/navigation';
+	import { setAccessToken } from '$lib/store/auth';
 	const schema = yup.object({
 		username: yup.string().required(),
 		password: yup.string().required()
@@ -14,17 +15,15 @@
 	
 
 	const { form, errors } = createForm({
-		// initialValues: {
-		// 	username: 'exp@exp.com',
-		// 	password: '12345'
-		// },
 		onSubmit: async (values) => {
 			const { status, data } = await login(values.username, values.password);
 			if (status == 200) {
 				console.log('login');
-				// goto('/admin')
+				setAccessToken();
+				goto('/admin')
 			} else {
 				console.log('bad ...');
+				goto('/login')
 			}
 		},
 		extend: validator({ schema })

@@ -1,9 +1,28 @@
-import { redirect } from '@sveltejs/kit';
 import axios from 'axios';
 
 export const http = axios.create({ baseURL: 'http://localhost:3000' });
 
+export function setupAuthHeader() {
+	// console.log('setupAuthHeader');
+	let accessToken = localStorage.getItem('accessToken');
+	if (accessToken) {
+		http.defaults.headers.common = {
+			Authorization: `Bearer ${accessToken}`
+		};
+	}
+}
+
+function removeAuthHeader() {
+	http.defaults.headers.common = null;
+}
+
+export function logout() {
+	localStorage.clear();
+	removeAuthHeader();
+}
+
 export async function login(username: String, password: String) {
+	console.log('ok');
 	try {
 		const {
 			data: { accessToken, user }
@@ -11,12 +30,10 @@ export async function login(username: String, password: String) {
 			email: username,
 			password: password
 		});
-
 		localStorage.setItem('accessToken', accessToken);
-		http.defaults.headers.common = {
-			Authorization: `Bearer ${accessToken}`
-		};
-        return Promise.resolve({ status: 200, data: user});
+		setupAuthHeader();
+
+		return Promise.resolve({ status: 200, data: user });
 	} catch ({ response }) {
 		return Promise.resolve({ status: response.status, data: response.data });
 	}

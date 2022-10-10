@@ -13,8 +13,8 @@ const config = {
 
 	kit: {
 		adapter: adapter({
-			fallback: '200.html',
-			precompress: false
+			fallback: 'index.html',
+			// precompress: false
 		})
 	}
 };
