@@ -47,7 +47,7 @@
 		},
 		{
 			label: 'About',
-			link: '/about'
+			link: '/about-us'
 		},
 		{
 			label: 'Contact',
@@ -56,9 +56,10 @@
 	];
 </script>
 
-<header class="t-shadow-md t-shadow-[#d1fae5] t-bg-white">
+<header>
 
-	<div class=" t-flex t-justify-evenly t-items-center">
+<div class="t-shadow-md t-shadow-[#d1fae5] t-bg-white">
+	<div class="t-container t-mx-auto t-flex t-justify-between t-items-center">
 		<div class="t-flex t-items-center">
 			<div>
 				<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-h-fit t-py-4"/>
@@ -116,5 +117,6 @@
 		</div>
 		
 	</div>
+</div>
 	
 </header>
