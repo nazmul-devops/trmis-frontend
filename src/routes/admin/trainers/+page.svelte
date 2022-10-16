@@ -17,13 +17,13 @@
 	let headers = [
 		{ key: 'id', value: 'id' },
 		{ key: 'name', value: 'name' },
+		{ key: 'designation', value: 'designation' },
 		{ key: 'organization', value: 'organization' },
-		{ key: 'gender', value: 'gender' },
-		{ key: 'venue', value: 'venue' },
-		{ key: 'date', value: 'date' },
-		{ key: 'duration', value: 'duration' },
-		{ key: 'subject', value: 'subject' },
-		{ key: 'remarks', value: 'remarks' }
+		{ key: 'phone', value: 'phone' },
+		{ key: 'emergencyPhone', value: 'emergencyPhone' },
+		{ key: 'nid', value: 'nid' },
+		{ key: 'email', value: 'email' },
+		{ key: 'gender', value: 'gender' }
 	];
 
 	onMount(async () => {

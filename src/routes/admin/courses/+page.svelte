@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { courses } from '$lib/store/course';
 	import {
 		DataTable,
 		Toolbar,
@@ -11,13 +12,12 @@
 	import EditOff from 'carbon-icons-svelte/lib/EditOff.svelte';
 	import TrashCan from 'carbon-icons-svelte/lib/TrashCan.svelte';
 	import { onMount } from 'svelte';
-	import { getTrainingCourses } from './service';
-
-	let trainingCourses: Array<any> = [];
+	import { get } from 'svelte/store';
 
 	onMount(async () => {
-		let { status, data } = await getTrainingCourses();
-		trainingCourses = data;
+		if (get(courses).length == 0) {
+			courses.getCourses();
+		}
 	});
 </script>
 
@@ -27,15 +27,11 @@
 	description="Your organization's active load balancers."
 	headers={[
 		{ key: 'id', value: 'id' },
-		{ key: 'code', value: 'code' },
-		{ key: 'shortName', value: 'Short Name' },
-		{ key: 'name', value: 'Name' },
-		{ key: 'sourceOfFund', value: 'Source Of Fund' },
-		{ key: 'coordinator', value: 'Coordinator' },
-		{ key: 'isActive', value: 'is Active' },
-		{ key: 'action', value: 'Action' }
+		{ key: 'name', value: 'name' },
+		{ key: 'description', value: 'descriptione' },
+		{ key: 'category', value: 'category' }
 	]}
-	rows={trainingCourses}
+	rows={$courses}
 >
 	<Toolbar size="sm">
 		<ToolbarContent>
