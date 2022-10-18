@@ -5,12 +5,12 @@
 	export let images: Array<Images>;
 </script>
 
-<div class="">
+<div>
 	<div>
 		<div class="t-container t-mx-auto t-columns-4 t-gap-0 t-py-12">
 			{#each images as item}
 				<div>
-					<Lightbox>
+					<Lightbox description={item.name}>
 						<img src={item.url} alt={item.name} class="t-w-100" />
 					</Lightbox>
 				</div>

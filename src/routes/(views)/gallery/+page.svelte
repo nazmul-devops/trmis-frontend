@@ -19,7 +19,7 @@
 		},
 		{
 			url: 'assets/photo3.jpg',
-			name: 'all',
+			name: 'Cultural',
 			key: 'Cultural'
 		},
 		{
