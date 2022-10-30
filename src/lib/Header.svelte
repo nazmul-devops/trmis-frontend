@@ -12,25 +12,26 @@
 		},
 		{
 			label: 'Training',
-			children: [
-				{
-					label: 'Menu 1',
-					link: '#'
-				},
-				{
-					label: 'Menu 2',
-					children: [
-						{
-							label: 'sub 1',
-							link: '#'
-						},
-						{
-							label: 'sub 2',
-							link: '#'
-						}
-					]
-				}
-			]
+			link: '/training',
+		// 	children: [
+		// 		{
+		// 			label: 'Menu 1',
+		// 			link: '#'
+		// 		},
+		// 		{
+		// 			label: 'Menu 2',
+		// 			children: [
+		// 				{
+		// 					label: 'sub 1',
+		// 					link: '#'
+		// 				},
+		// 				{
+		// 					label: 'sub 2',
+		// 					link: '#'
+		// 				}
+		// 			]
+		// 		}
+		// 	]
 		},
 		{
 			label: 'Downloads',
@@ -70,7 +71,10 @@
 				<nav>
 					<ul class="t-flex">
 						{#each menu as item}
-							{#if item.children == null}
+						<li class=" t-rounded-md">
+							<a class="t-rounded-lg t-px-5 t-text-black " href={item.link}>{item.label}</a>
+						</li>
+							<!-- {#if item.children == null}
 								<li class=" t-rounded-md">
 									<a class="t-rounded-lg t-px-5 t-text-black " href={item.link}>{item.label}</a>
 								</li>
@@ -110,7 +114,7 @@
 										{/each}
 									</ul>
 								</li>
-							{/if}
+							{/if} -->
 						{/each}
 					</ul>
 				</nav>

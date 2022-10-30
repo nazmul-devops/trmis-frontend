@@ -68,7 +68,7 @@
 			/>
 		</div>
 	</div>
-	<div class="t-container t-mx-auto t-py-32">
+	<div class="t-container t-py-32">
 		<div class="t-flex t-justify-center t-text-xl t-font-bold">
 			<GalleryNavbar bind:selected />
 		</div>
