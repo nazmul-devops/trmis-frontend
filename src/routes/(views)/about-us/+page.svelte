@@ -12,7 +12,7 @@
 							architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
 							sit  "
 			/>
-			<div class="t-container t-mx-auto t-flex t-py-32">
+			<div class="t-container  t-flex t-py-32">
 				<div
 					class="t-bg-[#44835C]  t-text-white t-text-center t-w-1/2 t-flex t-justify-center t-items-center"
 				>
