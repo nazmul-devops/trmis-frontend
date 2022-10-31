@@ -164,7 +164,6 @@
 			studentCount: 13
 		}
 	];
-	import { fly } from 'svelte/transition';
 </script>
 
 <div>
@@ -178,8 +177,8 @@
 		/>
         <div class="t-container t-py-32 t-transition t-ease-in-out t-delay-150  t-hover:-translate-y-1 t-hover:scale-110 t-hover:bg-indigo-500 t-duration-300">
             <div class="t-grid t-grid-cols-2 t-gap-4">
-                {#each trainigs as {course, studentCount} }
-                    <TrainingCard {course} {studentCount}/>
+                {#each trainigs as {course, studentCount, id} }
+                    <a href={`/training/${id}`} class="t-text-gray-500"><TrainingCard {course}/></a>
                 {/each}
             </div>
         </div>
