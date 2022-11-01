@@ -33,7 +33,7 @@
 	];
 </script>
 
-<div class="t-container t-bg-gradient-to-r t-from-rose-100 t-to-teal-100 t-min-h-screen t-py-16">
+<div class="t-container  t-min-h-screen t-py-16">
 	<div class="t-grid t-grid-cols-8 t-gap-4 t-mb-11 ">
 		{#each homecard as card}
 			<div
