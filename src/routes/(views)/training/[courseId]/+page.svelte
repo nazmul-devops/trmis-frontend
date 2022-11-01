@@ -62,11 +62,11 @@
 	</div>
 	<div class="t-container t-pb-5">
 		<div class="t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]  t-rounded-md t-pt-1 t-shadow-lg">
-			<div class="t-grid t-grid-cols-6 t-gap-4 t-py-5 t-bg-white t-rounded-md t-px-4 t-items-center">
+			<div class="t-grid t-grid-cols-6 t-gap-4 t-py-5 t-bg-white t-rounded-md t-px-4">
 				{#each batchesByYear as item}
 					<div class="t-col-span-1 t-text-2xl">
-						<span> <i class="las la-calendar t-px-2 t-font-bold t-text-transparent t-text-3xl t-text-right t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]" /></span>
-						{item.year}
+						<span class="t-flex t-items-center"> <i class="las la-calendar t-px-2 t-font-bold t-text-transparent t-text-3xl t-text-right t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]" /> {item.year} </span>
+						
 					</div>
 					<div class="t-col-span-5 t-text-center">
 						{#each item.batches as batch}
