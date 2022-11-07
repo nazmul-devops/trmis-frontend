@@ -1,6 +1,18 @@
 <script>
 	import PageTitle from '$lib/PageTitle.svelte';
+	import axios from 'axios';
+	import { onMount } from 'svelte';
+	import { each } from 'svelte/internal';
 	import DownloadCard from './DownloadCard.svelte';
+	let coursesName= [];
+	
+	async function getCoursesName(){
+		let {data} =await axios.get('http://localhost:3333/courses')
+		coursesName=data;
+	}
+	onMount(()=>{
+		getCoursesName();
+	})
 </script>
 
 <div>
@@ -21,22 +33,12 @@
 								class="  t-rounded-md t-bg-white "
 							>
 								<ul class="t-leading-normal">
-										<div>
-											<li class=" t-py-5 t-px-4">Lorem ipsum dolor sit amet</li>
-										<hr >
-										</div>
-										<div>
-											<li class=" t-py-5 t-px-4">Lorem ipsum dolor sit amet</li>
-										<hr >
-										</div>
-										<div>
-											<li class=" t-py-5 t-px-4">Lorem ipsum dolor sit amet</li>
-										<hr >
-										</div>
-										<div>
-											<li class=" t-py-5 t-px-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non nobis architecto eos officiis possimus nam.</li>
-										<hr >
-										</div>
+									{#each coursesName as course}
+									<div>
+										<li class=" t-py-5 t-px-4 t-cursor-pointer">{course.name}</li>
+									<hr >
+									</div>
+									{/each}
 								</ul>
 							</div>
 						</div>

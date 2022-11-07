@@ -8,10 +8,10 @@
 	<div
 		class="
             t-max-w-[60px]
-            sm:max-w-[70px]
+            sm:t-max-w-[70px]
             t-w-full
             t-h-[60px]
-            sm:h-[70px]
+            sm:t-h-[70px]
             t-flex
             t-items-center
             t-justify-center

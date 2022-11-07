@@ -134,12 +134,4 @@
 			<p>{message}</p>
 		{/if}
 	</form>
-	<div>
-		<span class="t-absolute t--top-10 t--right-9 t-z-[-1]">
-			<img src="/assets/dot-img.svg" alt="" />
-		</span>
-		<span class="t-absolute t--right-10 t-top-[90px] t-z-[-1]">
-			<img src="/assets/dot.svg" alt="" />
-		</span>
-	</div>
 </div>
