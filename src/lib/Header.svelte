@@ -1,4 +1,18 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
+	let showHamBurgerMenu = false;
+	const handleMobileIconClick = () => (showHamBurgerMenu = !showHamBurgerMenu);
+
+	const mediaQueryHandler = (e: any) => {
+		if (!e.matches) {
+			showHamBurgerMenu = false;
+		}
+	};
+	onMount(() => {
+		const mediaListener = window.matchMedia('(max-width: 767px)');
+
+		mediaListener.addListener(mediaQueryHandler);
+	});
 	interface Menu {
 		label: string;
 		link?: string;
@@ -12,26 +26,26 @@
 		},
 		{
 			label: 'Training',
-			link: '/training',
-		// 	children: [
-		// 		{
-		// 			label: 'Menu 1',
-		// 			link: '#'
-		// 		},
-		// 		{
-		// 			label: 'Menu 2',
-		// 			children: [
-		// 				{
-		// 					label: 'sub 1',
-		// 					link: '#'
-		// 				},
-		// 				{
-		// 					label: 'sub 2',
-		// 					link: '#'
-		// 				}
-		// 			]
-		// 		}
-		// 	]
+			link: '/training'
+			// 	children: [
+			// 		{
+			// 			label: 'Menu 1',
+			// 			link: '#'
+			// 		},
+			// 		{
+			// 			label: 'Menu 2',
+			// 			children: [
+			// 				{
+			// 					label: 'sub 1',
+			// 					link: '#'
+			// 				},
+			// 				{
+			// 					label: 'sub 2',
+			// 					link: '#'
+			// 				}
+			// 			]
+			// 		}
+			// 	]
 		},
 		{
 			label: 'Downloads',
@@ -58,8 +72,8 @@
 
 <header>
 	<div class="t-shadow-md t-shadow-[#d1fae5] t-bg-white">
-		<div class="t-container t-mx-auto t-flex t-justify-between t-items-center">
-			<div class="t-flex t-items-center">
+		<div class="lg:t-container  t-flex t-justify-between t-items-center sm:t-relative">
+			<div class="t-flex t-items-center sm:t-ml-[10px]">
 				<div>
 					<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-h-fit t-py-4" />
 				</div>
@@ -69,11 +83,13 @@
 			</div>
 			<div>
 				<nav>
-					<ul class="t-flex">
+					<ul
+						class={` lg:t-flex t-text-xl sm:t-flex-col lg:t-flex-row lg:t-justify-between t-items-center sm:t-items-end sm:t-absolute t-top-0 t-right-0 sm:t-bg-[#44835C]  sm:t-min-h-screen lg:t-min-h-fit lg:t-bg-white  lg:t-pt-4 sm:t-pt-12 sm:t-w-1/5  lg:t-w-fit ${showHamBurgerMenu ? ' t-block ' : 't-hidden'}`}>
 						{#each menu as item}
-						<li class=" t-rounded-md">
-							<a class="t-rounded-lg t-px-5 t-text-black " href={item.link}>{item.label}</a>
-						</li>
+							<li class=" t-rounded-md sm:t-py-2 sm:t-px-2">
+								
+								<a class="t-rounded-lg t-px-5 sm:t-text-white lg:t-text-black " href={item.link}>{item.label} </a>
+							</li>
 							<!-- {#if item.children == null}
 								<li class=" t-rounded-md">
 									<a class="t-rounded-lg t-px-5 t-text-black " href={item.link}>{item.label}</a>
@@ -118,6 +134,18 @@
 						{/each}
 					</ul>
 				</nav>
+			</div>
+			<div
+				class=" t-absolute t-right-[10px] t-top-5 t-m-auto sm:t-block lg:t-hidden "
+				on:click={handleMobileIconClick}
+			>
+				<button>
+					<i
+						class={`t-text-transparent t-bg-clip-text t-text-4xl t-font-bold ${
+							showHamBurgerMenu ? ' las la-times t-bg-white' : 'las la-bars t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] '
+						}`}
+					/>
+				</button>
 			</div>
 		</div>
 	</div>

@@ -7,6 +7,7 @@
 	async function getNotice() {
 		let { data } = await axios.get('http://localhost:3333/notice');
 		noticeData = data;
+		console.log(noticeData[0]);
 	}
 
 	onMount(() => {
@@ -21,11 +22,10 @@
 			desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis at natus quibusdam earum blanditiis aliquam!"
 		/>
 	</div>
-	<div class="t-container t-py-24">
-		{#each noticeData as { title, description, date }}
-			<div
-				class="t-relative t-p-8 t-overflow-hidden t-border t-bg-white t-border-slate-100 t-rounded-lg t-mt-4 t-shadow-lg"
-			>
+	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24">
+		{#each noticeData as { title, description, date ,id}}
+		     <a href={`/notice/${id}`} class="t-text-gray-500">
+			<div class="t-relative t-p-8 t-overflow-hidden t-border t-bg-white t-border-slate-100 t-rounded-lg t-mt-4 t-shadow-lg">
 				<span
 					class="t-absolute t-inset-x-0 t-bottom-0 t-h-2 t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]"
 				/>
@@ -43,6 +43,7 @@
 					</p>
 				</div>
 			</div>
+		</a>
 		{/each}
 	</div>
 </div>
