@@ -71,24 +71,33 @@
 </script>
 
 <header>
-	<div class="t-shadow-md t-shadow-[#d1fae5] t-bg-white">
-		<div class="lg:t-container  t-flex t-justify-between t-items-center sm:t-relative">
-			<div class="t-flex t-items-center sm:t-ml-[10px]">
-				<div>
+	<div class="t-shadow-md t-shadow-[#d1fae5] t-bg-white ">
+		<div
+			class="lg:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24  t-grid lg:t-grid-cols-4 xl:t-grid-cols-3 sm:t-relative "
+		>
+			<div class="lg:t-col-span-1 xl:t-col-span-1 lg:t-ml-0 sm:t-ml-[10px]">
+				<div
+					class=" t-flex
+				 t-items-center  "
+				>
 					<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-h-fit t-py-4" />
-				</div>
-				<div>
 					<h1 class="t-text-3xl t-px-2 t-font-bold t-text-[#22c55e]">TrMIS</h1>
 				</div>
 			</div>
-			<div>
+			<div class=" lg:t-col-span-3 xl:t-col-span-2">
 				<nav>
 					<ul
-						class={` lg:t-flex t-text-xl sm:t-flex-col lg:t-flex-row lg:t-justify-between t-items-center sm:t-items-end sm:t-absolute t-top-0 t-right-0 sm:t-bg-[#44835C]  sm:t-min-h-screen lg:t-min-h-fit lg:t-bg-white  lg:t-pt-4 sm:t-pt-12 sm:t-w-1/5  lg:t-w-fit ${showHamBurgerMenu ? ' t-block ' : 't-hidden'}`}>
+						class={` lg:t-flex lg:t-flex-row lg:t-relative t-top-0 t-right-0 lg:t-justify-between lg:t-min-h-fit lg:t-bg-transparent  lg:t-pt-4 sm:t-pt-12  t-text-xl  t-items-center sm:t-items-end sm:t-flex-col sm:t-absolute  sm:t-bg-[#44835C]  sm:t-min-h-screen ${
+							showHamBurgerMenu ? ' t-block ' : 't-hidden'
+						}`}
+					>
 						{#each menu as item}
-							<li class=" t-rounded-md sm:t-py-2 sm:t-px-2">
-								
-								<a class="t-rounded-lg t-px-5 sm:t-text-white lg:t-text-black " href={item.link}>{item.label} </a>
+							<li class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1">
+								<a
+									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-black "
+									href={item.link}
+									>{item.label}
+								</a>
 							</li>
 							<!-- {#if item.children == null}
 								<li class=" t-rounded-md">
@@ -134,19 +143,21 @@
 						{/each}
 					</ul>
 				</nav>
-			</div>
-			<div
-				class=" t-absolute t-right-[10px] t-top-5 t-m-auto sm:t-block lg:t-hidden "
-				on:click={handleMobileIconClick}
-			>
+				<div
+				class=" t-absolute t-right-[18px] t-top-5 t-m-auto sm:t-block lg:t-hidden "
+				on:click={handleMobileIconClick}>
 				<button>
 					<i
 						class={`t-text-transparent t-bg-clip-text t-text-4xl t-font-bold ${
-							showHamBurgerMenu ? ' las la-times t-bg-white' : 'las la-bars t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] '
+							showHamBurgerMenu
+								? ' las la-times t-bg-white'
+								: 'las la-bars t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] '
 						}`}
 					/>
 				</button>
 			</div>
+			</div>
+			
 		</div>
 	</div>
 </header>

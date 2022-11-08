@@ -1,6 +1,6 @@
 <footer class="t-bg-[#44835C]">
 	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24">
-		<div class=" t-min-h-[30vh] t-grid lg:t-grid-cols-5 md:t-items-center md:t-justify-center md:t-grid-cols-2 ">
+		<div class=" t-min-h-[30vh] t-grid lg:t-grid-cols-5 md:t-items-center md:t-justify-center md:t-grid-cols-2 sm:t-py-4 ">
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
 				<img src="/assets/usaid.png" alt="usaid" class="t-w-36 t-h-fit"/>
 			</div>
