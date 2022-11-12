@@ -1,6 +1,5 @@
 <script lang="ts">
 	export let course;
-	// export let studentCount;
 </script>
 
 <div>
@@ -20,7 +19,7 @@
 				<div
 					class="t-text-align-center t-text-transparent t-text-3xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] "
 				>
-				<i class="las la-angle-double-right"></i>
+					<i class="las la-angle-double-right" />
 				</div>
 			</div>
 		</div>
