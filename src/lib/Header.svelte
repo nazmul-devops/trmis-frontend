@@ -1,18 +1,36 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import axios from 'axios';
 	let showHamBurgerMenu = false;
 	const handleMobileIconClick = () => (showHamBurgerMenu = !showHamBurgerMenu);
 
-	const mediaQueryHandler = (e: any) => {
-		if (!e.matches) {
-			showHamBurgerMenu = false;
-		}
-	};
-	onMount(() => {
-		const mediaListener = window.matchMedia('(max-width: 767px)');
+	const mediaQueryHandler = e => {
+    // Reset mobile state
+    if (!e.matches) {
+      showHamBurgerMenu = false;
+    }
+  };
+	// async function getPageDetails(courseId) {
+	// 	let { data } = await axios.get(
+	// 		`http://localhost:3333/pageTrainingDetails/`
+	// 	);
+	// 	console.log(data);
+	// }
 
-		mediaListener.addListener(mediaQueryHandler);
-	});
+	$: {
+		
+			console.log("hello",$page.params);
+		
+	}
+
+
+
+  onMount(() => {
+    const mediaListener = window.matchMedia("(max-width: 767px)");
+
+    mediaListener.addListener(mediaQueryHandler);
+  });
 	interface Menu {
 		label: string;
 		link?: string;
@@ -92,10 +110,10 @@
 						}`}
 					>
 						{#each menu as item}
-							<li class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1">
+							<li class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1" on:click={()=>(showHamBurgerMenu = false)}>
 								<a
 									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-black "
-									href={item.link}
+									href={item.link} 
 									>{item.label}
 								</a>
 							</li>

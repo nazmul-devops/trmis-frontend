@@ -1,5 +1,27 @@
 <script>
-    export let Icon;
+	export let  desc;
+	export let materialTitle;
+	export let fileType;
+	let icon;
+
+	$: {
+		if(fileType == 'ppt'){
+			icon = 'las la-file-powerpoint'
+		}
+		else if(fileType == 'jpg' || fileType == "png" || fileType=="jpeg" || fileType=="svg"  ) {
+			icon = "las la-file-image"
+		} 
+		else if(fileType== 'mp4' || fileType== 'mov' || fileType=="mpeg"){
+			icon = "las la-file-video"
+		}else if(fileType== 'pdf'){
+			icon = "las la-file-pdf"
+		}else if(fileType== 'mp3'){
+			icon = "las la-file-audio"
+		}
+		else {
+			icon = "las la-file-alt"
+		}
+	} 
 </script>
 <div class="t-mb-3">
 	<div
@@ -8,10 +30,11 @@
 		<div class=" t-flex t-rounded-md t-h-full  t-justify-between t-items-center t-bg-white t-px-4 ">
 			<div class="t-flex t-items-center t-gap-2">
 				<div>
-					<i class="{Icon} t-text-4xl"></i>
+					<i class="{icon} t-text-4xl t-font-semibold t-text-transparent  t-bg-clip-text t-bg-gradient-to-r t-from-[#44835C] t-to-[#F94646] "></i>
 				</div>
 				<div>
-					<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates, sapiente.</p>
+					<h6>{materialTitle}</h6>
+					<p>{desc}</p>
 				</div>
 			</div>
 			<div
