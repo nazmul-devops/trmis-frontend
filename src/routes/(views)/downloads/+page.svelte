@@ -69,8 +69,6 @@
 							fileType={getFileType(materials.title)}
 						/>
 					{/each}
-					<!-- <DownloadCard Icon="las la-file-powerpoint" />
-					<DownloadCard Icon="las la-video" /> -->
 				</div>
 			</div>
 		</div>
