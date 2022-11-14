@@ -1,6 +1,6 @@
 <script>
-   export let Title;
-   export let desc;
+	export let Title;
+	export let desc;
 </script>
 
 <div class="t-py-12 t-text-center t-bg-[#b6f3c9]">

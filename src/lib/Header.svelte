@@ -1,9 +1,11 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import axios from 'axios';
 	let showHamBurgerMenu = false;
 	const handleMobileIconClick = () => (showHamBurgerMenu = !showHamBurgerMenu);
 
-	const mediaQueryHandler = (e: any) => {
+	const mediaQueryHandler = (e) => {
 		if (!e.matches) {
 			showHamBurgerMenu = false;
 		}
@@ -29,25 +31,6 @@
 		{
 			label: 'Training',
 			link: '/training'
-			// 	children: [
-			// 		{
-			// 			label: 'Menu 1',
-			// 			link: '#'
-			// 		},
-			// 		{
-			// 			label: 'Menu 2',
-			// 			children: [
-			// 				{
-			// 					label: 'sub 1',
-			// 					link: '#'
-			// 				},
-			// 				{
-			// 					label: 'sub 2',
-			// 					link: '#'
-			// 				}
-			// 			]
-			// 		}
-			// 	]
 		},
 		{
 			label: 'Downloads',
@@ -95,72 +78,34 @@
 						}`}
 					>
 						{#each menu as item}
-							<li class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1">
+							<li
+								class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1"
+								on:click={() => (showHamBurgerMenu = false)}
+							>
 								<a
 									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-black "
 									href={item.link}
 									>{item.label}
 								</a>
 							</li>
-							<!-- {#if item.children == null}
-								<li class=" t-rounded-md">
-									<a class="t-rounded-lg t-px-5 t-text-black " href={item.link}>{item.label}</a>
-								</li>
-							{:else}
-								<li class=" t-relative  t-rounded-md ">
-									<span class="t-peer t-cursor-pointer t-px-5 ">{item.label}</span>
-									<ul
-										class=" t-rounded-lg t-shadow-[0px_5px_10px_#b6f3c9] t-z-10 t-bg-white t-absolute t--bottom-15 t-left-2 peer-hover:t-flex hover:t-flex t-flex-col t-w-32"
-									>
-										{#each item.children as subMenu}
-											{#if subMenu.children == null}
-												<li class=" t-bg-white t-px-3 t-py-3">
-													<a href={subMenu.link}>
-														{subMenu.label}
-													</a>
-												</li>
-											{:else}
-												<li
-													class=" t-peer t-text-black    t-rounded-lg t-cursor-pointer t-relative t-px-3 t-py-3"
-												>
-													<span class=" t-peer  t-text-black ">
-														{subMenu.label}
-													</span>
-													<ul
-														class="t-absolute t-rounded-lg t-shadow-[0px_5px_10px_#b6f3c9] t-z-10 t-bg-white t--right-[130px] t-top-0  peer-hover:t-flex hover:t-flex t-flex-col t-w-32"
-													>
-														{#each subMenu.children as subSubMenu}
-															<li class="t-py-3 t-px-2">
-																<a class="t-text-black" href={subSubMenu.link}
-																	>{subSubMenu.label}
-																</a>
-															</li>
-														{/each}
-													</ul>
-												</li>
-											{/if}
-										{/each}
-									</ul>
-								</li>
-							{/if} -->
 						{/each}
 					</ul>
 				</nav>
 				<div
-				class=" t-absolute t-right-[18px] t-top-5 t-m-auto sm:t-block lg:t-hidden "
-				on:click={handleMobileIconClick}>
-				<button>
-					<i
-						class={`t-text-transparent t-bg-clip-text t-text-4xl t-font-bold ${
-							showHamBurgerMenu
-								? ' las la-times t-bg-white'
-								: 'las la-bars t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] '
-						}`}
-					/>
-				</button>
+					class=" t-absolute t-right-[18px] t-top-5 t-m-auto sm:t-block lg:t-hidden "
+					on:click={handleMobileIconClick}
+				>
+					<button>
+						<i
+							class={`t-text-transparent t-bg-clip-text t-text-4xl t-font-bold ${
+								showHamBurgerMenu
+									? ' las la-times t-bg-white'
+									: 'las la-bars t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] '
+							}`}
+						/>
+					</button>
+				</div>
 			</div>
-			</div>
-			
 		</div>
 	</div>
 </header>
