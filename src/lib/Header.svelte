@@ -8,11 +8,8 @@
 			showHamBurgerMenu = false;
 		}
 	};
-<<<<<<< Updated upstream
-=======
 
 
->>>>>>> Stashed changes
 	onMount(() => {
 		const mediaListener = window.matchMedia('(max-width: 767px)');
 

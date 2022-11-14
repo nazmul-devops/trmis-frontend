@@ -5,17 +5,6 @@
 	import { onMount } from 'svelte';
 	import { each } from 'svelte/internal';
 	import DownloadCard from './DownloadCard.svelte';
-<<<<<<< Updated upstream
-	let coursesName= [];
-	
-	async function getCoursesName(){
-		let {data} =await axios.get('http://localhost:3333/courses')
-		coursesName=data;
-	}
-	onMount(()=>{
-		getCoursesName();
-	})
-=======
 
 	let courses = [];
 	let courseMaterials = [];
@@ -41,7 +30,6 @@
 	onMount(() => {
 		getcourses();
 	});
->>>>>>> Stashed changes
 </script>
 
 <div class="sm:t-relative md:t-block">
@@ -52,36 +40,6 @@
     architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
     sit"
 	/>
-<<<<<<< Updated upstream
-	<div class="t-container t-py-32 ">
-		<div class="t-grid t-grid-cols-4 t-gap-4">
-					<div class="t-col-span-1">
-						<div
-							class="t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-rounded-md t-pt-1 t-shadow-lg "
-						>
-							<div
-								class="  t-rounded-md t-bg-white "
-							>
-								<ul class="t-leading-normal">
-									{#each coursesName as course}
-									<div>
-										<li class=" t-py-5 t-px-4 t-cursor-pointer">{course.name}</li>
-									<hr >
-									</div>
-									{/each}
-								</ul>
-							</div>
-						</div>
-					</div>
-		
-					<div class="t-col-span-3">
-						<div class="">
-							<DownloadCard Icon="las la-file-download" />
-							<DownloadCard Icon="las la-file-powerpoint" />
-							<DownloadCard Icon="las la-video" />
-						</div>
-					</div>
-=======
 	<div class="md:t-container sm:t-px-4  md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-32">
 		<div class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 lg:t-gap-4 sm:t-gap-0 ">
 			<div class="sm:t-col-span-1">
@@ -144,7 +102,6 @@
 					{/each}
 				</div>
 			</div>
->>>>>>> Stashed changes
 		</div>
 	</div>
 
