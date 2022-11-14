@@ -49,7 +49,7 @@
 					}`}
 				>
 					<div class="t-rounded-md t-bg-white ">
-						<ul class={`t-leading-normal t-overflow-y-scroll lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}>
+						<ul class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}>
 							{#each courses as course}
 								<div on:click={() => (dropdown = false)}>
 									<li

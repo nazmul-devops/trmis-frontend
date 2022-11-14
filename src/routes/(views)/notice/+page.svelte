@@ -41,8 +41,8 @@
 					<p class="t-text-sm t- text-slate-500 t-pb-6">
 						{description}
 					</p>
-					<a  href={fileURL} class="t-text-xl t-font-bold  t-text-[#44835C]" target="_blank">
-						Open here! <span><i class="las la-arrow-right t-text-[#F94646] t-font-bold t-text-2xl"></i></span>
+					<a  href={fileURL} class="t-text-xl t-font-bold  t-text-[#44835C] t-flex t-justify-center" target="_blank">
+						 Open here! <i class="las la-arrow-right t-text-[#F94646] t-font-bold t-text-2xl"></i>
 					</a>
 				</div>
 			</div>

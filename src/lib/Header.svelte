@@ -97,7 +97,7 @@
 						{#each menu as item}
 							<li class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1">
 								<a
-									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-black "
+									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-[#2a5132] lg:t-font-semibold "
 									href={item.link}
 									>{item.label}
 								</a>
