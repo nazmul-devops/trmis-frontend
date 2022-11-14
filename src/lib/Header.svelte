@@ -11,9 +11,6 @@
 		}
 	};
 
-	$: {
-		console.log('hello', $page.params);
-	}
 
 	onMount(() => {
 		const mediaListener = window.matchMedia('(max-width: 767px)');
@@ -58,19 +55,20 @@
 	];
 </script>
 
-<header>
+<header class="t-sticky t-top-0 t-z-50">
 	<div class="t-shadow-md t-shadow-[#d1fae5] t-bg-white ">
 		<div
 			class="lg:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24  t-grid lg:t-grid-cols-4 xl:t-grid-cols-3 sm:t-relative "
 		>
 			<div class="lg:t-col-span-1 xl:t-col-span-1 lg:t-ml-0 sm:t-ml-[10px]">
-				<div
+				<a href="/"><div 
 					class=" t-flex
 				 t-items-center  "
 				>
 					<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-h-fit t-py-4" />
 					<h1 class="t-text-3xl t-px-2 t-font-bold t-text-[#22c55e]">TrMIS</h1>
 				</div>
+				</a>
 			</div>
 			<div class=" lg:t-col-span-3 xl:t-col-span-2">
 				<nav>
