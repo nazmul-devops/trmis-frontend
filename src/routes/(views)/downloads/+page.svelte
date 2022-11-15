@@ -3,7 +3,6 @@
 	import axios from 'axios';
 	import { Course } from 'carbon-icons-svelte';
 	import { onMount } from 'svelte';
-	import { each } from 'svelte/internal';
 	import DownloadCard from './DownloadCard.svelte';
 
 	let courses = [];
@@ -104,5 +103,4 @@
 			</div>
 		</div>
 	</div>
-
 </div>

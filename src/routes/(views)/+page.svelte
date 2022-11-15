@@ -1,8 +1,5 @@
 <script lang="ts">
-	import Chart from '$lib/Chart.svelte';
 	import Chart1st from '$lib/Chart1st.svelte';
-	import Chart2nd from '$lib/Chart2nd.svelte';
-	import { string } from 'yup/lib/locale';
 
 	interface homeCard {
 		name: string;
@@ -33,13 +30,17 @@
 	];
 </script>
 
-<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24  t-min-h-screen t-py-16">
+<div
+	class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24  t-min-h-screen t-py-16"
+>
 	<div class="t-grid xl:t-grid-cols-4 md:t-grid-cols-2 t-gap-4 t-mb-11 ">
 		{#each homecard as card}
 			<div
-				class="t-bg-gradient-to-b t-from-[#F94646] t-to-[#44835C] t-rounded-md t-pl-2 t-shadow-lg  t-col-span-1 t-w-full">
+				class="t-bg-gradient-to-b t-from-[#F94646] t-to-[#44835C] t-rounded-md t-pl-2 t-shadow-lg  t-col-span-1 t-w-full"
+			>
 				<div
-					class="t-group t-shadow-lg hover:t-shadow-2xl t-duration-200 t-delay-75 t-bg-white t-rounded-md t-py-10 t-px-2">
+					class="t-group t-shadow-lg hover:t-shadow-2xl t-duration-200 t-delay-75 t-bg-white t-rounded-md t-py-10 t-px-2"
+				>
 					<div class="t-flex t-justify-between t-items-end">
 						<div>
 							<p
@@ -69,8 +70,5 @@
 		<div class="t-bg-white t-rounded-md t-p-5">
 			<Chart1st />
 		</div>
-		<!-- <div class="t-grid t-col-span-1  t-bg-white t-rounded-md t-p-5">
-			<Chart2nd />
-		</div> -->
 	</div>
 </div>
