@@ -2,3 +2,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+
+     /* Scroll thumb styles */
+    .scrollbar::-webkit-scrollbar {
+      width: .5rem;
+    }
+    .scrollbar::-webkit-scrollbar-thumb {
+      background: #44835C; 
+      border-radius: 1rem;
+    }
+    .scrollbar::-webkit-scrollbar-thumb:active {
+      background-color: #F94646;
+    }
+    .scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #3B3B46; 
+      box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Scroll track styles (Background) */
+    .scrollbar::-webkit-scrollbar-track {
+      background: #b6f3c9;
+      border-radius: 4px;
+    }
+    .scrollbar::-webkit-scrollbar-track:hover, 
+    .scrollbar::-webkit-scrollbar-track:active {
+      background: #F94646;
+    }
+}

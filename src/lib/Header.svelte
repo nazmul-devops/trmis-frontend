@@ -83,7 +83,7 @@
 								on:click={() => (showHamBurgerMenu = false)}
 							>
 								<a
-									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-black "
+									class="t-rounded-lg lg:t-px-2 xl:t-px-5 sm:t-text-white lg:t-text-[#2a5132] lg:t-font-semibold "
 									href={item.link}
 									>{item.label}
 								</a>
