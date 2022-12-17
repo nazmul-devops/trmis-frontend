@@ -1,8 +1,8 @@
 <script>
-	import '../app.postcss';
 	import 'carbon-components-svelte/css/g10.css';
+	import '../app.postcss';
 
-	export const prerender = true;
+	export const ssr = false;
 </script>
 
 <slot />
