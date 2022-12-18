@@ -6,8 +6,8 @@ stages:
 default:
   before_script:
     # - npm install --global yarn
-
-    - apt-get install nodejs
+    - apt-get install curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
     - pip3 install awscli
     - npm install
 
