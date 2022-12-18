@@ -1,5 +1,4 @@
-# image: python:3.8
-image: node:14.19-bullseye
+image: python:3.8
 
 stages:
   - build
