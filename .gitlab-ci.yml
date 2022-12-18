@@ -8,9 +8,9 @@ default:
     # - npm install --global yarn
     - apt-get install curl
     - curl -sL https://deb.nodesource.com/setup_16.x | bash -
-    - npm i -g pnpm
+    - apt-get install nodejs
     - pip3 install awscli
-    - pnpm install
+    - npm install
 
 build-and-deploy:
   only:
