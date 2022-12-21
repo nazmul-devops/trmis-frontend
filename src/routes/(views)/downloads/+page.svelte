@@ -10,13 +10,13 @@
 	let dropdown = false;
 
 	async function getcourses() {
-		let { data } = await axios.get('http://localhost:3333/courses');
+		let { data } = await axios.get('http://localhost:3000/courses');
 		courses = data;
 		getCourseMaterials(1);
 	}
 
 	async function getCourseMaterials(courseId) {
-		let { data } = await axios.get(`http://localhost:3333/courseMaterials?courseId=${courseId}`);
+		let { data } = await axios.get(`http://localhost:3000/courseMaterials?courseId=${courseId}`);
 		courseMaterials = data;
 	}
 

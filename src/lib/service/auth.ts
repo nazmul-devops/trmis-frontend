@@ -4,7 +4,7 @@ export const http = axios.create({ baseURL: 'http://localhost:3000' });
 
 export function setupAuthHeader() {
 	// console.log('setupAuthHeader');
-	let accessToken = localStorage.getItem('accessToken');
+	const accessToken = localStorage.getItem('accessToken');
 	if (accessToken) {
 		http.defaults.headers.common = {
 			Authorization: `Bearer ${accessToken}`
@@ -21,8 +21,7 @@ export function logout() {
 	removeAuthHeader();
 }
 
-export async function login(username: String, password: String) {
-	console.log('ok');
+export async function login(username, password) {
 	try {
 		const {
 			data: { accessToken, user }

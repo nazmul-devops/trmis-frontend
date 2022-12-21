@@ -7,7 +7,7 @@
 	let trainingData = [];
 
 	async function getCourse() {
-		let { data } = await axios.get('http://localhost:3333/courses');
+		let { data } = await axios.get('http://localhost:3000/courses');
 		trainingData = data;
 	}
 

@@ -8,11 +8,12 @@
 	import { login } from '$lib/service/auth';
 	import { goto } from '$app/navigation';
 	import { setAccessToken } from '$lib/store/auth';
+
+	let message = null;
 	const schema = yup.object({
 		username: yup.string().required(),
 		password: yup.string().required()
 	});
-	
 
 	const { form, errors } = createForm({
 		onSubmit: async (values) => {
@@ -20,10 +21,13 @@
 			if (status == 200) {
 				console.log('login');
 				setAccessToken();
-				goto('/admin')
+				goto('/admin');
 			} else {
-				console.log('bad ...');
-				goto('/login')
+				message = 'Invalid Username Or Password';
+				setTimeout(() => {
+					message = null;
+				}, 2000);
+				goto('/login');
 			}
 		},
 		extend: validator({ schema })
@@ -38,6 +42,7 @@
 		invalid={$errors.username}
 		bind:invalidText={$errors.username}
 	/>
+
 	<PasswordInput
 		name="password"
 		labelText="Password"
@@ -45,5 +50,8 @@
 		invalid={$errors.password}
 		bind:invalidText={$errors.password}
 	/>
+	{#if message}
+		<p class=" t-text-red-500 ">{message}</p>
+	{/if}
 	<Button type="submit">Login</Button>
 </form>

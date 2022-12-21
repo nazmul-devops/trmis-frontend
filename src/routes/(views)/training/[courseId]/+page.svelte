@@ -8,7 +8,7 @@
 
 	async function getCourseDetails(courseId) {
 		let { data } = await axios.get(
-			`http://localhost:3333/pageTrainingDetails/${courseId}?_expand=course`
+			`http://localhost:3000/pageTrainingDetails/${courseId}?_expand=course`
 		);
 		console.log(data);
 		title = data.course.name;

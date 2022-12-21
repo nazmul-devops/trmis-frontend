@@ -5,7 +5,7 @@
 	let noticeData = [];
 
 	async function getNotice() {
-		let { data } = await axios.get('http://localhost:3333/notice');
+		let { data } = await axios.get('http://localhost:3000/notice');
 		noticeData = data;
 		// console.log(noticeData[0]);
 	}
