@@ -14,7 +14,7 @@ default:
 
 build-and-deploy:
   only:
-    - develop
+    - stage
   stage: build
   cache:
     key:
