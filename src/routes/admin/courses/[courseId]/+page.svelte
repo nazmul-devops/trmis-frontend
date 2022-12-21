@@ -7,15 +7,15 @@
 	import { get } from 'svelte/store';
 	import { courses } from '$lib/store/course';
 
-	let courseData;
+	let courseData: any;
 
-	function edit(event) {
+	function edit(event: any) {
 		console.log('edit', event.detail);
 	}
 
 	onMount(async () => {
 		let _courses = get(courses);
-		let index = _courses.findIndex((item) => item.id == $page.params.courseId);
+		let index = _courses.findIndex((item: any) => item.id == $page.params.courseId);
 		courseData = _courses[index];
 	});
 </script>
