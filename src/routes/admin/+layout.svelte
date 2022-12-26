@@ -39,12 +39,11 @@
 		setAccessToken();
 	});
 
-
 	let isSideNavOpen = false;
 </script>
 
 {#if $isAuthincated}
-	<Header company="IBM" platformName="Carbon Svelte" bind:isSideNavOpen>
+	<Header company="TrMIS" platformName="" bind:isSideNavOpen>
 		<svelte:fragment slot="skip-to-content">
 			<SkipToContent />
 		</svelte:fragment>
