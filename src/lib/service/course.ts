@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getCourses() {
 	try {
-		let { data } = await http.get('courses');
+		const { data } = await http.get('courses');
 		return {
 			status: 200,
 			data: data
@@ -17,7 +17,7 @@ export async function getCourses() {
 export async function getCourse(id) {
 	console.log(id);
 	try {
-		let { data } = await http.get(`courses/${id}`);
+		const { data } = await http.get(`courses/${id}`);
 		return {
 			status: 200,
 			data: data

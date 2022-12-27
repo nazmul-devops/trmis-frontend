@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { degrees } from '$lib/store/degrees';
+	import { users } from '$lib/store/users';
 	import {
 		DataTable,
 		Toolbar,
@@ -20,35 +20,37 @@
 
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'name', value: 'Name' },
+		{ key: 'email', value: 'Email' },
+        { key: 'firstname', value: 'FirstName' },
+        { key: 'lastname', value: 'LasttName' },
 		{ key: 'action', value: 'Action' }
 	];
 
-	// let open = false;
+	let open = false;
 	let deleteModal = false;
 
-	let degree;
+	let user;
 
 	function openModalForm(row) {
-		// open = true;
-		degree = row;
+		open = true;
+		user = row;
 	}
 
 	async function doDelete() {
-		await degrees.deleteDegree(degree.id);
+		await users.deleteUser(user.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		degrees.getDegrees();
-		console.log($degrees);
+		users.getUsers();
+		console.log($users);
 	});
 </script>
 
-{#if $degrees.loading}
+{#if $users.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$degrees.data}>
+	<DataTable size="short" title="Degrees" description="" {headers} rows={$users.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch />
@@ -69,7 +71,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							degree = { ...row };
+							user = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -81,5 +83,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:degree />
+<FormModal bind:user bind:open />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

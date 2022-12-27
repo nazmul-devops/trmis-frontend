@@ -6,7 +6,9 @@
 		ModalBody,
 		ModalFooter,
 		Checkbox,
-		TextInput
+		TextInput,
+		Button,
+		PasswordInput
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
@@ -18,19 +20,27 @@
 		degrees.getDegrees();
 	});
 
-	export let open = true;
+	// export let open = true;
 
-	async function onSubmit() {
+	function resetForm() {
+		degree.id = null;
+		degree.name = null;
+	}
+
+	async function onSubmit(event) {
 		if (degree.id) {
 			await degrees.updateDegree({ ...degree });
 		} else {
 			await degrees.createDegree({ ...degree });
 		}
-		open = false;
+		// open = false;
+
+		// event.target.reset();
+		resetForm();
 	}
 </script>
 
-<Modal
+<!-- <Modal
 	bind:open
 	modalHeading="Create database"
 	primaryButtonText={degree.id == null ? 'Create' : 'Edit'}
@@ -39,6 +49,13 @@
 	on:submit={onSubmit}
 >
 	<form>
-		<TextInput bind:value={degree.name} labelText=" name" placeholder="Enter  name..." />
+		<TextInput bind:value={degree.name} labelText=" Email" placeholder="Enter  name..." />
 	</form>
-</Modal>
+	</Modal> -->
+
+<div>
+	<form on:submit|preventDefault={onSubmit}>
+		<TextInput bind:value={degree.name} labelText=" name" placeholder="Enter  name..." />
+		<Button type="submit">submit</Button>
+	</form>
+</div>

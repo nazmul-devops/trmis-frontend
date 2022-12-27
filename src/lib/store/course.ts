@@ -5,7 +5,7 @@ function createCourseStore(service) {
 	const { subscribe, set, update } = writable([]);
 
 	async function getCourses() {
-		let { data } = await courseService.getCourses();
+		const { data } = await courseService.getCourses();
 		set(data);
 	}
 
