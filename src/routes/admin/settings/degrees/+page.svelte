@@ -39,6 +39,8 @@
 		deleteModal = false;
 	}
 
+	let filteredRowIds = [];
+
 	onMount(async () => {
 		degrees.getDegrees();
 		console.log($degrees);
@@ -51,7 +53,7 @@
 	<DataTable size="short" title="Degrees" description="" {headers} rows={$degrees.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
-				<ToolbarSearch />
+				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<ToolbarMenu>
 					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
 					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"
@@ -59,7 +61,7 @@
 					>
 					<ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
 				</ToolbarMenu>
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add trainer</Button>
+				<Button>Add trainer</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>

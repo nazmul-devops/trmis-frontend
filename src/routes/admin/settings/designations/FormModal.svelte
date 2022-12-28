@@ -1,34 +1,44 @@
 <script lang="ts">
+	import { createForm } from 'felte';
+	import { validator } from '@felte/validator-yup';
+	import * as yup from 'yup';
 	import { designations } from '$lib/store/designations';
-	// import { getDesignations } from '$lib/service/designations';
-	import {
-		Modal,
-		ModalHeader,
-		ModalBody,
-		ModalFooter,
-		Checkbox,
-		TextInput
-	} from 'carbon-components-svelte';
+	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
+	export let open = true;
 	export let designation = {
 		id: null,
 		name: null
 	};
+
+	$: {
+		setFields('name', designation.name);
+	}
+
+	const schema = yup.object({
+		name: yup.string().required()
+	});
+
+	const { form, reset, createSubmitHandler, setFields } = createForm({
+		extend: validator({ schema })
+	});
+
+	const submitHandler = createSubmitHandler({
+		onSubmit: async (data) => {
+			if (designation.id) {
+				await designations.updateDesignation({ ...data, id: designation.id });
+			} else {
+				await designations.createDesignation({ ...data });
+			}
+			open = false;
+			reset();
+		}
+	});
+
 	onMount(async () => {
 		designations.getDesignations();
 	});
-
-	export let open = true;
-
-	async function onSubmit() {
-		if (designation.id) {
-			await designations.updateDesignation({ ...designation });
-		} else {
-			await designations.createDesignation({ ...designation });
-		}
-		open = false;
-	}
 </script>
 
 <Modal
@@ -37,9 +47,9 @@
 	primaryButtonText={designation.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
-	on:submit={onSubmit}
+	on:submit={submitHandler}
 >
-	<form>
-		<TextInput bind:value={designation.name} labelText=" name" placeholder="Enter  name..." />
+	<form use:form>
+		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
 	</form>
 </Modal>
