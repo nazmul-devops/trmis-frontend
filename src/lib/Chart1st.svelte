@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-	export let Class ="";
+	export let Class = '';
 	let satisfactionData2021 = [
 		{ framework: 'Jan', score: 96 },
 		{ framework: 'Feb', score: 91 },
@@ -25,42 +25,12 @@
 			{
 				label: 'Male (%)',
 				data: satisfactionData2021.map(({ score }) => score),
-				backgroundColor: [
-					'hsl(347 38% 49%)',
-					'hsl(346 65% 63%)',
-					'hsl(346 49% 56%)',
-					'hsl(346 89% 70%)',
-					'hsl(346 90% 76%)',
-					'hsl(346 90% 73%)',
-					'hsl(346 89% 79%)',
-					'hsl(346 89% 85%)',
-					'hsl(347 89% 82%)',
-					'hsl(346 90% 88%)',
-					'hsl(347 87% 94%)',
-					'hsl(347 91% 91%)'
-				],
-				borderColor: ['hsl(43 100% 52%)'],
 				borderRadius: 10,
 				borderWidth: 2
 			},
 			{
 				label: 'Female (%)',
-				data: satisfactionData2021.map(({ score }) => score-5),
-				backgroundColor: [
-					'hsl(347 38% 49%)',
-					'hsl(346 65% 63%)',
-					'hsl(346 49% 56%)',
-					'hsl(346 89% 70%)',
-					'hsl(346 90% 76%)',
-					'hsl(346 90% 73%)',
-					'hsl(346 89% 79%)',
-					'hsl(346 89% 85%)',
-					'hsl(347 89% 82%)',
-					'hsl(346 90% 88%)',
-					'hsl(347 87% 94%)',
-					'hsl(347 91% 91%)'
-				],
-				borderColor: ['hsl(43 100% 52%)'],
+				data: satisfactionData2021.map(({ score }) => score - 5),
 				borderRadius: 10,
 				borderWidth: 2
 			}
@@ -80,21 +50,21 @@
 					scales: {
 						x: {
 							grid: {
-								color: 'hsl(43 100% 52% / 10%)',
-								tickColor: 'red'
+								// color: 'hsl(43 100% 52% / 10%)',
+								// tickColor: 'red'
 							},
-							ticks: { color: 'hsl(43 100% 52% )' }
+							// ticks: { color: 'hsl(43 100% 52% )' }
 						},
 						y: {
 							beginAtZero: false,
-							ticks: { color: 'hsl(43 100% 52% )', font: { size: 18 } },
+							// ticks: { color: 'hsl(43 100% 52% )', font: { size: 18 } },
 							grid: {
 								color: 'hsl(43 100% 52% / 40%)'
 							},
 							title: {
 								display: true,
-								text: 'Satisfaction (%)',
-								color: 'hsl(43 100% 52% )',
+								text: 'No of Trainess',
+								// color: 'hsl(43 100% 52% )',
 								font: { size: 24, family: 'Merriweather' }
 							}
 						}
@@ -107,6 +77,6 @@
 
 <main class={Class}>
 	<section>
-		<canvas  bind:this={barChartElement} />
+		<canvas class="t-w-full" bind:this={barChartElement} />
 	</section>
 </main>
