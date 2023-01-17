@@ -18,6 +18,7 @@
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 
+	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
@@ -50,7 +51,7 @@
 	<DataTable size="short" title="Designations" description="" {headers} rows={$designations.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
-				<ToolbarSearch />
+				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<ToolbarMenu>
 					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
 					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"

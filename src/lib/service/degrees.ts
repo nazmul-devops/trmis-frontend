@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getDegrees() {
 	try {
-		const { data } = await http.get('degrees');
+		const { data } = await http.get('degrees/');
 
 		return {
 			status: 200,
@@ -19,7 +19,7 @@ export async function getDegrees() {
 export async function getDegree(id) {
 	console.log(id);
 	try {
-		const { data } = await http.get(`degrees/${id}`);
+		const { data } = await http.get(`degrees/${id}/`);
 		return {
 			status: 200,
 			data: data
@@ -34,7 +34,7 @@ export async function getDegree(id) {
 
 export async function deleteDegree(id: number) {
 	try {
-		return http.delete(`degrees/${id}`);
+		return http.delete(`degrees/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
@@ -56,7 +56,7 @@ export async function updateDegree(payload) {
 
 export async function createDegree(payload) {
 	try {
-		const { data } = await http.post(`degrees`, payload);
+		const { data } = await http.post(`degrees/`, payload);
 		return {
 			status: 201,
 			data

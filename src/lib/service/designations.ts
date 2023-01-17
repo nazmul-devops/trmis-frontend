@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getDesignations() {
 	try {
-		const { data } = await http.get('designation');
+		const { data } = await http.get('settings/designations/');
 
 		return {
 			status: 200,
@@ -19,7 +19,7 @@ export async function getDesignations() {
 export async function getDesignation(id) {
 	console.log(id);
 	try {
-		const { data } = await http.get(`designation/${id}`);
+		const { data } = await http.get(`settings/designations/${id}/`);
 		return {
 			status: 200,
 			data: data
@@ -34,7 +34,7 @@ export async function getDesignation(id) {
 
 export async function deleteDesignation(id: number) {
 	try {
-		return http.delete(`designation/${id}`);
+		return http.delete(`settings/designations/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
@@ -42,7 +42,7 @@ export async function deleteDesignation(id: number) {
 
 export async function updateDesignation(payload) {
 	try {
-		const { data } = await http.put(`designation/${payload.id}`, payload);
+		const { data } = await http.put(`settings/designations/${payload.id}/`, payload);
 		return {
 			status: 204,
 			data
@@ -56,7 +56,7 @@ export async function updateDesignation(payload) {
 
 export async function createDesignation(payload) {
 	try {
-		const { data } = await http.post(`designation`, payload);
+		const { data } = await http.post(`settings/designations/`, payload);
 		return {
 			status: 201,
 			data

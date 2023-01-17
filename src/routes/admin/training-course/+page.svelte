@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { trainingCourses } from '$lib/store/trainingCourse';
 	import {
 		DataTable,
 		Toolbar,
@@ -21,39 +21,39 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'name', value: 'Name' },
+		{ key: 'title', value: 'Title' },
+		{ key: 'description', value: 'Description' },
 		{ key: 'code', value: 'Code' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
-		{ key: 'email', value: 'Email' },
+		{ key: 'pass_mark', value: 'Pass Mark' },
+		{ key: 'objective', value: 'Objective' },
+		{ key: 'course_category', value: 'Course Category' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let coordinator;
+	let trainingCourse;
 
 	function openModalForm(row) {
 		open = true;
-		coordinator = row;
+		trainingCourse = row;
 	}
 
 	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
+		await trainingCourses.deleteTrainingCourse(trainingCourse.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		trainingCourses.getTrainingCourses();
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $trainingCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$coordinators.data}>
+	<DataTable size="short" title="Degrees" description="" {headers} rows={$trainingCourses.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -74,7 +74,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coordinator = { ...row };
+							trainingCourse = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -86,5 +86,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
+<FormModal bind:open bind:trainingCourse />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

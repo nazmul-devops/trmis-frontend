@@ -1,8 +1,8 @@
 import { http } from '$lib/service/auth';
 
-export async function getCordinators() {
+export async function getCoordinators() {
 	try {
-		const { data } = await http.get('trainingCordinators');
+		const { data } = await http.get('settings/coordinators/');
 		return {
 			status: 200,
 			data
@@ -15,9 +15,9 @@ export async function getCordinators() {
 	}
 }
 
-export async function getCordinator(id) {
+export async function getCoordinator(id) {
 	try {
-		const { data } = await http.get(`trainingCordinators/${id}`);
+		const { data } = await http.get(`settings/coordinators/${id}/`);
 		return {
 			status: 200,
 			data
@@ -29,9 +29,9 @@ export async function getCordinator(id) {
 	}
 }
 
-export async function updateCordinator(payload) {
+export async function updateCoordinator(payload) {
 	try {
-		const { data } = await http.put(`trainingCordinators/${payload.id}`, payload);
+		const { data } = await http.put(`settings/coordinators/${payload.id}`, payload);
 		return {
 			status: 200,
 			data
@@ -43,9 +43,9 @@ export async function updateCordinator(payload) {
 	}
 }
 
-export async function createCordinator(payload) {
+export async function createCoordinator(payload) {
 	try {
-		const { data } = await http.post(`trainingCordinators`, payload);
+		const { data } = await http.post(`settings/coordinators/`, payload);
 		return {
 			status: 200,
 			data
@@ -57,9 +57,9 @@ export async function createCordinator(payload) {
 	}
 }
 
-export async function deleteCordinator(id: number) {
+export async function deleteCoordinator(id: number) {
 	try {
-		return http.delete(`trainingCordinators/${id}`);
+		return http.delete(`settings/coordinators/${id}`);
 	} catch (err) {
 		return Promise.resolve();
 	}
