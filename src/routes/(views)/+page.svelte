@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Chart1st from '$lib/Chart1st.svelte';
+	import Map from '../admin/map.svelte';
 
 	interface homeCard {
 		name: string;
@@ -23,7 +24,7 @@
 			icon: 'las la-user'
 		},
 		{
-			name: 'Locations',
+			name: 'Training Center',
 			count: 10,
 			icon: 'las la-map-marker'
 		}
@@ -66,9 +67,14 @@
 			</div>
 		{/each}
 	</div>
-	<div class="t-grid t-grid-cols-1 t-gap-4">
+	<div class="t-grid t-grid-cols-1 t-gap-4 t-mb-5">
 		<div class="t-bg-white t-rounded-md t-p-5">
 			<Chart1st />
+		</div>
+	</div>
+	<div class="t-grid t-grid-cols-1 t-gap-4">
+		<div class="t-bg-white t-rounded-md t-p-5">
+			<Map />
 		</div>
 	</div>
 </div>

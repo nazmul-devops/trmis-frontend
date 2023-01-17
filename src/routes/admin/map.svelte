@@ -24,7 +24,7 @@
 		if (browser) {
 			const leaflet = await import('leaflet');
 
-			map = leaflet.map(mapElement).setView([51.505, -0.09], 13);
+			map = leaflet.map(mapElement).setView([23.8103, 90.4125], 7);
 
 			leaflet
 				.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -35,17 +35,23 @@
 
 			setTimeout(() => {
 				markers = [
-					[51.5, -0.15],
-					[51.5, -0.17]
+					[23.9, 90.3],
+					[23.7103, 90.5125],
+					[23.73, 90.54],
+					[23.83, 90.64],
+					[23.93, 90.674],
+					[23.893, 90.714],
+					[23.673, 90.574],
+					[23.573, 90.84]
 				];
-			}, 2000);
+			}, 	0);
 
-			setTimeout(() => {
-				markers = [
-					[51.5, -0.13],
-					[51.5, -0.11]
-				];
-			}, 3000);
+			// setTimeout(() => {
+			// 	markers = [
+			// 		[51.5, -0.13],
+			// 		[51.5, -0.11]
+			// 	];
+			// }, 3000);
 		}
 	});
 
@@ -58,7 +64,7 @@
 </script>
 
 <main>
-	<div class="t-h-[500px] t-w-100" bind:this={mapElement} />
+	<div class="t-h-[70vh] t-w-100" bind:this={mapElement} />
 </main>
 
 <!-- <style>

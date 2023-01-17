@@ -4,24 +4,24 @@
 			class=" t-min-h-[30vh] t-grid lg:t-grid-cols-5 md:t-items-center md:t-justify-center md:t-grid-cols-2 sm:t-py-4 "
 		>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
-				<img src="/assets/usaid.png" alt="usaid" class="t-w-36 t-h-fit" />
+				<img src="/assets/usaid.png" alt="usaid" class="t-w-64 t-h-fit" />
 			</div>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
-				<img src="/assets/icddrb.png" alt="ntp" class="t-w-32 t-h-fit" />
+				<img src="/assets/jsi.png" alt="ntp" class="t-w-32 t-h-fit" />
 			</div>
 
 			<div class="t-grid lg:t-col-span-1 md:t-col-span-2 t-items-center t-justify-center">
-				<p class="t-text-2xl  t-text-amber-200 t-font-medium sm:t-py-3">Sponsord by</p>
+				<p class="t-text-4xl  t-text-amber-200 t-font-medium sm:t-py-3">Sponsored by</p>
 			</div>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
-				<img src="/assets/usaid.png" alt="usaid" class="t-w-36 t-h-fit" />
+				<img src="/assets/usaid.png" alt="usaid" class="t-w-64 t-h-fit" />
 			</div>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
-				<img src="/assets/icddrb.png" alt="ntp" class="t-w-32 t-h-fit" />
+				<img src="/assets/jsi.png" alt="ntp" class="t-w-32 t-h-fit" />
 			</div>
 		</div>
-		</div>
-		<div>
+	</div>
+	<div>
 		<div class="t-grid t-grid-cols-1 t-py-3 t-bg-[#2a5132]">
 			<div class="t-text-center">
 				<p class="t-text-amber-200">
