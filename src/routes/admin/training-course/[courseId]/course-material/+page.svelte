@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { courseMaterials } from '$lib/store/courseMaterial';
 	import {
 		DataTable,
 		Toolbar,
@@ -9,7 +9,6 @@
 		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
@@ -21,39 +20,43 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'name', value: 'Name' },
-		{ key: 'code', value: 'Code' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
-		{ key: 'email', value: 'Email' },
+		{ key: 'title', value: 'Title' },
+		{ key: 'description', value: 'Description' },
+		{ key: 'file', value: 'File' },
+		{ key: 'training_course_id', value: 'Course Name' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let coordinator;
+	let courseMaterial;
 
 	function openModalForm(row) {
 		open = true;
-		coordinator = row;
+		courseMaterial = row;
 	}
 
 	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
+		await courseMaterials.deleteCourseMaterial(courseMaterial.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		courseMaterials.getCourseMaterials();
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $courseMaterials.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$coordinators.data}>
+	<DataTable
+		size="short"
+		title="Course Materials"
+		description=""
+		{headers}
+		rows={$courseMaterials.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -74,7 +77,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coordinator = { ...row };
+							courseMaterial = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -86,5 +89,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
+<FormModal bind:open bind:courseMaterial />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

@@ -2,12 +2,7 @@
 	import { users } from '$lib/store/users';
 	import {
 		Modal,
-		ModalHeader,
-		ModalBody,
-		ModalFooter,
-		Checkbox,
 		TextInput,
-		Button,
 		PasswordInput
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
@@ -15,9 +10,9 @@
 	export let user = {
 		id: null,
 		username: null,
+		first_name: null,
+		last_name: null,
 		email: null,
-		firstname: null,
-		lastname: null,
 		password: null
 	};
 	onMount(async () => {
@@ -47,8 +42,8 @@
 >
 	<form>
 		<TextInput bind:value={user.email} labelText=" Email" placeholder="Enter  name..." />
-		<TextInput bind:value={user.firstname} labelText="First Name" placeholder="Enter  name..." />
-		<TextInput bind:value={user.lastname} labelText="Last Name" placeholder="Enter  name..." />
+		<TextInput bind:value={user.first_name} labelText="First Name" placeholder="Enter  name..." />
+		<TextInput bind:value={user.last_name} labelText="Last Name" placeholder="Enter  name..." />
 		<TextInput bind:value={user.username} labelText=" User Name" placeholder="Enter  name..." />
 		{#if user.id == null}
 			<PasswordInput

@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getUsers() {
 	try {
-		const { data } = await http.get('users');
+		const { data } = await http.get('users/');
 
 		return {
 			status: 200,
@@ -18,7 +18,7 @@ export async function getUsers() {
 
 export async function getUser(id) {
 	try {
-		const { data } = await http.get(`users/${id}`);
+		const { data } = await http.get(`users/${id}/`);
 		return {
 			status: 200,
 			data: data
@@ -33,7 +33,7 @@ export async function getUser(id) {
 
 export async function deleteUser(id: number) {
 	try {
-		return http.delete(`users/${id}`);
+		return http.delete(`users/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
@@ -41,7 +41,7 @@ export async function deleteUser(id: number) {
 
 export async function updateUser(payload) {
 	try {
-		const { data } = await http.put(`users/${payload.id}`, payload);
+		const { data } = await http.put(`users/${payload.id}/`, payload);
 		return {
 			status: 204,
 			data
@@ -55,7 +55,7 @@ export async function updateUser(payload) {
 
 export async function createUser(payload) {
 	try {
-		const { data } = await http.post(`users`, payload);
+		const { data } = await http.post(`users/`, payload);
 		return {
 			status: 201,
 			data

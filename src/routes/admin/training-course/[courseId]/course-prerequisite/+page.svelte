@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { coursePrerequisites } from '$lib/store/coursePrerequisite';
 	import {
 		DataTable,
 		Toolbar,
@@ -21,39 +21,41 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'name', value: 'Name' },
-		{ key: 'code', value: 'Code' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
-		{ key: 'email', value: 'Email' },
+		{ key: 'course_id', value: 'Course Name' },
+		{ key: 'prerequisite_course_id', value: 'Prerequisite' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let coordinator;
+	let coursePrerequisite;
 
 	function openModalForm(row) {
 		open = true;
-		coordinator = row;
+		coursePrerequisite = row;
 	}
 
 	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
+		await coursePrerequisites.deleteCoursePrerequisite(coursePrerequisite.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		coursePrerequisites.getCoursePrerequisites();
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $coursePrerequisites.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$coordinators.data}>
+	<DataTable
+		size="short"
+		title="Course Topic"
+		description=""
+		{headers}
+		rows={$coursePrerequisites.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -74,7 +76,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coordinator = { ...row };
+							coursePrerequisite = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -86,5 +88,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
+<FormModal bind:open bind:coursePrerequisite />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

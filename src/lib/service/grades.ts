@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getGrades() {
 	try {
-		const { data } = await http.get('grades');
+		const { data } = await http.get('settings/grades/');
 
 		return {
 			status: 200,
@@ -19,7 +19,7 @@ export async function getGrades() {
 export async function getGrade(id) {
 	console.log(id);
 	try {
-		const { data } = await http.get(`grades/${id}`);
+		const { data } = await http.get(`settings/grades/${id}/`);
 		return {
 			status: 200,
 			data: data
@@ -34,7 +34,7 @@ export async function getGrade(id) {
 
 export async function deleteGrade(id: number) {
 	try {
-		return http.delete(`grades/${id}`);
+		return http.delete(`settings/grades/${id}`);
 	} catch (err) {
 		return Promise.resolve();
 	}
@@ -42,7 +42,7 @@ export async function deleteGrade(id: number) {
 
 export async function updateGrade(payload) {
 	try {
-		const { data } = await http.put(`grades/${payload.id}`, payload);
+		const { data } = await http.put(`settings/grades/${payload.id}`, payload);
 		return {
 			status: 204,
 			data
@@ -56,7 +56,7 @@ export async function updateGrade(payload) {
 
 export async function createGrade(payload) {
 	try {
-		const { data } = await http.post(`grades`, payload);
+		const { data } = await http.post(`settings/grades/`, payload);
 		return {
 			status: 201,
 			data

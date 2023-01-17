@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { courseTopics } from '$lib/store/courseTopic';
 	import {
 		DataTable,
 		Toolbar,
@@ -21,39 +21,36 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'name', value: 'Name' },
-		{ key: 'code', value: 'Code' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
-		{ key: 'email', value: 'Email' },
+		{ key: 'title', value: 'Title' },
+		{ key: 'description', value: 'Description' },
+		{ key: 'training_course', value: 'Course Name' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let coordinator;
+	let courseTopic;
 
 	function openModalForm(row) {
 		open = true;
-		coordinator = row;
+		courseTopic = row;
 	}
 
 	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
+		await courseTopics.deleteCourseTopic(courseTopic.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		courseTopics.getCourseTopics();
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $courseTopics.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$coordinators.data}>
+	<DataTable size="short" title="Course Topic" description="" {headers} rows={$courseTopics.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -74,7 +71,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coordinator = { ...row };
+							courseTopic = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -86,5 +83,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
+<FormModal bind:open bind:courseTopic />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

@@ -20,9 +20,10 @@
 
 	let headers = [
 		{ key: 'id', value: 'ID' },
+		{ key: 'username', value: 'Email' },
+		{ key: 'first_name', value: 'FirstName' },
+		{ key: 'last_name', value: 'LasttName' },
 		{ key: 'email', value: 'Email' },
-        { key: 'firstname', value: 'FirstName' },
-        { key: 'lastname', value: 'LasttName' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -43,7 +44,7 @@
 
 	onMount(async () => {
 		users.getUsers();
-		console.log($users);
+		// console.log($users);
 	});
 </script>
 
