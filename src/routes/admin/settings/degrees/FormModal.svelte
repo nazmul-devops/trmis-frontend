@@ -1,61 +1,44 @@
 <script lang="ts">
+	import { createForm } from 'felte';
+	import { validator } from '@felte/validator-yup';
+	import * as yup from 'yup';
 	import { degrees } from '$lib/store/degrees';
-	import {
-		Modal,
-		ModalHeader,
-		ModalBody,
-		ModalFooter,
-		Checkbox,
-		TextInput,
-		Button,
-		PasswordInput
-	} from 'carbon-components-svelte';
+	import { TextInput, Button } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+
+	const schema = yup.object({
+		name: yup.string().required()
+	});
 
 	export let degree = {
 		id: null,
 		name: null
 	};
-	onMount(async () => {
-		degrees.getDegrees();
+
+	$: {
+		setFields('name', degree.name);
+	}
+
+	const { form, reset, setFields } = createForm({
+		extend: validator({ schema }),
+		async onSubmit(value) {
+			if (degree.id) {
+				await degrees.updateDegree({ ...value, id: degree.id });
+			} else {
+				await degrees.createDegree({ ...value });
+			}
+			reset();
+		}
 	});
 
-	// export let open = true;
-
-	function resetForm() {
-		degree.id = null;
-		degree.name = null;
-	}
-
-	async function onSubmit(event) {
-		if (degree.id) {
-			await degrees.updateDegree({ ...degree });
-		} else {
-			await degrees.createDegree({ ...degree });
-		}
-		// open = false;
-
-		// event.target.reset();
-		resetForm();
-	}
+	onMount(async () => {
+		await degrees.getDegrees();
+	});
 </script>
 
-<!-- <Modal
-	bind:open
-	modalHeading="Create database"
-	primaryButtonText={degree.id == null ? 'Create' : 'Edit'}
-	secondaryButtonText="Cancel"
-	on:click:button--secondary={() => (open = false)}
-	on:submit={onSubmit}
->
-	<form>
-		<TextInput bind:value={degree.name} labelText=" Email" placeholder="Enter  name..." />
-	</form>
-	</Modal> -->
-
 <div>
-	<form on:submit|preventDefault={onSubmit}>
-		<TextInput bind:value={degree.name} labelText=" name" placeholder="Enter  name..." />
+	<form use:form>
+		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
 		<Button type="submit">submit</Button>
 	</form>
 </div>

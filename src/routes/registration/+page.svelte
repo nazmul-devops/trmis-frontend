@@ -55,7 +55,7 @@
 			invalid={$errors.password}
 			bind:invalidText={$errors.password}
 		/>
-		<Button type="submit">Submit</Button>
+		<Button class="" type="submit">Submit</Button>
 		{#if message}
 			<p class=" t-text-red-600 ">{message}</p>
 		{/if}
