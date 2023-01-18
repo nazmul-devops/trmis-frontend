@@ -1,7 +1,6 @@
 <script>
 	import { httpWeb } from '$lib/service/auth';
 	import PageTitle from '$lib/PageTitle.svelte';
-	import axios from 'axios';
 	import { onMount } from 'svelte';
 	import TrainingCard from './TrainingCard.svelte';
 

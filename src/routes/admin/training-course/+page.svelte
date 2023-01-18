@@ -53,18 +53,11 @@
 {#if $trainingCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$trainingCourses.data}>
+	<DataTable size="short" title="Training Courses" description="" {headers} rows={$trainingCourses.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<ToolbarMenu>
-					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
-					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"
-						>API documentation</ToolbarMenuItem
-					>
-					<ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
-				</ToolbarMenu>
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add trainer</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Course</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>

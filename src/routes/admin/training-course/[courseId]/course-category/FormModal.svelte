@@ -5,7 +5,6 @@
 	import { courseCategories } from '$lib/store/courseCategory';
 	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { updateCourseCategory } from '$lib/service/courseCategory';
 
 	export let open = true;
 	export let courseCategory = {
@@ -47,7 +46,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create database"
+	modalHeading="Create Course Category"
 	primaryButtonText={courseCategory.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

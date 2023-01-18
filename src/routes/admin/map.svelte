@@ -44,7 +44,7 @@
 					[23.673, 90.574],
 					[23.573, 90.84]
 				];
-			}, 	0);
+			}, 0);
 
 			// setTimeout(() => {
 			// 	markers = [
@@ -64,7 +64,7 @@
 </script>
 
 <main>
-	<div class="t-h-[70vh] t-w-100" bind:this={mapElement} />
+	<div class="t-h-[70vh] t-z-10 t-w-100" bind:this={mapElement} />
 </main>
 
 <!-- <style>

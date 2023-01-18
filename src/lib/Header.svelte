@@ -65,7 +65,7 @@
 						class=" t-flex
 				 t-items-center  "
 					>
-						<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-h-fit t-py-4" />
+						<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-py-4" />
 						<h1 class="t-text-3xl t-px-2 t-font-bold t-text-[#22c55e]">TrMIS</h1>
 					</div>
 				</a>
@@ -113,10 +113,10 @@
 </header>
 
 <style>
-	.active a{
+	.active a {
 		color: rgb(13, 145, 30) !important;
 	}
-	li a:hover{
+	li a:hover {
 		color: rgb(13, 145, 30) !important;
 	}
 </style>
