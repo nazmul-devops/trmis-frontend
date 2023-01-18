@@ -15,7 +15,7 @@
 		},
 		{
 			name: 'Trainings',
-			count: 202,
+			count: 22,
 			icon: 'las la-book-reader'
 		},
 		{
