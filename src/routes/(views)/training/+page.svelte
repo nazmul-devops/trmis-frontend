@@ -1,4 +1,5 @@
 <script>
+	import { httpWeb } from '$lib/service/auth';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import axios from 'axios';
 	import { onMount } from 'svelte';
@@ -7,7 +8,11 @@
 	let trainingData = [];
 
 	async function getCourse() {
-		let { data } = await axios.get('http://localhost:3000/courses');
+		let {
+			data: { data }
+		} = await httpWeb.get('mock/courses');
+		console.log(data);
+
 		trainingData = data;
 	}
 
