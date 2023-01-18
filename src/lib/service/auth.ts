@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const httpWeb = axios.create({ baseURL: 'http://3.137.0.157:8000/api/' });
+
 export const http = axios.create({ baseURL: 'http://3.137.0.157:8000/api/' });
 
 http.interceptors.response.use(
@@ -53,7 +55,7 @@ export function logout() {
 export async function refresh() {
 	const _refresh = localStorage.getItem('refreshToken');
 	try {
-		const resp = await axios.post('http://3.137.0.157:8000/api/token/refresh/', {
+		const resp = await axios.post('http://127.0.0.1:8000/api/token/refresh/', {
 			refresh: _refresh
 		});
 		return resp;
@@ -68,7 +70,7 @@ export async function login(username, password) {
 	try {
 		const {
 			data: { access, user, refresh }
-		} = await axios.post('http://3.137.0.157:8000/api/token/', { username, password });
+		} = await axios.post('http://127.0.0.1:8000/api/token/', { username, password });
 		localStorage.setItem('accessToken', access);
 		localStorage.setItem('refreshToken', refresh);
 

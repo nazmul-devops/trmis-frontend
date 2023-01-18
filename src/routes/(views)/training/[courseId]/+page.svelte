@@ -1,4 +1,5 @@
 <script>
+	import { httpWeb } from '$lib/service/auth';
 	import { page } from '$app/stores';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import axios from 'axios';
@@ -7,9 +8,9 @@
 	let batchesByYear = [];
 
 	async function getCourseDetails(courseId) {
-		let { data } = await axios.get(
-			`http://localhost:3000/pageTrainingDetails/${courseId}?_expand=course`
-		);
+		let {
+			data: { data }
+		} = await httpWeb.get(`mock/training-details`);
 		console.log(data);
 		title = data.course.name;
 		batchesByYear = data.batchesByYear;

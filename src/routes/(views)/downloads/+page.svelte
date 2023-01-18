@@ -1,4 +1,5 @@
 <script>
+	import { httpWeb } from '$lib/service/auth';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import axios from 'axios';
 	import { Course } from 'carbon-icons-svelte';
@@ -10,13 +11,17 @@
 	let dropdown = false;
 
 	async function getcourses() {
-		let { data } = await axios.get('http://localhost:3000/courses');
+		let {
+			data: { data }
+		} = await httpWeb.get('mock/courses');
 		courses = data;
 		getCourseMaterials(1);
 	}
 
-	async function getCourseMaterials(courseId) {
-		let { data } = await axios.get(`http://localhost:3000/courseMaterials?courseId=${courseId}`);
+	async function getCourseMaterials(id = 1) {
+		let {
+			data: { data }
+		} = await httpWeb.get(`mock/course-materials`);
 		courseMaterials = data;
 	}
 
@@ -48,7 +53,9 @@
 					}`}
 				>
 					<div class="t-rounded-md t-bg-white ">
-						<ul class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}>
+						<ul
+							class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}
+						>
 							{#each courses as course}
 								<div on:click={() => (dropdown = false)}>
 									<li
