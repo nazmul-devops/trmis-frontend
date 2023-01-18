@@ -12,7 +12,8 @@
 		id: null,
 		title: null,
 		description: null,
-		training_course: null
+		training_course: null,
+		training_course_name: null
 	};
 
 	$: {
@@ -51,7 +52,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create database"
+	modalHeading="Create Course Topic"
 	primaryButtonText={courseTopic.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -60,7 +61,7 @@
 	<form use:form>
 		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
-		<Select name="training_course" labelText="Course Category">
+		<Select name="training_course" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}
 				<SelectItem value={course.id} text={course.title} />

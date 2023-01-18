@@ -55,7 +55,7 @@ export function logout() {
 export async function refresh() {
 	const _refresh = localStorage.getItem('refreshToken');
 	try {
-		const resp = await axios.post('https://trmisapi.inneedcloud.com/api/token/', {
+		const resp = await axios.post('https://trmisapi.inneedcloud.com/api/token-refresh/', {
 			refresh: _refresh
 		});
 		return resp;
