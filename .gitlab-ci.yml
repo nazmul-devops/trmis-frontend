@@ -1,0 +1,32 @@
+image: python:3.8
+
+stages:
+  - build
+
+default:
+  before_script:
+    # - npm install --global yarn
+    - apt-get install curl
+    - curl -sL https://deb.nodesource.com/setup_16.x | bash -
+    - apt-get install nodejs
+    - pip3 install awscli
+    - npm install
+
+build-and-deploy:
+  only:
+    - stage
+  stage: build
+  cache:
+    key:
+      files:
+        - npm.lock
+    paths:
+      - node_modules
+  script:
+    - echo AWS_REGION="$AWS_REGION_DEV">>.env
+    - npm run build
+
+    - aws s3 cp ./build s3://"$TrMIS_WEBAPP_DEV"/ --recursive --region "$AWS_REGION_DEV"
+    - aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT_DISTRIBUTION_ID_DEV" --paths "/*"
+
+
