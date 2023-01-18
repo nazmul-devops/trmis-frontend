@@ -23,10 +23,10 @@ build-and-deploy:
     paths:
       - node_modules
   script:
-    - echo AWS_REGION="$AWS_REGION_DEV">>.env
+ #   - echo AWS_REGION="$AWS_REGION_DEV">>.env
     - npm run build
 
-    - aws s3 cp ./build s3://$TrMIS_WEBAPP_DEV --recursive
+    - aws s3 cp ./build s3://$TrMIS_WEBAPP_DEV/ --recursive
     - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID_DEV --paths "/*"
 
 
