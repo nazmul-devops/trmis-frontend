@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
@@ -33,7 +33,7 @@
 		code: yup.string().required(),
 		pass_mark: yup.number().required(),
 		objective: yup.string().required(),
-		course_category: yup.number().required()
+		course_category: yup.string()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
@@ -62,54 +62,23 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Course"
+	modalHeading="Create database"
 	primaryButtonText={trainingCourse.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.title != null}
-			name="title"
-			labelText="title"
-			placeholder="Enter  Title..."
-		/>
-		<TextInput
-			invalid={$errors.description != null}
-			name="description"
-			labelText="Description"
-			placeholder="Enter  description..."
-		/>
-		<TextInput
-			invalid={$errors.code != null}
-			name="code"
-			labelText="Code"
-			placeholder="Enter  Code..."
-		/>
-		<NumberInput
-			invalid={$errors.pass_mark != null}
-			name="pass_mark"
-			label="Pass Mark"
-			placeholder="Enter  pass_mark..."
-		/>
-		<TextInput
-			invalid={$errors.objective != null}
-			name="objective"
-			labelText="Objective"
-			placeholder="Enter  objective..."
-		/>
-		<Select
-			invalid={$errors.course_category != null}
-			name="course_category"
-			labelText="Course Category"
-		>
+		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
+		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
+		<TextInput name="code" labelText="Code" placeholder="Enter  Code..." />
+		<NumberInput name="pass_mark" label="Pass Mark" placeholder="Enter  pass_mark..." />
+		<TextInput name="objective" labelText="Objective" placeholder="Enter  objective..." />
+		<Select name="course_category" labelText="Course Category">
 			<SelectItem text="choose Course Category" />
 			{#each $courseCategories.data as category}
 				<SelectItem value={category.id} text={category.title} />
 			{/each}
 		</Select>
-
-		{JSON.stringify($errors)}
 	</form>
-</Modal>
+</Modal> -->
