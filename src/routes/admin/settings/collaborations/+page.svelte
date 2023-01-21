@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { grades } from '$lib/store/grades';
+	import { collaborations } from '$lib/store/collaboration';
 	import {
 		DataTable,
 		Toolbar,
@@ -22,7 +22,6 @@
 	let headers = [
 		{ key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'serial_no', value: 'Serial_No' },
 		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -30,32 +29,37 @@
 	let open = false;
 	let deleteModal = false;
 
-	let grade;
+	let collaboration;
 
 	function openModalForm(row) {
 		open = true;
-		grade = row;
+		collaboration = row;
 	}
 
 	async function doDelete() {
-		await grades.deleteGrade(grade.id);
+		await collaborations.deleteCollaboration(collaboration.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		grades.getGrades();
-		console.log($grades);
+		collaborations.getCollaborations();
 	});
 </script>
 
-{#if $grades.loading}
+{#if $collaborations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Grades" description="" {headers} rows={$grades.data}>
+	<DataTable
+		size="short"
+		title="Collaboration"
+		description=""
+		{headers}
+		rows={$collaborations.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add grade</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Collaboration</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -65,7 +69,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							grade = { ...row };
+							collaboration = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -77,5 +81,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:grade />
+<FormModal bind:open bind:collaboration />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

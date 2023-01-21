@@ -23,7 +23,7 @@
 		{ key: 'id', value: 'ID' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'description', value: 'Description' },
-		{ key: 'training_course', value: 'Course Name' },
+		{ key: 'training_course_name', value: 'Course Name' },
 		{ key: 'action', value: 'Action' }
 	];
 

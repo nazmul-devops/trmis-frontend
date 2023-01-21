@@ -46,7 +46,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create database"
+	modalHeading="Create Designations"
 	primaryButtonText={designation.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

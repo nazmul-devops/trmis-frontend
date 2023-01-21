@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { grades } from '$lib/store/grades';
 	import {
 		DataTable,
 		Toolbar,
@@ -17,45 +16,44 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { districts } from '$lib/store/district';
+	import { subDistricts } from '$lib/store/sub-district';
 
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'serial_no', value: 'Serial_No' },
-		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let grade;
+	let subDistrict;
 
 	function openModalForm(row) {
 		open = true;
-		grade = row;
+		subDistrict = row;
 	}
 
 	async function doDelete() {
-		await grades.deleteGrade(grade.id);
+		await subDistricts.deleteSubDistrict(subDistrict.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		grades.getGrades();
-		console.log($grades);
+		subDistricts.getSubDistricts();
 	});
 </script>
 
-{#if $grades.loading}
+{#if $subDistricts.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Grades" description="" {headers} rows={$grades.data}>
+	<DataTable size="short" title="Sub-district" description="" {headers} rows={$subDistricts.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add grade</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Sub-district</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -65,7 +63,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							grade = { ...row };
+							subDistrict = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -77,5 +75,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:grade />
+<FormModal bind:open bind:subDistrict />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

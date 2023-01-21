@@ -2,12 +2,12 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { grades } from '$lib/store/grades';
+	import { organizations } from '$lib/store/organization';
 	import { Modal, NumberInput, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
-	export let grade = {
+	export let organization = {
 		id: null,
 		name: null,
 		serial_no: null,
@@ -15,10 +15,9 @@
 	};
 
 	$: {
-		setFields('name', grade.name);
-		setFields('serial_no', grade.serial_no);
-		setFields('remarks', grade.remarks);
-		
+		setFields('name', organization.name);
+		setFields('serial_no', organization.serial_no);
+		setFields('remarks', organization.remarks	);
 	}
 
 	const schema = yup.object({
@@ -33,10 +32,10 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			if (grade.id) {
-				await grades.updateGrade({ ...data, id: grade.id });
+			if (organization.id) {
+				await organizations.updateOrganization({ ...data, id: organization.id });
 			} else {
-				await grades.createGrade({ ...data });
+				await organizations.createOrganization({ ...data });
 			}
 			open = false;
 			reset();
@@ -44,21 +43,21 @@
 	});
 
 	onMount(async () => {
-		grades.getGrades();
+		organizations.getOrganizations();
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading="Create Grades"
-	primaryButtonText={grade.id == null ? 'Create' : 'Edit'}
+	modalHeading="Create Organizations"
+	primaryButtonText={organization.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<NumberInput name="serial_no" label="Serial_No" placeholder="Enter  Serial_No..." />
-		<TextInput name="remarks" labelText="Remarks" placeholder="Enter  Remarks..." />
+		<NumberInput name="serial_no" label="Serial_No" placeholder="Enter  serial_no..." />
+		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
 	</form>
 </Modal>

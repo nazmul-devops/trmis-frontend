@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getCoursePrerequisites() {
 	try {
-		const { data } = await http.get('training_course/course-prerequisite/');
+		const { data } = await http.get('training-course/course-prerequisite/');
 		return {
 			status: 200,
 			data
@@ -17,7 +17,7 @@ export async function getCoursePrerequisites() {
 
 export async function getCoursePrerequisite(id) {
 	try {
-		const { data } = await http.get(`training_course/course-prerequisite/${id}/`);
+		const { data } = await http.get(`training-course/course-prerequisite/${id}/`);
 		return {
 			status: 200,
 			data
@@ -31,7 +31,7 @@ export async function getCoursePrerequisite(id) {
 
 export async function updateCoursePrerequisite(payload) {
 	try {
-		const { data } = await http.put(`training_course/course-prerequisite/${payload.id}`, payload);
+		const { data } = await http.put(`training-course/course-prerequisite/${payload.id}/`, payload);
 		return {
 			status: 200,
 			data
@@ -45,7 +45,7 @@ export async function updateCoursePrerequisite(payload) {
 
 export async function createCoursePrerequisite(payload) {
 	try {
-		const { data } = await http.post(`training_course/course-prerequisite/`, payload);
+		const { data } = await http.post(`training-course/course-prerequisite/`, payload);
 		return {
 			status: 200,
 			data
@@ -59,7 +59,7 @@ export async function createCoursePrerequisite(payload) {
 
 export async function deleteCoursePrerequisite(id) {
 	try {
-		const { data } = await http.delete(`training_course/course-prerequisite/${id}`);
+		const { data } = await http.delete(`training-course/course-prerequisite/${id}`);
 		return {
 			status: 200,
 			data
