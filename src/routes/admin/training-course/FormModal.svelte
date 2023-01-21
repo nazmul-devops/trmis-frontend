@@ -33,7 +33,7 @@
 		code: yup.string().required(),
 		pass_mark: yup.number().required(),
 		objective: yup.string().required(),
-		course_category: yup.number().required()
+		course_category: yup.string()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({

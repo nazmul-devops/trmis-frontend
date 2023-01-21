@@ -51,7 +51,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Course Topic"
+		title="Course Prerequisite"
 		description=""
 		{headers}
 		rows={$coursePrerequisites.data}
@@ -59,14 +59,7 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<ToolbarMenu>
-					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
-					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"
-						>API documentation</ToolbarMenuItem
-					>
-					<ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
-				</ToolbarMenu>
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add trainer</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Prerequisite</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>

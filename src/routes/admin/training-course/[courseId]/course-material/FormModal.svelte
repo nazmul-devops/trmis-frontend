@@ -64,7 +64,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create database"
+	modalHeading="Create Course Material"
 	primaryButtonText={courseMaterial.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -83,7 +83,7 @@
 		<!-- <Button kind="tertiary" disabled={!files.length} on:click={fileUploader.clearFiles}>
 			Clear (programmatic)
 		</Button> -->
-		<Select name="training_course_id" labelText="Course Category" type="nu">
+		<Select name="training_course_id" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}
 				<SelectItem value={course.id} text={course.title} />
