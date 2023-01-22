@@ -61,7 +61,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create database"
+	modalHeading="Create Course Prerequisite"
 	primaryButtonText={coursePrerequisite.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -77,7 +77,7 @@
 	<!-- {JSON.stringify(courseIds)} -->
 	<Select
 		selected={courseId}
-		labelText="Course Course"
+		labelText="Course"
 		on:change={(e) => setFields('course_id', e.detail)}
 	>
 		<SelectItem text="choose Course" />

@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getCourseMaterials() {
 	try {
-		const { data } = await http.get('training_course/course_material');
+		const { data } = await http.get('training-course/course-material/');
 		return {
 			status: 200,
 			data
@@ -17,7 +17,7 @@ export async function getCourseMaterials() {
 
 export async function getCourseMaterial(id) {
 	try {
-		const { data } = await http.get(`training_course/course_material/${id}/`);
+		const { data } = await http.get(`training-course/course-material/${id}/`);
 		return {
 			status: 200,
 			data
@@ -31,7 +31,7 @@ export async function getCourseMaterial(id) {
 
 export async function updateCourseMaterial(payload) {
 	try {
-		const { data } = await http.put(`training_course/course_material/${payload.id}`, payload);
+		const { data } = await http.put(`training-course/course-material/${payload.id}/`, payload);
 		return {
 			status: 200,
 			data
@@ -45,7 +45,7 @@ export async function updateCourseMaterial(payload) {
 
 export async function createCourseMaterial(payload) {
 	try {
-		const { data } = await http.post(`training_course/course_material`, payload);
+		const { data } = await http.post(`training-course/course-material/`, payload);
 		return {
 			status: 200,
 			data
@@ -59,7 +59,7 @@ export async function createCourseMaterial(payload) {
 
 export async function deleteCourseMaterial(id: number) {
 	try {
-		return http.delete(`training_course/course_material/${id}`);
+		return http.delete(`training-course/course-material/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
