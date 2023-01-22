@@ -33,7 +33,7 @@ export async function getDivision(id) {
 
 export async function deleteDivision(id: number) {
 	try {
-		return http.delete(`location/division/${id}`);
+		return http.delete(`location/division/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}

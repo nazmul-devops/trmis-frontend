@@ -2,12 +2,12 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { grades } from '$lib/store/grades';
+	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { Modal, NumberInput, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
-	export let grade = {
+	export let sourceOfFound = {
 		id: null,
 		name: null,
 		serial_no: null,
@@ -15,10 +15,9 @@
 	};
 
 	$: {
-		setFields('name', grade.name);
-		setFields('serial_no', grade.serial_no);
-		setFields('remarks', grade.remarks);
-		
+		setFields('name', sourceOfFound.name);
+		setFields('serial_no', sourceOfFound.serial_no);
+		setFields('remarks', sourceOfFound.remarks	);
 	}
 
 	const schema = yup.object({
@@ -33,10 +32,10 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			if (grade.id) {
-				await grades.updateGrade({ ...data, id: grade.id });
+			if (sourceOfFound.id) {
+				await sourceOfFounds.updateSourceOfFund({ ...data, id: sourceOfFound.id });
 			} else {
-				await grades.createGrade({ ...data });
+				await sourceOfFounds.createSourceOfFund({ ...data });
 			}
 			open = false;
 			reset();
@@ -44,21 +43,21 @@
 	});
 
 	onMount(async () => {
-		grades.getGrades();
+		sourceOfFounds.getSourceOfFounds();
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading="Create Grades"
-	primaryButtonText={grade.id == null ? 'Create' : 'Edit'}
+	modalHeading="Create Source Of Fund"
+	primaryButtonText={sourceOfFound.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<NumberInput name="serial_no" label="Serial_No" placeholder="Enter  Serial_No..." />
-		<TextInput name="remarks" labelText="Remarks" placeholder="Enter  Remarks..." />
+		<NumberInput name="serial_no" label="Serial_No" placeholder="Enter  serial_no..." />
+		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
 	</form>
 </Modal>

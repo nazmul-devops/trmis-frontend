@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { grades } from '$lib/store/grades';
+	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import {
 		DataTable,
 		Toolbar,
@@ -22,7 +22,6 @@
 	let headers = [
 		{ key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'serial_no', value: 'Serial_No' },
 		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -30,32 +29,37 @@
 	let open = false;
 	let deleteModal = false;
 
-	let grade;
+	let sourceOfFound;
 
 	function openModalForm(row) {
 		open = true;
-		grade = row;
+		sourceOfFound = row;
 	}
 
 	async function doDelete() {
-		await grades.deleteGrade(grade.id);
+		await sourceOfFounds.deleteSourceOfFund(sourceOfFound.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		grades.getGrades();
-		console.log($grades);
+		sourceOfFounds.getSourceOfFounds();
 	});
 </script>
 
-{#if $grades.loading}
+{#if $sourceOfFounds.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Grades" description="" {headers} rows={$grades.data}>
+	<DataTable
+		size="short"
+		title="Source Of Fund"
+		description=""
+		{headers}
+		rows={$sourceOfFounds.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add grade</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Source Of fund</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -65,7 +69,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							grade = { ...row };
+							sourceOfFound = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -77,5 +81,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:grade />
+<FormModal bind:open bind:sourceOfFound />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

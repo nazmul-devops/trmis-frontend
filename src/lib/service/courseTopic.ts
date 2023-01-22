@@ -31,7 +31,7 @@ export async function getCourseTopic(id) {
 
 export async function updateCourseTopic(payload) {
 	try {
-		const { data } = await http.put(`training-course/course-topic/${payload.id}`, payload);
+		const { data } = await http.put(`training-course/course-topic/${payload.id}				`, payload);
 		return {
 			status: 200,
 			data

@@ -59,26 +59,61 @@
 			<SideNavLink>
 				<a href="/admin">DashBoard</a>
 			</SideNavLink>
-			<SideNavLink>
-				<a href="/admin/trainers">Traininers</a>
-			</SideNavLink>
-			<SideNavLink>
-				<a href="/admin/courses">Courses</a>
-			</SideNavLink>
-			<SideNavLink>
-				<a href="/admin/training-calendar">Training Calender</a>
-			</SideNavLink>
-			<SideNavLink>
-				<a href="menu2">Menu 2</a>
-			</SideNavLink>
-			<SideNavMenu text="Menu 3">
+			<SideNavDivider />
+			<SideNavMenu text="Training Courses">
 				<SideNavLink>
-					<a href="submenu1">Submenu 1</a>
+					<a href="/admin/training-course">Courses</a>
 				</SideNavLink>
 				<SideNavLink>
-					<a href="submenu2">Submenu 2</a>
+					<a href="/admin/training-course/1/course-category">Course Category</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/training-course/1/course-material">Course Material</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/training-course/1/course-topic">Course Topic</a>
 				</SideNavLink>
 			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavMenu text="Locations">
+				<SideNavLink>
+					<a href="/admin/locations/division">Division</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/locations/district">District</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/locations/sub-district">Sub District</a>
+				</SideNavLink>
+			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavMenu text="Settings">
+				<SideNavLink>
+					<a href="/admin/settings/collaborations">Collaborations</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/settings/designations">Designations</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/settings/grades">Grades</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/settings/organizations">Organization</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/settings/source-of-funds">Source Of Fund</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/settings/training-coordinators">Training Coordinator</a>
+				</SideNavLink>
+			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/users">Users</a>
+			</SideNavLink>
 			<SideNavDivider />
 		</SideNavItems>
 	</SideNav>

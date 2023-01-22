@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { users } from '$lib/store/users';
-	import {
-		Modal,
-		TextInput,
-		PasswordInput
-	} from 'carbon-components-svelte';
+	import { Modal, TextInput, PasswordInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let user = {
@@ -15,9 +11,6 @@
 		email: null,
 		password: null
 	};
-	onMount(async () => {
-		users.getUsers();
-	});
 
 	export let open = true;
 
@@ -30,6 +23,9 @@
 		}
 		open = false;
 	}
+	onMount(async () => {
+		users.getUsers();
+	});
 </script>
 
 <Modal
@@ -53,7 +49,7 @@
 			/>
 		{/if}
 	</form>
-	</Modal>
+</Modal>
 
 <!-- <div>
 	<form on:submit={onSubmit}>

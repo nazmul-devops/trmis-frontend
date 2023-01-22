@@ -31,7 +31,7 @@ export async function getCoursePrerequisite(id) {
 
 export async function updateCoursePrerequisite(payload) {
 	try {
-		const { data } = await http.put(`training-course/course-prerequisite/${payload.id}`, payload);
+		const { data } = await http.put(`training-course/course-prerequisite/${payload.id}/`, payload);
 		return {
 			status: 200,
 			data

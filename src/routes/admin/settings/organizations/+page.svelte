@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { organizations } from '$lib/store/organization';
 	import {
 		DataTable,
 		Toolbar,
@@ -22,49 +22,44 @@
 	let headers = [
 		{ key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'code', value: 'Code' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
-		{ key: 'email', value: 'Email' },
+		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let coordinator;
+	let organization;
 
 	function openModalForm(row) {
 		open = true;
-		coordinator = row;
+		organization = row;
 	}
 
 	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
+		await organizations.deleteOrganization(organization.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		organizations.getOrganizations();
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $organizations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$coordinators.data}>
+	<DataTable
+		size="short"
+		title="Organization"
+		description=""
+		{headers}
+		rows={$organizations.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<ToolbarMenu>
-					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
-					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"
-						>API documentation</ToolbarMenuItem
-					>
-					<ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
-				</ToolbarMenu>
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add trainer</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -74,7 +69,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coordinator = { ...row };
+							organization = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -86,5 +81,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
+<FormModal bind:open bind:organization />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

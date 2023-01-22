@@ -20,7 +20,7 @@
 
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'username', value: 'Email' },
+		{ key: 'username', value: 'Username' },
 		{ key: 'first_name', value: 'FirstName' },
 		{ key: 'last_name', value: 'LasttName' },
 		{ key: 'email', value: 'Email' },
@@ -44,25 +44,18 @@
 
 	onMount(async () => {
 		users.getUsers();
-		// console.log($users);
+		console.log($users);
 	});
 </script>
 
 {#if $users.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Degrees" description="" {headers} rows={$users.data}>
+	<DataTable size="short" title="Users" description="" {headers} rows={$users.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch />
-				<ToolbarMenu>
-					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
-					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"
-						>API documentation</ToolbarMenuItem
-					>
-					<ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
-				</ToolbarMenu>
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add trainer</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add User</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>

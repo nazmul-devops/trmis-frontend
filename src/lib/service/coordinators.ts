@@ -31,7 +31,7 @@ export async function getCoordinator(id) {
 
 export async function updateCoordinator(payload) {
 	try {
-		const { data } = await http.put(`settings/coordinators/${payload.id}`, payload);
+		const { data } = await http.put(`settings/coordinators/${payload.id}/`, payload);
 		return {
 			status: 200,
 			data
@@ -59,7 +59,7 @@ export async function createCoordinator(payload) {
 
 export async function deleteCoordinator(id: number) {
 	try {
-		return http.delete(`settings/coordinators/${id}`);
+		return http.delete(`settings/coordinators/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
