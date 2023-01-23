@@ -21,14 +21,14 @@
 		id: null,
 		title: null,
 		description: null,
-		file: null,
+		uploaded_files: null,
 		training_course_id: null
 	};
 
 	$: {
 		setFields('title', courseMaterial.title);
 		setFields('description', courseMaterial.description);
-		setFields('file', courseMaterial.file);
+		setFields('uploaded_files', courseMaterial.uploaded_files);
 		setFields('training_course_id', courseMaterial.training_course_id);
 		console.log(courseMaterial);
 	}
@@ -36,16 +36,24 @@
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		// file: yup.string(),
+		uploaded_files: yup.string(),
 		training_course_id: yup.string().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+		// transform: (values: any) => {
+		// 	return {
+		// 		...values,
+		// 		uploaded_files: js(values.marital_status)
+		// 	};
+		// },
 		extend: validator({ schema })
 	});
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
+			console.log(data);
+			return;
 			if (courseMaterial.id) {
 				await courseMaterials.updateCourseMaterial({ ...data, id: courseMaterial.id });
 			} else {
@@ -75,7 +83,7 @@
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
 		<FileUploader
 			multiple
-			name="file"
+			name="uploaded_files"
 			labelTitle="Upload files"
 			buttonLabel="Add files"
 			status="complete"
@@ -89,6 +97,6 @@
 				<SelectItem value={course.id} text={course.title} />
 			{/each}
 		</Select>
-		<!-- {JSON.stringify($errors)} -->
+		{JSON.stringify($errors)}
 	</form>
 </Modal>

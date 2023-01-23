@@ -6,7 +6,7 @@ export async function getTrainees() {
 
 		return {
 			status: 200,
-			data
+			data: data.map((item, index) => ({ ...item, id: index }))
 		};
 	} catch (err) {
 		return Promise.resolve({
@@ -17,7 +17,6 @@ export async function getTrainees() {
 }
 
 export async function getTrainee(id) {
-	console.log(id);
 	try {
 		const { data } = await http.get(`trainee/${id}/`);
 		return {
@@ -34,7 +33,7 @@ export async function getTrainee(id) {
 
 export async function deleteTrainee(id: number) {
 	try {
-		return http.delete(`trainee/${id}`);
+		return http.delete(`trainee/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
@@ -42,7 +41,7 @@ export async function deleteTrainee(id: number) {
 
 export async function updateTrainee(payload) {
 	try {
-		const { data } = await http.put(`trainee/${payload.id}`, payload);
+		const { data } = await http.put(`trainee/${payload.phone}/`, payload);
 		return {
 			status: 204,
 			data
