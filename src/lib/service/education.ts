@@ -1,12 +1,12 @@
 import { http } from '$lib/service/auth';
 
-export async function getTrainees() {
+export async function getEducations() {
 	try {
-		const { data } = await http.get('trainee/');
+		const { data } = await http.get('trainee/education-detail/');
 
 		return {
 			status: 200,
-			data: data.map((item, index) => ({ ...item, id: index }))
+			data
 		};
 	} catch (err) {
 		return Promise.resolve({
@@ -16,9 +16,9 @@ export async function getTrainees() {
 	}
 }
 
-export async function getTrainee(id) {
+export async function getEducation(id) {
 	try {
-		const { data } = await http.get(`trainee/${id}/`);
+		const { data } = await http.get(`trainee/education-detail/${id}/`);
 		return {
 			status: 200,
 			data: data
@@ -31,17 +31,17 @@ export async function getTrainee(id) {
 	}
 }
 
-export async function deleteTrainee(id: number) {
+export async function deleteEducation(id: number) {
 	try {
-		return http.delete(`trainee/${id}/`);
+		return http.delete(`trainee/education-detail/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
 }
 
-export async function updateTrainee(payload) {
+export async function updateEducation(payload) {
 	try {
-		const { data } = await http.put(`trainee/${payload.phone}/`, payload);
+		const { data } = await http.put(`trainee/education-detail/${payload.id}/`, payload);
 		return {
 			status: 204,
 			data
@@ -53,9 +53,9 @@ export async function updateTrainee(payload) {
 	}
 }
 
-export async function createTrainee(payload) {
+export async function createEducation(payload) {
 	try {
-		const { data } = await http.post(`trainee/`, payload);
+		const { data } = await http.post(`trainee/education-detail/`, payload);
 		return {
 			status: 201,
 			data

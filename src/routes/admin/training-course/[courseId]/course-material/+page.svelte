@@ -22,7 +22,7 @@
 		{ key: 'id', value: 'ID' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'description', value: 'Description' },
-		{ key: 'file', value: 'File' },
+		{ key: 'uploaded_files', value: 'File' },
 		{ key: 'training_course_id', value: 'Course Name' },
 		{ key: 'action', value: 'Action' }
 	];

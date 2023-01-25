@@ -60,6 +60,10 @@
 				<a href="/admin">DashBoard</a>
 			</SideNavLink>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/trainee">Trainee</a>
+			</SideNavLink>
+			<SideNavDivider />
 			<SideNavMenu text="Training Courses">
 				<SideNavLink>
 					<a href="/admin/training-course">Courses</a>

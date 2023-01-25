@@ -2,7 +2,9 @@ import { http } from '$lib/service/auth';
 
 export async function getUsers() {
 	try {
-		const { data } = await http.get('users/');
+		const {
+			data: { data }
+		} = await http.get('users/');
 
 		return {
 			status: 200,

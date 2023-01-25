@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { trainees } from '$lib/store/trainee';
+	import { educations } from '$lib/store/education';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
 		Loading,
@@ -17,59 +15,55 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { designations } from '$lib/store/designations';
-	import { organizations } from '$lib/store/organization';
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'name', value: 'Name' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'gender', value: 'Gender' },
-		{ key: 'nid', value: 'NID' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'dob', value: 'Dob' },
+		{ key: 'trainee', value: 'Trainee' },
+		{ key: 'degree', value: 'Degree' },
+		{ key: 'board', value: 'Board' },
+		{ key: 'institution', value: 'Institution' },
+		{ key: 'result', value: 'Result' },
+		{ key: 'passing_year', value: 'Passing Year' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
-	let trainee;
+	let education;
 
 	function openModalForm(row) {
 		open = true;
-		trainee = row;
+		education = row;
 	}
 
 	async function doDelete() {
-		await trainees.deleteTrainee(trainee.id);
+		await educations.deleteEducation(education.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		trainees.getTrainees();
-		designations.getDesignations();
-		organizations.getOrganizations();
+		educations.getEducations();
 	});
 </script>
 
-{#if $trainees.loading}
+{#if $educations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Trainee" description="" {headers} rows={$trainees.data}>
+	<DataTable size="short" title="Trainee Education" description="" {headers} rows={$educations.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Trainee</Button>
+				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Education</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem text="View"  />
+					<OverflowMenuItem text="View" />
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							trainee = { ...row };
+							education = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -81,5 +75,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:trainee />
+<FormModal bind:open bind:education />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

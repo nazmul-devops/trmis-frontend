@@ -1,12 +1,10 @@
 <script lang="ts">
-	import { trainees } from '$lib/store/trainee';
+	import { completedCourses } from '$lib/store/completedCourse';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
 		Loading,
@@ -17,59 +15,51 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { designations } from '$lib/store/designations';
-	import { organizations } from '$lib/store/organization';
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'name', value: 'Name' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'gender', value: 'Gender' },
-		{ key: 'nid', value: 'NID' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'dob', value: 'Dob' },
+		{ key: 'trainee_id', value: 'Trainee ID' },
+		{ key: 'completed_course_name', value: 'Training Course' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
-	let trainee;
+	let completedCourse;
 
 	function openModalForm(row) {
 		open = true;
-		trainee = row;
+		completedCourse = row;
 	}
 
 	async function doDelete() {
-		await trainees.deleteTrainee(trainee.id);
+		await completedCourses.deleteCompletedCourse(completedCourse.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		trainees.getTrainees();
-		designations.getDesignations();
-		organizations.getOrganizations();
+		completedCourses.getCompletedCourses();
 	});
 </script>
 
-{#if $trainees.loading}
+{#if $completedCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Trainee" description="" {headers} rows={$trainees.data}>
+	<DataTable size="short" title="Completed Course" description="" {headers} rows={$completedCourses.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Trainee</Button>
+				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Completed Course</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem text="View"  />
+					<OverflowMenuItem text="View" />
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							trainee = { ...row };
+							completedCourse = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -81,5 +71,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:trainee />
+<FormModal bind:open bind:completedCourse />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
