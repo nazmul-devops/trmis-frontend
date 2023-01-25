@@ -64,6 +64,10 @@
 				<a href="/admin/trainee">Trainee</a>
 			</SideNavLink>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/trainer">Trainer</a>
+			</SideNavLink>
+			<SideNavDivider />
 			<SideNavMenu text="Training Courses">
 				<SideNavLink>
 					<a href="/admin/training-course">Courses</a>

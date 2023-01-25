@@ -39,7 +39,7 @@
 		sub_district: null
 	};
 
-	$: {
+	function formSetFields() {
 		setFields('name', trainee.name);
 		setFields('phone', trainee.phone);
 		setFields('emg_phone', trainee.emg_phone);
@@ -54,6 +54,12 @@
 		setFields('division', trainee.division);
 		setFields('district', trainee.district);
 		setFields('sub_district', trainee.sub_district);
+	}
+
+	$: {
+		if (trainee.id != null) {
+			formSetFields();
+		}
 	}
 
 	const schema = yup.object({

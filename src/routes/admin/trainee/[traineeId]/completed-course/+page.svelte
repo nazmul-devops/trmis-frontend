@@ -15,6 +15,12 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { page } from '$app/stores';
+	import { getCompletedCourse } from '$lib/service/completedCourse';
+
+	// $: {
+	// 	getCompletedCourse($page.params.traineeId).then((resp) => console.log(resp));
+	// }
 
 	let filteredRowIds = [];
 	let headers = [
@@ -45,11 +51,19 @@
 {#if $completedCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Completed Course" description="" {headers} rows={$completedCourses.data}>
+	<DataTable
+		size="short"
+		title="Completed Course"
+		description=""
+		{headers}
+		rows={$completedCourses.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Completed Course</Button>
+				<Button on:click={() => openModalForm({ name: null, nid: null })}
+					>Add Completed Course</Button
+				>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>

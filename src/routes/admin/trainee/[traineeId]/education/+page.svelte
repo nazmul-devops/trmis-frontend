@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { educations } from '$lib/store/education';
+	import { educations } from '$lib/store/traineeEducation';
 	import {
 		DataTable,
 		Toolbar,
@@ -49,7 +49,13 @@
 {#if $educations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Trainee Education" description="" {headers} rows={$educations.data}>
+	<DataTable
+		size="short"
+		title="Trainee Education"
+		description=""
+		{headers}
+		rows={$educations.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -59,7 +65,7 @@
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem text="View" />
+					<OverflowMenuItem text="Completed Course" />
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
