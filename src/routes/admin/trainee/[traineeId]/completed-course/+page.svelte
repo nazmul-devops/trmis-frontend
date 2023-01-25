@@ -16,10 +16,9 @@
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { page } from '$app/stores';
-	import { getCompletedCourse } from '$lib/service/completedCourse';
 
 	// $: {
-	// 	getCompletedCourse($page.params.traineeId).then((resp) => console.log(resp));
+	// 	completedCourse.getCompletedCourses($page.params.trainee_id).then((resp) => console.log(resp));
 	// }
 
 	let filteredRowIds = [];

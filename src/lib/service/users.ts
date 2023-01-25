@@ -57,7 +57,7 @@ export async function updateUser(payload) {
 
 export async function createUser(payload) {
 	try {
-		const { data } = await http.post(`users/`, payload);
+		const { data } = await http.post(`user-registration/`, payload);
 		return {
 			status: 201,
 			data

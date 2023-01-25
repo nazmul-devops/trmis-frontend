@@ -69,6 +69,10 @@
 						on:click={() => goto(`/admin/trainee/${row.phone}/completed-course`)}
 						text="Completed Course"
 					/>
+					<OverflowMenuItem
+						on:click={() => goto(`/admin/trainee/${row.phone}/education`)}
+						text="Education"
+					/>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {

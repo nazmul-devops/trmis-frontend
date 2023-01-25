@@ -15,6 +15,7 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { page } from '$app/stores';
 
 	let filteredRowIds = [];
 	let headers = [

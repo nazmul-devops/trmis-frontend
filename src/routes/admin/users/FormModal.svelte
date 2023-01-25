@@ -9,7 +9,8 @@
 		first_name: null,
 		last_name: null,
 		email: null,
-		password: null
+		password: null,
+		// group: null
 	};
 
 	export let open = true;

@@ -49,7 +49,7 @@
 		</svelte:fragment>
 		<HeaderUtilities>
 			<div class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5" on:click={logout}>
-				LogOut
+				Log Out
 			</div>
 		</HeaderUtilities>
 	</Header>
