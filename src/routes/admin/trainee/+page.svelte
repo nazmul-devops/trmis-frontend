@@ -19,7 +19,7 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
-
+	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Name' },
@@ -65,7 +65,10 @@
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem text="View"  />
+					<OverflowMenuItem
+						on:click={() => goto(`/admin/trainee/${row.phone}/completed-course`)}
+						text="Completed Course"
+					/>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {

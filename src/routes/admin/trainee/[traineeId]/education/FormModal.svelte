@@ -2,7 +2,7 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { educations } from '$lib/store/education';
+	import { educations } from '$lib/store/traineeEducation';
 	import { trainees } from '$lib/store/trainee';
 	import { Modal, Select, SelectItem, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
@@ -81,7 +81,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Completed Course"
+	modalHeading="Create Education"
 	primaryButtonText={education.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
