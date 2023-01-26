@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import * as educationService from '$lib/service/education';
+import * as educationService from '$lib/service/traineeEducation';
 
 function createEducationsStore() {
 	const { subscribe, set, update } = writable({ loading: true, data: [] });

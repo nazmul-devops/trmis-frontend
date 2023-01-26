@@ -2,8 +2,8 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { educations } from '$lib/store/traineeEducation';
-	import { trainees } from '$lib/store/trainee';
+	import { educations } from '$lib/store/trainerEducation';
+	import { trainers } from '$lib/store/trainer';
 	import { Modal, Select, SelectItem, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
@@ -16,7 +16,7 @@
 		institution: null,
 		result: null,
 		passing_year: null,
-		trainee: null
+		trainer: null
 	};
 
 	let board = [
@@ -31,14 +31,20 @@
 		{ title: 'Sylhet' }
 	];
 
-	$: {
+	function formSetFields() {
 		setFields('degree', education.degree);
 		setFields('board', education.board);
 		setFields('grade_type', education.grade_type);
 		setFields('institution', education.institution);
 		setFields('result', education.result);
 		setFields('passing_year', education.passing_year);
-		setFields('trainee', education.trainee);
+		setFields('trainer', education.trainer);
+	}
+
+	$: {
+		if (education.id != null) {
+			formSetFields();
+		}
 	}
 
 	const schema = yup.object({
@@ -48,14 +54,14 @@
 		institution: yup.string().required(),
 		result: yup.string().required(),
 		passing_year: yup.string().required(),
-		trainee: yup.number().required()
+		trainer: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				trainee: parseInt(values.trainee)
+				trainer: parseInt(values.trainer)
 			};
 		},
 		extend: validator({ schema })
@@ -75,7 +81,7 @@
 
 	onMount(async () => {
 		educations.getEducations();
-		trainees.getTrainees();
+		trainers.getTrainers();
 	});
 </script>
 
@@ -124,10 +130,10 @@
 			labelText="Passing Year"
 			placeholder="Enter Passing Year..."
 		/>
-		<Select invalid={$errors.trainee != null} name="trainee" labelText="Trainee">
-			<SelectItem text="choose Training Course" />
-			{#each $trainees.data as trainee}
-				<SelectItem value={trainee.phone} text={trainee.name} />
+		<Select invalid={$errors.trainer != null} name="trainer" labelText="Trainer">
+			<SelectItem text="choose Trainer" />
+			{#each $trainers.data as trainer}
+				<SelectItem value={trainer.phone} text={trainer.name} />
 			{/each}
 		</Select>
 

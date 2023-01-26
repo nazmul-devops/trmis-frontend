@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { completedCourses } from '$lib/store/completedCourse';
+	import { educations } from '$lib/store/trainerEducation';
 	import {
 		DataTable,
 		Toolbar,
@@ -17,52 +17,44 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { page } from '$app/stores';
 
-	// $: {
-	// 	completedCourse.getCompletedCourses($page.params.trainee_id).then((resp) => console.log(resp));
-	// }
-
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'trainee_id', value: 'Trainee ID' },
-		{ key: 'completed_course_name', value: 'Training Course' },
+		{ key: 'trainer', value: 'Trainer' },
+		{ key: 'degree', value: 'Degree' },
+		{ key: 'board', value: 'Board' },
+		{ key: 'institution', value: 'Institution' },
+		{ key: 'result', value: 'Result' },
+		{ key: 'passing_year', value: 'Passing Year' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
-	let completedCourse;
+	let education;
 
 	function openModalForm(row) {
 		open = true;
-		completedCourse = row;
+		education = row;
 	}
 
 	async function doDelete() {
-		await completedCourses.deleteCompletedCourse(completedCourse.id);
+		await educations.deleteEducation(education.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		completedCourses.getCompletedCourses();
+		educations.getEducations();
 	});
 </script>
 
-{#if $completedCourses.loading}
+{#if $educations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable
-		size="short"
-		title="Completed Course"
-		description=""
-		{headers}
-		rows={$completedCourses.data}
-	>
+	<DataTable size="short" title="Trainer Education" description="" {headers} rows={$educations.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}
-					>Add Completed Course</Button
-				>
+				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Education</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -72,7 +64,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							completedCourse = { ...row };
+							education = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -84,5 +76,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:completedCourse />
+<FormModal bind:open bind:education />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

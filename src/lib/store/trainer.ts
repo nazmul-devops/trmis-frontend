@@ -1,9 +1,8 @@
 import { writable } from 'svelte/store';
-import * as trainerService from '../service/service';
+import * as trainerService from '$lib/service/trainer';
 
-function createTrainerStore() {
+function createTrainersStore() {
 	const { subscribe, set, update } = writable({ loading: true, data: [] });
-
 	function setLoading() {
 		update((prev) => ({
 			...prev,
@@ -17,10 +16,30 @@ function createTrainerStore() {
 		set({ loading: false, data: resp.data });
 	}
 
+	async function deleteTrainer(id: number) {
+		setLoading();
+		await trainerService.deleteTrainer(id);
+		await getTrainers();
+	}
+
+	async function updateTrainer(payload) {
+		setLoading();
+		await trainerService.updateTrainer(payload);
+		await getTrainers();
+	}
+	async function createTrainer(payload) {
+		setLoading();
+		await trainerService.createTrainer(payload);
+		await getTrainers();
+	}
+
 	return {
 		subscribe,
-		getTrainers
+		getTrainers,
+		deleteTrainer,
+		updateTrainer,
+		createTrainer
 	};
 }
 
-export const trainers = createTrainerStore();
+export const trainers = createTrainersStore();

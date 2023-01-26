@@ -49,7 +49,7 @@
 		</svelte:fragment>
 		<HeaderUtilities>
 			<div class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5" on:click={logout}>
-				LogOut
+				Log Out
 			</div>
 		</HeaderUtilities>
 	</Header>
@@ -62,6 +62,10 @@
 			<SideNavDivider />
 			<SideNavLink>
 				<a href="/admin/trainee">Trainee</a>
+			</SideNavLink>
+			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/trainer">Trainer</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavMenu text="Training Courses">

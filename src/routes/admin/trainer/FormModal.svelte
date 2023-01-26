@@ -2,7 +2,7 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { trainees } from '$lib/store/trainee';
+	import { trainers } from '$lib/store/trainer';
 	import { designations } from '$lib/store/designations';
 	import { grades } from '$lib/store/grades';
 	import { organizations } from '$lib/store/organization';
@@ -21,7 +21,7 @@
 	import { onMount } from 'svelte';
 
 	export let open = true;
-	export let trainee = {
+	export let trainer = {
 		id: null,
 		phone: null,
 		name: null,
@@ -30,6 +30,7 @@
 		email: null,
 		gender: null,
 		marital_status: null,
+		address: null,
 		dob: null,
 		designation: null,
 		grade: null,
@@ -40,24 +41,25 @@
 	};
 
 	function formSetFields() {
-		setFields('name', trainee.name);
-		setFields('phone', trainee.phone);
-		setFields('emg_phone', trainee.emg_phone);
-		setFields('nid', trainee.nid);
-		setFields('email', trainee.email);
-		setFields('gender', trainee.gender);
-		setFields('marital_status', trainee.marital_status);
-		setFields('dob', trainee.dob);
-		setFields('designation', trainee.designation);
-		setFields('grade', trainee.grade);
-		setFields('organization', trainee.organization);
-		setFields('division', trainee.division);
-		setFields('district', trainee.district);
-		setFields('sub_district', trainee.sub_district);
+		setFields('name', trainer.name);
+		setFields('phone', trainer.phone);
+		setFields('emg_phone', trainer.emg_phone);
+		setFields('nid', trainer.nid);
+		setFields('email', trainer.email);
+		setFields('gender', trainer.gender);
+		setFields('marital_status', trainer.marital_status);
+		setFields('dob', trainer.dob);
+		setFields('address', trainer.address);
+		setFields('designation', trainer.designation);
+		setFields('grade', trainer.grade);
+		setFields('organization', trainer.organization);
+		setFields('division', trainer.division);
+		setFields('district', trainer.district);
+		setFields('sub_district', trainer.sub_district);
 	}
 
 	$: {
-		if (trainee.id != null) {
+		if (trainer.id != null) {
 			formSetFields();
 		}
 	}
@@ -69,6 +71,7 @@
 		email: yup.string().email().required(),
 		gender: yup.number().required(),
 		dob: yup.string().required(),
+		address: yup.string().required(),
 		designation: yup.number().required(),
 		grade: yup.number().required(),
 		organization: yup.number().required(),
@@ -100,10 +103,10 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			if (trainee.phone) {
-				await trainees.updateTrainee({ ...data, id: trainee.phone });
+			if (trainer.phone) {
+				await trainers.updateTrainer({ ...data, id: trainer.phone });
 			} else {
-				await trainees.createTrainee({ ...data });
+				await trainers.createTrainer({ ...data });
 			}
 			open = false;
 			reset();
@@ -111,7 +114,7 @@
 	});
 
 	onMount(async () => {
-		trainees.getTrainees();
+		trainers.getTrainers();
 		designations.getDesignations();
 		grades.getGrades();
 		organizations.getOrganizations();
@@ -123,8 +126,8 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Trainee"
-	primaryButtonText={trainee.id == null ? 'Create' : 'Edit'}
+	modalHeading="Create Trainer"
+	primaryButtonText={trainer.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
@@ -160,7 +163,7 @@
 			labelText="Email"
 			placeholder="Enter  Email..."
 		/>
-		<Select selected="2" invalid={$errors.gender != null} name="gender" labelText="Gender">
+		<Select invalid={$errors.gender != null} name="gender" labelText="Gender">
 			<SelectItem text="choose Gender" value="" />
 			<SelectItem text="Male" value="1" />
 			<SelectItem text="Female" value="2" />
@@ -179,12 +182,12 @@
 				placeholder="YYYY-mm-dd"
 			/>
 		</DatePicker>
-		<!-- <DatePickerInput
-			invalid={$errors.dob != null}
-			name="dob"
-			labelText="Date Of Birth"
-			placeholder="Enter  Date Of Birth..."
-		/> -->
+		<TextInput
+			invalid={$errors.address != null}
+			name="address"
+			labelText="Address"
+			placeholder="Enter address..."
+		/>
 		<Select
 			invalid={$errors.marital_status != null}
 			name="marital_status"

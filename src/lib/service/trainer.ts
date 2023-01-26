@@ -1,14 +1,12 @@
 import { http } from '$lib/service/auth';
 
-export async function getUsers() {
+export async function getTrainers() {
 	try {
-		const {
-			data: { data }
-		} = await http.get('users/');
+		const { data } = await http.get('trainer/');
 
 		return {
 			status: 200,
-			data
+			data: data.map((item, index) => ({ ...item, id: index }))
 		};
 	} catch (err) {
 		return Promise.resolve({
@@ -18,9 +16,9 @@ export async function getUsers() {
 	}
 }
 
-export async function getUser(id) {
+export async function getTrainer(id) {
 	try {
-		const { data } = await http.get(`users/${id}/`);
+		const { data } = await http.get(`trainer/${id}/`);
 		return {
 			status: 200,
 			data: data
@@ -33,17 +31,17 @@ export async function getUser(id) {
 	}
 }
 
-export async function deleteUser(id: number) {
+export async function deleteTrainer(id: number) {
 	try {
-		return http.delete(`users/${id}/`);
+		return http.delete(`trainer/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
 }
 
-export async function updateUser(payload) {
+export async function updateTrainer(payload) {
 	try {
-		const { data } = await http.put(`users/${payload.id}/`, payload);
+		const { data } = await http.put(`trainer/${payload.phone}/`, payload);
 		return {
 			status: 204,
 			data
@@ -55,9 +53,9 @@ export async function updateUser(payload) {
 	}
 }
 
-export async function createUser(payload) {
+export async function createTrainer(payload) {
 	try {
-		const { data } = await http.post(`user-registration/`, payload);
+		const { data } = await http.post(`trainer/`, payload);
 		return {
 			status: 201,
 			data
