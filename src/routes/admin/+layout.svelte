@@ -86,7 +86,7 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavMenu text="Locations">
+			<!-- <SideNavMenu text="Locations">
 				<SideNavLink>
 					<a href="/admin/locations/division">Division</a>
 				</SideNavLink>
@@ -96,8 +96,8 @@
 				<SideNavLink>
 					<a href="/admin/locations/sub-district">Sub District</a>
 				</SideNavLink>
-			</SideNavMenu>
-			<SideNavDivider />
+			</SideNavMenu> -->
+			<!-- <SideNavDivider /> -->
 			<SideNavMenu text="Settings">
 				<SideNavLink>
 					<a href="/admin/settings/collaborations">Collaborations</a>
@@ -119,10 +119,10 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavLink>
+			<!-- <SideNavLink>
 				<a href="/admin/users">Users</a>
 			</SideNavLink>
-			<SideNavDivider />
+			<SideNavDivider /> -->
 		</SideNavItems>
 	</SideNav>
 
