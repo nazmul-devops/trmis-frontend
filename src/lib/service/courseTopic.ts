@@ -31,7 +31,7 @@ export async function getCourseTopic(id) {
 
 export async function updateCourseTopic(payload) {
 	try {
-		const { data } = await http.put(`training-course/course-topic/${payload.id}				`, payload);
+		const { data } = await http.put(`training-course/course-topic/${payload.id}/`, payload);
 		return {
 			status: 200,
 			data
@@ -59,7 +59,7 @@ export async function createCourseTopic(payload) {
 
 export async function deleteCourseTopic(id) {
 	try {
-		const { data } = await http.delete(`training-course/course-topic/${id}`);
+		const { data } = await http.delete(`training-course/course-topic/${id}/`);
 		return {
 			status: 200,
 			data

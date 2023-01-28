@@ -41,7 +41,7 @@
 	}
 
 	async function doDelete() {
-		await trainees.deleteTrainee(trainee.id);
+		await trainees.deleteTrainee(trainee.phone);
 		deleteModal = false;
 	}
 

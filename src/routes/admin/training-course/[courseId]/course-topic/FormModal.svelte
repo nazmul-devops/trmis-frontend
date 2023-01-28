@@ -25,10 +25,16 @@
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		training_course: yup.string().required()
+		training_course: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+		transform: (values: any) => {
+			return {
+				...values,
+				training_course: parseInt(values.training_course)
+			}
+		},
 		extend: validator({ schema })
 	});
 
