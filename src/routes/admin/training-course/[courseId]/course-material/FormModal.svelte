@@ -25,7 +25,7 @@
 		id: null,
 		title: null,
 		description: null,
-		uploaded_files: null,
+		uploaded_files: [],
 		training_course_id: null
 	};
 
@@ -39,7 +39,7 @@
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		uploaded_files: yup.array(),
+		uploaded_files: yup.array().min(1),
 		training_course_id: yup.string().required()
 	});
 
@@ -83,6 +83,7 @@
 		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
 		<FileUploader
+			name="uploaded_files"
 			multiple
 			labelTitle="Upload files"
 			buttonLabel="Add files"

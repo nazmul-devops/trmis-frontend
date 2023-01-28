@@ -49,8 +49,6 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			console.log(data);
-			// return;
 			if (trainingCourse.id) {
 				await trainingCourses.updateTrainingCourse({ ...data, id: trainingCourse.id });
 			} else {
@@ -117,6 +115,6 @@
 			{/each}
 		</Select>
 
-		{JSON.stringify($errors)}
+		<!-- {JSON.stringify($errors)} -->
 	</form>
 </Modal>

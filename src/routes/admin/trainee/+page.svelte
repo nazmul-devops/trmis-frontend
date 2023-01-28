@@ -23,11 +23,11 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Name' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'gender', value: 'Gender' },
+		{ key: 'organization__name', value: 'Organization' },
+		{ key: 'gender_name', value: 'Gender' },
 		{ key: 'nid', value: 'NID' },
 		{ key: 'phone', value: 'Phone' },
-		{ key: 'dob', value: 'Dob' },
+		{ key: 'district_name', value: 'Division' },
 		{ key: 'action', value: 'Action' }
 	];
 

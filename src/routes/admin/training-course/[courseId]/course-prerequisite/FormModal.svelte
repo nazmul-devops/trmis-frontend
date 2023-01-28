@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
@@ -11,7 +11,8 @@
 	export let coursePrerequisite = {
 		id: null,
 		course_id: null,
-		prerequisite_course_id: []
+		prerequisite_course_id: [],
+		prerequisite_courses: []
 	};
 
 	let prerequisites = [];
@@ -29,7 +30,6 @@
 	$: {
 		setFields('course_id', courseId);
 		setFields('prerequisite_course_id', prerequisites);
-		console.log(courseId, prerequisites);
 	}
 
 	const schema = yup.object({
@@ -42,7 +42,7 @@
 	});
 
 	const submitHandler = createSubmitHandler({
-		onSubmit: async (data) => {
+		onSubmit: async (data, prerequisite_courses) => {
 			if (coursePrerequisite.id) {
 				await coursePrerequisites.updateCoursePrerequisite({ ...data, id: coursePrerequisite.id });
 			} else {
@@ -74,7 +74,6 @@
 		items={$trainingCourses.data.map((item) => ({ ...item, text: item.title }))}
 		on:select={(e) => setFields('prerequisite_course_id', e.detail.selectedIds)}
 	/>
-	<!-- {JSON.stringify(courseIds)} -->
 	<Select
 		selected={courseId}
 		labelText="Course"
@@ -85,5 +84,5 @@
 			<SelectItem value={course.id} text={course.title} />
 		{/each}
 	</Select>
-	{JSON.stringify($errors)}
+	<!-- {JSON.stringify($errors)} -->
 </Modal>

@@ -46,6 +46,7 @@ export async function updateCoursePrerequisite(payload) {
 export async function createCoursePrerequisite(payload) {
 	try {
 		const { data } = await http.post(`training-course/course-prerequisite/`, payload);
+		console.log(data.prerequisite_courses);
 		return {
 			status: 200,
 			data
@@ -59,7 +60,7 @@ export async function createCoursePrerequisite(payload) {
 
 export async function deleteCoursePrerequisite(id) {
 	try {
-		const { data } = await http.delete(`training-course/course-prerequisite/${id}`);
+		const { data } = await http.delete(`training-course/course-prerequisite/${id}/`);
 		return {
 			status: 200,
 			data

@@ -33,6 +33,13 @@
 	});
 
 	const { form, reset, createSubmitHandler, setFields } = createForm({
+		transform: (values: any) => {
+			return {
+				...values,
+				phone: values.phone ? parseInt(values.phone) : null,
+				alt_phone: values.alt_phone ? parseInt(values.alt_phone) : null
+			};
+		},
 		extend: validator({ schema })
 	});
 
@@ -64,8 +71,8 @@
 	<form use:form>
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
 		<TextInput name="code" labelText=" Code" placeholder="Enter  code..." />
-		<NumberInput name="phone" label="phone" placeholder="Enter  phone..." />
-		<NumberInput name="alt_phone" label="alt_phone" placeholder="Enter  alt_phone..." />
+		<TextInput name="phone" labelText="phone" placeholder="Enter  phone..." />
+		<TextInput name="alt_phone" labelText="alt_phone" placeholder="Enter  alt_phone..." />
 		<TextInput name="email" labelText="Email" placeholder="Enter  Email..." />
 	</form>
 </Modal>
