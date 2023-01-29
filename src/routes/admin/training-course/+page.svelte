@@ -26,7 +26,7 @@
 		{ key: 'code', value: 'Code' },
 		{ key: 'pass_mark', value: 'Pass Mark' },
 		{ key: 'objective', value: 'Objective' },
-		{ key: 'course_category', value: 'Course Category' },
+		{ key: 'course_category_name', value: 'Course Category' },
 		{ key: 'action', value: 'Action' }
 	];
 

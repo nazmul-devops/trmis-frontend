@@ -27,6 +27,13 @@
 	});
 
 	const { form, reset, createSubmitHandler, setFields } = createForm({
+		transform: (values: any) => {
+			return {
+				...values,
+				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
+
+			}
+		},
 		extend: validator({ schema })
 	});
 
@@ -57,7 +64,7 @@
 >
 	<form use:form>
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<NumberInput name="serial_no" label="Serial_No" placeholder="Enter  serial_no..." />
+		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
 		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
 	</form>
 </Modal>

@@ -21,10 +21,12 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'id', value: 'ID' },
-		{ key: 'course_id', value: 'Course Name' },
+		{ key: 'course_name', value: 'Course Name' },
 		{ key: 'prerequisite_course_id', value: 'Prerequisite' },
+		{ key: 'prerequisite_courses.title', value: 'prerequisite_courses' },
 		{ key: 'action', value: 'Action' }
 	];
+
 
 	let open = false;
 	let deleteModal = false;

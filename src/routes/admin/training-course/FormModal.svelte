@@ -33,17 +33,22 @@
 		code: yup.string().required(),
 		pass_mark: yup.number().required(),
 		objective: yup.string().required(),
-		course_category: yup.string()
+		course_category: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+		transform: (values: any) => {
+			return {
+				...values,
+				pass_mark: values.pass_mark ? parseInt(values.pass_mark) : null,
+				course_category: parseInt(values.course_category)
+			}
+		},
 		extend: validator({ schema })
 	});
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			console.log(data);
-			// return;
 			if (trainingCourse.id) {
 				await trainingCourses.updateTrainingCourse({ ...data, id: trainingCourse.id });
 			} else {
@@ -87,10 +92,10 @@
 			labelText="Code"
 			placeholder="Enter  Code..."
 		/>
-		<NumberInput
+		<TextInput
 			invalid={$errors.pass_mark != null}
 			name="pass_mark"
-			label="Pass Mark"
+			labelText="Pass Mark"
 			placeholder="Enter  pass_mark..."
 		/>
 		<TextInput
@@ -110,6 +115,6 @@
 			{/each}
 		</Select>
 
-		{JSON.stringify($errors)}
+		<!-- {JSON.stringify($errors)} -->
 	</form>
 </Modal>

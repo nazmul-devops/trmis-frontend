@@ -14,14 +14,18 @@
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
-	// let fileUploader;
-	// let files = [];
+	let uploadedFiles = [];
+
+	function handleAdd(event) {
+		uploadedFiles = event.detail;
+		console.log(uploadedFiles[0].name);
+	}
 	export let open = true;
 	export let courseMaterial = {
 		id: null,
 		title: null,
 		description: null,
-		uploaded_files: null,
+		uploaded_files: [],
 		training_course_id: null
 	};
 
@@ -30,13 +34,12 @@
 		setFields('description', courseMaterial.description);
 		setFields('uploaded_files', courseMaterial.uploaded_files);
 		setFields('training_course_id', courseMaterial.training_course_id);
-		console.log(courseMaterial);
 	}
 
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		uploaded_files: yup.string(),
+		uploaded_files: yup.array().min(1),
 		training_course_id: yup.string().required()
 	});
 
@@ -52,8 +55,6 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			console.log(data);
-			return;
 			if (courseMaterial.id) {
 				await courseMaterials.updateCourseMaterial({ ...data, id: courseMaterial.id });
 			} else {
@@ -82,15 +83,15 @@
 		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
 		<FileUploader
-			multiple
 			name="uploaded_files"
+			multiple
 			labelTitle="Upload files"
 			buttonLabel="Add files"
+			labelDescription=""
+			on:add={handleAdd}
+			files={uploadedFiles}
 			status="complete"
 		/>
-		<!-- <Button kind="tertiary" disabled={!files.length} on:click={fileUploader.clearFiles}>
-			Clear (programmatic)
-		</Button> -->
 		<Select name="training_course_id" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}

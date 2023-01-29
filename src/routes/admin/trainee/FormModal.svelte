@@ -35,6 +35,7 @@
 		grade: null,
 		organization: null,
 		division: null,
+		address: null,
 		district: null,
 		sub_district: null
 	};
@@ -52,6 +53,7 @@
 		setFields('grade', trainee.grade);
 		setFields('organization', trainee.organization);
 		setFields('division', trainee.division);
+		setFields('address', trainee.address);
 		setFields('district', trainee.district);
 		setFields('sub_district', trainee.sub_district);
 	}
@@ -73,6 +75,7 @@
 		grade: yup.number().required(),
 		organization: yup.number().required(),
 		division: yup.number().required(),
+		address: yup.string().required(),
 		district: yup.number().required(),
 		sub_district: yup.number().required(),
 		marital_status: yup.number().required()
@@ -160,7 +163,13 @@
 			labelText="Email"
 			placeholder="Enter  Email..."
 		/>
-		<Select selected="2" invalid={$errors.gender != null} name="gender" labelText="Gender">
+		<TextInput
+			invalid={$errors.address != null}
+			name="address"
+			labelText="Address"
+			placeholder="Enter  Address..."
+		/>
+		<Select invalid={$errors.gender != null} name="gender" labelText="Gender">
 			<SelectItem text="choose Gender" value="" />
 			<SelectItem text="Male" value="1" />
 			<SelectItem text="Female" value="2" />
@@ -179,12 +188,7 @@
 				placeholder="YYYY-mm-dd"
 			/>
 		</DatePicker>
-		<!-- <DatePickerInput
-			invalid={$errors.dob != null}
-			name="dob"
-			labelText="Date Of Birth"
-			placeholder="Enter  Date Of Birth..."
-		/> -->
+
 		<Select
 			invalid={$errors.marital_status != null}
 			name="marital_status"
@@ -231,6 +235,6 @@
 			{/each}
 		</Select>
 
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 </Modal>

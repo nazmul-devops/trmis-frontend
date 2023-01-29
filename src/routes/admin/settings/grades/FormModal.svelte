@@ -3,7 +3,7 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { grades } from '$lib/store/grades';
-	import { Modal, NumberInput, TextInput } from 'carbon-components-svelte';
+	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
@@ -18,7 +18,6 @@
 		setFields('name', grade.name);
 		setFields('serial_no', grade.serial_no);
 		setFields('remarks', grade.remarks);
-		
 	}
 
 	const schema = yup.object({
@@ -28,6 +27,12 @@
 	});
 
 	const { form, reset, createSubmitHandler, setFields } = createForm({
+		transform: (values: any) => {
+			return {
+				...values,
+				serial_no: values.serial_no ? parseInt(values.serial_no) : null
+			};
+		},
 		extend: validator({ schema })
 	});
 
@@ -58,7 +63,7 @@
 >
 	<form use:form>
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<NumberInput name="serial_no" label="Serial_No" placeholder="Enter  Serial_No..." />
+		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  Serial_No..." />
 		<TextInput name="remarks" labelText="Remarks" placeholder="Enter  Remarks..." />
 	</form>
 </Modal>

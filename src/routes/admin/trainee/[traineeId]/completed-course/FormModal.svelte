@@ -19,9 +19,16 @@
 		training_course_id: null
 	};
 
-	$: {
+
+	function formSetFields(){
 		setFields('trainee_id', completedCourse.trainee_id);
 		setFields('training_course_id', completedCourse.training_course_id);
+	}
+
+	$: {
+		if (completedCourse.id != null) {
+			formSetFields();
+		}
 	}
 
 	const schema = yup.object({
@@ -81,6 +88,6 @@
 			{/each}
 		</Select>
 
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 </Modal>
