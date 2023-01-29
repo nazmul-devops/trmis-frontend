@@ -2,7 +2,7 @@
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
 
-	export let year = 2019;
+	export let year = null;
 	export let month = 0; // Jan
 	export let offset = 0; // Sun
 	export let today = null; // Date

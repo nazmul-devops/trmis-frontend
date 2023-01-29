@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { coursePrerequisites } from '$lib/store/coursePrerequisite';
+	import { trainingCenters } from '$lib/store/trainingCenter';
 	import {
 		DataTable,
 		Toolbar,
@@ -20,46 +20,49 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
-		{ key: 'course_name', value: 'Course Name' },
-		{ key: 'prerequisite_courses', value: 'prerequisite_courses' },
+		{ key: 'name', value: 'Name' },
+		{ key: 'division_name', value: 'Division' },
+		{ key: 'district_name', value: 'District' },
+		{ key: 'sub_district_name', value: 'Sub District' },
+		{ key: 'address', value: 'Address' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let coursePrerequisite;
+	let trainingCenter;
 
 	function openModalForm(row) {
 		open = true;
-		coursePrerequisite = row;
+		trainingCenter = row;
 	}
 
 	async function doDelete() {
-		await coursePrerequisites.deleteCoursePrerequisite(coursePrerequisite.id);
+		await trainingCenters.deleteTrainingCenter(trainingCenter.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coursePrerequisites.getCoursePrerequisites();
+		trainingCenters.getTrainingCenters();
 	});
 </script>
 
-{#if $coursePrerequisites.loading}
+{#if $trainingCenters.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
 	<DataTable
 		size="short"
-		title="Course Prerequisite"
+		title="Training Center"
 		description=""
 		{headers}
-		rows={$coursePrerequisites.data}
+		rows={$trainingCenters.data}
 	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Prerequisite</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Training Center</Button
+				>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -69,21 +72,17 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coursePrerequisite = { ...row };
+							trainingCenter = { ...row };
 							deleteModal = true;
 						}}
 						danger
 						text="Delete"
 					/>
 				</OverflowMenu>
-			{:else if cell.key === 'prerequisite_courses'}
-				{#each cell.value as item}
-					{item.title}
-				{/each}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coursePrerequisite />
+<FormModal bind:open bind:trainingCenter />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

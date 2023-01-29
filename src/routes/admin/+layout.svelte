@@ -68,6 +68,10 @@
 				<a href="/admin/trainer">Trainer</a>
 			</SideNavLink>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/training-center">Training Center</a>
+			</SideNavLink>
+			<SideNavDivider />
 			<SideNavMenu text="Training Courses">
 				<SideNavLink>
 					<a href="/admin/training-course">Courses</a>
@@ -83,6 +87,9 @@
 				</SideNavLink>
 				<SideNavLink>
 					<a href="/admin/training-course/1/course-topic">Course Topic</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
