@@ -19,13 +19,16 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
-		{ key: 'name', value: 'Name' },
-		{ key: 'remarks', value: 'Remarks' },
+		{ key: 'first_name', value: 'First Name' },
+		{ key: 'last_name', value: 'Last Name' },
+		{ key: 'email', value: 'Email' },
+		{ key: 'phone', value: 'Phone' },
+		{ key: 'company_name', value: 'Company Name' },
+		{ key: 'message', value: 'Message' },
 		{ key: 'action', value: 'Action' }
 	];
 
-	// let open = false;
+	let Data = [];
 	let deleteModal = false;
 
 	let contact;
@@ -36,15 +39,15 @@
 	}
 
 	onMount(async () => {
-		await getContacts();
-		console.log(getContacts());
+		const { data } = await getContacts();
+		Data = data;
 	});
 </script>
 
 <!-- {#if $collaborations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else} -->
-<DataTable size="short" title="Collaboration" description="" {headers} rows={{getContacts.data}}>
+<DataTable size="short" title="Collaboration" description="" {headers} rows={Data}>
 	<Toolbar size="sm">
 		<ToolbarContent>
 			<ToolbarSearch shouldFilterRows bind:filteredRowIds />
