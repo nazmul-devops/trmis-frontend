@@ -16,10 +16,10 @@
 
 	let uploadedFiles = [];
 
-	function handleAdd(event) {
-		uploadedFiles = event.detail;
-		console.log(uploadedFiles[0].name);
-	}
+	// function handleAdd(event) {
+	// 	uploadedFiles = event.detail;
+	// 	console.log(uploadedFiles[0].name);
+	// }
 	export let open = true;
 	export let courseMaterial = {
 		id: null,
@@ -88,7 +88,6 @@
 			labelTitle="Upload files"
 			buttonLabel="Add files"
 			labelDescription=""
-			on:add={handleAdd}
 			files={uploadedFiles}
 			status="complete"
 		/>
