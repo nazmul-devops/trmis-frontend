@@ -38,12 +38,12 @@
 	}
 
 	async function doDelete() {
-		await completedCourses.deleteCompletedCourse(completedCourse.id);
+		// await completedCourses.deleteCompletedCourse(completedCourse.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		completedCourses.getCompletedCourses();
+		completedCourses.getCompletedCourses($page.params.traineeId);
 	});
 </script>
 
@@ -51,6 +51,7 @@
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
 	<DataTable
+		id="training_course_id"
 		size="short"
 		title="Completed Course"
 		description=""

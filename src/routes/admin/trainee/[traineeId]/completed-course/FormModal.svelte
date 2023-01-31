@@ -5,12 +5,9 @@
 	import { completedCourses } from '$lib/store/completedCourse';
 	import { trainingCourses } from '$lib/store/trainingCourse';
 	import { trainees } from '$lib/store/trainee';
-	import {
-		Modal,
-		Select,
-		SelectItem
-	} from 'carbon-components-svelte';
+	import { Modal, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	export let open = true;
 	export let completedCourse = {
@@ -19,9 +16,8 @@
 		training_course_id: null
 	};
 
-
-	function formSetFields(){
-		setFields('trainee_id', completedCourse.trainee_id);
+	function formSetFields() {
+		// setFields('trainee_id', completedCourse.trainee_id);
 		setFields('training_course_id', completedCourse.training_course_id);
 	}
 
@@ -30,9 +26,10 @@
 			formSetFields();
 		}
 	}
+	``;
 
 	const schema = yup.object({
-		trainee_id: yup.number().required(),
+		// trainee_id: yup.number().required(),
 		training_course_id: yup.number().required()
 	});
 
@@ -40,7 +37,7 @@
 		transform: (values: any) => {
 			return {
 				...values,
-				trainee_id: parseInt(values.trainee_id),
+				trainee_id: parseInt($page.params.traineeId),
 				training_course_id: parseInt(values.training_course_id)
 			};
 		},
@@ -60,9 +57,7 @@
 	});
 
 	onMount(async () => {
-		completedCourses.getCompletedCourses();
 		trainingCourses.getTrainingCourses();
-		trainees.getTrainees();
 	});
 </script>
 
@@ -75,13 +70,13 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<Select invalid={$errors.designation != null} name="trainee_id" labelText="Trainee">
+		<!-- <Select invalid={$errors.designation != null} name="trainee_id" labelText="Trainee">
 			<SelectItem text="choose Trainee" />
 			{#each $trainees.data as trainee}
 				<SelectItem value={trainee.phone} text={trainee.name} />
 			{/each}
-		</Select>
-		<Select invalid={$errors.grade != null} name="training_course_id" labelText="Training Course">
+		</Select> -->
+		<Select invalid={$errors.training_course_id != null} name="training_course_id" labelText="Training Course">
 			<SelectItem text="choose Training Course" />
 			{#each $trainingCourses.data as course}
 				<SelectItem value={course.id} text={course.title} />

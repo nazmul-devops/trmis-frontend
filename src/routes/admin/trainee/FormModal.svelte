@@ -114,13 +114,13 @@
 	});
 
 	onMount(async () => {
-		trainees.getTrainees();
-		designations.getDesignations();
-		grades.getGrades();
-		organizations.getOrganizations();
-		divisions.getDivisions();
-		districts.getDistricts();
-		subDistricts.getSubDistricts();
+		// trainees.getTrainees();
+		// designations.getDesignations();
+		// grades.getGrades();
+		// organizations.getOrganizations();
+		// divisions.getDivisions();
+		// districts.getDistricts();
+		// subDistricts.getSubDistricts();
 	});
 </script>
 

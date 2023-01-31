@@ -2,7 +2,8 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { createContact, getContacts } from '$lib/service/contact';
+	import { createContact } from '$lib/service/contact';
+	import { ToastNotification } from 'carbon-components-svelte';
 
 	let message = null;
 
@@ -19,7 +20,7 @@
 		transform: (values: any) => {
 			return {
 				...values,
-				phone: values.phone
+				phone: values.phone ? parseInt(values.phone) : null
 			};
 		},
 		extend: validator({ schema })
@@ -27,6 +28,10 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			await createContact({ ...data });
+			message = 'Message Sent Successfully';
+			setTimeout(() => {
+				message = '';
+			}, 2000);
 			reset();
 		}
 	});
@@ -34,6 +39,9 @@
 
 <div class="t-bg-white  t-rounded-lg t-p-8 sm:p-12 t-shadow-lg">
 	<form use:form on:submit={submitHandler}>
+		{#if message}
+			<p class="t-text-[#44835C] t-mb-5 ">{message}</p>
+		{/if}
 		<div class="t-grid t-grid-cols-2 t-gap-2">
 			<div class="t-mb-4">
 				<input
@@ -177,9 +185,5 @@
 				</button>
 			</div>
 		</div>
-
-		{#if message}
-			<p>{message}</p>
-		{/if}
 	</form>
 </div>

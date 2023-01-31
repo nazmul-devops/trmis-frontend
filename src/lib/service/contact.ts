@@ -15,20 +15,6 @@ export async function getContacts() {
 	}
 }
 
-export async function getContact(id) {
-	try {
-		const { data } = await http.get(`contact/${id}/`);
-		return {
-			status: 200,
-			data
-		};
-	} catch (err) {
-		return Promise.resolve({
-			status: 400
-		});
-	}
-}
-
 export async function createContact(payload) {
 	try {
 		const { data } = await http.post(`contact/`, payload);
