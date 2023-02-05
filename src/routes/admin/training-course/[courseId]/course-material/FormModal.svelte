@@ -14,7 +14,7 @@
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
-	let uploadedFiles = [];
+	// let uploadedFiles = [];
 
 	// function handleAdd(event) {
 	// 	uploadedFiles = event.detail;
@@ -39,7 +39,7 @@
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		uploaded_files: yup.array().min(1),
+		uploaded_files: yup.object(),
 		training_course_id: yup.string().required()
 	});
 
@@ -82,7 +82,8 @@
 	<form use:form>
 		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
-		<FileUploader
+		<input name="uploaded_files" type="file" />
+		<!-- <FileUploader
 			name="uploaded_files"
 			multiple
 			labelTitle="Upload files"
@@ -90,7 +91,7 @@
 			labelDescription=""
 			files={uploadedFiles}
 			status="complete"
-		/>
+		/> -->
 		<Select name="training_course_id" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}

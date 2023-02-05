@@ -78,7 +78,9 @@
 				</OverflowMenu>
 			{:else if cell.key === 'prerequisite_courses'}
 				{#each cell.value as item}
-					{item.title}
+					<ul>
+						<li>=> {item.title}</li>
+					</ul>
 				{/each}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>

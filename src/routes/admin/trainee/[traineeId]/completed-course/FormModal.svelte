@@ -70,12 +70,6 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<!-- <Select invalid={$errors.designation != null} name="trainee_id" labelText="Trainee">
-			<SelectItem text="choose Trainee" />
-			{#each $trainees.data as trainee}
-				<SelectItem value={trainee.phone} text={trainee.name} />
-			{/each}
-		</Select> -->
 		<Select invalid={$errors.training_course_id != null} name="training_course_id" labelText="Training Course">
 			<SelectItem text="choose Training Course" />
 			{#each $trainingCourses.data as course}

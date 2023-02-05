@@ -17,10 +17,6 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { page } from '$app/stores';
 
-	// $: {
-	// 	completedCourse.getCompletedCourses($page.params.trainee_id).then((resp) => console.log(resp));
-	// }
-
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'trainee_id', value: 'Trainee ID' },
