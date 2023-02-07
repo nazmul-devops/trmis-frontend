@@ -1,6 +1,8 @@
 <script lang="ts">
+	import { Loading } from 'carbon-components-svelte';
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
+	import { getCalenders } from '$lib/service/calendar';
 
 	export let today: Date; // Date
 	export let year = today.getFullYear();
@@ -23,29 +25,13 @@
 		'Dec'
 	];
 
-	let courses = {
-		3: [
-			'course one',
-			'course two',
-			'course two',
-			'course two',
-			'course two',
-			'course two',
-			'course two'
-		],
-		4: ['course one', 'course two'],
-		5: ['course one', 'course two'],
-		25: ['course one', 'course two', 'course three'],
-		26: ['course one', 'course two', 'course three']
-	};
+	let courses = {};
 
-	function getCoursesByDay(dayNumber) {
-		return courses[dayNumber] ? courses[dayNumber] : [];
+	$: {
+		getCalenders(year, month + 1).then((resp) => {
+			courses = resp.data;
+		});
 	}
-
-	// $: today_month = today && today.getMonth();
-	// $: today_year = today && today.getFullYear();
-	// $: today_day = today && today.getDate();
 
 	let prev = calendarize(new Date(year, month - 1), offset);
 	let current = calendarize(new Date(year, month), offset);
@@ -58,7 +44,7 @@
 			month = 11;
 			year--;
 		}
-
+		courses = {};
 		prev = calendarize(new Date(year, month - 1), offset);
 	}
 
@@ -70,7 +56,7 @@
 			month = 0;
 			year++;
 		}
-
+		courses = {};
 		next = calendarize(new Date(year, month + 1), offset);
 	}
 
@@ -79,8 +65,6 @@
 			today && today.getFullYear() === year && today.getMonth() === month && today.getDate() === day
 		);
 	}
-
-	let height = '90%';
 </script>
 
 <header class="t-flex t-my-5 t-mx-auto t-justify-center t-items-center t-select-none">
@@ -90,6 +74,7 @@
 </header>
 
 <div class="t-grid t-grid-cols-7 t-text-right t-gap-1">
+	<!-- {JSON.stringify(calenderCourse)} -->
 	{#each labels as txt, idx (txt)}
 		<span class="t-text-semibold t-text-center t-uppercase t-mb-5 "
 			>{labels[(idx + offset) % 7]}</span
@@ -108,9 +93,15 @@
 							{current[idxw][idxd]}
 						</span>
 						<div class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar">
-							{#each getCoursesByDay(current[idxw][idxd]) as schedule}
-								<li class=" ">{schedule}</li>
-							{/each}
+							{#if Object.keys(courses).length != 0}
+								{#each courses[parseInt(current[idxw][idxd])] ?? [] as schedule}
+									{#if schedule == null}
+										<Loading withOverlay={false} small />
+									{:else}
+										<li class="">{schedule}</li>
+									{/if}
+								{/each}
+							{/if}
 						</div>
 					</span>
 				{:else if idxw < 1}
