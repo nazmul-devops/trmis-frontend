@@ -31,7 +31,7 @@ export async function getCollaboration(id) {
 
 export async function updateCollaboration(payload) {
 	try {
-		const { data } = await http.put(`settings/collaboration/${payload.id}/`, payload);
+		const { data } = await http.patch(`settings/collaboration/${payload.id}/`, payload);
 		return {
 			status: 200,
 			data

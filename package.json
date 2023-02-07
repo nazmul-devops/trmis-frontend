@@ -32,6 +32,7 @@
 		"eslint-plugin-svelte3": "^4.0.0",
 		"felte": "^1.2.6",
 		"leaflet": "^1.9.3",
+		"luxon": "^3.2.1",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.0",

@@ -45,7 +45,11 @@ export async function updateCourseMaterial(payload) {
 
 export async function createCourseMaterial(payload) {
 	try {
-		const { data } = await http.post(`training-course/course-material/`, payload);
+		const { data } = await http.post(`training-course/course-material/`, payload, {
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		});
 		return {
 			status: 200,
 			data

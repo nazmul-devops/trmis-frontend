@@ -10,27 +10,34 @@ function createCompletedCourseStore() {
 		}));
 	}
 
-	async function getCompletedCourses() {
+	async function getCompletedCourses(traineeId) {
 		setLoading();
-		const resp = await completedCourseService.getCompletedCourses();
-		set({ loading: false, data: resp.data });
+		const resp = await completedCourseService.getCompletedCourses(traineeId);
+		// console.log(resp);
+		set({
+			loading: false,
+			data:
+				resp.data.length == 0
+					? []
+					: resp.data.map((item) => ({ ...item, id: item.training_course_id }))
+		});
 	}
 
-	async function deleteCompletedCourse(id: number) {
+	async function deleteCompletedCourse(id: number, traineeId) {
 		setLoading();
 		await completedCourseService.deleteCompletedCourse(id);
-		await getCompletedCourses();
+		await getCompletedCourses(traineeId);
 	}
 
 	async function updateCompletedCourse(payload) {
 		setLoading();
 		await completedCourseService.updateCompletedCourse(payload);
-		await getCompletedCourses();
+		await getCompletedCourses(payload.trainee_id);
 	}
 	async function createCompletedCourse(payload) {
 		setLoading();
 		await completedCourseService.createCompletedCourse(payload);
-		await getCompletedCourses();
+		await getCompletedCourses(payload.trainee_id);
 	}
 
 	return {

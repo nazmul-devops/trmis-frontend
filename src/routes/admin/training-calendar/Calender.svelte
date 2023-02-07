@@ -1,11 +1,11 @@
-<script>
+<script lang="ts">
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
 
-	export let year = null;
-	export let month = 0; // Jan
+	export let today: Date; // Date
+	export let year = today.getFullYear();
+	export let month = today.getMonth(); // Jan
 	export let offset = 0; // Sun
-	export let today = null; // Date
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	export let months = [
@@ -23,9 +23,29 @@
 		'Dec'
 	];
 
-	$: today_month = today && today.getMonth();
-	$: today_year = today && today.getFullYear();
-	$: today_day = today && today.getDate();
+	let courses = {
+		3: [
+			'course one',
+			'course two',
+			'course two',
+			'course two',
+			'course two',
+			'course two',
+			'course two'
+		],
+		4: ['course one', 'course two'],
+		5: ['course one', 'course two'],
+		25: ['course one', 'course two', 'course three'],
+		26: ['course one', 'course two', 'course three']
+	};
+
+	function getCoursesByDay(dayNumber) {
+		return courses[dayNumber] ? courses[dayNumber] : [];
+	}
+
+	// $: today_month = today && today.getMonth();
+	// $: today_year = today && today.getFullYear();
+	// $: today_day = today && today.getDate();
 
 	let prev = calendarize(new Date(year, month - 1), offset);
 	let current = calendarize(new Date(year, month), offset);
@@ -46,6 +66,7 @@
 		[prev, current] = [current, next];
 
 		if (++month > 11) {
+			isToday;
 			month = 0;
 			year++;
 		}
@@ -54,8 +75,12 @@
 	}
 
 	function isToday(day) {
-		return today && today_year === year && today_month === month && today_day === day;
+		return (
+			today && today.getFullYear() === year && today.getMonth() === month && today.getDate() === day
+		);
 	}
+
+	let height = '90%';
 </script>
 
 <header class="t-flex t-my-5 t-mx-auto t-justify-center t-items-center t-select-none">
@@ -76,15 +101,22 @@
 			{#each { length: 7 } as d, idxd (idxd)}
 				{#if current[idxw][idxd] != 0}
 					<span
-						class="t-h-28 t-text-lg  t-border-solid t-border t-border-gray-400 t-pr-2 t-text-semibold "
+						class=" t-h-full md:t-h-36 t-text-sm  t-border-solid t-border t-p-3 t-border-gray-400 t-text-semibold "
 						class:today={isToday(current[idxw][idxd])}
 					>
-						{current[idxw][idxd]}
+						<span>
+							{current[idxw][idxd]}
+						</span>
+						<div class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar">
+							{#each getCoursesByDay(current[idxw][idxd]) as schedule}
+								<li class=" ">{schedule}</li>
+							{/each}
+						</div>
 					</span>
 				{:else if idxw < 1}
-					<span class="t-text-[#a6b1c9]">{prev[prev.length - 1][idxd]}</span>
+					<span class="t-text-[#a6b1c9] t-p-3">{prev[prev.length - 1][idxd]}</span>
 				{:else}
-					<span class="t-text-[#a6b1c9]">{next[0][idxd]}</span>
+					<span class="t-text-[#a6b1c9] t-p-3">{next[0][idxd]}</span>
 				{/if}
 			{/each}
 		{/if}

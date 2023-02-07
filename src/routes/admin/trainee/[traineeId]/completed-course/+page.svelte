@@ -17,10 +17,6 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { page } from '$app/stores';
 
-	// $: {
-	// 	completedCourse.getCompletedCourses($page.params.trainee_id).then((resp) => console.log(resp));
-	// }
-
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'trainee_id', value: 'Trainee ID' },
@@ -38,12 +34,12 @@
 	}
 
 	async function doDelete() {
-		await completedCourses.deleteCompletedCourse(completedCourse.id);
+		// await completedCourses.deleteCompletedCourse(completedCourse.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		completedCourses.getCompletedCourses();
+		completedCourses.getCompletedCourses($page.params.traineeId);
 	});
 </script>
 
@@ -51,6 +47,7 @@
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
 	<DataTable
+		id="training_course_id"
 		size="short"
 		title="Completed Course"
 		description=""
