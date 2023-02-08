@@ -20,9 +20,8 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		{ key: 'serial_no', value: 'Serial No' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'serial_no', value: 'Serial_No' },
 		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -44,7 +43,6 @@
 
 	onMount(async () => {
 		grades.getGrades();
-		console.log($grades);
 	});
 </script>
 

@@ -130,10 +130,10 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavLink>
+			<!-- <SideNavLink>
 				<a href="/admin/users">Users</a>
 			</SideNavLink>
-			<SideNavDivider />
+			<SideNavDivider /> -->
 		</SideNavItems>
 	</SideNav>
 

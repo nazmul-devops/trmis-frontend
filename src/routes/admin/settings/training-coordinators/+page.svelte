@@ -20,7 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'code', value: 'Code' },
 		{ key: 'phone', value: 'Phone' },
@@ -53,17 +53,16 @@
 {#if $coordinators.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Training Coordinator" description="" {headers} rows={$coordinators.data}>
+	<DataTable
+		size="short"
+		title="Training Coordinator"
+		description=""
+		{headers}
+		rows={$coordinators.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<ToolbarMenu>
-					<ToolbarMenuItem primaryFocus>Restart all</ToolbarMenuItem>
-					<ToolbarMenuItem href="https://cloud.ibm.com/docs/loadbalancer-service"
-						>API documentation</ToolbarMenuItem
-					>
-					<ToolbarMenuItem hasDivider danger>Stop all</ToolbarMenuItem>
-				</ToolbarMenu>
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Coordinator</Button>
 			</ToolbarContent>
 		</Toolbar>

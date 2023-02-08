@@ -47,10 +47,6 @@
 			reset();
 		}
 	});
-
-	onMount(async () => {
-		grades.getGrades();
-	});
 </script>
 
 <Modal

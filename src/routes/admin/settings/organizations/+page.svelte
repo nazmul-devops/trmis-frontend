@@ -20,7 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		{ key: 'serial_no', value: 'Serial No' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
@@ -49,13 +49,7 @@
 {#if $organizations.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable
-		size="short"
-		title="Organization"
-		description=""
-		{headers}
-		rows={$organizations.data}
-	>
+	<DataTable size="short" title="Organization" description="" {headers} rows={$organizations.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
