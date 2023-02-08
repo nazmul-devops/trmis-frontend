@@ -1,11 +1,17 @@
 <script lang="ts">
+	import { ComboBox } from 'carbon-components-svelte';
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
+	import { getCalenders } from '$lib/service/calendar';
+	import { getTrainingCentersTitles } from '$lib/service/trainingCenter';
+	import { onMount } from 'svelte';
+	import { ref } from 'yup';
 
 	export let today: Date; // Date
 	export let year = today.getFullYear();
 	export let month = today.getMonth(); // Jan
 	export let offset = 0; // Sun
+	let training_center;
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	export let months = [
@@ -23,29 +29,18 @@
 		'Dec'
 	];
 
-	let courses = {
-		3: [
-			'course one',
-			'course two',
-			'course two',
-			'course two',
-			'course two',
-			'course two',
-			'course two'
-		],
-		4: ['course one', 'course two'],
-		5: ['course one', 'course two'],
-		25: ['course one', 'course two', 'course three'],
-		26: ['course one', 'course two', 'course three']
-	};
+	let courses = {};
+	let trainingCenterId;
 
-	function getCoursesByDay(dayNumber) {
-		return courses[dayNumber] ? courses[dayNumber] : [];
+	$: {
+		console.log(trainingCenterId);
 	}
 
-	// $: today_month = today && today.getMonth();
-	// $: today_year = today && today.getFullYear();
-	// $: today_day = today && today.getDate();
+	$: {
+		getCalenders(trainingCenterId, year, month + 1).then((resp) => {
+			courses = resp.data;
+		});
+	}
 
 	let prev = calendarize(new Date(year, month - 1), offset);
 	let current = calendarize(new Date(year, month), offset);
@@ -58,7 +53,7 @@
 			month = 11;
 			year--;
 		}
-
+		courses = {};
 		prev = calendarize(new Date(year, month - 1), offset);
 	}
 
@@ -70,7 +65,7 @@
 			month = 0;
 			year++;
 		}
-
+		courses = {};
 		next = calendarize(new Date(year, month + 1), offset);
 	}
 
@@ -80,8 +75,32 @@
 		);
 	}
 
-	let height = '90%';
+	function shouldFilterItem(item, value) {
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
+
+	// function filterWithCenter() {
+	// 	getTrainingCenterTitle(year, month + 1, training_center).then((resp) => {
+	// 		console.log(resp.data);
+	// 	});
+	// }
+
+	let trainingCenter = [];
+
+	onMount(async () => {
+		const { data } = await getTrainingCentersTitles();
+		trainingCenter = data.map((item) => ({ id: item.value, text: item.title }));
+	});
 </script>
+
+<ComboBox
+	bind:selectedId={trainingCenterId}
+	titleText="Training Center"
+	placeholder="Select Training center"
+	items={trainingCenter}
+	{shouldFilterItem}
+/>
 
 <header class="t-flex t-my-5 t-mx-auto t-justify-center t-items-center t-select-none">
 	<Arrow left on:click={toPrev} />
@@ -108,9 +127,11 @@
 							{current[idxw][idxd]}
 						</span>
 						<div class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar">
-							{#each getCoursesByDay(current[idxw][idxd]) as schedule}
-								<li class=" ">{schedule}</li>
-							{/each}
+							{#if Object.keys(courses).length != 0}
+								{#each courses[parseInt(current[idxw][idxd])] ?? [] as schedule}
+									<li class="">{schedule}</li>
+								{/each}
+							{/if}
 						</div>
 					</span>
 				{:else if idxw < 1}

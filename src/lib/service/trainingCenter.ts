@@ -64,3 +64,21 @@ export async function deleteTrainingCenter(id: number) {
 		return Promise.resolve();
 	}
 }
+
+export async function getTrainingCentersTitles() {
+	try {
+		const { data } = await http.get('training-center/title-combo/');
+		console.log(data);
+		return {
+			status: 200,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}
+
+
