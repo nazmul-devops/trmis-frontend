@@ -69,8 +69,8 @@
 >
 	<MultiSelect
 		selectedIds={prerequisites}
-		titleText="Contact"
-		label="Select contact methods..."
+		titleText="Prerequisite"
+		label="Select Prerequisite..."
 		items={$trainingCourses.data.map((item) => ({ ...item, text: item.title }))}
 		on:select={(e) => setFields('prerequisite_course_id', e.detail.selectedIds)}
 	/>

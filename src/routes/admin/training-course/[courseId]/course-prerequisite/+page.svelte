@@ -20,7 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		// { key: 'id', value: 'ID' },
 		{ key: 'course_name', value: 'Course Name' },
 		{ key: 'prerequisite_courses', value: 'prerequisite_courses' },
 		{ key: 'action', value: 'Action' }
