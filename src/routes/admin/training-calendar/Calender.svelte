@@ -94,19 +94,21 @@
 	});
 </script>
 
-<ComboBox
-	bind:selectedId={trainingCenterId}
-	titleText="Training Center"
-	placeholder="Select Training center"
-	items={trainingCenter}
-	{shouldFilterItem}
-/>
+<div class=" t-flex t-justify-between  t-mb-5">
+	<ComboBox
+		bind:selectedId={trainingCenterId}
+		titleText="Training Center"
+		placeholder="Select Training center"
+		items={trainingCenter}
+		{shouldFilterItem}
+	/>
 
-<header class="t-flex t-my-5 t-mx-auto t-justify-center t-items-center t-select-none">
-	<Arrow left on:click={toPrev} />
-	<h4 class="t-block t-text-center t-uppercase t-text-4xl">{months[month]} {year}</h4>
-	<Arrow on:click={toNext} />
-</header>
+	<header class="t-my-5 t-flex t-items-center t-select-none">
+		<Arrow left on:click={toPrev} />
+		<h4 class="t-block t-text-center t-uppercase t-text-4xl">{months[month]} {year}</h4>
+		<Arrow on:click={toNext} />
+	</header>
+</div>
 
 <div class="t-grid t-grid-cols-7 t-text-right t-gap-1">
 	{#each labels as txt, idx (txt)}
