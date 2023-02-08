@@ -18,7 +18,6 @@
 	export let open = true;
 	export let schedule = {
 		id: null,
-		title: null,
 		training_course: null,
 		training_center: null,
 		start_date: null,
@@ -26,7 +25,6 @@
 	};
 
 	function formSetFields() {
-		setFields('title', schedule.title);
 		setFields('training_course', schedule.training_course);
 		setFields('training_center', schedule.training_center);
 		setFields('start_date', schedule.start_date);
@@ -40,7 +38,6 @@
 	}
 
 	const schema = yup.object({
-		title: yup.string().required(),
 		training_course: yup.number().required(),
 		training_center: yup.number().required(),
 		start_date: yup.string().required(),
@@ -86,18 +83,12 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.title != null}
-			name="title"
-			labelText="Title"
-			placeholder="Enter Title..."
-		/>
 		<Select
 			invalid={$errors.training_course != null}
 			name="training_course"
 			labelText="Training Course"
 		>
-			<SelectItem text="choose Designation" />
+			<SelectItem text="choose course" />
 			{#each $trainingCourses.data as Course}
 				<SelectItem value={Course.id} text={Course.title} />
 			{/each}
