@@ -47,7 +47,13 @@
 {#if $trainingSchedules.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Training Schedule" description="" {headers} rows={$trainingSchedules.data}>
+	<DataTable
+		size="short"
+		title="Training Schedule"
+		description=""
+		{headers}
+		rows={$trainingSchedules.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -57,10 +63,6 @@
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem
-						on:click={() => goto(`/admin/trainer/${row.phone}/education`)}
-						text="Education"
-					/>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
