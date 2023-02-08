@@ -26,8 +26,6 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			console.log(data);
-			// return;
 			if (division.id) {
 				await divisions.updateDivision({ ...data, id: division.id });
 			} else {
