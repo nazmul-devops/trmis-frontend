@@ -1,4 +1,6 @@
 import { http } from '$lib/service/auth';
+import { generateFromData } from '$lib/service/utilities';
+import axios from 'axios';
 
 export async function getCourseMaterials() {
 	try {
@@ -31,7 +33,12 @@ export async function getCourseMaterial(id) {
 
 export async function updateCourseMaterial(payload) {
 	try {
-		const { data } = await http.put(`training-course/course-material/${payload.id}/`, payload);
+		const { data } = await http({
+			method: 'PUT',
+			url: `training-course/course-material/${payload.id}/`,
+			data: generateFromData(payload),
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
 		return {
 			status: 200,
 			data
@@ -45,11 +52,15 @@ export async function updateCourseMaterial(payload) {
 
 export async function createCourseMaterial(payload) {
 	try {
-		const { data } = await http.post(`training-course/course-material/`, payload, {
-			headers: {
-				'Content-Type': 'multipart/form-data'
-			}
+		const formData = await generateFromData(payload);
+
+		const { data } = await http({
+			method: 'POST',
+			url: 'training-course/course-material/',
+			data: formData,
+			headers: { 'Content-Type': 'multipart/form-data' }
 		});
+		console.log(data);
 		return {
 			status: 200,
 			data

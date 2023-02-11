@@ -84,5 +84,5 @@
 			<SelectItem value={course.id} text={course.title} />
 		{/each}
 	</Select>
-	<!-- {JSON.stringify($errors)} -->
+	{JSON.stringify($errors)}
 </Modal>

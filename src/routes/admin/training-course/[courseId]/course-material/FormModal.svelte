@@ -29,8 +29,11 @@
 	$: {
 		setFields('title', courseMaterial.title);
 		setFields('description', courseMaterial.description);
-		// setFields('uploaded_files', courseMaterial.uploaded_files);
 		setFields('training_course_id', courseMaterial.training_course_id);
+	}
+
+	$: {
+		setFields('uploaded_files', files);
 	}
 
 	const schema = yup.object({
@@ -75,26 +78,12 @@
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
 		<FileUploader
 			bind:this={fileUploader}
-			multiple
 			labelTitle="Upload files"
 			buttonLabel="Add files"
+			multiple
 			bind:files
 			status="complete"
 			type="file"
-			on:add={() => {
-				// files.forEach((file, index) => {
-				// 	const reader = new FileReader();
-				// 	reader.onload = (e) => {
-				// 		// console.log('ok -> ', e.target?.result);
-				// 		addField('uploaded_files', e.target?.result, index);
-				// 	};
-				// 	reader.onerror = (e) => {
-				// 		console.log('Error : ' + e.type);
-				// 	};
-				// 	reader.readAsBinaryString(file);
-				// });
-				console.log(files 	);
-			}}
 		/>
 		<Select name="training_course_id" labelText="Course">
 			<SelectItem text="choose Course" />
