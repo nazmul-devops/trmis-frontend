@@ -22,7 +22,7 @@
 		{ key: 'id', value: 'ID' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'description', value: 'Description' },
-		{ key: 'uploaded_files', value: 'File' },
+		{ key: 'files', value: 'File' },
 		{ key: 'training_course_name', value: 'Course Name' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -77,6 +77,13 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'files'}
+				<!-- {JSON.stringify(cell.value)} -->
+				{#each cell.value as item}
+					<ul>
+						<li>=> {item.file}</li>
+					</ul>
+				{/each}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
