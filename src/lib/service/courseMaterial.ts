@@ -32,11 +32,12 @@ export async function getCourseMaterial(id) {
 }
 
 export async function updateCourseMaterial(payload) {
+	const formData = await generateFromData(payload);
 	try {
 		const { data } = await http({
 			method: 'PUT',
 			url: `training-course/course-material/${payload.id}/`,
-			data: generateFromData(payload),
+			data: formData,
 			headers: { 'Content-Type': 'multipart/form-data' }
 		});
 		return {

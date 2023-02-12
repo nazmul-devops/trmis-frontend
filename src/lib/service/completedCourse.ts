@@ -1,7 +1,6 @@
 import { http } from '$lib/service/auth';
 
 export async function getCompletedCourses(traineeId) {
-	// console.log(traineeId);
 	try {
 		const { data } = await http.get('trainee/completed-course/', {
 			params: { trainee_id: traineeId }
