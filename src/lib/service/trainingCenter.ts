@@ -1,8 +1,8 @@
 import { http } from '$lib/service/auth';
 
-export async function getTrainingCenters() {
+export async function getTrainingCenters(subDistrict = null) {
 	try {
-		const { data } = await http.get('training-center/');
+		const { data } = await http.get('training-center/', { params: { sub_district: subDistrict } });
 		return {
 			status: 200,
 			data
@@ -80,5 +80,3 @@ export async function getTrainingCentersTitles() {
 		});
 	}
 }
-
-

@@ -39,29 +39,29 @@ export const locations = [
 		zilas: [
 			{
 				id: 3,
-				text: 'Lorem',
-				upozilas: [
+				text: 'Thakurgaon',
+				upazilas: [
 					{
 						id: 5,
-						text: 'lorem ipsum'
+						text: 'Kelor kirti'
 					},
 					{
 						id: 6,
-						text: 'dolor sit amet'
+						text: 'Jamai 420'
 					}
 				]
 			},
 			{
 				id: 4,
-				text: 'Ipsum',
-				upozilas: [
+				text: 'Dinajpur',
+				upazilas: [
 					{
 						id: 7,
-						text: 'lorem ipsum'
+						text: 'Rongmala'
 					},
 					{
 						id: 8,
-						text: 'dolor sit amet'
+						text: 'Bangla Bazar'
 					}
 				]
 			}

@@ -3,10 +3,9 @@
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
 	import { getCalenders } from '$lib/service/calendar';
-	import { getTrainingCentersTitles } from '$lib/service/trainingCenter';
+	import { getTrainingCentersTitles, getTrainingCenters } from '$lib/service/trainingCenter';
 	import { locations } from './data';
 	import { onMount } from 'svelte';
-	import { divisions } from '$lib/store/division';
 
 	export let today: Date; // Date
 	export let year = today.getFullYear();
@@ -39,7 +38,14 @@
 	}
 
 	$: {
-		getCalenders(trainingCenterId, year, month + 1).then((resp) => {
+		getCalenders(
+			trainingCenterId,
+			selectedDivisionId,
+			selectedZilaId,
+			selectedUpazilaId,
+			year,
+			month + 1
+		).then((resp) => {
 			courses = resp.data;
 		});
 	}
@@ -111,10 +117,15 @@
 		}
 	}
 
-	onMount(async () => {
-		const { data } = await getTrainingCentersTitles();
-		trainingCenter = data.map((item) => ({ id: item.value, text: item.title }));
-	});
+	$: {
+		if (selectedUpazilaId) {
+			getTrainingCenters(selectedUpazilaId).then((resp) => {
+				trainingCenter = resp.data.map((item) => ({ ...item, text: item.name }));
+			});
+		}
+	}
+
+	onMount(async () => {});
 </script>
 
 <div class=" t-flex t-justify-between  t-mb-5">
@@ -127,28 +138,33 @@
 				items={locations}
 				{shouldFilterItem}
 			/>
-			<ComboBox
-				bind:selectedId={selectedZilaId}
-				titleText="Training District"
-				placeholder="Select District"
-				items={zilaOptions}
-				{shouldFilterItem}
-			/>
-			<ComboBox
-				bind:selectedId={selectedUpazilaId}
-				titleText="Training Sub-District"
-				placeholder="Select Sub-District"
-				items={upazilaOptions}
-				{shouldFilterItem}
-			/>
-			<ComboBox
-				bind:selectedId={trainingCenterId}
-				titleText="Training Center"
-				placeholder="Select Training center"
-				items={trainingCenter}
-				{shouldFilterItem}
-			/>
-			<Button type="submit">Primary button</Button>
+			<div class={`${selectedDivisionId ? 't-block' : 't-hidden'}`}>
+				<ComboBox
+					bind:selectedId={selectedZilaId}
+					titleText="Training District"
+					placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
+					items={zilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div class={`${selectedZilaId ? 't-block' : 't-hidden'}`}>
+				<ComboBox
+					bind:selectedId={selectedUpazilaId}
+					titleText="Training Sub-District"
+					placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
+					items={upazilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div class={`${selectedUpazilaId ? 't-block' : 't-hidden'}`}>
+				<ComboBox
+					bind:selectedId={trainingCenterId}
+					titleText="Training Center"
+					placeholder="Select Training center"
+					items={trainingCenter}
+					{shouldFilterItem}
+				/>
+			</div>
 		</div>
 	</form>
 

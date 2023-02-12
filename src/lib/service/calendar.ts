@@ -1,9 +1,16 @@
 import { http } from '$lib/service/auth';
 
-export async function getCalenders(trainingCenter = null, year, month) {
+export async function getCalenders(
+	trainingCenter = null,
+	division = null,
+	district = null,
+	subDistrict = null,
+	year,
+	month
+) {
 	try {
 		const { data } = await http.get('training-course/calender-course/', {
-			params: {  training_center: trainingCenter, year, month }
+			params: { training_center: trainingCenter, year, month, division, district, sub_district: subDistrict }
 		});
 		return {
 			status: 200,
