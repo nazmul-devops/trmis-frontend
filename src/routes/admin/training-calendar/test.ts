@@ -1,3 +1,4 @@
+
 export default function (target, offset) {
 	var i = 0,
 		j = 0,

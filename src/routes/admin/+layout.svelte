@@ -61,15 +61,15 @@
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/trainee">Trainee</a>
+				<a href="/admin/trainee">Participant</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/trainer">Trainer</a>
+				<a href="/admin/trainer">Resources Person</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/training-center">Training Center</a>
+				<a href="/admin/training-center">Training Venue</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
@@ -78,17 +78,17 @@
 			<SideNavDivider />
 			<SideNavMenu text="Training Courses">
 				<SideNavLink>
-					<a href="/admin/training-course">Courses</a>
+					<a href="/admin/training-course">Training</a>
 				</SideNavLink>
 				<SideNavLink>
-					<a href="/admin/training-course/1/course-category">Course Category</a>
+					<a href="/admin/training-course/1/course-category">Training Category</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/training-course/1/course-material">Training Material</a>
 				</SideNavLink>
 				<!-- <SideNavLink>
-					<a href="/admin/training-course/1/course-material">Course Material</a>
-				</SideNavLink> -->
-				<SideNavLink>
 					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
-				</SideNavLink>
+				</SideNavLink> -->
 				<!-- <SideNavLink>
 					<a href="/admin/training-course/1/course-topic">Course Topic</a>
 				</SideNavLink> -->
@@ -110,15 +110,15 @@
 			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavMenu text="Settings">
-				<SideNavLink>
+				<!-- <SideNavLink>
 					<a href="/admin/settings/collaborations">Collaborations</a>
-				</SideNavLink>
+				</SideNavLink> -->
 				<SideNavLink>
 					<a href="/admin/settings/designations">Designations</a>
 				</SideNavLink>
-				<SideNavLink>
+				<!-- <SideNavLink>
 					<a href="/admin/settings/grades">Grades</a>
-				</SideNavLink>
+				</SideNavLink> -->
 				<SideNavLink>
 					<a href="/admin/settings/organizations">Organization</a>
 				</SideNavLink>
