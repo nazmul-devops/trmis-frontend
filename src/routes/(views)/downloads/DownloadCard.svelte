@@ -3,6 +3,7 @@
 	export let materialTitle;
 	export let fileType;
 	let icon;
+	export let link;
 
 	$: {
 		if (fileType == 'ppt') {
@@ -40,11 +41,12 @@
 			<div
 				class="t-rounded-full  t-h-20 t-w-20 t-text-gray-900  t-justify-center t-items-center t-flex"
 			>
-				<p
+				<a
+					href={link}
 					class="t-text-align-center t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] "
 				>
-					<i class="las la-download t-text-4xl t-font-semibold t-cursor-pointer" />
-				</p>
+					<i class="las la-download t-text-4xl t-font-semibold" />
+				</a>
 			</div>
 		</div>
 	</div>

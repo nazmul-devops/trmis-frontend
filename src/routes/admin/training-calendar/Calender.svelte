@@ -1,10 +1,9 @@
 <script lang="ts">
-	import { ComboBox, Modal, Button } from 'carbon-components-svelte';
+	import { ComboBox, Modal } from 'carbon-components-svelte';
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
-	import { getCalenders } from '$lib/service/calendar';
-	import { getTrainingCentersTitles, getTrainingCenters } from '$lib/service/trainingCenter';
-	import { locations } from './data';
+	import { getCalenders, getLocations } from '$lib/service/calendar';
+	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { onMount } from 'svelte';
 
 	export let today: Date; // Date
@@ -96,6 +95,13 @@
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
+	let locations = [];
+
+	$: {
+		getLocations().then((resp) => {
+			locations = resp.data;
+		});
+	}
 
 	$: {
 		if (selectedDivisionId) {
@@ -138,33 +144,30 @@
 				items={locations}
 				{shouldFilterItem}
 			/>
-			<div class={`${selectedDivisionId ? 't-block' : 't-hidden'}`}>
-				<ComboBox
-					bind:selectedId={selectedZilaId}
-					titleText="Training District"
-					placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
-					items={zilaOptions}
-					{shouldFilterItem}
-				/>
-			</div>
-			<div class={`${selectedZilaId ? 't-block' : 't-hidden'}`}>
-				<ComboBox
-					bind:selectedId={selectedUpazilaId}
-					titleText="Training Sub-District"
-					placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
-					items={upazilaOptions}
-					{shouldFilterItem}
-				/>
-			</div>
-			<div class={`${selectedUpazilaId ? 't-block' : 't-hidden'}`}>
-				<ComboBox
-					bind:selectedId={trainingCenterId}
-					titleText="Training Center"
-					placeholder="Select Training center"
-					items={trainingCenter}
-					{shouldFilterItem}
-				/>
-			</div>
+			<ComboBox
+				disabled={!selectedDivisionId}
+				bind:selectedId={selectedZilaId}
+				titleText="Training District"
+				placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
+				items={zilaOptions}
+				{shouldFilterItem}
+			/>
+			<ComboBox
+				disabled={!selectedZilaId}
+				bind:selectedId={selectedUpazilaId}
+				titleText="Training Sub-District"
+				placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
+				items={upazilaOptions}
+				{shouldFilterItem}
+			/>
+			<ComboBox
+				disabled={!selectedUpazilaId}
+				bind:selectedId={trainingCenterId}
+				titleText="Training Center"
+				placeholder="Select Training center"
+				items={trainingCenter}
+				{shouldFilterItem}
+			/>
 		</div>
 	</form>
 
