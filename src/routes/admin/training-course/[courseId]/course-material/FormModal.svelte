@@ -4,14 +4,7 @@
 	import * as yup from 'yup';
 	import { courseMaterials } from '$lib/store/courseMaterial';
 	import { trainingCourses } from '$lib/store/trainingCourse';
-	import {
-		Modal,
-		FileUploader,
-		TextInput,
-		Select,
-		SelectItem,
-		Button
-	} from 'carbon-components-svelte';
+	import { Modal, FileUploader, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	let fileUploader;
@@ -26,24 +19,41 @@
 		training_course_id: null
 	};
 
-	$: {
+	function formSetFields() {
 		setFields('title', courseMaterial.title);
 		setFields('description', courseMaterial.description);
 		setFields('training_course_id', courseMaterial.training_course_id);
 	}
 
+	function formSetFieldsForFile() {
+		setFields('uploaded_files', files);
+	}
 	$: {
 		setFields('uploaded_files', files);
+		// formSetFieldsForFile();
+	}
+
+	$: {
+		// formSetFieldsForFile();
+		if (courseMaterial.id != null) {
+			formSetFields();
+		}
 	}
 
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
 		uploaded_files: yup.array().min(1),
-		training_course_id: yup.string().required()
+		training_course_id: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, addField } = createForm({
+		transform: (values: any) => {
+			return {
+				...values,
+				training_course_id: parseInt(values.training_course_id)
+			};
+		},
 		extend: validator({ schema })
 	});
 

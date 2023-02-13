@@ -1,17 +1,18 @@
 <script lang="ts">
-	import { ComboBox } from 'carbon-components-svelte';
+	import { ComboBox, Modal, Button } from 'carbon-components-svelte';
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
 	import { getCalenders } from '$lib/service/calendar';
-	import { getTrainingCentersTitles } from '$lib/service/trainingCenter';
+	import { getTrainingCentersTitles, getTrainingCenters } from '$lib/service/trainingCenter';
+	import { locations } from './data';
 	import { onMount } from 'svelte';
-	import { ref } from 'yup';
 
 	export let today: Date; // Date
 	export let year = today.getFullYear();
 	export let month = today.getMonth(); // Jan
 	export let offset = 0; // Sun
-	let training_center;
+	let open = false;
+	let trainingScheduleList = [];
 
 	export let labels = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 	export let months = [
@@ -31,13 +32,20 @@
 
 	let courses = {};
 	let trainingCenterId;
+	let thisDate;
 
 	$: {
-		console.log(trainingCenterId);
 	}
 
 	$: {
-		getCalenders(trainingCenterId, year, month + 1).then((resp) => {
+		getCalenders(
+			trainingCenterId,
+			selectedDivisionId,
+			selectedZilaId,
+			selectedUpazilaId,
+			year,
+			month + 1
+		).then((resp) => {
 			courses = resp.data;
 		});
 	}
@@ -80,28 +88,85 @@
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	// function filterWithCenter() {
-	// 	getTrainingCenterTitle(year, month + 1, training_center).then((resp) => {
-	// 		console.log(resp.data);
-	// 	});
-	// }
-
 	let trainingCenter = [];
 
-	onMount(async () => {
-		const { data } = await getTrainingCentersTitles();
-		trainingCenter = data.map((item) => ({ id: item.value, text: item.title }));
-	});
+	let selectedDivisionId;
+	let selectedZilaId;
+	let selectedUpazilaId;
+
+	let zilaOptions = [];
+	let upazilaOptions = [];
+
+	$: {
+		if (selectedDivisionId) {
+			let index = locations.findIndex((item) => item.id === selectedDivisionId);
+			zilaOptions = locations[index]?.zilas;
+		} else {
+			zilaOptions = [];
+			selectedZilaId = null;
+		}
+	}
+
+	$: {
+		if (selectedZilaId) {
+			let index = zilaOptions.findIndex((item) => item.id === selectedZilaId);
+			upazilaOptions = zilaOptions[index]?.upazilas;
+		} else {
+			upazilaOptions = [];
+			selectedUpazilaId = null;
+		}
+	}
+
+	$: {
+		if (selectedUpazilaId) {
+			getTrainingCenters(selectedUpazilaId).then((resp) => {
+				trainingCenter = resp.data.map((item) => ({ ...item, text: item.name }));
+			});
+		}
+	}
+
+	onMount(async () => {});
 </script>
 
 <div class=" t-flex t-justify-between  t-mb-5">
-	<ComboBox
-		bind:selectedId={trainingCenterId}
-		titleText="Training Center"
-		placeholder="Select Training center"
-		items={trainingCenter}
-		{shouldFilterItem}
-	/>
+	<form>
+		<div class=" t-flex t-gap-2 ">
+			<ComboBox
+				bind:selectedId={selectedDivisionId}
+				titleText="Division"
+				placeholder="Select Division"
+				items={locations}
+				{shouldFilterItem}
+			/>
+			<div class={`${selectedDivisionId ? 't-block' : 't-hidden'}`}>
+				<ComboBox
+					bind:selectedId={selectedZilaId}
+					titleText="Training District"
+					placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
+					items={zilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div class={`${selectedZilaId ? 't-block' : 't-hidden'}`}>
+				<ComboBox
+					bind:selectedId={selectedUpazilaId}
+					titleText="Training Sub-District"
+					placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
+					items={upazilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div class={`${selectedUpazilaId ? 't-block' : 't-hidden'}`}>
+				<ComboBox
+					bind:selectedId={trainingCenterId}
+					titleText="Training Center"
+					placeholder="Select Training center"
+					items={trainingCenter}
+					{shouldFilterItem}
+				/>
+			</div>
+		</div>
+	</form>
 
 	<header class="t-my-5 t-flex t-items-center t-select-none">
 		<Arrow left on:click={toPrev} />
@@ -128,10 +193,23 @@
 						<span>
 							{current[idxw][idxd]}
 						</span>
-						<div class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar">
+						<div
+							class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar t-cursor-pointer"
+							on:keypress={() => {
+								trainingScheduleList = courses[parseInt(current[idxw][idxd])];
+								open = true;
+							}}
+							on:click={() => {
+								thisDate = current[idxw][idxd];
+								trainingScheduleList = courses[parseInt(current[idxw][idxd])];
+								open = true;
+							}}
+						>
 							{#if Object.keys(courses).length != 0}
 								{#each courses[parseInt(current[idxw][idxd])] ?? [] as schedule}
-									<li class="">{schedule}</li>
+									<li class="">
+										{schedule}
+									</li>
 								{/each}
 							{/if}
 						</div>
@@ -145,6 +223,14 @@
 		{/if}
 	{/each}
 </div>
+
+<Modal passiveModal bind:open modalHeading={`${months[month]} ${thisDate}`} on:open on:close>
+	{#each trainingScheduleList as item}
+		<li>
+			{item}
+		</li>
+	{/each}
+</Modal>
 
 <style>
 </style>
