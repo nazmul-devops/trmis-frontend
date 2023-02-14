@@ -2,7 +2,8 @@
 	import { ComboBox, Modal } from 'carbon-components-svelte';
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
-	import { getCalenders, getLocations } from '$lib/service/calendar';
+	import { getCalenders } from '$lib/service/calendar';
+	import { getLocations } from  '$lib/service/locations'
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { onMount } from 'svelte';
 
@@ -137,29 +138,29 @@
 <div class=" t-flex t-justify-between  t-mb-5">
 	<form>
 		<div class=" t-flex t-gap-2 ">
-			<ComboBox
-				bind:selectedId={selectedDivisionId}
-				titleText="Division"
-				placeholder="Select Division"
-				items={locations}
-				{shouldFilterItem}
-			/>
-			<ComboBox
-				disabled={!selectedDivisionId}
-				bind:selectedId={selectedZilaId}
-				titleText="Training District"
-				placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
-				items={zilaOptions}
-				{shouldFilterItem}
-			/>
-			<ComboBox
-				disabled={!selectedZilaId}
-				bind:selectedId={selectedUpazilaId}
-				titleText="Training Sub-District"
-				placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
-				items={upazilaOptions}
-				{shouldFilterItem}
-			/>
+				<ComboBox
+					bind:selectedId={selectedDivisionId}
+					titleText="Division"
+					placeholder="Select Division"
+					items={locations}
+					{shouldFilterItem}
+				/>
+				<ComboBox
+					disabled={!selectedDivisionId}
+					bind:selectedId={selectedZilaId}
+					titleText="Training District"
+					placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
+					items={zilaOptions}
+					{shouldFilterItem}
+				/>
+				<ComboBox
+					disabled={!selectedZilaId}
+					bind:selectedId={selectedUpazilaId}
+					titleText="Training Sub-District"
+					placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
+					items={upazilaOptions}
+					{shouldFilterItem}
+				/>
 			<ComboBox
 				disabled={!selectedUpazilaId}
 				bind:selectedId={trainingCenterId}
