@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte';
 
 	let fileUploader;
-	let files;
+	let files = [];
 
 	export let open = true;
 	export let courseMaterial = {
@@ -25,10 +25,7 @@
 		setFields('training_course_id', courseMaterial.training_course_id);
 	}
 
-	function formSetFieldsForFile() {
-		setFields('files', files);
-	}
-
+	function formSetFieldsForFile() {}
 
 	$: {
 		// formSetFieldsForFile();
@@ -38,17 +35,18 @@
 	}
 
 	$: {
-		// setFields('uploaded_files', files);
-		formSetFieldsForFile();
+		setFields('files', files[0]);
+		console.log(files[0]);
 	}
+
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		files: yup.string().required(),
+		files: yup.mixed().required(),
 		training_course_id: yup.number().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, addField } = createForm({
+	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
@@ -87,6 +85,12 @@
 	<form use:form>
 		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
 		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
+		<Select name="training_course_id" labelText="Course">
+			<SelectItem text="choose Course" />
+			{#each $trainingCourses.data as course}
+				<SelectItem value={course.id} text={course.title} />
+			{/each}
+		</Select>
 		<FileUploader
 			bind:this={fileUploader}
 			labelTitle="Upload files"
@@ -95,12 +99,6 @@
 			status="complete"
 			type="file"
 		/>
-		<Select name="training_course_id" labelText="Course">
-			<SelectItem text="choose Course" />
-			{#each $trainingCourses.data as course}
-				<SelectItem value={course.id} text={course.title} />
-			{/each}
-		</Select>
-		{JSON.stringify($errors)}
+		{JSON.stringify($errors, $data)}
 	</form>
 </Modal>
