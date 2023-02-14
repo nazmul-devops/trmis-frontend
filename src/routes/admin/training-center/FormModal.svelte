@@ -50,6 +50,14 @@
 		}
 	}
 
+	$: {
+		if (selectedUpazilaId) {
+			setFields('sub_district', selectedUpazilaId);
+		} else {
+			setFields('sub_district', null);
+		}
+	}
+
 	export let open = true;
 	export let trainingCenter = {
 		id: null,
@@ -65,6 +73,7 @@
 		// setFields('division', trainingCenter.division);
 		selectedDivisionId = trainingCenter.division;
 		selectedZilaId = trainingCenter.district;
+		selectedUpazilaId = trainingCenter.sub_district;
 		setFields('address', trainingCenter.address);
 	}
 
@@ -73,10 +82,9 @@
 			setFormFields();
 		} else {
 			setFields('name', null);
-			selectedDivisionId = null;
-			// setFields('division', null);
-			// setFields('district', null);
-			// setFields('sub_district', null);
+			setFields('division', null);
+			setFields('district', null);
+			setFields('sub_district', null);
 			setFields('address', null);
 		}
 	}
