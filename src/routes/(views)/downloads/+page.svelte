@@ -1,8 +1,6 @@
 <script>
 	import { httpWeb } from '$lib/service/auth';
 	import PageTitle from '$lib/PageTitle.svelte';
-	import axios from 'axios';
-	import { Course } from 'carbon-icons-svelte';
 	import { onMount } from 'svelte';
 	import DownloadCard from './DownloadCard.svelte';
 
@@ -10,18 +8,16 @@
 	let courseMaterials = [];
 	let dropdown = false;
 
-	async function getcourses() {
-		let {
-			data: { data }
-		} = await httpWeb.get('mock/courses');
+	async function getCourses() {
+		let { data } = await httpWeb.get('training-course/');
 		courses = data;
-		getCourseMaterials(1);
+		getCourseMaterials();
 	}
 
-	async function getCourseMaterials(id = 1) {
-		let {
-			data: { data }
-		} = await httpWeb.get(`mock/course-materials`);
+	async function getCourseMaterials(id) {
+		let { data } = await httpWeb.get(`training-course/course-material/`, {
+			params: { training_course_id: id }
+		});
 		courseMaterials = data;
 	}
 
@@ -32,7 +28,8 @@
 	const handledropdownClick = () => (dropdown = !dropdown);
 
 	onMount(() => {
-		getcourses();
+		getCourses();
+		getCourseMaterials();
 	});
 </script>
 
@@ -57,12 +54,13 @@
 							class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}
 						>
 							{#each courses as course}
-								<div on:click={() => (dropdown = false)}>
+								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
 									<li
 										on:click={() => getCourseMaterials(course.id)}
+										on:keypress={() => getCourseMaterials(course.id)}
 										class="t-py-5 t-px-4 t-cursor-pointer "
 									>
-										{course.name}
+										{course.title}
 									</li>
 									<hr />
 								</div>
@@ -75,6 +73,7 @@
 						dropdown ? 't-absolute t-top-0 t-left-2' : 't-relative t-bg-white t-shadow-lg'
 					}`}
 					on:click={handledropdownClick}
+					on:keypress={handledropdownClick}
 				>
 					<div class="t-z-50">
 						{#if dropdown}
@@ -104,6 +103,7 @@
 							materialTitle={materials.title}
 							desc={materials.description}
 							fileType={getFileType(materials.title)}
+							link={'https://www.youtube.com/'}
 						/>
 					{/each}
 				</div>

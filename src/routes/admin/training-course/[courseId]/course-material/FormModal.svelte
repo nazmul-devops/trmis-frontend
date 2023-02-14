@@ -8,14 +8,14 @@
 	import { onMount } from 'svelte';
 
 	let fileUploader;
-	let files: Array<any> = [];
+	let files;
 
 	export let open = true;
 	export let courseMaterial = {
 		id: null,
 		title: null,
 		description: null,
-		uploaded_files: [],
+		files: null,
 		training_course_id: null
 	};
 
@@ -26,12 +26,9 @@
 	}
 
 	function formSetFieldsForFile() {
-		setFields('uploaded_files', files);
+		setFields('files', files);
 	}
-	$: {
-		setFields('uploaded_files', files);
-		// formSetFieldsForFile();
-	}
+
 
 	$: {
 		// formSetFieldsForFile();
@@ -40,10 +37,14 @@
 		}
 	}
 
+	$: {
+		// setFields('uploaded_files', files);
+		formSetFieldsForFile();
+	}
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
-		uploaded_files: yup.array().min(1),
+		files: yup.string().required(),
 		training_course_id: yup.number().required()
 	});
 
@@ -90,7 +91,6 @@
 			bind:this={fileUploader}
 			labelTitle="Upload files"
 			buttonLabel="Add files"
-			multiple
 			bind:files
 			status="complete"
 			type="file"

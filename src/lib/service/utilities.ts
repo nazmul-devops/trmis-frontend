@@ -8,6 +8,7 @@ export async function generateFromData(payload) {
 		} else {
 			formData.append(key, payload[key]);
 		}
+		
 	});
 	return formData;
 }

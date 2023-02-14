@@ -10,8 +10,30 @@ export async function getCalenders(
 ) {
 	try {
 		const { data } = await http.get('training-course/calender-course/', {
-			params: { training_center: trainingCenter, year, month, division, district, sub_district: subDistrict }
+			params: {
+				training_center: trainingCenter,
+				year,
+				month,
+				division,
+				district,
+				sub_district: subDistrict
+			}
 		});
+		return {
+			status: 200,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}
+
+export async function getLocations() {
+	try {
+		const { data } = await http.get('location/');
 		return {
 			status: 200,
 			data

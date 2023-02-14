@@ -77,13 +77,13 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-			{:else if cell.key === 'files'}
-				<!-- {JSON.stringify(cell.value)} -->
-				{#each cell.value as item}
+			<!-- {:else if cell.key === 'files'} -->
+				
+				<!-- {#each cell.value as item}
 					<ul>
-						<li>=> {item.file}</li>
+						<li>{item}</li>
 					</ul>
-				{/each}
+				{/each} -->
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
