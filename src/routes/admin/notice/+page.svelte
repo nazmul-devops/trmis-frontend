@@ -26,7 +26,7 @@
 		{ key: 'description', value: 'Description' },
 		{ key: 'files', value: 'Notice File' },
 		{ key: 'show_in_home_page', value: 'Status' },
-		{ key: 'expiration_date', value: 'Exp Date' },
+		// { key: 'expiration_date', value: 'Exp Date' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -83,7 +83,7 @@
 					/>
 				</OverflowMenu>
 			{:else if cell.key === 'show_in_home_page'}
-				<Toggle toggled={cell.value} labelA="" labelB="" disabled />
+				<Toggle toggled={cell.value} labelA="Disabled" labelB="Active" disabled />
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

@@ -50,6 +50,14 @@
 		}
 	}
 
+	$: {
+		if (selectedUpazilaId) {
+			setFields('sub_district', selectedUpazilaId);
+		} else {
+			setFields('sub_district', null);
+		}
+	}
+
 	export let open = true;
 	export let trainingCenter = {
 		id: null,
@@ -73,7 +81,9 @@
 			setFormFields();
 		} else {
 			setFields('name', null);
-			selectedDivisionId = null;
+			// selectedDivisionId = null;
+			// selectedZilaId = null;
+			// selectedUpazilaId = null;
 			// setFields('division', null);
 			// setFields('district', null);
 			// setFields('sub_district', null);

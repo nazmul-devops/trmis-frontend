@@ -112,7 +112,7 @@
 		>
 			<DatePickerInput
 				invalid={$errors.start_date != null}
-				labelText="Date Of Birth"
+				labelText="Start Date"
 				placeholder="YYYY-mm-dd"
 			/>
 		</DatePicker>
@@ -125,7 +125,7 @@
 		>
 			<DatePickerInput
 				invalid={$errors.end_date != null}
-				labelText="Date Of Birth"
+				labelText="End Date"
 				placeholder="YYYY-mm-dd"
 			/>
 		</DatePicker>
