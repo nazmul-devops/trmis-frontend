@@ -82,9 +82,12 @@
 			setFormFields();
 		} else {
 			setFields('name', null);
-			setFields('division', null);
-			setFields('district', null);
-			setFields('sub_district', null);
+			// selectedDivisionId = null;
+			// selectedZilaId = null;
+			// selectedUpazilaId = null;
+			// setFields('division', null);
+			// setFields('district', null);
+			// setFields('sub_district', null);
 			setFields('address', null);
 		}
 	}

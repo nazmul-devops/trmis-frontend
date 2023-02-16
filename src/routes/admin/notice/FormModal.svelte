@@ -37,7 +37,7 @@
 		show_in_home_page: yup.boolean().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
+	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
 		// transform: (values: any) => {
 		// 	return {
 		// 		...values,
@@ -89,4 +89,5 @@
 		<input type="datetime-local" id="birthdaytime" name="expiration_date" />
 		<Checkbox name="show_in_home_page" labelText=" Show Home Page ?" />
 	</form>
+	{JSON.stringify($errors)}
 </Modal>
