@@ -1,59 +1,33 @@
 <script lang="ts">
 	import PageTitle from '$lib/PageTitle.svelte';
+	import { getImages } from '$lib/service/gallery';
+	import { onMount } from 'svelte';
 	import GalleryImages from './GalleryImage.svelte';
 	import GalleryNavbar from './GalleryNavbar.svelte';
-	import type { Images } from './models';
 
-	let selected = 'All';
+	let selected = '';
 
-	let images: Array<Images> = [
-		{
-			url: 'assets/photo1.jpg',
-			name: 'all',
-			key: 'Meeting'
-		},
-		{
-			url: 'assets/photo2.jpg',
-			name: 'all',
-			key: 'Event'
-		},
-		{
-			url: 'assets/photo3.jpg',
-			name: 'Cultural',
-			key: 'Cultural'
-		},
-		{
-			url: 'assets/photo4.jpg',
-			name: 'all',
-			key: 'Cultural'
-		},
-		{
-			url: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQle0ohP4I57j0FK5n4WdNkv_K_Rp2hWZeSTc9p6_n-ke96fEX6LoiYp9L2RFlvncOTZU0&usqp=CAU',
-			name: 'all',
-			key: 'Meeting'
-		},
-		{
-			url: 'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-			name: 'all',
-			key: 'Meeting'
-		},
-		{
-			url: 'https://static.vecteezy.com/packs/media/vectors/term-bg-1-666de2d9.jpg',
-			name: 'all',
-			key: 'Meeting'
-		}
-	];
-
-	let activeImages = [...images];
+	let images: Array<any>;
+	let categories: [];
+	let allData = [];
 
 	$: {
-		if (selected == 'All') {
-			activeImages = [...images];
-		} else {
-			activeImages = images.filter((image) => image.key == selected);
+		let index = allData.findIndex((item) => item.id == selected);
+		if (index >= 0) {
+			images = allData[index].images;
 		}
-		console.log(activeImages);
 	}
+
+	onMount(async () => {
+		const { data } = await getImages();
+		categories = data.map((item) => ({
+			id: item.id,
+			title: item.title
+		}));
+		selected = data[0]?.id;
+		images = data[0].images;
+		allData = data;
+	});
 </script>
 
 <div>
@@ -70,10 +44,10 @@
 	</div>
 	<div class="t-container t-py-32">
 		<div class="t-flex t-justify-center t-text-xl t-font-bold">
-			<GalleryNavbar bind:selected />
+			<GalleryNavbar bind:selected bind:categories />
 		</div>
 		<div>
-			<GalleryImages bind:images={activeImages} />
+			<GalleryImages bind:images />
 		</div>
 	</div>
 </div>

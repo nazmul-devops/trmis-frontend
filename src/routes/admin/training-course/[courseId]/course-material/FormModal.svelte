@@ -25,7 +25,6 @@
 		setFields('training_course_id', courseMaterial.training_course_id);
 	}
 
-	function formSetFieldsForFile() {}
 
 	$: {
 		// formSetFieldsForFile();

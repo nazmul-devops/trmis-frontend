@@ -103,7 +103,7 @@
 							materialTitle={materials.title}
 							desc={materials.description}
 							fileType={getFileType(materials.title)}
-							link={'https://www.youtube.com/'}
+							link={materials.files}
 						/>
 					{/each}
 				</div>

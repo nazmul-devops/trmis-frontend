@@ -130,6 +130,14 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/notice">Notice</a>
+			</SideNavLink>
+			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/gallery">Gallery</a>
+			</SideNavLink>
+			<SideNavDivider />
 			<!-- <SideNavLink>
 				<a href="/admin/users">Users</a>
 			</SideNavLink>
