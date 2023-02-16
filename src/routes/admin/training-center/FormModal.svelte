@@ -73,6 +73,7 @@
 		// setFields('division', trainingCenter.division);
 		selectedDivisionId = trainingCenter.division;
 		selectedZilaId = trainingCenter.district;
+		selectedUpazilaId = trainingCenter.sub_district;
 		setFields('address', trainingCenter.address);
 	}
 
