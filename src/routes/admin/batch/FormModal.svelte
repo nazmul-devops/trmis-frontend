@@ -8,16 +8,10 @@
 	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { getTrainingSchedules } from '$lib/service/trainingSchedule';
 	import { createEventDispatcher } from 'svelte';
-	import {
-		Modal,
-		DatePickerInput,
-		TextInput,
-		Select,
-		SelectItem,
-		DatePicker
-	} from 'carbon-components-svelte';
+	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
+	let training_course_schedule: any = [];
 	export let open = true;
 	export let batch = {
 		id: null,
@@ -89,12 +83,10 @@
 				await createBatch({ ...data });
 			}
 			open = false;
-			reset();
 			dispatch('update-list');
+			reset();
 		}
 	});
-
-	let training_course_schedule: any = [];
 
 	onMount(async () => {
 		coordinators.getCoordinators();
@@ -182,5 +174,6 @@
 		</Select>
 
 		<p>{JSON.stringify($errors)}</p>
+		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>
