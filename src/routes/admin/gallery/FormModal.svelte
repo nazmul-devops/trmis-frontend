@@ -78,6 +78,6 @@
 		/>
 	</form>
 
-	{JSON.stringify($data)} <br />
-	{JSON.stringify($errors)}
+	<!-- {JSON.stringify($data)} <br />
+	{JSON.stringify($errors)} -->
 </Modal>

@@ -69,6 +69,10 @@
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
+				<a href="/admin/batch">Batches</a>
+			</SideNavLink>
+			<SideNavDivider />
+			<SideNavLink>
 				<a href="/admin/training-center">Training Venue</a>
 			</SideNavLink>
 			<SideNavDivider />
@@ -97,7 +101,7 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavMenu text="Locations">
+			<!-- <SideNavMenu text="Locations">
 				<SideNavLink>
 					<a href="/admin/locations/division">Division</a>
 				</SideNavLink>
@@ -108,7 +112,7 @@
 					<a href="/admin/locations/sub-district">Sub District</a>
 				</SideNavLink>
 			</SideNavMenu>
-			<SideNavDivider />
+			<SideNavDivider /> -->
 			<SideNavMenu text="Settings">
 				<!-- <SideNavLink>
 					<a href="/admin/settings/collaborations">Collaborations</a>
