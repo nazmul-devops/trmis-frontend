@@ -166,6 +166,6 @@
 			placeholder="Enter Address..."
 		/>
 
-		{JSON.stringify($data)}
+		<!-- {JSON.stringify($data)} -->
 	</form>
 </Modal>

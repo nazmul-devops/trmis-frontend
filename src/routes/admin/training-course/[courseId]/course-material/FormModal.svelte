@@ -98,6 +98,6 @@
 			status="complete"
 			type="file"
 		/>
-		{JSON.stringify($errors, $data)}
+		<!-- {JSON.stringify($errors, $data)} -->
 	</form>
 </Modal>

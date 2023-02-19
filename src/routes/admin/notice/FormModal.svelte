@@ -34,7 +34,7 @@
 		description: yup.string().required(),
 		files: yup.mixed().required(),
 		expiration_date: yup.string().required(),
-		show_in_home_page: yup.boolean().required()
+		show_in_home_page: yup.boolean()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
@@ -86,8 +86,16 @@
 			status="complete"
 			type="file"
 		/>
-		<input type="datetime-local" id="birthdaytime" name="expiration_date" />
-		<Checkbox name="show_in_home_page" labelText=" Show Home Page ?" />
+		<div>
+			<label for="">Expiration Date</label> <br />
+			<input
+				class=" t-border t-p-3 t-my-2 "
+				type="datetime-local"
+				id="birthdaytime"
+				name="expiration_date"
+			/>
+		</div>
+		<Checkbox name="show_in_home_page" labelText=" Show Public Website ?" />
 	</form>
-	{JSON.stringify($errors)}
+	<!-- {JSON.stringify($errors)} -->
 </Modal>
