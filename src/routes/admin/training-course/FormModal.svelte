@@ -42,7 +42,7 @@
 				...values,
 				pass_mark: values.pass_mark ? parseInt(values.pass_mark) : null,
 				course_category: parseInt(values.course_category)
-			}
+			};
 		},
 		extend: validator({ schema })
 	});

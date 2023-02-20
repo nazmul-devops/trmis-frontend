@@ -53,7 +53,13 @@
 {#if $trainingCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Training Courses" description="" {headers} rows={$trainingCourses.data}>
+	<DataTable
+		size="short"
+		title="Training Courses"
+		description=""
+		{headers}
+		rows={$trainingCourses.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
