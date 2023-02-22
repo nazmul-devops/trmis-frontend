@@ -55,11 +55,11 @@
 {#if $trainers.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Trainer" description="" {headers} rows={$trainers.data}>
+	<DataTable size="short" title="Resources Persons" description="" {headers} rows={$trainers.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Trainer</Button>
+				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Resources</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>

@@ -123,7 +123,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Training Center"
+	modalHeading="Create Training Venue"
 	primaryButtonText={trainingCenter.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
