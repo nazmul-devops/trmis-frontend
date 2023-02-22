@@ -18,7 +18,6 @@
 	// import { organizations } from '$lib/store/organization';
 	// import { sourceOfFounds } from '$lib/store/source-of-found';
 	// import { getTrainingSchedules } from '$lib/service/trainingSchedule';
-	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Name' },
@@ -39,8 +38,9 @@
 	let batch;
 
 	function openModalForm(row) {
-		open = true;
 		batch = row;
+		open = true;
+		console.log(row);
 	}
 
 	async function doDelete() {

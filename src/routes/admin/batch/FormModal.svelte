@@ -8,16 +8,10 @@
 	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { getTrainingSchedules } from '$lib/service/trainingSchedule';
 	import { createEventDispatcher } from 'svelte';
-	import {
-		Modal,
-		DatePickerInput,
-		TextInput,
-		Select,
-		SelectItem,
-		DatePicker
-	} from 'carbon-components-svelte';
+	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
+	let training_course_schedule: any = [];
 	export let open = true;
 	export let batch = {
 		id: null,
@@ -26,9 +20,9 @@
 		duration: null,
 		initial_cost: null,
 		final_cost: null,
-		coordinator: null,
-		organization: null,
-		source_of_fund: null,
+		coordinator_id: null,
+		organization_id: null,
+		source_of_fund_id: null,
 		training_course_schedule: null
 	};
 
@@ -38,15 +32,17 @@
 		setFields('duration', batch.duration);
 		setFields('initial_cost', batch.initial_cost);
 		setFields('final_cost', batch.final_cost);
-		setFields('coordinator', batch.coordinator);
-		setFields('organization', batch.organization);
-		setFields('source_of_fund', batch.source_of_fund);
-		setFields('training_course_schedule', batch.source_of_fund);
+		setFields('coordinator', batch.coordinator_id);
+		setFields('organization', batch.organization_id);
+		setFields('source_of_fund', batch.source_of_fund_id);
+		setFields('training_course_schedule', batch.training_course_schedule);
 	}
 
 	$: {
 		if (batch.id != null) {
 			formSetFields();
+		} else {
+			reset();
 		}
 	}
 
@@ -93,8 +89,6 @@
 			dispatch('update-list');
 		}
 	});
-
-	let training_course_schedule: any = [];
 
 	onMount(async () => {
 		coordinators.getCoordinators();
@@ -182,5 +176,6 @@
 		</Select>
 
 		<p>{JSON.stringify($errors)}</p>
+		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>
