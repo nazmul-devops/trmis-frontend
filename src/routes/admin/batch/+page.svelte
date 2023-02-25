@@ -81,6 +81,14 @@
 						on:click={() => goto(`/admin/batch/${row.id}/participants`)}
 						text="Participants"
 					/>
+					<OverflowMenuItem
+						on:click={() => goto(`/admin/batch/${row.id}/resources`)}
+						text="Resources"
+					/>
+					<OverflowMenuItem
+						on:click={() => goto(`/admin/batch/${row.id}/session-details`)}
+						text="Session Details"
+					/>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {

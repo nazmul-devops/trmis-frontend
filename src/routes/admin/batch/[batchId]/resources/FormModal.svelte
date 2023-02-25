@@ -3,29 +3,30 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { createBatchParticipant } from '$lib/service/batch-participants';
-	import { trainees } from '$lib/store/trainee';
+	import { trainers } from '$lib/store/trainer';
 	import { createEventDispatcher } from 'svelte';
 	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { createBatchResource } from '$lib/service/batch-resources';
 	export let open = true;
-	export let participant = {
-		trainee: null
+	export let resource = {
+		trainer: null
 	};
 
 	$: {
-		setFields('trainee', participant.trainee);
+		setFields('trainer', resource.trainer);
 	}
 
 	const schema = yup.object({
-		trainee: yup.number().required()
+		trainer: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				trainee: parseInt(values.trainee)
+				trainer: parseInt(values.trainer)
 			};
 		},
 		extend: validator({ schema })
@@ -35,7 +36,7 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-				await createBatchParticipant($page.params.batchId, { ...data });
+			await createBatchResource($page.params.batchId, { ...data });
 			open = false;
 			reset();
 			dispatch('update-list');
@@ -43,7 +44,7 @@
 	});
 
 	onMount(async () => {
-		trainees.getTrainees();
+		trainers.getTrainers();
 	});
 </script>
 
@@ -56,9 +57,9 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
-			<SelectItem text="choose Participant" value="" />
-			{#each $trainees.data as item}
+		<Select invalid={$errors.resource != null} name="trainer" labelText="Resources">
+			<SelectItem text="choose Resources" value="" />
+			{#each $trainers.data as item}
 				<SelectItem text={item.name} value={item.phone} />
 			{/each}
 		</Select>
