@@ -93,9 +93,9 @@
 				<!-- <SideNavLink>
 					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
 				</SideNavLink> -->
-				<!-- <SideNavLink>
+				<SideNavLink>
 					<a href="/admin/training-course/1/course-topic">Course Topic</a>
-				</SideNavLink> -->
+				</SideNavLink>
 				<SideNavLink>
 					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
 				</SideNavLink>

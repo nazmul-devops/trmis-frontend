@@ -12,12 +12,11 @@
 
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { goto } from '$app/navigation';
-	import { deleteBatchParticipant, getBatchParticipants } from '$lib/service/batch-participants';
+	import { deleteBatchResource, getBatchResources } from '$lib/service/batch-resources';
 	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'trainee_name', value: 'Participant' },
+		{ key: 'trainer_name', value: 'Participant' },
 		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -25,30 +24,30 @@
 	let open = false;
 	let loading = false;
 	let deleteModal = false;
-	let participant;
+	let resource;
 
 	function openModalForm(row) {
 		open = true;
 	}
 
 	async function doDelete() {
-		await deleteBatchParticipant(parseInt($page.params.batchId), participant.id);
+		await deleteBatchResource(parseInt($page.params.batchId), resource.id);
 		deleteModal = false;
-		getBatchParticapnts();
+		getBatchResource();
 	}
 
 	let participants = [];
 
-	async function getBatchParticapnts() {
+	async function getBatchResource() {
 		loading = true;
-		const { data } = await getBatchParticipants($page.params.batchId);
+		const { data } = await getBatchResources($page.params.batchId);
 		participants = data;
 		loading = false;
 	}
 
 	$: {
 		if ($page.params.batchId) {
-			getBatchParticapnts();
+			getBatchResource();
 		}
 	}
 </script>
@@ -60,7 +59,7 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ trainee_name: null, batch_name: null })}
+				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
 					>Add Participant</Button
 				>
 			</ToolbarContent>
@@ -70,7 +69,7 @@
 				<OverflowMenu flipped>
 					<OverflowMenuItem
 						on:click={() => {
-							participant = { ...row };
+							resource = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -82,5 +81,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open on:update-list={getBatchParticapnts} />
+<FormModal bind:open on:update-list={getBatchResource} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

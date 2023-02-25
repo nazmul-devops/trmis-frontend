@@ -38,20 +38,6 @@ export async function deleteBatchParticipant(batchId: number, participantId: num
 	}
 }
 
-export async function updateBatchParticipant(batchId, payload) {
-	try {
-		const { data } = await http.put(`batch/${batchId}/batch-trainee/${payload.id}/`, payload);
-		return {
-			status: 204,
-			data
-		};
-	} catch (err) {
-		return Promise.resolve({
-			status: 403
-		});
-	}
-}
-
 export async function createBatchParticipant(batchId, payload) {
 	try {
 		const { data } = await http.post(`batch/${batchId}/batch-trainee/`, payload);
