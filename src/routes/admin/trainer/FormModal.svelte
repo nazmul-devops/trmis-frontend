@@ -4,36 +4,74 @@
 	import * as yup from 'yup';
 	import { trainers } from '$lib/store/trainer';
 	import { designations } from '$lib/store/designations';
-	import { grades } from '$lib/store/grades';
 	import { organizations } from '$lib/store/organization';
-	import { divisions } from '$lib/store/division';
-	import { districts } from '$lib/store/district';
-	import { subDistricts } from '$lib/store/sub-district';
-	import {
-		Modal,
-		NumberInput,
-		DatePickerInput,
-		TextInput,
-		Select,
-		SelectItem,
-		DatePicker
-	} from 'carbon-components-svelte';
+	import { getLocations } from '$lib/service/locations';
+	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+
+	let selectedDivisionId;
+	let selectedZilaId;
+	let selectedUpazilaId;
+
+	let zilaOptions = [];
+	let upazilaOptions = [];
+	let locations = [];
+
+	function shouldFilterItem(item, value) {
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
+
+	$: {
+		getLocations().then((resp) => {
+			locations = resp.data;
+		});
+	}
+
+	$: {
+		if (selectedDivisionId) {
+			let index = locations.findIndex((item) => item.id === selectedDivisionId);
+			zilaOptions = locations[index]?.zilas;
+			setFields('division', selectedDivisionId);
+		} else {
+			zilaOptions = [];
+			selectedZilaId = null;
+			setFields('division', null);
+		}
+	}
+
+	$: {
+		if (selectedZilaId) {
+			let index = zilaOptions.findIndex((item) => item.id === selectedZilaId);
+			upazilaOptions = zilaOptions[index]?.upazilas;
+			setFields('district', selectedZilaId);
+		} else {
+			upazilaOptions = [];
+			selectedUpazilaId = null;
+			setFields('district', null);
+		}
+	}
+
+	$: {
+		if (selectedUpazilaId) {
+			setFields('sub_district', selectedUpazilaId);
+		} else {
+			setFields('sub_district', null);
+		}
+	}
 
 	export let open = true;
 	export let trainer = {
 		id: null,
 		phone: null,
 		name: null,
-		emg_phone: null,
 		nid: null,
 		email: null,
 		gender: null,
 		marital_status: null,
+		area_of_specialization: null,
 		address: null,
-		dob: null,
 		designation: null,
-		grade: null,
 		organization: null,
 		division: null,
 		district: null,
@@ -43,38 +81,36 @@
 	function formSetFields() {
 		setFields('name', trainer.name);
 		setFields('phone', trainer.phone);
-		setFields('emg_phone', trainer.emg_phone);
 		setFields('nid', trainer.nid);
 		setFields('email', trainer.email);
 		setFields('gender', trainer.gender);
 		setFields('marital_status', trainer.marital_status);
-		setFields('dob', trainer.dob);
+		setFields('area_of_specialization', trainer.area_of_specialization);
 		setFields('address', trainer.address);
 		setFields('designation', trainer.designation);
-		setFields('grade', trainer.grade);
 		setFields('organization', trainer.organization);
-		setFields('division', trainer.division);
-		setFields('district', trainer.district);
-		setFields('sub_district', trainer.sub_district);
+		selectedDivisionId = trainer.division;
+		selectedZilaId = trainer.district;
+		selectedUpazilaId = trainer.sub_district;
 	}
 
 	$: {
 		if (trainer.id != null) {
 			formSetFields();
+		} else {
+			reset();
 		}
 	}
 
 	const schema = yup.object({
 		phone: yup.number().required(),
-		emg_phone: yup.number().required(),
 		nid: yup.number().required(),
 		email: yup.string().email().required(),
 		gender: yup.number().required(),
-		dob: yup.string().required(),
 		address: yup.string().required(),
 		designation: yup.number().required(),
-		grade: yup.number().required(),
 		organization: yup.number().required(),
+		area_of_specialization: yup.string().required(),
 		division: yup.number().required(),
 		district: yup.number().required(),
 		sub_district: yup.number().required(),
@@ -86,11 +122,9 @@
 			return {
 				...values,
 				phone: values.phone ? parseInt(values.phone) : null,
-				emg_phone: values.phone ? parseInt(values.emg_phone) : null,
 				nid: values.phone ? parseInt(values.nid) : null,
 				gender: parseInt(values.gender),
 				designation: parseInt(values.designation),
-				grade: parseInt(values.grade),
 				organization: parseInt(values.organization),
 				division: parseInt(values.division),
 				district: parseInt(values.gender),
@@ -116,17 +150,13 @@
 	onMount(async () => {
 		trainers.getTrainers();
 		designations.getDesignations();
-		grades.getGrades();
 		organizations.getOrganizations();
-		divisions.getDivisions();
-		districts.getDistricts();
-		subDistricts.getSubDistricts();
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading="Create Trainer"
+	modalHeading="Create Resources Persons"
 	primaryButtonText={trainer.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -146,12 +176,6 @@
 			placeholder="Enter  Phone..."
 		/>
 		<TextInput
-			invalid={$errors.emg_phone != null}
-			name="emg_phone"
-			labelText="Emergency Phone "
-			placeholder="Enter  Emergency Phone..."
-		/>
-		<TextInput
 			invalid={$errors.nid != null}
 			name="nid"
 			labelText="NID"
@@ -163,25 +187,18 @@
 			labelText="Email"
 			placeholder="Enter  Email..."
 		/>
+		<TextInput
+			invalid={$errors.area_of_specialization != null}
+			name="area_of_specialization"
+			labelText="Area Of Specialization"
+			placeholder="Enter Specialization..."
+		/>
 		<Select invalid={$errors.gender != null} name="gender" labelText="Gender">
 			<SelectItem text="choose Gender" value="" />
 			<SelectItem text="Male" value="1" />
 			<SelectItem text="Female" value="2" />
 			<SelectItem text="Other" value="3" />
 		</Select>
-		<DatePicker
-			bind:value={$data.dob}
-			name="dob"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.dob != null}
-				labelText="Date Of Birth"
-				placeholder="YYYY-mm-dd"
-			/>
-		</DatePicker>
 		<TextInput
 			invalid={$errors.address != null}
 			name="address"
@@ -203,36 +220,35 @@
 				<SelectItem value={designation.id} text={designation.name} />
 			{/each}
 		</Select>
-		<Select invalid={$errors.grade != null} name="grade" labelText="Grade">
-			<SelectItem text="choose Grade" />
-			{#each $grades.data as grade}
-				<SelectItem value={grade.id} text={grade.name} />
-			{/each}
-		</Select>
 		<Select invalid={$errors.organization != null} name="organization" labelText="Organization">
 			<SelectItem text="choose Organization" />
 			{#each $organizations.data as organization}
 				<SelectItem value={organization.id} text={organization.name} />
 			{/each}
 		</Select>
-		<Select invalid={$errors.division != null} name="division" labelText="Division">
-			<SelectItem text="choose Division" />
-			{#each $divisions.data as division}
-				<SelectItem value={division.id} text={division.name} />
-			{/each}
-		</Select>
-		<Select invalid={$errors.district != null} name="district" labelText="District">
-			<SelectItem text="choose District" />
-			{#each $districts.data as district}
-				<SelectItem value={district.id} text={district.name} />
-			{/each}
-		</Select>
-		<Select invalid={$errors.sub_district != null} name="sub_district" labelText="Sub District">
-			<SelectItem text="choose Sub District" />
-			{#each $subDistricts.data as subDistrict}
-				<SelectItem value={subDistrict.id} text={subDistrict.name} />
-			{/each}
-		</Select>
+		<ComboBox
+			bind:selectedId={selectedDivisionId}
+			titleText="Division"
+			placeholder="Select Division"
+			items={locations}
+			{shouldFilterItem}
+		/>
+		<ComboBox
+			disabled={!selectedDivisionId}
+			bind:selectedId={selectedZilaId}
+			titleText="Training District"
+			placeholder="Select District"
+			items={zilaOptions}
+			{shouldFilterItem}
+		/>
+		<ComboBox
+			disabled={!selectedZilaId}
+			bind:selectedId={selectedUpazilaId}
+			titleText="Training Sub-District"
+			placeholder="Select Sub District"
+			items={upazilaOptions}
+			{shouldFilterItem}
+		/>
 
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>

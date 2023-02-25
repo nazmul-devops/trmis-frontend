@@ -61,11 +61,11 @@
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/trainee">Participant</a>
+				<a href="/admin/trainee">Participants</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/trainer">Resources Person</a>
+				<a href="/admin/trainer">Resources Persons</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>

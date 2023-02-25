@@ -53,7 +53,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Training Center"
+		title="Training Venue"
 		description=""
 		{headers}
 		rows={$trainingCenters.data}
@@ -61,7 +61,7 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Training Center</Button
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Training Venue</Button
 				>
 			</ToolbarContent>
 		</Toolbar>
