@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { getBatches, deleteBatch } from '$lib/service/batch';
 	import {
 		DataTable,
 		Toolbar,
@@ -11,67 +10,61 @@
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
 
-	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { goto } from '$app/navigation';
-	// import { coordinators } from '$lib/store/coordinators';
-	// import { organizations } from '$lib/store/organization';
-	// import { sourceOfFounds } from '$lib/store/source-of-found';
-	// import { getTrainingSchedules } from '$lib/service/trainingSchedule';
+	import { deleteBatchParticipant, getBatchParticipants } from '$lib/service/batch-participants';
+	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'name', value: 'Name' },
-		{ key: 'duration', value: 'Duration' },
-		{ key: 'initial_cost', value: 'Initial Cost' },
-		{ key: 'final_cost', value: 'Final Cost' },
-		{ key: 'coordinator', value: 'Coordinator' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'source_of_fund', value: 'Source Of Fund' },
-		{ key: 'training_center', value: 'Training Schedule' },
-		{ key: 'status', value: 'Status' },
+		{ key: 'trainee_name', value: 'Participant' },
+		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let loading = false;
 	let deleteModal = false;
-	let batch;
+	let participant;
 
 	function openModalForm(row) {
-		batch = row;
+		participant = row;
 		open = true;
-		console.log(row);
+		console.log('error');
 	}
 
 	async function doDelete() {
-		await deleteBatch(batch.id);
+		await deleteBatchParticipant(parseInt($page.params.batchId), participant.id);
 		deleteModal = false;
-		batchList();
+		getBatchParticapnts();
 	}
 
-	let batches = [];
+	let participants = [];
 
-	async function batchList() {
-		loading = true;
-		const { data } = await getBatches();
-		batches = data;
-		loading = false;
+	async function getBatchParticapnts() {
+		const { data } = await getBatchParticipants($page.params.batchId);
+		participants = data;
 	}
 
-	onMount(async () => {
-		batchList();
-	});
+	$: {
+		if ($page.params.batchId) {
+			loading = true;
+			getBatchParticapnts();
+			loading = false;
+		}
+	}
 </script>
 
 {#if loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Batches" description="" {headers} rows={batches}>
+	<DataTable size="short" title="All Participant" description="" {headers} rows={participants}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Batch</Button>
+				<Button on:click={() => openModalForm({ trainee_name: null, batch_name: null })}
+					>Add Participant</Button
+				>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -84,7 +77,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							batch = { ...row };
+							participant = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -96,5 +89,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:batch on:update-list={batchList} />
+<FormModal bind:open bind:participant on:update-list={getBatchParticapnts} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
