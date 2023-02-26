@@ -5,7 +5,8 @@ export async function getBatchSessions(id) {
 		const { data } = await http.get(`batch/${id}/session-details/`);
 		return {
 			status: 200,
-			data: data.map((item) => ({ ...item, id: item.trainer }))
+			data
+			// : data.map((item) => ({ ...item, id: item.trainer }))
 		};
 	} catch (err) {
 		return Promise.resolve({
@@ -24,7 +25,7 @@ export async function deleteBatchSession(batchId: number, sessionId: number) {
 }
 export async function updateBatchSession(batchId, payload) {
 	try {
-		const { data } = await http.post(`batch/${batchId}/session-details/`, payload);
+		const { data } = await http.put(`batch/${batchId}/session-details/${payload.id}/`, payload);
 		return {
 			status: 201,
 			data
