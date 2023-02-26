@@ -25,7 +25,6 @@
 		session_no: null,
 		from_time: null,
 		to_time: null,
-		batch: null,
 		trainer: null,
 		topic: null
 	};
@@ -36,7 +35,6 @@
 		setFields('session_no', sessionDetail.session_no);
 		setFields('from_time', sessionDetail.from_time);
 		setFields('to_time', sessionDetail.to_time);
-		setFields('batch', sessionDetail.batch);
 		setFields('trainer', sessionDetail.trainer);
 		setFields('topic', sessionDetail.topic);
 	}
@@ -55,7 +53,6 @@
 		session_no: yup.number().required(),
 		from_time: yup.string().required(),
 		to_time: yup.string().required(),
-		batch: yup.number().required(),
 		trainer: yup.number().required(),
 		topic: yup.number().required()
 	});
@@ -65,7 +62,6 @@
 			return {
 				...values,
 				session_no: values.session_no ? parseInt(values.session_no) : null,
-				batch: parseInt(values.batch),
 				trainer: parseInt(values.trainer),
 				topic: parseInt(values.topic)
 			};
@@ -88,19 +84,15 @@
 		}
 	});
 
-	let batches = [];
-
 	onMount(async () => {
 		trainers.getTrainers();
 		courseTopics.getCourseTopics();
-		const { data } = await getBatches();
-		batches = data;
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading="Create Participant"
+	modalHeading="Create Session Details"
 	primaryButtonText="ADD"
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -135,36 +127,13 @@
 			placeholder="Enter Session No..."
 		/>
 
-		<DatePicker
-			bind:value={$data.from_time}
-			name="from_time"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.from_time != null}
-				labelText="From"
-				placeholder="YYYY-mm-dd"
-			/>
-		</DatePicker>
+		<div>
+			<input type="time" name="from_time" />
+		</div>
+		<div>
+			<input type="time" name="to_time" />
+		</div>
 
-		<DatePicker
-			bind:value={$data.to_time}
-			name="to_time"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput invalid={$errors.to_time != null} labelText="To" placeholder="YYYY-mm-dd" />
-		</DatePicker>
-
-		<Select invalid={$errors.batch != null} name="batch" labelText="Batch">
-			<SelectItem text="choose Batch" value="" />
-			{#each batches as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select>
 		<Select invalid={$errors.trainer != null} name="trainer" labelText="Trainer">
 			<SelectItem text="choose Trainer" value="" />
 			{#each $trainers.data as item}
@@ -178,7 +147,7 @@
 			{/each}
 		</Select>
 
-		<!-- <p>{JSON.stringify($errors)}</p>
-		<p>{JSON.stringify($data)}</p> -->
+		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>

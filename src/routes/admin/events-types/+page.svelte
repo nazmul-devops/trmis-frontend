@@ -12,58 +12,51 @@
 
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { deleteBatchSession, getBatchSessions } from '$lib/service/batch-sessions-detail';
-	import { page } from '$app/stores';
+	import { deleteEventType, getEventTypes } from '$lib/service/event-type';
+	import { onMount } from 'svelte';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'batch_name', value: 'Batch' },
-		{ key: 'session_day', value: 'Day' },
-		{ key: 'topic_name', value: 'Topic' },
-		{ key: 'trainer_name', value: 'trainer_name' },
+		{ key: 'name', value: 'Name' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let loading = false;
 	let deleteModal = false;
-	let sessionDetail;
+	let eventType;
 
 	function openModalForm(row) {
-		sessionDetail = row;
+		eventType = row;
 		open = true;
 	}
 
 	async function doDelete() {
-		await deleteBatchSession(parseInt($page.params.batchId), sessionDetail.id);
+		await deleteEventType(eventType.id);
 		deleteModal = false;
-		getBatchSession();
+		getEventType();
 	}
 
-	let sessions = [];
+	let eventTypes = [];
 
-	async function getBatchSession() {
+	async function getEventType() {
 		loading = true;
-		const { data } = await getBatchSessions($page.params.batchId);
-		sessions = data;
+		const { data } = await getEventTypes();
+		eventTypes = data;
 		loading = false;
 	}
 
-	$: {
-		if ($page.params.batchId) {
-			getBatchSession();
-		}
-	}
+	onMount(getEventType);
 </script>
 
 {#if loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Participant" description="" {headers} rows={sessions}>
+	<DataTable size="short" title="All Event Type" description="" {headers} rows={eventTypes}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
-					>Add Participant</Button
+					>Add Schedule</Button
 				>
 			</ToolbarContent>
 		</Toolbar>
@@ -73,7 +66,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							sessionDetail = { ...row };
+							eventType = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -85,5 +78,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:sessionDetail on:update-list={getBatchSession} />
+<FormModal bind:open bind:eventType on:update-list={getEventType} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

@@ -12,58 +12,61 @@
 
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { deleteBatchSession, getBatchSessions } from '$lib/service/batch-sessions-detail';
+	import { deleteEventSchedule, getEventSchedules } from '$lib/service/schedule-events';
 	import { page } from '$app/stores';
+	import { onMount } from 'svelte';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'batch_name', value: 'Batch' },
-		{ key: 'session_day', value: 'Day' },
-		{ key: 'topic_name', value: 'Topic' },
-		{ key: 'trainer_name', value: 'trainer_name' },
+		{ key: 'event_venue', value: 'Venue' },
+		{ key: 'start_date', value: 'Start Date' },
+		{ key: 'end_date', value: 'End Date' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let loading = false;
 	let deleteModal = false;
-	let sessionDetail;
+	let eventSchedule;
 
 	function openModalForm(row) {
-		sessionDetail = row;
+		eventSchedule = row;
 		open = true;
 	}
 
 	async function doDelete() {
-		await deleteBatchSession(parseInt($page.params.batchId), sessionDetail.id);
+		await deleteEventSchedule(eventSchedule.id);
 		deleteModal = false;
-		getBatchSession();
+		getEventSchedule();
 	}
 
-	let sessions = [];
+	let eventSchedules = [];
 
-	async function getBatchSession() {
+	async function getEventSchedule() {
 		loading = true;
-		const { data } = await getBatchSessions($page.params.batchId);
-		sessions = data;
+		const { data } = await getEventSchedules();
+		eventSchedules = data;
 		loading = false;
 	}
 
-	$: {
-		if ($page.params.batchId) {
-			getBatchSession();
-		}
-	}
+	// $: {
+	// 	if ($page.params.batchId) {
+	// 		getEventSchedule();
+	// 	}
+
+	// }
+
+	onMount(getEventSchedule);
 </script>
 
 {#if loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Participant" description="" {headers} rows={sessions}>
+	<DataTable size="short" title="All Event Schedule" description="" {headers} rows={eventSchedules}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
-					>Add Participant</Button
+					>Add Schedule</Button
 				>
 			</ToolbarContent>
 		</Toolbar>
@@ -73,7 +76,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							sessionDetail = { ...row };
+							eventSchedule = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -85,5 +88,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:sessionDetail on:update-list={getBatchSession} />
+<FormModal bind:open bind:eventSchedule on:update-list={getEventSchedule} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

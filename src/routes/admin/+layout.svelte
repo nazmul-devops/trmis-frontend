@@ -135,6 +135,14 @@
 			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavLink>
+				<a href="/admin/schedule-events">Event Schedule</a>
+			</SideNavLink>
+			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/event-types">Event Type</a>
+			</SideNavLink>
+			<SideNavDivider />
+			<SideNavLink>
 				<a href="/admin/notice">Notice</a>
 			</SideNavLink>
 			<SideNavDivider />
