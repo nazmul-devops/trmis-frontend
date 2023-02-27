@@ -193,9 +193,10 @@
 
 		<Select invalid={$errors.type != null} name="type" labelText="Type">
 			<SelectItem text="choose Type" value="" />
-			<SelectItem text="Type1" value="1" />
-			<SelectItem text="Type2" value="2" />
-			<SelectItem text="Type3" value="3" />
+			<SelectItem text="Meeting" value="1" />
+			<SelectItem text="Workshop" value="2" />
+			<SelectItem text="Orientation" value="3" />
+			<SelectItem text="Sensitization" value="4" />
 		</Select>
 
 		<Select invalid={$errors.organization != null} name="organization" labelText="Organizations">
