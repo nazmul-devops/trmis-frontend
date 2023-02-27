@@ -2,13 +2,25 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { trainingCenters } from '$lib/store/trainingCenter';
+	import { organizations } from '$lib/store/organization';
+	import { coordinators } from '$lib/store/coordinators';
+	import { trainers } from '$lib/store/trainer';
+	import { getEventSchedules } from '$lib/service/schedule-events';
 	import { createEventDispatcher } from 'svelte';
-	import { Modal, Select, SelectItem, DatePicker, DatePickerInput } from 'carbon-components-svelte';
+	import {
+		Modal,
+		Select,
+		SelectItem,
+		TextInput,
+		TextArea,
+		DataTable,
+		Button,
+		MultiSelect
+	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { createEvent, updateEvent } from '$lib/service/event';
 	export let open = true;
-	export let eventSchedule = {
+	export let event = {
 		id: null,
 		status: null,
 		name: null,
@@ -20,17 +32,24 @@
 		organization: null,
 		coordinator: null,
 		schedule: null,
-		facilitator: null
+		facilitator: []
 	};
 
 	function formDetails() {
-		setFields('start_date', eventSchedule.start_date);
-		setFields('end_date', eventSchedule.end_date);
-		setFields('event_venue', eventSchedule.event_venue);
+		setFields('status', event.status);
+		setFields('name', event.name);
+		setFields('number_of_participants', event.number_of_participants);
+		setFields('participants', event.participants);
+		setFields('description', event.description);
+		setFields('budget', event.budget);
+		setFields('type', event.type);
+		setFields('organization', event.organization);
+		setFields('coordinator', event.coordinator);
+		setFields('schedule', event.schedule);
 	}
 
 	$: {
-		if (eventSchedule.id != null) {
+		if (event.id != null) {
 			formDetails();
 		} else {
 			reset();
@@ -38,16 +57,33 @@
 	}
 
 	const schema = yup.object({
-		start_date: yup.string().required(),
-		end_date: yup.string().required(),
-		event_venue: yup.number().required()
+		status: yup.number().required(),
+		name: yup.string().required(),
+		number_of_participants: yup.number().required(),
+		participants: yup.array().min(1),
+		description: yup.string().required(),
+		budget: yup.number().required(),
+		type: yup.number().required(),
+		organization: yup.number().required(),
+		coordinator: yup.number().required(),
+		schedule: yup.number().required(),
+		facilitator: yup.object().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				event_venue: parseInt(values.event_venue)
+				number_of_participants: values.number_of_participants
+					? parseInt(values.number_of_participants)
+					: null,
+				budget: values.budget ? parseInt(values.budget) : null,
+				status: parseInt(values.status),
+				type: parseInt(values.type),
+				organization: parseInt(values.organization),
+				coordinator: parseInt(values.coordinator),
+				schedule: parseInt(values.schedule),
+				facilitator: parseInt(values.facilitator)
 			};
 		},
 		extend: validator({ schema })
@@ -57,10 +93,10 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			if (eventSchedule.id) {
-				await updateEventSchedule({ ...data, id: eventSchedule.id });
+			if (event.id) {
+				await updateEvent({ ...data, id: event.id });
 			} else {
-				await createEventSchedule({ ...data });
+				await createEvent({ ...data });
 			}
 			open = false;
 			dispatch('update-list');
@@ -68,52 +104,125 @@
 		}
 	});
 
+	let participantsList = [];
+	let participantsName: any;
+	let participantsPhone: any;
+	let participantsEmail: any;
+
+	function addParticipants() {
+		participantsList = [
+			...participantsList,
+			{
+				id: participantsList.length + 1,
+				name: participantsName,
+				phone: participantsPhone,
+				email: participantsEmail
+			}
+		];
+		participantsName = '';
+		participantsPhone = '';
+		participantsEmail = '';
+		// participantsList = event.participants;
+	}
+
+	let facilators = [];
+
+	let eventSchedule = [];
+
 	onMount(async () => {
-		trainingCenters.getTrainingCenters();
+		organizations.getOrganizations();
+		coordinators.getCoordinators();
+		trainers.getTrainers();
+		const { data } = await getEventSchedules();
+		eventSchedule = data;
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading="Create Schedule"
+	modalHeading="Create Event"
 	primaryButtonText="ADD"
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<DatePicker
-			bind:value={$data.start_date}
-			name="start_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.start_date != null}
-				labelText="Start Date"
-				placeholder="YYYY-mm-dd"
+		<TextInput labelText="Name" name="name" placeholder="Enter Event Name" />
+		<TextInput
+			labelText="Number Of Participants"
+			name="number_of_participants"
+			placeholder="Number Of Participants"
+		/>
+
+		<div>
+			<DataTable
+				headers={[
+					{
+						key: 'name',
+						value: 'Name'
+					},
+					{
+						key: 'phone',
+						value: 'Phone'
+					},
+					{
+						key: 'email',
+						value: 'Email'
+					}
+				]}
+				rows={participantsList}
 			/>
-		</DatePicker>
-		<DatePicker
-			bind:value={$data.end_date}
-			name="end_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.end_date != null}
-				labelText="Late Date"
-				placeholder="YYYY-mm-dd"
-			/>
-		</DatePicker>
-		<Select invalid={$errors.event_venue != null} name="event_venue" labelText="Event Venue">
-			<SelectItem text="choose Venue" value="" />
-			{#each $trainingCenters.data as item}
+
+			<div>
+				<h4>Participants Details</h4>
+				<TextInput labelText="Name" placeholder="Enter Name" bind:value={participantsName} />
+				<TextInput labelText="Phone" placeholder="Enter Phone" bind:value={participantsPhone} />
+				<TextInput labelText="Email" placeholder="Enter Email" bind:value={participantsEmail} />
+				<Button on:click={() => addParticipants()}>ADD</Button>
+			</div>
+		</div>
+
+		<TextArea labelText="Description" name="description" placeholder="Enter a description..." />
+		<TextInput labelText="Budget" name="budget" placeholder="Budget" />
+		<Select invalid={$errors.status != null} name="status" labelText="Status">
+			<SelectItem text="choose Status" value="" />
+			<SelectItem text="Pending" value="1" />
+			<SelectItem text="Complete" value="2" />
+			<SelectItem text="In progress" value="3" />
+		</Select>
+
+		<Select invalid={$errors.type != null} name="type" labelText="Type">
+			<SelectItem text="choose Type" value="" />
+			<SelectItem text="Type1" value="1" />
+			<SelectItem text="Type2" value="2" />
+			<SelectItem text="Type3" value="3" />
+		</Select>
+
+		<Select invalid={$errors.organization != null} name="organization" labelText="Organizations">
+			<SelectItem text="choose Organization" value="" />
+			{#each $organizations.data as item}
+				<SelectItem text={item.title} value={item.id} />
+			{/each}
+		</Select>
+		<Select invalid={$errors.coordinator != null} name="coordinator" labelText="Coordinator">
+			<SelectItem text="choose Coordinator" value="" />
+			{#each $coordinators.data as item}
+				<SelectItem text={item.title} value={item.id} />
+			{/each}
+		</Select>
+		<Select invalid={$errors.schedule != null} name="schedule" labelText="Schedule">
+			<SelectItem text="choose Organization" value="" />
+			{#each eventSchedule as item}
 				<SelectItem text={item.name} value={item.id} />
 			{/each}
 		</Select>
+		<MultiSelect
+			selectedIds={facilators}
+			titleText="Prerequisite"
+			label="Select Prerequisite..."
+			items={$trainers.data.map((item) => ({ ...item, text: item.name }))}
+			on:select={(e) => setFields('facilitator', e.detail.selectedIds)}
+		/>
 
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 		<p>{JSON.stringify($data)}</p>

@@ -7,13 +7,13 @@
 		Button,
 		DataTableSkeleton,
 		OverflowMenu,
-		OverflowMenuItem
+		OverflowMenuItem,
+		Row
 	} from 'carbon-components-svelte';
 
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { deleteEventSchedule, getEventSchedules } from '$lib/service/schedule-events';
-	import { page } from '$app/stores';
+	import { deleteEvent, getEvents } from '$lib/service/event';
 	import { onMount } from 'svelte';
 	let filteredRowIds = [];
 	let headers = [
@@ -26,48 +26,39 @@
 	let open = false;
 	let loading = false;
 	let deleteModal = false;
-	let eventSchedule;
+	let event;
 
 	function openModalForm(row) {
-		eventSchedule = row;
+		event = row;
 		open = true;
 	}
 
 	async function doDelete() {
-		await deleteEventSchedule(eventSchedule.id);
+		await deleteEvent(event.id);
 		deleteModal = false;
-		getEventSchedule();
+		getEvent();
 	}
 
-	let eventSchedules = [];
+	let events = [];
 
-	async function getEventSchedule() {
+	async function getEvent() {
 		loading = true;
-		const { data } = await getEventSchedules();
-		eventSchedules = data;
+		const { data } = await getEvents();
+		events = data;
 		loading = false;
 	}
 
-	// $: {
-	// 	if ($page.params.batchId) {
-	// 		getEventSchedule();
-	// 	}
-
-	// }
-
-	onMount(getEventSchedule);
+	onMount(getEvent);
 </script>
 
 {#if loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Event Schedule" description="" {headers} rows={eventSchedules}>
+	<DataTable size="short" title="All Event" description="" {headers} rows={events}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
-					>Add Schedule</Button
-				>
+				<Button on:click={() => openModalForm({})}>Add Event</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -76,7 +67,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							eventSchedule = { ...row };
+							event = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -88,5 +79,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:eventSchedule on:update-list={getEventSchedule} />
+<FormModal bind:open bind:event on:update-list={getEvent} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
