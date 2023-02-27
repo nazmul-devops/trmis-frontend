@@ -21,6 +21,7 @@
 		training_course: null,
 		training_center: null,
 		start_date: null,
+		status: null,
 		end_date: null
 	};
 
@@ -28,18 +29,22 @@
 		setFields('training_course', schedule.training_course);
 		setFields('training_center', schedule.training_center);
 		setFields('start_date', schedule.start_date);
+		setFields('status', schedule.status);
 		setFields('end_date', schedule.end_date);
 	}
 
 	$: {
 		if (schedule.id != null) {
 			formSetFields();
+		} else {
+			reset();
 		}
 	}
 
 	const schema = yup.object({
 		training_course: yup.number().required(),
 		training_center: yup.number().required(),
+		status: yup.number().required(),
 		start_date: yup.string().required(),
 		end_date: yup.string().required()
 	});
@@ -49,6 +54,7 @@
 			return {
 				...values,
 				training_course: parseInt(values.training_course),
+				status: parseInt(values.status),
 				training_center: parseInt(values.training_center)
 			};
 		},
@@ -102,6 +108,12 @@
 			{#each $trainingCenters.data as center}
 				<SelectItem value={center.id} text={center.name} />
 			{/each}
+		</Select>
+		<Select invalid={$errors.status != null} name="status" labelText="Status">
+			<SelectItem text="choose Status" />
+			<SelectItem text="Pending" value="1" />
+			<SelectItem text="Approved" value="2" />
+			<SelectItem text="Rejected" value="3" />
 		</Select>
 		<DatePicker
 			bind:value={$data.start_date}

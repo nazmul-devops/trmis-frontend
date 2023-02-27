@@ -6,12 +6,12 @@
 	import { coordinators } from '$lib/store/coordinators';
 	import { organizations } from '$lib/store/organization';
 	import { sourceOfFounds } from '$lib/store/source-of-found';
-	import { getTrainingSchedules } from '$lib/service/trainingSchedule';
+	import { getApprovedSchedules, getTrainingSchedules } from '$lib/service/trainingSchedule';
 	import { createEventDispatcher } from 'svelte';
 	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
-	let training_course_schedule: any = [];
+	let training_course_schedules: any = [];
 	export let open = true;
 	export let batch = {
 		id: null,
@@ -35,6 +35,9 @@
 		setFields('coordinator', batch.coordinator_id);
 		setFields('organization', batch.organization_id);
 		setFields('source_of_fund', batch.source_of_fund_id);
+	}
+
+	$: {
 		setFields('training_course_schedule', batch.training_course_schedule);
 	}
 
@@ -94,8 +97,8 @@
 		coordinators.getCoordinators();
 		organizations.getOrganizations();
 		sourceOfFounds.getSourceOfFounds();
-		const { data } = await getTrainingSchedules();
-		training_course_schedule = data;
+		const { data } = await getApprovedSchedules();
+		training_course_schedules = data;
 	});
 </script>
 
@@ -167,15 +170,12 @@
 			labelText="Training Schedule"
 		>
 			<SelectItem text="choose Schedule" />
-			{#each training_course_schedule as Schedule}
-				<SelectItem
-					value={Schedule.id}
-					text={Schedule.training_course_name + ' - ' + Schedule.training_center_name}
-				/>
+			{#each training_course_schedules as Schedule}
+				<SelectItem value={Schedule.value} text={Schedule.title} />
 			{/each}
 		</Select>
 
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>

@@ -15,10 +15,6 @@
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { goto } from '$app/navigation';
-	// import { coordinators } from '$lib/store/coordinators';
-	// import { organizations } from '$lib/store/organization';
-	// import { sourceOfFounds } from '$lib/store/source-of-found';
-	// import { getTrainingSchedules } from '$lib/service/trainingSchedule';
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Name' },
