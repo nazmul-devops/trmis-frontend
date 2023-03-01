@@ -15,11 +15,14 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { deleteEvent, getEvents } from '$lib/service/event';
 	import { onMount } from 'svelte';
+	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'event_venue', value: 'Venue' },
-		{ key: 'start_date', value: 'Start Date' },
-		{ key: 'end_date', value: 'End Date' },
+		{ key: 'name', value: 'Event Name' },
+		{ key: 'status', value: 'Status' },
+		{ key: 'coordinator_name', value: 'Coordinator' },
+		{ key: 'organization_name', value: 'Organization' },
+		{ key: 'schedule', value: 'Schedule' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -28,18 +31,13 @@
 	let deleteModal = false;
 	let event;
 
-	function openModalForm(row) {
-		event = row;
-		open = true;
-	}
-
 	async function doDelete() {
 		await deleteEvent(event.id);
 		deleteModal = false;
 		getEvent();
 	}
 
-	let events = [];
+	let events: Array<any> = [];
 
 	async function getEvent() {
 		loading = true;
@@ -58,13 +56,13 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({})}>Add Event</Button>
+				<Button on:click={() => goto(`/admin/event/add-event`)}>Add Event</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
+					<OverflowMenuItem on:click={() => goto(`/admin/event/${row.id}/edit`)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
 							event = { ...row };
