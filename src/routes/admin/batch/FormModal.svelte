@@ -38,14 +38,19 @@
 	}
 
 	$: {
-		setFields('training_course_schedule', batch.training_course_schedule);
-	}
-
-	$: {
 		if (batch.id != null) {
 			formSetFields();
 		} else {
 			reset();
+		}
+	}
+
+	$: {
+		// console.log(training_course_schedules);
+		// console.log(batch.training_course_schedule);
+		console.log(training_course_schedules);
+		if (batch.training_course_schedule && training_course_schedules.length > 0) {
+			setData('training_course_schedule', 242);
 		}
 	}
 
@@ -61,7 +66,7 @@
 		training_course_schedule: yup.number().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
+	const { form, reset, createSubmitHandler, setFields, setData, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
@@ -98,7 +103,7 @@
 		organizations.getOrganizations();
 		sourceOfFounds.getSourceOfFounds();
 		const { data } = await getApprovedSchedules();
-		training_course_schedules = data;
+		training_course_schedules = data; 
 	});
 </script>
 
@@ -175,7 +180,7 @@
 			{/each}
 		</Select>
 
-		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<p>{JSON.stringify($errors)}</p>
 		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>

@@ -2,7 +2,7 @@ import { http } from '$lib/service/auth';
 
 export async function getEventSchedules() {
 	try {
-		const { data } = await http.get('event/schedule/');
+		const { data } = await http.get('event/schedules/');
 		return {
 			status: 200,
 			data
@@ -18,7 +18,7 @@ export async function getEventSchedules() {
 
 export async function deleteEventSchedule(id) {
 	try {
-		return http.delete(`event/schedule/${id}/`);
+		return http.delete(`event/schedules/${id}/`);
 	} catch (err) {
 		return Promise.resolve();
 	}
@@ -26,7 +26,7 @@ export async function deleteEventSchedule(id) {
 
 export async function updateEventSchedule(payload) {
 	try {
-		const { data } = await http.put(`event/schedule/${payload.id}/`, payload);
+		const { data } = await http.put(`event/schedules/${payload.id}/`, payload);
 		return {
 			status: 201,
 			data
@@ -40,7 +40,7 @@ export async function updateEventSchedule(payload) {
 
 export async function createEventSchedule(payload) {
 	try {
-		const { data } = await http.post(`event/schedule/`, payload);
+		const { data } = await http.post(`event/schedules/`, payload);
 		return {
 			status: 201,
 			data
