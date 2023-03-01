@@ -101,18 +101,6 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<!-- <SideNavMenu text="Locations">
-				<SideNavLink>
-					<a href="/admin/locations/division">Division</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/locations/district">District</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/locations/sub-district">Sub District</a>
-				</SideNavLink>
-			</SideNavMenu>
-			<SideNavDivider /> -->
 			<SideNavMenu text="Settings">
 				<!-- <SideNavLink>
 					<a href="/admin/settings/collaborations">Collaborations</a>
@@ -153,6 +141,39 @@
 			<SideNavLink>
 				<a href="/admin/gallery">Gallery</a>
 			</SideNavLink>
+			<SideNavDivider />
+			<SideNavMenu text="Reports">
+				<SideNavLink>
+					<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/designation-wise-trainee">Designation wise Trainee</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/training-schedule">Training Schedule</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/training-name-list">Trainee Name List</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/trainer-report">Trainer Report</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/exam-test-evaluation">Exam Test Evaluation</a>
+				</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/reports/cost-center">Cost Center</a>
+				</SideNavLink>
+			</SideNavMenu>
 			<SideNavDivider />
 			<!-- <SideNavLink>
 				<a href="/admin/users">Users</a>
