@@ -58,12 +58,12 @@
 {#if loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Participant" description="" {headers} rows={sessions}>
+	<DataTable size="short" title="All Session Details" description="" {headers} rows={sessions}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
-					>Add Participant</Button
+					>Add Session</Button
 				>
 			</ToolbarContent>
 		</Toolbar>

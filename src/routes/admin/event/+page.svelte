@@ -22,7 +22,7 @@
 		{ key: 'status', value: 'Status' },
 		{ key: 'coordinator_name', value: 'Coordinator' },
 		{ key: 'organization_name', value: 'Organization' },
-		{ key: 'schedule', value: 'Schedule' },
+		// { key: 'schedule', value: 'Schedule' },
 		{ key: 'action', value: 'Action' }
 	];
 
