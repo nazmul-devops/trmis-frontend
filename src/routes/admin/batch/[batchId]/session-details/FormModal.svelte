@@ -127,10 +127,12 @@
 			placeholder="Enter Session No..."
 		/>
 
-		<div>
+		<div class=" t-p-3 t-border ">
+			<label for="">Start Time</label>
 			<input type="time" name="from_time" />
 		</div>
-		<div>
+		<div class="t-p-3 t-border">
+			<label for="">End Time</label>
 			<input type="time" name="to_time" />
 		</div>
 

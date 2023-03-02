@@ -97,7 +97,7 @@
 		>
 			<DatePickerInput
 				invalid={$errors.end_date != null}
-				labelText="Late Date"
+				labelText="End Date"
 				placeholder="YYYY-mm-dd"
 			/>
 		</DatePicker>
@@ -109,6 +109,6 @@
 		</Select>
 
 		<!-- <p>{JSON.stringify($errors)}</p> -->
-		<p>{JSON.stringify($data)}</p>
+		<!-- <p>{JSON.stringify($data)}</p> -->
 	</form>
 </Modal>

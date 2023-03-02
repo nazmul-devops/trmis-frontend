@@ -130,10 +130,10 @@
 				<a href="/admin/schedule-events">Event Schedule</a>
 			</SideNavLink>
 			<SideNavDivider />
-			<SideNavLink>
+			<!-- <SideNavLink>
 				<a href="/admin/event-types">Event Type</a>
 			</SideNavLink>
-			<SideNavDivider />
+			<SideNavDivider /> -->
 			<SideNavLink>
 				<a href="/admin/notice">Notice</a>
 			</SideNavLink>
