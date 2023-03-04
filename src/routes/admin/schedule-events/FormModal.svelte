@@ -3,11 +3,9 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { trainingCenters } from '$lib/store/trainingCenter';
-	import { createEventDispatcher } from 'svelte';
 	import { Modal, Select, SelectItem, DatePicker, DatePickerInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { page } from '$app/stores';
-	import { createEventSchedule, updateEventSchedule } from '$lib/service/schedule-events';
+	import { scheduleEventsLists } from "$lib/store/schedule-events"
 	export let open = true;
 	export let eventSchedule = {
 		id: null,
@@ -46,23 +44,22 @@
 		extend: validator({ schema })
 	});
 
-	const dispatch = createEventDispatcher();
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (eventSchedule.id) {
-				await updateEventSchedule({ ...data, id: eventSchedule.id });
+				await scheduleEventsLists.updateEventSchedule({ ...data, id: eventSchedule.id });
 			} else {
-				await createEventSchedule({ ...data });
+				await scheduleEventsLists.createEventSchedule({ ...data });
 			}
 			open = false;
-			dispatch('update-list');
 			reset();
 		}
 	});
 
 	onMount(async () => {
 		trainingCenters.getTrainingCenters();
+		scheduleEventsLists.getEventSchedules()
 	});
 </script>
 

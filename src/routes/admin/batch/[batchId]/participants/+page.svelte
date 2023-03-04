@@ -13,7 +13,7 @@
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { goto } from '$app/navigation';
-	import { deleteBatchParticipant, getBatchParticipants } from '$lib/service/batch-participants';
+	import { batchParticipantsList } from "$lib/store/batch-participants" 
 	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
@@ -32,31 +32,23 @@
 	}
 
 	async function doDelete() {
-		await deleteBatchParticipant(parseInt($page.params.batchId), participant.id);
+		await batchParticipantsList.deleteBatchParticipant(parseInt($page.params.batchId), participant.id);
 		deleteModal = false;
-		getBatchParticapnts();
+		await batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId))
 	}
 
-	let participants = [];
-
-	async function getBatchParticapnts() {
-		loading = true;
-		const { data } = await getBatchParticipants($page.params.batchId);
-		participants = data;
-		loading = false;
-	}
 
 	$: {
 		if ($page.params.batchId) {
-			getBatchParticapnts();
+			batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId))
 		}
 	}
 </script>
 
-{#if loading}
+{#if $batchParticipantsList.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Participant" description="" {headers} rows={participants}>
+	<DataTable size="short" title="All Participant" description="" {headers} rows={$batchParticipantsList.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -82,5 +74,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open on:update-list={getBatchParticapnts} />
+<FormModal bind:open  bind:participant/>
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
