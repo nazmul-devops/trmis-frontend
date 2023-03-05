@@ -1,13 +1,20 @@
 <script>
+	import { createForm } from 'felte';
+	import { validator } from '@felte/validator-yup';
+	import * as yup from 'yup';
+	import { REPORT_TYPE } from '$lib/constants';
+	import { getReports } from '$lib/service/report';
 	import { getLocations } from '$lib/service/locations';
 	import { getBatches } from '$lib/service/batch';
 	import { trainingCourses } from '$lib/store/trainingCourse';
 	import { ComboBox, DatePicker, DatePickerInput, Button } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
-	let selectedDivisionId;
-	let selectedZilaId;
-	let selectedUpazilaId;
+	let division_id;
+	let district_id;
+	let sub_district_id;
+	let batch_id;
+	let Course_id;
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
@@ -18,6 +25,34 @@
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
+
+	const schema = yup.object({
+		division_id: yup.number(),
+		district_id: yup.number(),
+		sub_district_id: yup.number(),
+		batch_id: yup.number(),
+		Course_id: yup.number()
+	});
+
+	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
+		extend: validator({ schema })
+	});
+
+	const submitHandler = createSubmitHandler({
+		onSubmit: async (data) => {
+			// console.log('OK -> ', data);
+			await getReports({
+				...data,
+				division_id,
+				district_id,
+				sub_district_id,
+				batch_id,
+				Course_id,
+				report_type: REPORT_TYPE.TRAINING_NAME.id,
+				fileName: REPORT_TYPE.TRAINING_NAME.name
+			});
+		}
+	});
 
 	$: {
 		getLocations().then((resp) => {
@@ -32,22 +67,22 @@
 	}
 
 	$: {
-		if (selectedZilaId) {
-			let index = zilaOptions.findIndex((item) => item.id === selectedZilaId);
+		if (district_id) {
+			let index = zilaOptions.findIndex((item) => item.id === district_id);
 			upazilaOptions = zilaOptions[index]?.upazilas;
 		} else {
 			upazilaOptions = [];
-			selectedUpazilaId = null;
+			sub_district_id = null;
 		}
 	}
 
 	$: {
-		if (selectedDivisionId) {
-			let index = locations.findIndex((item) => item.id === selectedDivisionId);
+		if (division_id) {
+			let index = locations.findIndex((item) => item.id === division_id);
 			zilaOptions = locations[index]?.zilas;
 		} else {
 			zilaOptions = [];
-			selectedZilaId = null;
+			district_id = null;
 		}
 	}
 
@@ -65,37 +100,44 @@
 	</div>
 	<div class="t-flex t-gap-4 t-items-center   ">
 		<ComboBox
-			bind:selectedId={selectedDivisionId}
+			bind:selectedId={division_id}
 			titleText="Division"
 			placeholder="Select Division"
 			items={locations}
 			{shouldFilterItem}
 		/>
 		<ComboBox
-			disabled={!selectedDivisionId}
-			bind:selectedId={selectedZilaId}
+			disabled={!division_id}
+			bind:selectedId={district_id}
 			titleText="Training District"
 			placeholder="Select District"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
 		<ComboBox
-			disabled={!selectedZilaId}
-			bind:selectedId={selectedUpazilaId}
+			disabled={!district_id}
+			bind:selectedId={sub_district_id}
 			titleText="Training Sub-District"
 			placeholder="Select Sub District"
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>
 		<ComboBox
+			bind:selectedId={Course_id}
 			titleText="Training"
 			placeholder="Select Training"
 			items={Course}
 			{shouldFilterItem}
 		/>
-		<ComboBox titleText="Batch" placeholder="Select Batch" items={Batch} {shouldFilterItem} />
+		<ComboBox
+			bind:selectedId={batch_id}
+			titleText="Batch"
+			placeholder="Select Batch"
+			items={Batch}
+			{shouldFilterItem}
+		/>
 		<div class="">
-			<Button>Generate</Button>
+			<Button on:click={submitHandler}>Generate</Button>
 		</div>
 	</div>
 </div>

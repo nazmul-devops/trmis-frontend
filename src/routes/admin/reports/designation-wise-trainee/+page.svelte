@@ -16,7 +16,7 @@
 	}
 
 	const schema = yup.object({
-		organization_id: yup.number(),
+		designation_id: yup.number(),
 		start_date: yup.string(),
 		end_date: yup.string()
 	});
