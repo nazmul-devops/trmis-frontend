@@ -2,9 +2,8 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { createBatchParticipant } from '$lib/service/batch-participants';
+	import { batchParticipantsList } from "$lib/store/batch-participants"
 	import { trainees } from '$lib/store/trainee';
-	import { createEventDispatcher } from 'svelte';
 	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
@@ -31,14 +30,13 @@
 		extend: validator({ schema })
 	});
 
-	const dispatch = createEventDispatcher();
+
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-				await createBatchParticipant($page.params.batchId, { ...data });
+				await batchParticipantsList.createBatchParticipant(parseInt($page.params.batchId), { ...data });
 			open = false;
 			reset();
-			dispatch('update-list');
 		}
 	});
 

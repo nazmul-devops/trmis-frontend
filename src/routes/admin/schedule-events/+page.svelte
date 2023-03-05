@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { scheduleEventsLists } from "$lib/store/schedule-events"
 	import {
 		DataTable,
 		Toolbar,
@@ -12,9 +13,8 @@
 
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { deleteEventSchedule, getEventSchedules } from '$lib/service/schedule-events';
-	import { page } from '$app/stores';
 	import { onMount } from 'svelte';
+
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'event_venue', value: 'Venue' },
@@ -24,8 +24,8 @@
 	];
 
 	let open = false;
-	let loading = false;
 	let deleteModal = false;
+
 	let eventSchedule;
 
 	function openModalForm(row) {
@@ -34,34 +34,21 @@
 	}
 
 	async function doDelete() {
-		await deleteEventSchedule(eventSchedule.id);
+		await scheduleEventsLists.        deleteEventSchedule(eventSchedule.id);
 		deleteModal = false;
-		getEventSchedule();
 	}
 
-	let eventSchedules = [];
+	// let eventSchedules = [];
 
-	async function getEventSchedule() {
-		loading = true;
-		const { data } = await getEventSchedules();
-		eventSchedules = data;
-		loading = false;
-	}
-
-	// $: {
-	// 	if ($page.params.batchId) {
-	// 		getEventSchedule();
-	// 	}
-
-	// }
-
-	onMount(getEventSchedule);
+	onMount(async ()=>{
+		scheduleEventsLists.getEventSchedules()
+	});
 </script>
 
-{#if loading}
+{#if $scheduleEventsLists.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Event Schedule" description="" {headers} rows={eventSchedules}>
+	<DataTable size="short" title="All Event Schedule" description="" {headers} rows={$scheduleEventsLists.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -88,5 +75,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:eventSchedule on:update-list={getEventSchedule} />
+<FormModal bind:open bind:eventSchedule />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
