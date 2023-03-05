@@ -43,10 +43,10 @@
 			label: 'Notice',
 			link: '/notice'
 		},
-		{
-			label: 'About',
-			link: '/about-us'
-		},
+		// {
+		// 	label: 'About',
+		// 	link: '/about-us'
+		// },
 		{
 			label: 'Contact',
 			link: '/contact'

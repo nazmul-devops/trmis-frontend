@@ -56,7 +56,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Source Of Fund"
+	modalHeading={sourceOfFound.id == null ? "Create Source Of Fund" : "Edit Source Of Fund"}
 	primaryButtonText={sourceOfFound.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

@@ -156,7 +156,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Resources Persons"
+	modalHeading={trainer.id == null ? "Create Resources Person" : "Edit Resources Person"}
 	primaryButtonText={trainer.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

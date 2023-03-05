@@ -62,7 +62,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Training Coordinator"
+	modalHeading={coordinator.id == null ? 'Create Training Coordinator' : 'Edit Training Coordinator'}
 	primaryButtonText={coordinator.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -72,7 +72,7 @@
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
 		<TextInput name="code" labelText=" Code" placeholder="Enter  code..." />
 		<TextInput name="phone" labelText="phone" placeholder="Enter  phone..." />
-		<TextInput name="alt_phone" labelText="alt_phone" placeholder="Enter  alt_phone..." />
+		<!-- <TextInput name="alt_phone" labelText="alt_phone" placeholder="Enter  alt_phone..." /> -->
 		<TextInput name="email" labelText="Email" placeholder="Enter  Email..." />
 	</form>
 </Modal>
