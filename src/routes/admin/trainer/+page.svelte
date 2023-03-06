@@ -24,9 +24,7 @@
 		{ key: 'name', value: 'Name' },
 		{ key: 'organization__name', value: 'Organization' },
 		{ key: 'gender_name', value: 'Gender' },
-		{ key: 'nid', value: 'NID' },
 		{ key: 'phone', value: 'Phone' },
-		{ key: 'address', value: 'Address' },
 		{ key: 'division_name', value: 'Division' },
 		{ key: 'action', value: 'Action' }
 	];

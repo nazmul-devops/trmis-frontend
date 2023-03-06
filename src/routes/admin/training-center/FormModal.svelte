@@ -6,10 +6,7 @@
 	import { getLocations } from '$lib/service/locations';
 	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-
-	let selectedDivisionId;
-	let selectedZilaId;
-	let selectedUpazilaId;
+	import { sleep } from '$lib/service/utilities';
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
@@ -27,34 +24,20 @@
 	}
 
 	$: {
-		if (selectedZilaId) {
-			let index = zilaOptions.findIndex((item) => item.id === selectedZilaId);
-			upazilaOptions = zilaOptions[index]?.upazilas;
-			setFields('district', selectedZilaId);
-		} else {
-			upazilaOptions = [];
-			selectedUpazilaId = null;
-			setFields('district', null);
-		}
-	}
-
-	$: {
-		if (selectedDivisionId) {
-			let index = locations.findIndex((item) => item.id === selectedDivisionId);
+		if ($data.division) {
+			let index = locations.findIndex((item) => item.id === $data.division);
 			zilaOptions = locations[index]?.zilas;
-			setFields('division', selectedDivisionId);
 		} else {
 			zilaOptions = [];
-			selectedZilaId = null;
-			setFields('division', null);
 		}
 	}
 
 	$: {
-		if (selectedUpazilaId) {
-			setFields('sub_district', selectedUpazilaId);
+		if ($data.district) {
+			let index = zilaOptions.findIndex((item) => item.id === $data.district);
+			upazilaOptions = zilaOptions[index]?.upazilas;
 		} else {
-			setFields('sub_district', null);
+			upazilaOptions = [];
 		}
 	}
 
@@ -68,27 +51,28 @@
 		address: null
 	};
 
-	function setFormFields() {
-		setFields('name', trainingCenter.name);
-		// setFields('division', trainingCenter.division);
-		selectedDivisionId = trainingCenter.division;
-		selectedZilaId = trainingCenter.district;
-		selectedUpazilaId = trainingCenter.sub_district;
-		setFields('address', trainingCenter.address);
-	}
-
 	$: {
 		if (trainingCenter.id != null) {
-			setFormFields();
+			setData('name', trainingCenter.name);
+			sleep(0)
+				.then(() => {
+					setData('division', trainingCenter.division);
+					return sleep(100);
+				})
+				.then(() => {
+					setData('district', trainingCenter.district);
+					return sleep(100);
+				})
+				.then(() => {
+					setData('sub_district', trainingCenter.sub_district);
+					return sleep(100);
+				})
+				.then(() => {
+					setData('address', trainingCenter.address);
+					return sleep(100);
+				});
 		} else {
-			setFields('name', null);
-			// selectedDivisionId = null;
-			// selectedZilaId = null;
-			// selectedUpazilaId = null;
-			// setFields('division', null);
-			// setFields('district', null);
-			// setFields('sub_district', null);
-			setFields('address', null);
+			reset();
 		}
 	}
 
@@ -100,7 +84,7 @@
 		address: yup.string().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
+	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -123,7 +107,7 @@
 
 <Modal
 	bind:open
-	modalHeading={trainingCenter.id == null ? "Create Training Venue" : "Edit Training Venue"}
+	modalHeading={trainingCenter.id == null ? 'Create Training Venue' : 'Edit Training Venue'}
 	primaryButtonText={trainingCenter.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -131,42 +115,42 @@
 >
 	<form use:form>
 		<TextInput
+			bind:value={$data.name}
 			invalid={$errors.name != null}
 			name="name"
 			labelText="Name"
 			placeholder="Enter Name..."
 		/>
 		<ComboBox
-			bind:selectedId={selectedDivisionId}
+			bind:selectedId={$data.division}
 			titleText="Division"
 			placeholder="Select Division"
 			items={locations}
 			{shouldFilterItem}
 		/>
 		<ComboBox
-			disabled={!selectedDivisionId}
-			bind:selectedId={selectedZilaId}
-			titleText="Training District"
+			disabled={!$data.division}
+			bind:selectedId={$data.district}
+			titleText="District"
 			placeholder="Select District"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
 		<ComboBox
-			disabled={!selectedZilaId}
-			bind:selectedId={selectedUpazilaId}
+			disabled={!$data.district}
+			bind:selectedId={$data.sub_district}
 			titleText="Training Sub-District"
 			placeholder="Select Sub District"
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>
 		<TextInput
-			disabled={!selectedUpazilaId}
+			bind:value={$data.address}
+			disabled={!$data.sub_district}
 			invalid={$errors.address != null}
 			name="address"
 			labelText="Address"
 			placeholder="Enter Address..."
 		/>
-
-		<!-- {JSON.stringify($data)} -->
 	</form>
 </Modal>
