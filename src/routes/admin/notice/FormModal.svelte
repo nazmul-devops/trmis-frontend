@@ -1,10 +1,11 @@
 <script lang="ts">
+	import {onMount} from 'svelte'
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { createNotice, updateNotice } from '$lib/service/notice';
+	import { notices } from '$lib/store/notice';
 	import { Checkbox, FileUploader, Modal, TextInput } from 'carbon-components-svelte';
-	import { createEventDispatcher } from 'svelte';
+
 
 	let fileUploader;
 	let files = [];
@@ -47,24 +48,23 @@
 		extend: validator({ schema })
 	});
 
-	const dispatch = createEventDispatcher();
+
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (notice.id) {
-				await updateNotice({ ...data, id: notice.id });
+				await notices.updateNotice({ ...data, id: notice.id });
 			} else {
-				await createNotice({ ...data });
+				await notices.createNotice({ ...data });
 			}
 			open = false;
-			dispatch('update-list');
 			reset();
 		}
 	});
 
-	// onMount(async () => {
-	// 	getNotices();
-	// });
+	onMount(async () => {
+		notices.getNotices()
+	});
 </script>
 
 <Modal

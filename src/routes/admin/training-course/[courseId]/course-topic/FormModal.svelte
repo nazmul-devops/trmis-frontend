@@ -58,7 +58,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Course Topic"
+	modalHeading={courseTopic.id === null ? "Create Course Topic" : "Edit Course Topic"}
 	primaryButtonText={courseTopic.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

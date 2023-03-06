@@ -15,24 +15,27 @@
 	};
 
 	$: {
-		setFields('name', sourceOfFound.name);
-		setFields('serial_no', sourceOfFound.serial_no);
-		setFields('remarks', sourceOfFound.remarks	);
+		if (sourceOfFound.id) {
+			setFields('name', sourceOfFound.name);
+			setFields('serial_no', sourceOfFound.serial_no);
+			setFields('remarks', sourceOfFound.remarks);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		serial_no: yup.number().required(),
+		name: yup.string().required().typeError('Name is required'),
+		serial_no: yup.number().required().typeError('Serial Number must be a number'),
 		remarks: yup.string().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
+	const { form, touched, reset, errors, createSubmitHandler, setFields } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
-
-			}
+				serial_no: values.serial_no ? parseInt(values.serial_no) : null
+			};
 		},
 		extend: validator({ schema })
 	});
@@ -56,15 +59,27 @@
 
 <Modal
 	bind:open
-	modalHeading={sourceOfFound.id == null ? "Create Source Of Fund" : "Edit Source Of Fund"}
+	modalHeading={sourceOfFound.id == null ? 'Create Source Of Fund' : 'Edit Source Of Fund'}
 	primaryButtonText={sourceOfFound.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+		<TextInput invalid={$errors.name} name="name" labelText=" name" placeholder="Enter  name..." />
+		{#if $errors.name}
+			<p class="t-text-red-500">{$errors.name}</p>
+		{/if}
+		<TextInput
+			invalid={$errors.serial_no}
+			name="serial_no"
+			labelText="Serial_No"
+			placeholder="Enter  serial_no..."
+		/>
+		{#if $errors.serial_no}
+			<p class="t-text-red-500">{$errors.serial_no}</p>
+		{/if}
 		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
+		{JSON.stringify($touched)}
 	</form>
 </Modal>

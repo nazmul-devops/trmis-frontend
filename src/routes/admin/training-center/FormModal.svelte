@@ -3,7 +3,7 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { trainingCenters } from '$lib/store/trainingCenter';
-	import { getLocations } from '$lib/service/locations';
+	import { locations } from '$lib/store/locations';
 	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
@@ -13,7 +13,6 @@
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
-	let locations = [];
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -21,9 +20,7 @@
 	}
 
 	$: {
-		getLocations().then((resp) => {
-			locations = resp.data;
-		});
+			locations.getLocations()
 	}
 
 	$: {
@@ -40,8 +37,8 @@
 
 	$: {
 		if (selectedDivisionId) {
-			let index = locations.findIndex((item) => item.id === selectedDivisionId);
-			zilaOptions = locations[index]?.zilas;
+			let index = $locations.data.findIndex((item) => item.id === selectedDivisionId);
+			zilaOptions = $locations.data[index]?.zilas;
 			setFields('division', selectedDivisionId);
 		} else {
 			zilaOptions = [];
@@ -116,6 +113,7 @@
 		}
 	});
 
+
 	onMount(async () => {
 		trainingCenters.getTrainingCenters();
 	});
@@ -140,7 +138,7 @@
 			bind:selectedId={selectedDivisionId}
 			titleText="Division"
 			placeholder="Select Division"
-			items={locations}
+			items={$locations.data}
 			{shouldFilterItem}
 		/>
 		<ComboBox

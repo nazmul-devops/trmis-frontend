@@ -61,4 +61,4 @@ function createNoticeStore(){
     }
 }
 
-export const notice = createNoticeStore()
+export const notices = createNoticeStore()
