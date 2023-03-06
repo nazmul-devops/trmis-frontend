@@ -19,11 +19,11 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		serial_no: yup.number().required()
+		name: yup.string().required().typeError("Nama is required"),
+		serial_no: yup.number().required("").typeError("Serial No. must be a number")
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
+	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
@@ -60,7 +60,13 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+		<TextInput invalid={$errors.name} name="name" labelText=" name" placeholder="Enter  name..." />
+		{#if $errors.name}
+		<p class="t-text-red-500">{$errors.name}</p>	
+		{/if}
+		<TextInput invalid={$errors.serial_no} name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+		{#if $errors.serial_no}
+			<p class="t-text-red-500">{$errors.serial_no}</p>
+		{/if}
 	</form>
 </Modal>

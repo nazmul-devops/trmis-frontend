@@ -102,7 +102,7 @@
 		<TextInput
 			invalid={$errors.name != null}
 			name="session_day"
-			labelText="Session Day"
+			labelText="Session Day Number"
 			placeholder="Enter Session Day..."
 		/>
 

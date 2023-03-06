@@ -63,7 +63,7 @@
 {#if loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Batches" description="" {headers} rows={batches}>
+	<DataTable size="short" title="Batch" description="" {headers} rows={batches}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />

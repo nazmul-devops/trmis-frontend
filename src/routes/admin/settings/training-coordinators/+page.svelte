@@ -22,9 +22,9 @@
 	let headers = [
 		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'code', value: 'Code' },
+		// { key: 'code', value: 'Code' },
 		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
+		// { key: 'alt_phone', value: 'Alt Phone' },
 		{ key: 'email', value: 'Email' },
 		{ key: 'action', value: 'Action' }
 	];

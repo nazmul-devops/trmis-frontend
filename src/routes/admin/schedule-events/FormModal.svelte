@@ -65,8 +65,8 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Schedule"
-	primaryButtonText="ADD"
+	modalHeading={eventSchedule.id == null ? "Create Schedule" : "Edit Schedule"}
+	primaryButtonText={eventSchedule.id == null ? "ADD" : "Edit"}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
