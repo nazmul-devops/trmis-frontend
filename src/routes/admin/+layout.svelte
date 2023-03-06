@@ -69,7 +69,7 @@
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/batch">Batches</a>
+				<a href="/admin/batch">Batch</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
@@ -82,7 +82,7 @@
 			<SideNavDivider />
 			<SideNavMenu text="Training Courses">
 				<SideNavLink>
-					<a href="/admin/training-course">Training</a>
+					<a href="/admin/training-course">Training Course</a>
 				</SideNavLink>
 				<SideNavLink>
 					<a href="/admin/training-course/1/course-category">Training Category</a>

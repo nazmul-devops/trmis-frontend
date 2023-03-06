@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { deleteNotice, getNotices } from '$lib/service/notice';
+	import { notices } from '$lib/store/notice';
 	import {
 		DataTable,
 		Toolbar,
@@ -43,25 +43,24 @@
 	}
 
 	async function doDelete() {
-		await deleteNotice(notice.id);
+		await notices.deleteNotice(notice.id);
 		deleteModal = false;
-		getNoticeList();
 	}
 
-	async function getNoticeList() {
-		const { data } = await getNotices();
-		Notices = data;
-	}
+	// async function getNoticeList() {
+	// 	const { data } = await getNotices();
+	// 	Notices = data;
+	// }
 
 	onMount(async () => {
-		getNoticeList();
+		notices.getNotices()
 	});
 </script>
 
-{#if Notices.loading}
-	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
+{#if $notices.loading}
+	<DataTableSkeleton showHeader={false} showToolbar={false} {headers}  />
 {:else}
-	<DataTable size="short" title="Notice" description="" {headers} rows={Notices}>
+	<DataTable size="short" title="Notice" description="" {headers} rows={$notices.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -89,5 +88,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:notice on:update-list={getNoticeList} />
+<FormModal bind:open bind:notice  />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />

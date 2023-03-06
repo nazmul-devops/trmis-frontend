@@ -4,8 +4,15 @@
 	import * as yup from 'yup';
 	import { trainingCourses } from '$lib/store/trainingCourse';
 	import { courseCategories } from '$lib/store/courseCategory';
-	import { Modal, NumberInput, TextInput, Select, SelectItem } from 'carbon-components-svelte';
+	import { Modal, NumberInput, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+	import { Course } from 'carbon-icons-svelte';
+
+
+	function shouldFilterItem(item, value) {
+    if (!value) return true;
+    return item.text.toLowerCase().includes(value.toLowerCase());
+  }
 
 	export let open = true;
 	export let trainingCourse = {
@@ -13,34 +20,32 @@
 		title: null,
 		description: null,
 		code: null,
-		pass_mark: null,
-		objective: null,
 		course_category: null
 	};
 
 	$: {
-		setFields('title', trainingCourse.title);
-		setFields('description', trainingCourse.description);
-		setFields('code', trainingCourse.code);
-		setFields('pass_mark', trainingCourse.pass_mark);
-		setFields('objective', trainingCourse.objective);
-		setFields('course_category', trainingCourse.course_category);
+		if (trainingCourse.id != null) {
+			setFields('title', trainingCourse.title);
+			setFields('description', trainingCourse.description);
+			setFields('code', trainingCourse.code);
+			setFields('course_category', trainingCourse.course_category);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
 		title: yup.string().required(),
 		description: yup.string().required(),
 		code: yup.string().required(),
-		pass_mark: yup.number().required(),
-		objective: yup.string().required(),
 		course_category: yup.number().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				pass_mark: values.pass_mark ? parseInt(values.pass_mark) : null,
+				// pass_mark: values.pass_mark ? parseInt(values.pass_mark) : null,
 				course_category: parseInt(values.course_category)
 			};
 		},
@@ -59,6 +64,11 @@
 		}
 	});
 
+	$: CourseCategories = $courseCategories.data.map((item) => ({ ...item, text: item.title }))
+	$: {
+		console.log("Hello", CourseCategories);
+	}
+
 	onMount(async () => {
 		trainingCourses.getTrainingCourses();
 		courseCategories.getCourseCategories();
@@ -67,7 +77,7 @@
 
 <Modal
 	bind:open
-	modalHeading={trainingCourse.id == null ? "Create Course" : "Edit Course"}
+	modalHeading={trainingCourse.id == null ? 'Create Course' : 'Edit Course'}
 	primaryButtonText={trainingCourse.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -78,42 +88,28 @@
 			invalid={$errors.title != null}
 			name="title"
 			labelText="title"
-			placeholder="Enter  Title..."
+			placeholder="Enter Title..."
 		/>
 		<TextInput
 			invalid={$errors.description != null}
 			name="description"
 			labelText="Description"
-			placeholder="Enter  description..."
+			placeholder="Enter description..."
 		/>
 		<TextInput
 			invalid={$errors.code != null}
 			name="code"
 			labelText="Code"
-			placeholder="Enter  Code..."
+			placeholder="Enter 	Code..."
 		/>
-		<TextInput
-			invalid={$errors.pass_mark != null}
-			name="pass_mark"
-			labelText="Pass Mark"
-			placeholder="Enter  pass_mark..."
+
+		<ComboBox
+			bind:selectedId={$data.course_category}
+			titleText="Course Category"
+			placeholder="Select Course Category"
+			items={CourseCategories}
+			{shouldFilterItem}
 		/>
-		<TextInput
-			invalid={$errors.objective != null}
-			name="objective"
-			labelText="Objective"
-			placeholder="Enter  objective..."
-		/>
-		<Select
-			invalid={$errors.course_category != null}
-			name="course_category"
-			labelText="Course Category"
-		>
-			<SelectItem text="choose Course Category" />
-			{#each $courseCategories.data as category}
-				<SelectItem value={category.id} text={category.title} />
-			{/each}
-		</Select>
 
 		<!-- {JSON.stringify($errors)} -->
 	</form>

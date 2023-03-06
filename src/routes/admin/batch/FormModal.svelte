@@ -109,7 +109,7 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Batch"
+	modalHeading={batch.id == null ? "Create Batch" : "Edit Batch"}
 	primaryButtonText={batch.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

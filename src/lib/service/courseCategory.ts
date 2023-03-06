@@ -3,7 +3,6 @@ import { http } from '$lib/service/auth';
 export async function getCourseCategories() {
 	try {
 		const { data } = await http.get('training-course/course-category/');
-		console.log('getCourseCategories', data);
 		return {
 			status: 200,
 			data
