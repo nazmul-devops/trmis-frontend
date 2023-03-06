@@ -16,7 +16,7 @@
 	}
 
 	const schema = yup.object({
-		course_id: yup.number(),
+		course_id: yup.number()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
@@ -28,14 +28,14 @@
 			await getReports({
 				...data,
 				course_id,
-				report_type: REPORT_TYPE.COURSE.id,
-				fileName: REPORT_TYPE.COURSE.name
+				report_type: REPORT_TYPE.COURSE_CURRICULAM.id,
+				fileName: REPORT_TYPE.COURSE_CURRICULAM.name
 			});
 		}
 	});
 
 	$: {
-		setData('designation_id', course_id);
+		setData('course_id', course_id);
 	}
 
 	$: Courses = $trainingCourses.data.map((item) => ({ ...item, text: item.title }));
@@ -59,7 +59,7 @@
 			/>
 		</div>
 		<div class="">
-			<Button>Generate</Button>
+			<Button on:click={submitHandler}>Generate</Button>
 		</div>
 	</div>
 </div>
