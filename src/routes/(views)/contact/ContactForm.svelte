@@ -3,7 +3,6 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { createContact } from '$lib/service/contact';
-	import { ToastNotification } from 'carbon-components-svelte';
 
 	let message = null;
 

@@ -6,12 +6,10 @@
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
-	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
+	import { MATERIAL_STATUS } from '$lib/constants';
+	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-
-	let selectedDivisionId;
-	let selectedZilaId;
-	let selectedUpazilaId;
+	import { sleep } from '$lib/service/utilities';
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
@@ -29,34 +27,20 @@
 	}
 
 	$: {
-		if (selectedDivisionId) {
-			let index = locations.findIndex((item) => item.id === selectedDivisionId);
+		if ($data.division) {
+			let index = locations.findIndex((item) => item.id === $data.division);
 			zilaOptions = locations[index]?.zilas;
-			setFields('division', selectedDivisionId);
 		} else {
 			zilaOptions = [];
-			selectedZilaId = null;
-			setFields('division', null);
 		}
 	}
 
 	$: {
-		if (selectedZilaId) {
-			let index = zilaOptions.findIndex((item) => item.id === selectedZilaId);
+		if ($data.district) {
+			let index = zilaOptions.findIndex((item) => item.id === $data.district);
 			upazilaOptions = zilaOptions[index]?.upazilas;
-			setFields('district', selectedZilaId);
 		} else {
 			upazilaOptions = [];
-			selectedUpazilaId = null;
-			setFields('district', null);
-		}
-	}
-
-	$: {
-		if (selectedUpazilaId) {
-			setFields('sub_district', selectedUpazilaId);
-		} else {
-			setFields('sub_district', null);
 		}
 	}
 
@@ -69,67 +53,68 @@
 		email: null,
 		gender: null,
 		marital_status: null,
-		area_of_specialization: null,
-		address: null,
 		designation: null,
 		organization: null,
+		area_of_specialization:null,
 		division: null,
+		address: null,
 		district: null,
 		sub_district: null
 	};
 
-	function formSetFields() {
-		setFields('name', trainer.name);
-		setFields('phone', trainer.phone);
-		setFields('nid', trainer.nid);
-		setFields('email', trainer.email);
-		setFields('gender', trainer.gender);
-		setFields('marital_status', trainer.marital_status);
-		setFields('area_of_specialization', trainer.area_of_specialization);
-		setFields('address', trainer.address);
-		setFields('designation', trainer.designation);
-		setFields('organization', trainer.organization);
-		selectedDivisionId = trainer.division;
-		selectedZilaId = trainer.district;
-		selectedUpazilaId = trainer.sub_district;
-	}
-
 	$: {
 		if (trainer.id != null) {
-			formSetFields();
+			setData('name', trainer.name);
+			setData('phone', trainer.phone);
+			setData('nid', trainer.nid);
+			setData('email', trainer.email);
+			setData('gender', trainer.gender);
+			setData("area_of_specialization", trainer.area_of_specialization);
+			setData('marital_status', trainer.marital_status);
+			setData('designation', trainer.designation);
+			setData('organization', trainer.organization);
+			setData('address', trainer.address);
+
+			sleep(0)
+				.then(() => {
+					setData('division', trainer.division);
+					return sleep(100);
+				})
+				.then(() => {
+					setData('district', trainer.district);
+					return sleep(100);
+				})
+				.then(() => {
+					setData('sub_district', trainer.sub_district);
+				});
 		} else {
 			reset();
 		}
 	}
 
 	const schema = yup.object({
-		phone: yup.number().required(),
-		nid: yup.number().required(),
-		email: yup.string().email().required(),
-		gender: yup.number().required(),
-		address: yup.string().required(),
-		designation: yup.number().required(),
-		organization: yup.number().required(),
+		phone: yup.number().typeError('Phone number is required!').required(),
+		// .min(11, 'Phone Number Must Be Less Than or Equal 11')
+		// .max(11, 'Phone Number Must Be Less Than or Equal 11'),
+		nid: yup.number().required().typeError('NID is required!'),
 		area_of_specialization: yup.string().required(),
-		division: yup.number().required(),
-		district: yup.number().required(),
-		sub_district: yup.number().required(),
-		marital_status: yup.number().required()
+		email: yup.string().email().required(),
+		gender: yup.number().required().typeError('Select Gender'),
+		designation: yup.number().required().typeError('Select Designation'),
+		organization: yup.number().required().typeError('Select Organization'),
+		division: yup.number().required().typeError('Select Division'),
+		address: yup.string().required(),
+		district: yup.number().required().typeError('Select District'),
+		sub_district: yup.number().required().typeError('Select Sub District'),
+		marital_status: yup.number().required().typeError('Select Material Status')
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
+	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
 				phone: values.phone ? parseInt(values.phone) : null,
-				nid: values.phone ? parseInt(values.nid) : null,
-				gender: parseInt(values.gender),
-				designation: parseInt(values.designation),
-				organization: parseInt(values.organization),
-				division: parseInt(values.division),
-				district: parseInt(values.gender),
-				sub_district: parseInt(values.sub_district),
-				marital_status: parseInt(values.marital_status)
+				nid: values.nid ? parseInt(values.nid) : null
 			};
 		},
 		extend: validator({ schema })
@@ -147,6 +132,14 @@
 		}
 	});
 
+	$: Organizations = $organizations.data.map((item) => ({ ...item, text: item.name }));
+	$: Designations = $designations.data.map((item) => ({ ...item, text: item.name }));
+
+	function Cancel() {
+		open = false;
+		reset();
+	}
+
 	onMount(async () => {
 		trainers.getTrainers();
 		designations.getDesignations();
@@ -156,94 +149,154 @@
 
 <Modal
 	bind:open
-	modalHeading={trainer.id == null ? "Create Resources Person" : "Edit Resources Person"}
+	modalHeading={trainer.id == null ? 'Create Participant' : 'Edit Participant'}
 	primaryButtonText={trainer.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
-	on:click:button--secondary={() => (open = false)}
+	on:click:button--secondary={Cancel}
 	on:submit={submitHandler}
 >
 	<form use:form>
 		<TextInput
+			bind:value={$data.name}
 			invalid={$errors.name != null}
 			name="name"
 			labelText="Name"
 			placeholder="Enter Name..."
 		/>
+		{#if $errors.name}
+			<p class=" t-text-red-500 ">{$errors.name}</p>
+		{/if}
 		<TextInput
+			bind:value={$data.phone}
 			invalid={$errors.phone != null}
 			name="phone"
 			labelText="Phone"
 			placeholder="Enter  Phone..."
 		/>
+		{#if $errors.phone}
+			<p class=" t-text-red-500 ">{$errors.phone}</p>
+		{/if}
 		<TextInput
+			bind:value={$data.nid}
 			invalid={$errors.nid != null}
 			name="nid"
 			labelText="NID"
 			placeholder="Enter  NID No..."
 		/>
+		{#if $errors.nid}
+			<p class=" t-text-red-500 ">{$errors.nid}</p>
+		{/if}
 		<TextInput
+			bind:value={$data.email}
 			invalid={$errors.email != null}
 			name="email"
 			labelText="Email"
 			placeholder="Enter  Email..."
 		/>
+		{#if $errors.email}
+			<p class=" t-text-red-500 ">{$errors.email}</p>
+		{/if}
 		<TextInput
+			bind:value={$data.area_of_specialization}
 			invalid={$errors.area_of_specialization != null}
 			name="area_of_specialization"
-			labelText="Area Of Specialization"
-			placeholder="Enter Specialization..."
+			labelText="Specialization"
+			placeholder="Enter Area Of Specializayion..."
 		/>
-		<Select invalid={$errors.gender != null} name="gender" labelText="Gender">
-			<SelectItem text="choose Gender" value="" />
-			<SelectItem text="Male" value="1" />
-			<SelectItem text="Female" value="2" />
-			<SelectItem text="Other" value="3" />
-		</Select>
+		{#if $errors.area_of_specialization}
+			<p class=" t-text-red-500 ">{$errors.area_of_specialization}</p>
+		{/if}
 		<TextInput
+			bind:value={$data.address}
 			invalid={$errors.address != null}
 			name="address"
 			labelText="Address"
-			placeholder="Enter address..."
+			placeholder="Enter  Address..."
 		/>
-		<Select
-			invalid={$errors.marital_status != null}
-			name="marital_status"
-			labelText="Material Status"
-		>
-			<SelectItem text="choose Material Status" />
-			<SelectItem text="Married" value="1" />
-			<SelectItem text="UnMarried" value="2" />
-		</Select>
-		<Select invalid={$errors.designation != null} name="designation" labelText="Designation">
-			<SelectItem text="choose Designation" />
-			{#each $designations.data as designation}
-				<SelectItem value={designation.id} text={designation.name} />
-			{/each}
-		</Select>
-		<Select invalid={$errors.organization != null} name="organization" labelText="Organization">
-			<SelectItem text="choose Organization" />
-			{#each $organizations.data as organization}
-				<SelectItem value={organization.id} text={organization.name} />
-			{/each}
-		</Select>
+		{#if $errors.address}
+			<p class=" t-text-red-500 ">{$errors.address}</p>
+		{/if}
 		<ComboBox
-			bind:selectedId={selectedDivisionId}
+			invalid={$errors.gender != null}
+			bind:selectedId={$data.gender}
+			titleText="Gender"
+			placeholder="Select Gender"
+			items={[
+				{ id: 1, text: 'Male' },
+				{ id: 2, text: 'Female' },
+				{ id: 3, text: 'Other' }
+			]}
+			{shouldFilterItem}
+		/>
+
+		{#if $errors.gender}
+			<p class=" t-text-red-500 ">{$errors.gender}</p>
+		{/if}
+
+		<ComboBox
+			name="marital_status"
+			invalid={$errors.marital_status != null}
+			bind:selectedId={$data.marital_status}
+			titleText="Material Status"
+			placeholder="Select Material Status"
+			items={MATERIAL_STATUS}
+		/>
+
+		{#if $errors.marital_status}
+			<p class=" t-text-red-500 ">{$errors.marital_status}</p>
+		{/if}
+
+		<ComboBox
+			invalid={$errors.designation != null}
+			bind:selectedId={$data.designation}
+			titleText="Designations"
+			placeholder="Select Designations"
+			items={Designations}
+			{shouldFilterItem}
+		/>
+
+		{#if $errors.designation}
+			<p class=" t-text-red-500 ">{$errors.designation}</p>
+		{/if}
+		<ComboBox
+			invalid={$errors.organization != null}
+			bind:selectedId={$data.organization}
+			titleText="Organizations"
+			placeholder="Select Organizations"
+			items={Organizations}
+			{shouldFilterItem}
+		/>
+		{#if $errors.organization}
+			<p class=" t-text-red-500 ">{$errors.organization}</p>
+		{/if}
+
+		<ComboBox
+			name="division"
+			invalid={$errors.division != null}
+			bind:selectedId={$data.division}
 			titleText="Division"
 			placeholder="Select Division"
 			items={locations}
 			{shouldFilterItem}
 		/>
+
+		{#if $errors.division}
+			<p class=" t-text-red-500 ">{$errors.division}</p>
+		{/if}
+
 		<ComboBox
-			disabled={!selectedDivisionId}
-			bind:selectedId={selectedZilaId}
+			disabled={!$data.division}
+			name="district"
+			bind:selectedId={$data.district}
 			titleText="Training District"
 			placeholder="Select District"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
 		<ComboBox
-			disabled={!selectedZilaId}
-			bind:selectedId={selectedUpazilaId}
+			disabled={!$data.district}
+			name="sub_district"
+			bind:selectedId={$data.sub_district}
 			titleText="Training Sub-District"
 			placeholder="Select Sub District"
 			items={upazilaOptions}
@@ -251,6 +304,6 @@
 		/>
 
 		<p>{JSON.stringify($data)}</p>
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 </Modal>

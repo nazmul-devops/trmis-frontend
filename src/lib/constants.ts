@@ -9,3 +9,8 @@ export const REPORT_TYPE = {
 	TRAINER: { id: 8, name: 'Trainer' },
 	EXAM_TEST: { id: 9, name: 'Exam-Test-Evaluation' }
 };
+
+export const MATERIAL_STATUS = [
+	{ id: 1, text: 'Married' },
+	{ id: 2, text: 'UnMarried' }
+];
