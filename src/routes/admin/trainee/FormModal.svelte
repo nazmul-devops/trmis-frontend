@@ -99,8 +99,8 @@
 		nid: yup
 			.number()
 			.required()
-			.min(1000000000, 'Enter a Valid NID')
-			.max(9999999999, 'Enter a Valid NID')
+			.min(1000000000, 'Enter A Valid NID')
+			.max(9999999999, 'Enter A Valid NID')
 			.typeError('NID is required!'),
 		email: yup.string().email().required(),
 		gender: yup.number().required().typeError('Select Gender'),
