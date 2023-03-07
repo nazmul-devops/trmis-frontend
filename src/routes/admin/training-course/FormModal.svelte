@@ -4,15 +4,21 @@
 	import * as yup from 'yup';
 	import { trainingCourses } from '$lib/store/trainingCourse';
 	import { courseCategories } from '$lib/store/courseCategory';
-	import { Modal, NumberInput, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
+	import {
+		Modal,
+		NumberInput,
+		TextInput,
+		Select,
+		SelectItem,
+		ComboBox
+	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { Course } from 'carbon-icons-svelte';
 
-
 	function shouldFilterItem(item, value) {
-    if (!value) return true;
-    return item.text.toLowerCase().includes(value.toLowerCase());
-  }
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
 
 	export let open = true;
 	export let trainingCourse = {
@@ -64,9 +70,9 @@
 		}
 	});
 
-	$: CourseCategories = $courseCategories.data.map((item) => ({ ...item, text: item.title }))
+	$: CourseCategories = $courseCategories.data.map((item) => ({ ...item, text: item.title }));
 	$: {
-		console.log("Hello", CourseCategories);
+		console.log('Hello', CourseCategories);
 	}
 
 	onMount(async () => {
@@ -77,7 +83,7 @@
 
 <Modal
 	bind:open
-	modalHeading={trainingCourse.id == null ? 'Create Course' : 'Edit Course'}
+	modalHeading={trainingCourse.id == null ? 'Create training' : 'Edit training'}
 	primaryButtonText={trainingCourse.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

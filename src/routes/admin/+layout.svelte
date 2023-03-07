@@ -65,7 +65,7 @@
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/trainer">Resources Persons</a>
+				<a href="/admin/trainer">Resource Person / Facilitator</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
@@ -94,7 +94,7 @@
 					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
 				</SideNavLink> -->
 				<SideNavLink>
-					<a href="/admin/training-course/1/course-topic">Course Topic</a>
+					<a href="/admin/training-course/1/course-topic">Training Topic</a>
 				</SideNavLink>
 				<SideNavLink>
 					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>

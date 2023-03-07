@@ -3,7 +3,7 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { designations } from '$lib/store/designations';
-	import { Modal, NumberInput, TextInput } from 'carbon-components-svelte';
+	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
@@ -14,22 +14,25 @@
 	};
 
 	$: {
-		setFields('name', designation.name);
-		setFields('serial_no', designation.serial_no);
+		if (designation.id != null) {
+			setFields('name', designation.name);
+			setFields('serial_no', designation.serial_no);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
-		name: yup.string().required().typeError("Nama is required"),
-		serial_no: yup.number().required("").typeError("Serial No. must be a number")
+		name: yup.string().required().typeError('Nama is required'),
+		serial_no: yup.number().required('').typeError('Serial No. must be a number')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
-
-			}
+				serial_no: values.serial_no ? parseInt(values.serial_no) : null
+			};
 		},
 		extend: validator({ schema })
 	});
@@ -62,9 +65,14 @@
 	<form use:form>
 		<TextInput invalid={$errors.name} name="name" labelText=" name" placeholder="Enter  name..." />
 		{#if $errors.name}
-		<p class="t-text-red-500">{$errors.name}</p>	
+			<p class="t-text-red-500">{$errors.name}</p>
 		{/if}
-		<TextInput invalid={$errors.serial_no} name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+		<TextInput
+			invalid={$errors.serial_no}
+			name="serial_no"
+			labelText="Serial_No"
+			placeholder="Enter  serial_no..."
+		/>
 		{#if $errors.serial_no}
 			<p class="t-text-red-500">{$errors.serial_no}</p>
 		{/if}

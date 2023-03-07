@@ -38,7 +38,11 @@
 	$: {
 		if ($data.district) {
 			let index = zilaOptions.findIndex((item) => item.id === $data.district);
-			upazilaOptions = zilaOptions[index]?.upazilas;
+			if (index >= 0) {
+				upazilaOptions = zilaOptions[index]?.upazilas;
+			} else {
+				upazilaOptions = [];
+			}
 		} else {
 			upazilaOptions = [];
 		}
@@ -60,7 +64,6 @@
 		district: null,
 		sub_district: null
 	};
-
 
 	$: {
 		if (trainee.id != null) {
@@ -93,9 +96,12 @@
 
 	const schema = yup.object({
 		phone: yup.number().typeError('Phone number is required!').required(),
-		// .min(11, 'Phone Number Must Be Less Than or Equal 11')
-		// .max(11, 'Phone Number Must Be Less Than or Equal 11'),
-		nid: yup.number().required().typeError('NID is required!'),
+		nid: yup
+			.number()
+			.required()
+			.min(1000000000, 'Enter A Valid NID')
+			.max(9999999999, 'Enter A Valid NID')
+			.typeError('NID is required!'),
 		email: yup.string().email().required(),
 		gender: yup.number().required().typeError('Select Gender'),
 		designation: yup.number().required().typeError('Select Designation'),
@@ -112,7 +118,7 @@
 			return {
 				...values,
 				phone: values.phone ? parseInt(values.phone) : null,
-				nid: values.phone ? parseInt(values.nid) : null
+				nid: values.nid ? parseInt(values.nid) : null
 			};
 		},
 		extend: validator({ schema })
@@ -276,8 +282,8 @@
 			disabled={!$data.division}
 			name="district"
 			bind:selectedId={$data.district}
-			titleText="Training District"
-			placeholder="Select District"
+			titleText="Zila"
+			placeholder="Select Zila"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
@@ -285,8 +291,8 @@
 			disabled={!$data.district}
 			name="sub_district"
 			bind:selectedId={$data.sub_district}
-			titleText="Training Sub-District"
-			placeholder="Select Sub District"
+			titleText="Upazila"
+			placeholder="Select Upazila"
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>

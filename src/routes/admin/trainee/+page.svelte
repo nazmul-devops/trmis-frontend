@@ -23,11 +23,10 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Name' },
+		{ key: 'designation_name', value: 'Designation' },
 		{ key: 'organization_name', value: 'Organization' },
 		{ key: 'gender_name', value: 'Gender' },
-		{ key: 'nid', value: 'NID' },
-		{ key: 'phone', value: 'Phone' },
-		{ key: 'district_name', value: 'Division' },
+		{ key: 'phone', value: 'Mobile' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -67,12 +66,12 @@
 				<OverflowMenu flipped>
 					<OverflowMenuItem
 						on:click={() => goto(`/admin/trainee/${row.phone}/completed-course`)}
-						text="Completed Course"
+						text="Completed Training"
 					/>
-					<OverflowMenuItem
+					<!-- <OverflowMenuItem
 						on:click={() => goto(`/admin/trainee/${row.phone}/education`)}
 						text="Education"
-					/>
+					/> -->
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -89,4 +88,4 @@
 {/if}
 
 <FormModal bind:open bind:trainee />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'participants'} />

@@ -49,7 +49,7 @@
 	<DataTable
 		id="training_course_id"
 		size="short"
-		title="Completed Course"
+		title="Training completed by Participant's name"
 		description=""
 		{headers}
 		rows={$completedCourses.data}
@@ -82,4 +82,4 @@
 {/if}
 
 <FormModal bind:open bind:completedCourse />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'Completed Training'} />
