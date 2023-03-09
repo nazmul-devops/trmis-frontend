@@ -3,13 +3,14 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { trainingCenters } from '$lib/store/trainingCenter';
-	import { locations } from '$lib/store/locations';
+	import { getLocations } from '$lib/service/locations';
 	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { sleep } from '$lib/service/utilities';
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
+	let locations = [];
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -17,13 +18,19 @@
 	}
 
 	$: {
-			locations.getLocations()
+		getLocations().then((resp) => {
+			locations = resp.data;
+		});
 	}
 
 	$: {
 		if ($data.division) {
 			let index = locations.findIndex((item) => item.id === $data.division);
-			zilaOptions = locations[index]?.zilas;
+			if (index >= 0) {
+				zilaOptions = locations[index]?.zilas;
+			} else {
+				zilaOptions = [];
+			}
 		} else {
 			zilaOptions = [];
 		}
@@ -32,7 +39,11 @@
 	$: {
 		if ($data.district) {
 			let index = zilaOptions.findIndex((item) => item.id === $data.district);
-			upazilaOptions = zilaOptions[index]?.upazilas;
+			if (index >= 0) {
+				upazilaOptions = zilaOptions[index]?.upazilas;
+			} else {
+				upazilaOptions = [];
+			}
 		} else {
 			upazilaOptions = [];
 		}
@@ -97,7 +108,6 @@
 		}
 	});
 
-
 	onMount(async () => {
 		trainingCenters.getTrainingCenters();
 	});
@@ -123,22 +133,22 @@
 			bind:selectedId={$data.division}
 			titleText="Division"
 			placeholder="Select Division"
-			items={$locations.data}
+			items={locations}
 			{shouldFilterItem}
 		/>
 		<ComboBox
 			disabled={!$data.division}
 			bind:selectedId={$data.district}
-			titleText="District"
-			placeholder="Select District"
+			titleText="Zila"
+			placeholder="Select Zila"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
 		<ComboBox
 			disabled={!$data.district}
 			bind:selectedId={$data.sub_district}
-			titleText="Training Sub-District"
-			placeholder="Select Sub District"
+			titleText="Upazila"
+			placeholder="Select Upazila"
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>

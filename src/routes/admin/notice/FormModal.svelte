@@ -1,11 +1,10 @@
 <script lang="ts">
-	import {onMount} from 'svelte'
+	import { onMount } from 'svelte';
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { notices } from '$lib/store/notice';
 	import { Checkbox, FileUploader, Modal, TextInput } from 'carbon-components-svelte';
-
 
 	let fileUploader;
 	let files = [];
@@ -20,14 +19,18 @@
 	};
 
 	$: {
-		setFields('title', notice.title);
-		setFields('description', notice.description);
-		setFields('expiration_date', notice.expiration_date);
-		setFields('show_in_home_page', notice.show_in_home_page);
+		if (notice.id != null) {
+			setFields('title', notice.title);
+			setFields('description', notice.description);
+			setFields('expiration_date', notice.expiration_date);
+			setFields('show_in_home_page', notice.show_in_home_page);
+		} else {
+			reset();
+		}
 	}
 
 	$: {
-		setFields('files', files[0]);
+		setFields('files', files);
 	}
 
 	const schema = yup.object({
@@ -48,8 +51,6 @@
 		extend: validator({ schema })
 	});
 
-
-
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (notice.id) {
@@ -63,7 +64,7 @@
 	});
 
 	onMount(async () => {
-		notices.getNotices()
+		notices.getNotices();
 	});
 </script>
 

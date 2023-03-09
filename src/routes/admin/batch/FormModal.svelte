@@ -23,7 +23,7 @@
 		coordinator_id: null,
 		organization_id: null,
 		source_of_fund_id: null,
-		training_course_schedule: null
+		training_course_schedule_id: null
 	};
 
 	function formSetFields() {
@@ -35,6 +35,7 @@
 		setFields('coordinator', batch.coordinator_id);
 		setFields('organization', batch.organization_id);
 		setFields('source_of_fund', batch.source_of_fund_id);
+		setFields('training_course_schedule', batch.training_course_schedule_id);
 	}
 
 	$: {
@@ -48,10 +49,10 @@
 	$: {
 		// console.log(training_course_schedules);
 		// console.log(batch.training_course_schedule);
-		console.log(training_course_schedules);
-		if (batch.training_course_schedule && training_course_schedules.length > 0) {
-			setData('training_course_schedule', 242);
-		}
+		// console.log(training_course_schedules);
+		// if (batch.training_course_schedule && training_course_schedules.length > 0) {
+		// 	setData('training_course_schedule', batch.training_course_schedule);
+		// }
 	}
 
 	const schema = yup.object({
@@ -63,7 +64,7 @@
 		coordinator: yup.number().required(),
 		organization: yup.number().required(),
 		source_of_fund: yup.number().required(),
-		training_course_schedule: yup.number().required()
+		training_course_schedule_id: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, setData, errors, data } = createForm({
@@ -103,13 +104,13 @@
 		organizations.getOrganizations();
 		sourceOfFounds.getSourceOfFounds();
 		const { data } = await getApprovedSchedules();
-		training_course_schedules = data; 
+		training_course_schedules = data;
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading={batch.id == null ? "Create Batch" : "Edit Batch"}
+	modalHeading={batch.id == null ? 'Create Batch' : 'Edit Batch'}
 	primaryButtonText={batch.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
@@ -180,7 +181,7 @@
 			{/each}
 		</Select>
 
-		<!-- <p>{JSON.stringify($errors)}</p>
-		<p>{JSON.stringify($data)}</p> -->
+		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<!-- <p>{JSON.stringify($data)}</p> -->
 	</form>
 </Modal>

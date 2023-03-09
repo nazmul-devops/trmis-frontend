@@ -7,7 +7,6 @@
 		ToolbarSearch,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
@@ -53,7 +52,13 @@
 {#if $trainers.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Resources Persons" description="" {headers} rows={$trainers.data}>
+	<DataTable
+		size="short"
+		title="Resource Person / Facilitator"
+		description=""
+		{headers}
+		rows={$trainers.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -63,13 +68,14 @@
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem
+					<!-- <OverflowMenuItem
 						on:click={() => goto(`/admin/trainer/${row.phone}/education`)}
 						text="Education"
-					/>
+					/> -->
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
+							console.log(row);
 							trainer = { ...row };
 							deleteModal = true;
 						}}
@@ -83,4 +89,8 @@
 {/if}
 
 <FormModal bind:open bind:trainer />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'Resource Person / Facilitator'}
+/>

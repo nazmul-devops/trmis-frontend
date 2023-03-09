@@ -29,7 +29,11 @@
 	$: {
 		if ($data.division) {
 			let index = locations.findIndex((item) => item.id === $data.division);
-			zilaOptions = locations[index]?.zilas;
+			if (index >= 0) {
+				zilaOptions = locations[index]?.zilas;
+			} else {
+				zilaOptions = [];
+			}
 		} else {
 			zilaOptions = [];
 		}
@@ -55,7 +59,7 @@
 		marital_status: null,
 		designation: null,
 		organization: null,
-		area_of_specialization:null,
+		area_of_specialization: null,
 		division: null,
 		address: null,
 		district: null,
@@ -69,7 +73,7 @@
 			setData('nid', trainer.nid);
 			setData('email', trainer.email);
 			setData('gender', trainer.gender);
-			setData("area_of_specialization", trainer.area_of_specialization);
+			setData('area_of_specialization', trainer.area_of_specialization);
 			setData('marital_status', trainer.marital_status);
 			setData('designation', trainer.designation);
 			setData('organization', trainer.organization);
@@ -149,7 +153,7 @@
 
 <Modal
 	bind:open
-	modalHeading={trainer.id == null ? 'Create Participant' : 'Edit Participant'}
+	modalHeading={trainer.id == null ? 'Create Resources Person' : 'Edit Resources Person'}
 	primaryButtonText={trainer.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={Cancel}
@@ -288,8 +292,8 @@
 			disabled={!$data.division}
 			name="district"
 			bind:selectedId={$data.district}
-			titleText="Training District"
-			placeholder="Select District"
+			titleText="Zila"
+			placeholder="Select Zila"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
@@ -297,13 +301,13 @@
 			disabled={!$data.district}
 			name="sub_district"
 			bind:selectedId={$data.sub_district}
-			titleText="Training Sub-District"
-			placeholder="Select Sub District"
+			titleText="Upazila"
+			placeholder="Select Upazila"
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>
 
-		<p>{JSON.stringify($data)}</p>
+		<!-- <p>{JSON.stringify($data)}</p> -->
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 </Modal>

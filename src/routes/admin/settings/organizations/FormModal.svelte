@@ -15,9 +15,13 @@
 	};
 
 	$: {
-		setFields('name', organization.name);
-		setFields('serial_no', organization.serial_no);
-		setFields('remarks', organization.remarks);
+		if (organization.id != null) {
+			setFields('name', organization.name);
+			setFields('serial_no', organization.serial_no);
+			setFields('remarks', organization.remarks);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
@@ -26,13 +30,12 @@
 		remarks: yup.string().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
+	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
-
-			}
+				serial_no: values.serial_no ? parseInt(values.serial_no) : null
+			};
 		},
 		extend: validator({ schema })
 	});
@@ -65,6 +68,9 @@
 	<form use:form>
 		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
 		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+		{#if $errors.serial_no}
+			<p class=" t-text-red-600 ">{$errors.serial_no}</p>
+		{/if}
 		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
 	</form>
 </Modal>

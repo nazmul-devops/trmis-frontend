@@ -33,7 +33,7 @@
 			return {
 				...values,
 				training_course: parseInt(values.training_course)
-			}
+			};
 		},
 		extend: validator({ schema })
 	});
@@ -58,7 +58,7 @@
 
 <Modal
 	bind:open
-	modalHeading={courseTopic.id === null ? "Create Course Topic" : "Edit Course Topic"}
+	modalHeading={courseTopic.id === null ? 'Create training Topic' : 'Edit training Topic'}
 	primaryButtonText={courseTopic.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}

@@ -50,7 +50,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Course Category"
+		title="Training Category"
 		description=""
 		{headers}
 		rows={$courseCategories.data}
@@ -80,4 +80,4 @@
 {/if}
 
 <FormModal bind:open bind:courseCategory />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"training category"} />
