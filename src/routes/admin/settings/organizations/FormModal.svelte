@@ -25,9 +25,9 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		serial_no: yup.number().required(),
-		remarks: yup.string().required()
+		name: yup.string().required().typeError('Name is required.'),
+		serial_no: yup.number().required().typeError('Serial no must be a number.'),
+		remarks: yup.string().required().typeError('Remarks is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
@@ -66,11 +66,32 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
-		{#if $errors.serial_no}
-			<p class=" t-text-red-600 ">{$errors.serial_no}</p>
+		<TextInput 
+			invalid={$errors.name != null}
+			name="name" 
+			labelText="name" 
+			placeholder="Enter  name..." 
+		/>
+		{#if $errors.name}
+			<p class="t-text-red-500">{$errors.name}</p>
 		{/if}
-		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
+		<TextInput 
+			invalid={$errors.serial_no != null}
+			name="serial_no" 
+			labelText="Serial_No" 
+			placeholder="Enter  serial_no..." 
+		/>
+		{#if $errors.serial_no}
+			<p class=" t-text-red-500 ">{$errors.serial_no}</p>
+		{/if}
+		<TextInput 
+			invalid ={$errors.remarks != null}
+			name="remarks" 
+			labelText=" Remarks" 
+			placeholder="Enter  Remarks..." 
+		/>
+		{#if $errors.remarks}
+			<p class=" t-text-red-500 ">{$errors.remarks}</p>
+		{/if}
 	</form>
 </Modal>

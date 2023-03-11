@@ -14,13 +14,17 @@
 	};
 
 	$: {
-		setFields('title', courseCategory.title);
-		setFields('description', courseCategory.description);
+		if(courseCategory.id != null){
+			setFields('title', courseCategory.title);
+			setFields('description', courseCategory.description);
+		}else{
+			reset()
+		}
 	}
 
 	const schema = yup.object({
-		title: yup.string().required(),
-		description: yup.string().required()
+		title: yup.string().required().typeError("Title is required."),
+		description: yup.string().required().typeError("Description is required.")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
@@ -53,7 +57,23 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
-		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
+		<TextInput 
+			invalid={$errors.title != null}
+			name="title" 
+			labelText="title" 
+			placeholder="Enter  Title..." 
+		/>
+		{#if $errors.title}
+			<p class="t-text-red-500">{$errors.title}</p>
+		{/if}
+		<TextInput 
+			invalid={$errors.description != null}
+			name="description" 
+			labelText="Description" 
+			placeholder="Enter  description..." 
+		/>
+		{#if $errors.description}
+			<p class="t-text-red-500">{$errors.description}</p>
+		{/if}
 	</form>
 </Modal>

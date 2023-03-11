@@ -4,8 +4,9 @@
 	import * as yup from 'yup';
 	import { courseMaterials } from '$lib/store/courseMaterial';
 	import { trainingCourses } from '$lib/store/trainingCourse';
-	import { Modal, FileUploader, TextInput, Select, SelectItem } from 'carbon-components-svelte';
+	import { Modal, FileUploader, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+	import { bind } from 'svelte/internal';
 
 	let fileUploader;
 	let files = [];
@@ -30,6 +31,8 @@
 		// formSetFieldsForFile();
 		if (courseMaterial.id != null) {
 			formSetFields();
+		}else{
+			reset()
 		}
 	}
 
@@ -39,10 +42,10 @@
 	}
 
 	const schema = yup.object({
-		title: yup.string().required(),
-		description: yup.string().required(),
+		title: yup.string().required().typeError("Title is required."),
+		description: yup.string().required().typeError("Description is required."),
 		files: yup.mixed().required(),
-		training_course_id: yup.number().required()
+		training_course_id: yup.number().required().typeError("Training course id is required.")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -67,6 +70,8 @@
 		}
 	});
 
+	$: trainingCoursesList = $trainingCourses.data.map((item)=>({...item, text:item.title}))
+
 	onMount(async () => {
 		courseMaterials.getCourseMaterials();
 		trainingCourses.getTrainingCourses();
@@ -82,14 +87,41 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
-		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
-		<Select name="training_course_id" labelText="Course">
+		<TextInput 
+			invalid={$errors.title != null}
+			name="title" 
+			labelText="title" 
+			placeholder="Enter  Title..." 
+		/>
+		{#if $errors.title}
+			<p class="t-text-red-600">{$errors.title}</p>
+		{/if}
+		<TextInput 
+			invalid={$errors.description != null}
+			name="description" 
+			labelText="Description" 
+			placeholder="Enter  description..." 
+		/>
+		{#if $errors.description}
+			<p class="t-text-red-600">{$errors.description}</p>
+		{/if}
+
+		<ComboBox
+			titleText="Course"
+			invalid = {$errors.training_course_id != null}
+			bind:selectedId={$data.training_course_id}
+			placeholder={"Choose Course"}
+			items={trainingCoursesList}
+		/>
+		{#if $errors.training_course_id}
+			<p class="t-text-red-600">{$errors.training_course_id}</p>
+		{/if}
+		<!-- <Select name="training_course_id" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}
 				<SelectItem value={course.id} text={course.title} />
 			{/each}
-		</Select>
+		</Select> -->
 		<FileUploader
 			bind:this={fileUploader}
 			labelTitle="Upload files"
