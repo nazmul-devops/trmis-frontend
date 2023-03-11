@@ -82,4 +82,4 @@
 {/if}
 
 <FormModal bind:open on:update-list={getBatchResource} />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="resouce person"/>

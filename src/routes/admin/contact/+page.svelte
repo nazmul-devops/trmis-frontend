@@ -76,4 +76,4 @@
 	</DataTable>
 {/if}
 
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="contact"/>

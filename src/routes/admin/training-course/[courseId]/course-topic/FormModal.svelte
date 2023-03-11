@@ -4,7 +4,7 @@
 	import * as yup from 'yup';
 	import { trainingCourses } from '$lib/store/trainingCourse';
 	import { courseTopics } from '$lib/store/courseTopic';
-	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
+	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
@@ -17,18 +17,22 @@
 	};
 
 	$: {
-		setFields('title', courseTopic.title);
-		setFields('description', courseTopic.description);
-		setFields('training_course', courseTopic.training_course);
+		if(courseTopic.id != null){
+			setFields('title', courseTopic.title);
+			setFields('description', courseTopic.description);
+			setFields('training_course', courseTopic.training_course);
+		}else{
+			reset()
+		}
 	}
 
 	const schema = yup.object({
-		title: yup.string().required(),
-		description: yup.string().required(),
-		training_course: yup.number().required()
+		title: yup.string().required().typeError("Title is required."),
+		description: yup.string().required().typeError("Description is required."),
+		training_course: yup.number().required().typeError("Training Course is required.")
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
@@ -50,6 +54,8 @@
 		}
 	});
 
+	$: trainingCourseList = $trainingCourses.data.map((item) => ({ ...item, text: item.title}))
+
 	onMount(async () => {
 		trainingCourses.getTrainingCourses();
 		courseTopics.getCourseTopics();
@@ -65,14 +71,41 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="title" labelText="title" placeholder="Enter  Title..." />
-		<TextInput name="description" labelText="Description" placeholder="Enter  description..." />
-		<Select name="training_course" labelText="Course">
+		<TextInput 
+			name="title" 
+			labelText="title" 
+			placeholder="Enter  Title..." 
+			invalid={$errors.title != null}
+		/>
+		{#if $errors.title}
+			<p class="t-text-red-600">{$errors.title}</p>
+		{/if}
+		<TextInput 
+			name="description" 
+			labelText="Description" 
+			placeholder="Enter  description..." 
+			invalid={$errors.description != null}
+		/>
+		{#if $errors.description}
+			<p class="t-text-red-600">{$errors.description}</p>
+		{/if}
+		<ComboBox
+			name="training_course"
+			invalid={$errors.training_course != null}
+			bind:selectedId={$data.training_course}
+			titleText="Training Course"
+			placeholder="Select Training Course"
+			items={trainingCourseList}
+		/>
+		{#if $errors.training_course}
+			<p class="t-text-red-600">{$errors.training_course}</p>
+		{/if}
+		<!-- <Select name="training_course" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}
 				<SelectItem value={course.id} text={course.title} />
 			{/each}
-		</Select>
+		</Select> -->
 	</form>
 	<!-- {JSON.stringify($errors)} -->
 </Modal>

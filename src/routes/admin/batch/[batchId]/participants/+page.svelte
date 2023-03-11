@@ -75,4 +75,4 @@
 {/if}
 
 <FormModal bind:open  bind:participant/>
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="participant"/>

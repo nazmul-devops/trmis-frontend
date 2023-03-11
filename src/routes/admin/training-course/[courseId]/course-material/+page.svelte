@@ -52,7 +52,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Course Materials"
+		title="Training Materials"
 		description=""
 		{headers}
 		rows={$courseMaterials.data}
@@ -66,7 +66,7 @@
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem text="View" />
+					<!-- <OverflowMenuItem text="View" /> -->
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -90,4 +90,4 @@
 {/if}
 
 <FormModal bind:open bind:courseMaterial />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"course material"} />
