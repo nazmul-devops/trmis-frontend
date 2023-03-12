@@ -5,17 +5,15 @@
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
 
 	import { onMount } from 'svelte';
-	import FormModal from './FormModal.svelte';
+	import CreateFormModal from './CreateFormModal.svelte';
+	import EditFormModal from './EditFormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 
 	let headers = [
@@ -29,11 +27,16 @@
 
 	let open = false;
 	let deleteModal = false;
+	let editModal = false;
 
 	let user;
 
-	function openModalForm(row) {
+	function openCreateModalForm() {
 		open = true;
+	}
+
+	function openEditModalForm(row) {
+		editModal = true;
 		user = row;
 	}
 
@@ -55,14 +58,14 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add User</Button>
+				<Button on:click={() => openCreateModalForm()}>Add User</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<OverflowMenuItem text="View" />
-					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
+					<!-- <OverflowMenuItem text="View" /> -->
+					<OverflowMenuItem on:click={() => openEditModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
 							user = { ...row };
@@ -77,5 +80,6 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:user bind:open />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<CreateFormModal bind:user bind:open />
+<EditFormModal bind:user bind:open={editModal} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'user'} />

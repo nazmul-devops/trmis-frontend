@@ -3,7 +3,7 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { permissions } from '$lib/store/permission';
-	import { groups } from '$lib/store/group';
+	import { groupsList } from '$lib/store/group';
 	import { Modal, MultiSelect, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
@@ -37,9 +37,9 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (group.id) {
-				await groups.updateGroup({ ...data, id: group.id });
+				await groupsList.updateGroup({ ...data, id: group.id });
 			} else {
-				await groups.createGroup({ ...data });
+				await groupsList.createGroup({ ...data });
 			}
 			open = false;
 			reset();
@@ -48,7 +48,7 @@
 
 	onMount(async () => {
 		permissions.getPermissions();
-		groups.getGroups();
+		groupsList.getGroups();
 	});
 </script>
 
