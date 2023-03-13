@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { groups } from '$lib/store/group';
+	import { groupsList } from '$lib/store/group';
 	import {
 		DataTable,
 		Toolbar,
@@ -19,7 +19,7 @@
 	let headers = [
 		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'permission_name', value: 'Permission' },
+		{ key: 'permissions', value: 'Permission' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -35,19 +35,19 @@
 	}
 
 	async function doDelete() {
-		await groups.deleteGroup(group.id);
+		await groupsList.deleteGroup(group.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		groups.getGroups();
+		groupsList.getGroups();
 	});
 </script>
 
-{#if $groups.loading}
+{#if $groupsList.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Course Group" description="" {headers} rows={$groups.data}>
+	<DataTable size="short" title="Course Group" description="" {headers} rows={$groupsList.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -68,10 +68,10 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-			{:else if cell.key === 'prerequisite_courses'}
+			{:else if cell.key === 'permissions'}
 				{#each cell.value as item}
 					<ul>
-						<li>=> {item.title}</li>
+						<li>=> {item.permission_name}</li>
 					</ul>
 				{/each}
 			{:else}{cell.value}{/if}

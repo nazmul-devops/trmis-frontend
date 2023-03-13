@@ -42,4 +42,4 @@ function createGropusStore() {
 	};
 }
 
-export const groups = createGropusStore();
+export const groupsList = createGropusStore();
