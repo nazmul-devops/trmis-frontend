@@ -107,14 +107,14 @@
 		/>
 		<Checkbox bind:checked={user.is_staff} name="is_staff" labelText="Is Staff?" />
 		<Checkbox name="is_superuser" labelText="Is Super User?" />
-		<MultiSelect
-			selectedIds={Groups}
-			titleText="Groups"
-			label="Select Group..."
-			items={$groupsList.data.map((item) => ({ ...item, text: item.name }))}
-			on:select={(e) => setData('groups', e.detail.selectedIds)}
-		/>
 
 		<p>{JSON.stringify($errors)}</p>
 	</form>
+	<MultiSelect
+		selectedIds={Groups}
+		titleText="Groups"
+		label="Select Group..."
+		items={$groupsList.data.map((item) => ({ ...item, text: item.name }))}
+		on:select={(e) => setData('groups', e.detail.selectedIds)}
+	/>
 </Modal>
