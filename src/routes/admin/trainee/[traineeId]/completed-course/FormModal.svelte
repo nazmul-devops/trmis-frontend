@@ -1,10 +1,9 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { completedCourses } from '$lib/store/completedCourse';
 	import { trainingCourses } from '$lib/store/trainingCourse';
-	import { trainees } from '$lib/store/trainee';
 	import { Modal, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
@@ -17,7 +16,6 @@
 	};
 
 	function formSetFields() {
-		// setFields('trainee_id', completedCourse.trainee_id);
 		setFields('training_course_id', completedCourse.training_course_id);
 	}
 
@@ -29,7 +27,6 @@
 	``;
 
 	const schema = yup.object({
-		// trainee_id: yup.number().required(),
 		training_course_id: yup.number().required()
 	});
 
@@ -77,6 +74,5 @@
 			{/each}
 		</Select>
 
-		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
-</Modal>
+</Modal> -->

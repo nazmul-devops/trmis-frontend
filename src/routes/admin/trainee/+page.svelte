@@ -40,7 +40,7 @@
 	}
 
 	async function doDelete() {
-		await trainees.deleteTrainee(trainee.phone);
+		await trainees.deleteTrainee(trainee.id);
 		deleteModal = false;
 	}
 
@@ -65,7 +65,7 @@
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem
-						on:click={() => goto(`/admin/trainee/${row.phone}/completed-course`)}
+						on:click={() => goto(`/admin/trainee/${row.id}/completed-course`)}
 						text="Completed Training"
 					/>
 					<!-- <OverflowMenuItem

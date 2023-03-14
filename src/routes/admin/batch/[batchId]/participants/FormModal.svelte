@@ -2,7 +2,7 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { batchParticipantsList } from "$lib/store/batch-participants"
+	import { batchParticipantsList } from '$lib/store/batch-participants';
 	import { trainees } from '$lib/store/trainee';
 	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
@@ -30,11 +30,11 @@
 		extend: validator({ schema })
 	});
 
-
-
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-				await batchParticipantsList.createBatchParticipant(parseInt($page.params.batchId), { ...data });
+			await batchParticipantsList.createBatchParticipant(parseInt($page.params.batchId), {
+				...data
+			});
 			open = false;
 			reset();
 		}
@@ -57,7 +57,7 @@
 		<Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
 			<SelectItem text="choose Participant" value="" />
 			{#each $trainees.data as item}
-				<SelectItem text={item.name} value={item.phone} />
+				<SelectItem text={item.name} value={item.id} />
 			{/each}
 		</Select>
 

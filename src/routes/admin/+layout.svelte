@@ -36,11 +36,9 @@
 		}
 	}
 
-
-	function openPassModal(){
+	function openPassModal() {
 		changePassModal = true;
 	}
-
 
 	onMount(() => {
 		setAccessToken();
@@ -104,9 +102,9 @@
 				<a href="/admin/training-calendar">Training Calendar</a>
 			</SideNavLink>
 			<SideNavDivider />
-			<SideNavMenu text="Training Courses">
+			<SideNavMenu text="Training">
 				<SideNavLink>
-					<a href="/admin/training-course">Training Course</a>
+					<a href="/admin/training-course">Training</a>
 				</SideNavLink>
 				<SideNavLink>
 					<a href="/admin/training-course/1/course-category">Training Category</a>
@@ -207,6 +205,10 @@
 				<a href="/admin/users">Users</a>
 			</SideNavLink>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/trainee-request">Trainee Request</a>
+			</SideNavLink>
+			<SideNavDivider />
 		</SideNavItems>
 	</SideNav>
 
@@ -214,6 +216,5 @@
 		<slot />
 	</Content>
 {/if}
-
 
 <ChangePassModal bind:open={changePassModal} />

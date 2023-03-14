@@ -190,7 +190,7 @@
 		<Select invalid={$errors.schedule != null} name="schedule" labelText="Schedule">
 			<SelectItem text="Choose schedule" value="" />
 			{#each eventSchedule as item}
-				<SelectItem text={item.name} value={item.id} />
+				<SelectItem text={item.event_venue_name} value={item.id} />
 			{/each}
 		</Select>
 	</div>
@@ -244,8 +244,7 @@
 	filterable={true}
 	items={$trainers.data.map((item) => ({
 		...item,
-		text: item.name,
-		id: item.phone
+		text: item.name
 	}))}
 />
 

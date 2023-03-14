@@ -60,7 +60,7 @@
 		<Select invalid={$errors.resource != null} name="trainer" labelText="Resources">
 			<SelectItem text="choose Resources" value="" />
 			{#each $trainers.data as item}
-				<SelectItem text={item.name} value={item.phone} />
+				<SelectItem text={item.name} value={item.id} />
 			{/each}
 		</Select>
 

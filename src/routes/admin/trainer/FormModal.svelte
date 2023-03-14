@@ -97,10 +97,15 @@
 	}
 
 	const schema = yup.object({
-		phone: yup.number().typeError('Phone number is required!').required(),
-		// .min(11, 'Phone Number Must Be Less Than or Equal 11')
-		// .max(11, 'Phone Number Must Be Less Than or Equal 11'),
-		nid: yup.number().required().typeError('NID is required!'),
+		phone: yup
+			.string()
+			.matches(new RegExp(/^\+?(88)?0?1[3456789][0-9]{8}\b/), 'Not valid format')
+			.required(),
+		nid: yup
+			.number()
+			.nullable()
+			.min(1000000000, 'Enter A Valid NID')
+			.max(9999999999, 'Enter A Valid NID'),
 		area_of_specialization: yup.string().required(),
 		email: yup.string().email().required(),
 		gender: yup.number().required().typeError('Select Gender'),
@@ -110,14 +115,14 @@
 		address: yup.string().required(),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District'),
-		marital_status: yup.number().required().typeError('Select Material Status')
+		hris: yup.number().nullable()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				phone: values.phone ? parseInt(values.phone) : null,
+				hris: values.hris ? parseInt(values.hris) : null,
 				nid: values.nid ? parseInt(values.nid) : null
 			};
 		},
@@ -126,8 +131,8 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			if (trainer.phone) {
-				await trainers.updateTrainer({ ...data, id: trainer.phone });
+			if (trainer.id) {
+				await trainers.updateTrainer({ ...data, id: trainer.id });
 			} else {
 				await trainers.createTrainer({ ...data });
 			}
@@ -180,8 +185,21 @@
 		{#if $errors.phone}
 			<p class=" t-text-red-500 ">{$errors.phone}</p>
 		{/if}
+
+		<TextInput
+			bind:value={$data.hris}
+			invalid={$errors.hris != null}
+			name="hris"
+			labelText="HRIS ID"
+			placeholder="Enter HRIS ID..."
+		/>
+		{#if $errors.phone}
+			<p class=" t-text-red-500 ">{$errors.hris}</p>
+		{/if}
+
 		<TextInput
 			bind:value={$data.nid}
+			type="number"
 			invalid={$errors.nid != null}
 			name="nid"
 			labelText="NID"
@@ -235,19 +253,6 @@
 
 		{#if $errors.gender}
 			<p class=" t-text-red-500 ">{$errors.gender}</p>
-		{/if}
-
-		<ComboBox
-			name="marital_status"
-			invalid={$errors.marital_status != null}
-			bind:selectedId={$data.marital_status}
-			titleText="Material Status"
-			placeholder="Select Material Status"
-			items={MATERIAL_STATUS}
-		/>
-
-		{#if $errors.marital_status}
-			<p class=" t-text-red-500 ">{$errors.marital_status}</p>
 		{/if}
 
 		<ComboBox
@@ -308,6 +313,6 @@
 		/>
 
 		<!-- <p>{JSON.stringify($data)}</p> -->
-		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<p>{JSON.stringify($errors)}</p>
 	</form>
 </Modal>

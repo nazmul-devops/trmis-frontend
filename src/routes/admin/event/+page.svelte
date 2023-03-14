@@ -19,10 +19,10 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Event Name' },
-		{ key: 'status', value: 'Status' },
 		{ key: 'coordinator_name', value: 'Coordinator' },
 		{ key: 'organization_name', value: 'Organization' },
 		// { key: 'schedule', value: 'Schedule' },
+		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -78,4 +78,4 @@
 {/if}
 
 <FormModal bind:open bind:event on:update-list={getEvent} />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'event'} />

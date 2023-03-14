@@ -59,7 +59,6 @@
 		marital_status: null,
 		designation: null,
 		organization: null,
-		area_of_specialization: null,
 		division: null,
 		address: null,
 		status: null,
@@ -74,7 +73,6 @@
 		setData('email', traineeRequest.email);
 		setData('gender', traineeRequest.gender);
 		setData('status', traineeRequest.status);
-		setData('area_of_specialization', traineeRequest.area_of_specialization);
 		setData('marital_status', traineeRequest.marital_status);
 		setData('designation', traineeRequest.designation);
 		setData('organization', traineeRequest.organization);
@@ -106,7 +104,6 @@
 		gender: yup.number().required().typeError('Select Gender'),
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
-		area_of_specialization: yup.string().required(),
 		division: yup.number().required().typeError('Select Division'),
 		address: yup.string().required(),
 		district: yup.number().required().typeError('Select District'),
@@ -202,16 +199,7 @@
 				{#if $errors.address}
 					<p class=" t-text-red-500 ">{$errors.address}</p>
 				{/if}
-				<TextInput
-					bind:value={$data.area_of_specialization}
-					invalid={$errors.area_of_specialization != null}
-					name="area_of_specialization"
-					labelText="Specialization"
-					placeholder="Enter Area Of Specializayion..."
-				/>
-				{#if $errors.area_of_specialization}
-					<p class=" t-text-red-500 ">{$errors.area_of_specialization}</p>
-				{/if}
+
 				<ComboBox
 					invalid={$errors.gender != null}
 					bind:selectedId={$data.gender}
