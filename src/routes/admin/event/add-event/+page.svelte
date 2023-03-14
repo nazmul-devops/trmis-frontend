@@ -149,6 +149,7 @@
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 > -->
+<h4 class="t-pb-4">Create Event</h4>
 <form use:form>
 	<div class="t-grid t-grid-cols-2 t-gap-4">
 		<TextInput labelText="Name" name="name" placeholder="Enter Event Name" />

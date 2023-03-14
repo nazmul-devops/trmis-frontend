@@ -17,9 +17,13 @@
 	};
 
 	$: {
-		setFields('title', image.title);
-		setFields('description', image.description);
-		setFields('uploaded_files', image.uploaded_files);
+		if(image.id != null){
+			setFields('title', image.title);
+			setFields('description', image.description);
+			setFields('uploaded_files', image.uploaded_files);
+		}else{
+			reset()
+		}
 	}
 
 	$: {
@@ -27,8 +31,8 @@
 	}
 
 	const schema = yup.object({
-		title: yup.string().required(),
-		description: yup.string().required(),
+		title: yup.string().required().typeError("Title is required."),
+		description: yup.string().required().typeError("Description is required"),
 		uploaded_files: yup.array().min(1)
 	});
 
@@ -58,15 +62,31 @@
 
 <Modal
 	bind:open
-	modalHeading="Upload Images"
+	modalHeading={image.id == null ? "Upload Images" : "Edit Images"}
 	primaryButtonText={image.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="title" labelText="Title" placeholder="Enter Title..." />
-		<TextInput name="description" labelText="Description" placeholder="Enter Description..." />
+		<TextInput 
+			invalid={$errors.title != null} 
+			name="title" 
+			labelText="Title" 
+			placeholder="Enter Title..." 
+		/>
+		{#if $errors.title}
+			<p class="t-text-red-500">{$errors.title}</p>
+		{/if}
+		<TextInput 
+			invalid={$errors.description != null}
+			name="description" 
+			labelText="Description" 
+			placeholder="Enter Description..." 
+		/>
+		{#if $errors.description}
+			<p class="t-text-red-500">{$errors.description}</p>
+		{/if}
 		<FileUploader
 			bind:this={fileUploader}
 			multiple

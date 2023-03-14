@@ -4,7 +4,7 @@
 	import * as yup from 'yup';
 	import { batchParticipantsList } from '$lib/store/batch-participants';
 	import { trainees } from '$lib/store/trainee';
-	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
+	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	export let open = true;
@@ -17,7 +17,7 @@
 	}
 
 	const schema = yup.object({
-		trainee: yup.number().required()
+		trainee: yup.number().required().typeError("Participant is required")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -40,6 +40,8 @@
 		}
 	});
 
+	$: traineesList = $trainees.data.map((item) =>({...item, id: item.phone, text:item.name}))
+
 	onMount(async () => {
 		trainees.getTrainees();
 	});
@@ -54,14 +56,23 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
+		<ComboBox 
+			invalid={$errors.trainee != null}
+			invalidText={$errors.trainee}
+			name="trainee"
+			titleText="Participant"
+			placeholder="Choose Participant"
+			bind:selectedId={$data.trainee}
+			items={traineesList}
+		/>
+		<!-- <Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
 			<SelectItem text="choose Participant" value="" />
 			{#each $trainees.data as item}
 				<SelectItem text={item.name} value={item.id} />
 			{/each}
-		</Select>
+		</Select> -->
 
-		<!-- <p>{JSON.stringify($errors)}</p>
-		<p>{JSON.stringify($data)}</p> -->
+		<p>{JSON.stringify($errors)}</p>
+		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>

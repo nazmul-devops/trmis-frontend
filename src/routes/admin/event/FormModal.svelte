@@ -15,7 +15,8 @@
 		TextArea,
 		DataTable,
 		Button,
-		MultiSelect
+		MultiSelect,
+		ComboBox
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { createEvent, updateEvent } from '$lib/service/event';
@@ -57,17 +58,17 @@
 	}
 
 	const schema = yup.object({
-		status: yup.number().required(),
-		name: yup.string().required(),
-		number_of_participants: yup.number().required(),
+		status: yup.number().required().typeError("Status is required"),
+		name: yup.string().required().typeError("Name is required."),
+		number_of_participants: yup.number().required().typeError("Number of participants are required."),
 		participants: yup.array().min(1),
-		description: yup.string().required(),
-		budget: yup.number().required(),
-		type: yup.number().required(),
-		organization: yup.number().required(),
-		coordinator: yup.number().required(),
-		schedule: yup.number().required(),
-		facilitator: yup.object().required()
+		description: yup.string().required().typeError("Description is required."),
+		budget: yup.number().required().typeError("Budget is required."),
+		type: yup.number().required().typeError("Type is required."),
+		organization: yup.number().required().typeError("Organization is required."),
+		coordinator: yup.number().required().typeError("coordinator is required."),
+		schedule: yup.number().required().typeError("Schedule is required."),
+		facilitator: yup.object().required().typeError("Facilitator is required.")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -129,6 +130,11 @@
 
 	let eventSchedule = [];
 
+	$: organizationsList = $organizations.data.map((item) => ({...item, text: item.title}));
+	$: coordinatorsList = $coordinators.data.map((item) => ({...item, text: item.name}));
+	$: eventScheduleList = eventSchedule.map((item) => ({ ...item, tex: item.name}))
+	
+
 	onMount(async () => {
 		organizations.getOrganizations();
 		coordinators.getCoordinators();
@@ -147,11 +153,18 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput labelText="Name" name="name" placeholder="Enter Event Name" />
+		<TextInput 
+			labelText="Name" 
+			name="name" 
+			placeholder="Enter Event Name"
+			invalid={ $errors.name != null }
+			invalidText={$errors.name}
+		/>
 		<TextInput
 			labelText="Number Of Participants"
 			name="number_of_participants"
 			placeholder="Number Of Participants"
+			invalid={ $errors.number_of_participants}
 		/>
 
 		<div>
@@ -182,41 +195,108 @@
 			</div>
 		</div>
 
-		<TextArea labelText="Description" name="description" placeholder="Enter a description..." />
-		<TextInput labelText="Budget" name="budget" placeholder="Budget" />
-		<Select invalid={$errors.status != null} name="status" labelText="Status">
+		<TextArea 
+			labelText="Description" 
+			name="description" 
+			placeholder="Enter a description..." 
+			invalid={$errors.description != null}
+			invalidText={$errors.description}
+		/>
+		<TextInput 
+			labelText="Budget" 
+			name="budget" 
+			placeholder="Budget" 
+			invalid={$errors.budget != null}
+			invalidText={$errors.budget}
+		/>
+		<ComboBox
+			name="status"
+			invalid ={$errors.status != null}
+			invalidText={$errors.status}
+			titleText="Status"
+			placeholder="Choose Status"
+			bind:selectedId={$data.status}
+			items = {[
+				{ id: 1, text: "Pending" },
+				{ id: 2, text: "In Progress" },
+				{ id: 3, text: "Completed" },
+				{ id: 4, text: "Rejected" },
+			]}
+		/>
+		<!-- <Select invalid={$errors.status != null} name="status" labelText="Status">
 			<SelectItem text="choose Status" value="" />
 			<SelectItem text="Pending" value="1" />
 			<SelectItem text="Complete" value="2" />
 			<SelectItem text="In progress" value="3" />
-		</Select>
-
-		<Select invalid={$errors.type != null} name="type" labelText="Type">
+		</Select> -->
+		<ComboBox
+			name="type"
+			invalid ={$errors.type != null}
+			invalidText={$errors.type}
+			titleText="Type"
+			placeholder="Choose Type"
+			bind:selectedId={$data.type}
+			items = {[
+				{ id: 1, text: "Meeting" },
+				{ id: 2, text: "Workshop" },
+				{ id: 3, text: "Orientation" },
+				{ id: 4, text: "Sensitization" },
+			]}
+		/>
+		<!-- <Select invalid={$errors.type != null} name="type" labelText="Type">
 			<SelectItem text="choose Type" value="" />
 			<SelectItem text="Meeting" value="1" />
 			<SelectItem text="Workshop" value="2" />
 			<SelectItem text="Orientation" value="3" />
 			<SelectItem text="Sensitization" value="4" />
-		</Select>
+		</Select> -->
 
-		<Select invalid={$errors.organization != null} name="organization" labelText="Organizations">
+		<ComboBox
+			invalid={$errors.organization != null}
+			invalidText={$errors.organization}
+			name="organization"
+			titleText="Organization"
+			placeholder="Choose Organization"
+			bind:selectedId={$data.organization}
+			items={organizationsList}
+		/>
+
+		<!-- <Select invalid={$errors.organization != null} name="organization" labelText="Organizations">
 			<SelectItem text="choose Organization" value="" />
 			{#each $organizations.data as item}
 				<SelectItem text={item.title} value={item.id} />
 			{/each}
-		</Select>
-		<Select invalid={$errors.coordinator != null} name="coordinator" labelText="Coordinator">
+		</Select> -->
+		<ComboBox
+			invalid={$errors.coordinator != null}
+			invalidText={$errors.coordinator}
+			name="coordinator"
+			titleText="Coordinator"
+			placeholder="Choose Coordinator"
+			bind:selectedId={$data.coordinator}
+			items={coordinatorsList}
+		/>
+		<!-- <Select invalid={$errors.coordinator != null} name="coordinator" labelText="Coordinator">
 			<SelectItem text="choose Coordinator" value="" />
 			{#each $coordinators.data as item}
 				<SelectItem text={item.title} value={item.id} />
 			{/each}
-		</Select>
-		<Select invalid={$errors.schedule != null} name="schedule" labelText="Schedule">
+		</Select> -->
+		<ComboBox
+			invalid={ $errors.schedule != null }
+			invalidText={ $errors.schedule}
+			name="schedule"
+			titleText="Schedule"
+			placeholder="Choose Organization"
+			bind:selectedId={$data.schedule}
+			items={eventScheduleList}
+		/>
+		<!-- <Select invalid={$errors.schedule != null} name="schedule" labelText="Schedule">
 			<SelectItem text="choose Organization" value="" />
 			{#each eventSchedule as item}
 				<SelectItem text={item.name} value={item.id} />
 			{/each}
-		</Select>
+		</Select> -->
 		<MultiSelect
 			selectedIds={facilators}
 			titleText="Prerequisite"

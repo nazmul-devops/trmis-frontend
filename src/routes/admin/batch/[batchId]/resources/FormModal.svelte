@@ -5,7 +5,7 @@
 	import { createBatchParticipant } from '$lib/service/batch-participants';
 	import { trainers } from '$lib/store/trainer';
 	import { createEventDispatcher } from 'svelte';
-	import { Modal, TextInput, Select, SelectItem } from 'carbon-components-svelte';
+	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { createBatchResource } from '$lib/service/batch-resources';
@@ -19,7 +19,7 @@
 	}
 
 	const schema = yup.object({
-		trainer: yup.number().required()
+		trainer: yup.number().required().typeError("Resources are required")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -43,6 +43,8 @@
 		}
 	});
 
+	$: resourcesList =  $trainers.data.map((item) => ({...item, id: item.phone, text: item.name}))
+
 	onMount(async () => {
 		trainers.getTrainers();
 	});
@@ -57,12 +59,21 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<Select invalid={$errors.resource != null} name="trainer" labelText="Resources">
+		<ComboBox 
+			invalid={$errors.trainer != null}
+			invalidText={$errors.trainer}
+			name="trainer"
+			titleText="Resources"
+			placeholder="Choose Resources"
+			bind:selectedId={$data.trainer}
+			items={resourcesList}
+		/>
+		<!-- <Select invalid={$errors.resource != null} name="trainer" labelText="Resources">
 			<SelectItem text="choose Resources" value="" />
 			{#each $trainers.data as item}
 				<SelectItem text={item.name} value={item.id} />
 			{/each}
-		</Select>
+		</Select> -->
 
 		<!-- <p>{JSON.stringify($errors)}</p>
 		<p>{JSON.stringify($data)}</p> -->

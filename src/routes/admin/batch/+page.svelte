@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { getBatches, deleteBatch } from '$lib/service/batch';
+	import { batchs } from '$lib/store/batch';
 	import {
 		DataTable,
 		Toolbar,
@@ -35,35 +35,35 @@
 	let batch;
 
 	function openModalForm(row) {
-		batch = row;
 		open = true;
-		console.log(row);
+		batch = row;
 	}
 
 	async function doDelete() {
-		await deleteBatch(batch.id);
+		await batchs.deleteBatch(batch.id);
 		deleteModal = false;
-		batchList();
+		// batchList();
 	}
 
-	let batches = [];
+	// let batches = [];
 
-	async function batchList() {
-		loading = true;
-		const { data } = await getBatches();
-		batches = data;
-		loading = false;
-	}
+	// async function batchList() {
+	// 	loading = true;
+	// 	const { data } = await getBatches();
+	// 	batches = data;
+	// 	loading = false;
+	// }
 
 	onMount(async () => {
-		batchList();
+		batchs.getBatches()
+		// batchList();
 	});
 </script>
 
-{#if loading}
+{#if $batchs.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Batch" description="" {headers} rows={batches}>
+	<DataTable size="short" title="Batch" description="" {headers} rows={$batchs.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />

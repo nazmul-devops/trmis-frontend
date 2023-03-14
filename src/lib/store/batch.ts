@@ -55,4 +55,4 @@ function createBatchStore(){
     }
 }
 
-export const batch = createBatchStore()
+export const batchs = createBatchStore()
