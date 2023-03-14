@@ -38,7 +38,7 @@
 	}
 
 	async function doDelete() {
-		await trainers.deleteTrainer(trainer.phone);
+		await trainers.deleteTrainer(trainer.id);
 		deleteModal = false;
 	}
 

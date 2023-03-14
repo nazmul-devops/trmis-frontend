@@ -80,6 +80,6 @@
 	</DataTable>
 {/if}
 
-<CreateFormModal bind:user bind:open />
+<CreateFormModal bind:open />
 <EditFormModal bind:user bind:open={editModal} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'user'} />

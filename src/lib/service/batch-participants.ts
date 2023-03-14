@@ -5,7 +5,7 @@ export async function getBatchParticipants(id) {
 		const { data } = await http.get(`batch/${id}/batch-trainee/`);
 		return {
 			status: 200,
-			data: data.map((item) => ({ ...item, id: item.trainee }))
+			data
 		};
 	} catch (err) {
 		return Promise.resolve({

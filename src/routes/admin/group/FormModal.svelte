@@ -11,18 +11,17 @@
 	export let group = {
 		id: null,
 		name: null,
-		permissions: [],
-		permission_name: []
+		permissions: []
 	};
-	let Groups = [];
+	let groups = [];
 
 	$: {
-		Groups = group.permissions ? group.permissions : [];
+		groups = group.permissions ? group.permissions.map((item) => item.permission) : [];
 	}
 
 	$: {
 		setData('name', group.name);
-		setData('permissions', Groups);
+		setData('permissions', groups);
 	}
 
 	const schema = yup.object({
@@ -30,7 +29,7 @@
 		permissions: yup.array().min(1)
 	});
 
-	const { reset, createSubmitHandler, setData, errors } = createForm({
+	const { reset, createSubmitHandler, setData, errors, data } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -62,11 +61,11 @@
 >
 	<TextInput bind:value={group.name} labelText="Name" placeholder="Enter Name" />
 	<MultiSelect
-		selectedIds={Groups}
+		selectedIds={groups}
 		titleText="Prerequisite"
 		label="Select Prerequisite..."
 		items={$permissions.data.map((item) => ({ ...item, id: item.value, text: item.title }))}
 		on:select={(e) => setData('permissions', e.detail.selectedIds)}
 	/>
-	{JSON.stringify($errors)}
+	{JSON.stringify($data)}
 </Modal>

@@ -25,7 +25,7 @@
 		{ key: 'organization', value: 'Organization' },
 		{ key: 'source_of_fund', value: 'Source Of Fund' },
 		{ key: 'training_center', value: 'Training Schedule' },
-		{ key: 'status', value: 'Status' },
+		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -100,5 +100,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:batch />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="trainee"/>
+<FormModal bind:open bind:batch on:update-list={batchList} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

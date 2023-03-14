@@ -17,7 +17,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'event_venue', value: 'Venue' },
+		{ key: 'event_venue_name', value: 'Venue' },
 		{ key: 'start_date', value: 'Start Date' },
 		{ key: 'end_date', value: 'End Date' },
 		{ key: 'action', value: 'Action' }
@@ -76,4 +76,4 @@
 {/if}
 
 <FormModal bind:open bind:eventSchedule />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"event schedule"} />

@@ -6,7 +6,6 @@
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
-	import { MATERIAL_STATUS } from '$lib/constants';
 	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { sleep } from '$lib/service/utilities';
@@ -52,11 +51,11 @@
 	export let trainee = {
 		id: null,
 		phone: null,
+		hris: null,
 		name: null,
 		nid: null,
 		email: null,
 		gender: null,
-		marital_status: null,
 		designation: null,
 		organization: null,
 		division: null,
@@ -70,9 +69,9 @@
 			setData('name', trainee.name);
 			setData('phone', trainee.phone);
 			setData('nid', trainee.nid);
+			setData('hris', trainee.hris);
 			setData('email', trainee.email);
 			setData('gender', trainee.gender);
-			setData('marital_status', trainee.marital_status);
 			setData('designation', trainee.designation);
 			setData('organization', trainee.organization);
 			setData('address', trainee.address);
@@ -95,29 +94,31 @@
 	}
 
 	const schema = yup.object({
-		phone: yup.number().typeError('Phone number is required!').required(),
+		phone: yup
+			.string()
+			.matches(new RegExp(/^\+?(88)?0?1[3456789][0-9]{8}\b/), 'Not valid format')
+			.required(),
 		nid: yup
 			.number()
-			.required()
 			.min(1000000000, 'Enter A Valid NID')
 			.max(9999999999, 'Enter A Valid NID')
-			.typeError('NID is required!'),
-		email: yup.string().email().required(),
+			.nullable(),
+		email: yup.string().email().nullable(),
 		gender: yup.number().required().typeError('Select Gender'),
+		hris: yup.number().nullable(),
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
 		address: yup.string().required(),
 		district: yup.number().required().typeError('Select District'),
-		sub_district: yup.number().required().typeError('Select Sub District'),
-		marital_status: yup.number().required().typeError('Select Material Status')
+		sub_district: yup.number().required().typeError('Select Sub District')
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				phone: values.phone ? parseInt(values.phone) : null,
+				hris: values.hris ? parseInt(values.hris) : null,
 				nid: values.nid ? parseInt(values.nid) : null
 			};
 		},
@@ -126,8 +127,8 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			if (trainee.phone) {
-				await trainees.updateTrainee({ ...data, id: trainee.phone });
+			if (trainee.id) {
+				await trainees.updateTrainee({ ...data, id: trainee.id });
 			} else {
 				await trainees.createTrainee({ ...data });
 			}
@@ -170,6 +171,18 @@
 		{#if $errors.name}
 			<p class=" t-text-red-500 ">{$errors.name}</p>
 		{/if}
+
+		<TextInput
+			bind:value={$data.hris}
+			invalid={$errors.hris != null}
+			name="hris"
+			labelText="HRIS ID"
+			placeholder="Enter HRIS ID.."
+		/>
+		{#if $errors.phone}
+			<p class=" t-text-red-500 ">{$errors.hris}</p>
+		{/if}
+
 		<TextInput
 			bind:value={$data.phone}
 			invalid={$errors.phone != null}
@@ -182,6 +195,7 @@
 		{/if}
 		<TextInput
 			bind:value={$data.nid}
+			type="number"
 			invalid={$errors.nid != null}
 			name="nid"
 			labelText="NID"
@@ -225,19 +239,6 @@
 
 		{#if $errors.gender}
 			<p class=" t-text-red-500 ">{$errors.gender}</p>
-		{/if}
-
-		<ComboBox
-			name="marital_status"
-			invalid={$errors.marital_status != null}
-			bind:selectedId={$data.marital_status}
-			titleText="Material Status"
-			placeholder="Select Material Status"
-			items={MATERIAL_STATUS}
-		/>
-
-		{#if $errors.marital_status}
-			<p class=" t-text-red-500 ">{$errors.marital_status}</p>
 		{/if}
 
 		<ComboBox

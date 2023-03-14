@@ -1,30 +1,31 @@
 <script>
 	import {
 		Header,
-		HeaderNav,
-		HeaderNavItem,
-		HeaderNavMenu,
 		HeaderUtilities,
-		HeaderGlobalAction,
 		HeaderAction,
 		SideNav,
 		SideNavItems,
-		Dropdown,
 		SideNavMenu,
 		HeaderPanelLinks,
 		HeaderPanelLink,
 		HeaderPanelDivider,
-		SideNavMenuItem,
 		SideNavLink,
 		SideNavDivider,
 		SkipToContent,
 		Content
 	} from 'carbon-components-svelte';
+	import { expoIn } from 'svelte/easing';
+	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 	import { isAuthincated, setAccessToken, logout } from '$lib/store/auth';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
 	import { onMount } from 'svelte';
 	import { setupAuthHeader } from '$lib/service/auth';
+	import ChangePassModal from '$lib/ChangePassModal.svelte';
+
+	let isOpen = false;
+	let changePassModal = false;
+
 	$: {
 		if (!$isAuthincated) {
 			if (browser) {
@@ -33,6 +34,10 @@
 		} else {
 			setupAuthHeader();
 		}
+	}
+
+	function openPassModal() {
+		changePassModal = true;
 	}
 
 	onMount(() => {
@@ -48,9 +53,26 @@
 			<SkipToContent />
 		</svelte:fragment>
 		<HeaderUtilities>
-			<div class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5" on:click={logout}>
-				Log Out
-			</div>
+			<HeaderAction
+				class=" t-flex t-justify-center t-items-center "
+				bind:isOpen
+				icon={UserAvatarFilledAlt}
+				closeIcon={UserAvatarFilledAlt}
+			>
+				<HeaderPanelLinks class=" t-h-[18vh] ">
+					<HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
+					<HeaderPanelLink>Edit Details</HeaderPanelLink>
+					<HeaderPanelLink on:click={openPassModal}>Change Password</HeaderPanelLink>
+					<HeaderPanelLink>
+						<div
+							class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5"
+							on:click={logout}
+						>
+							Log Out
+						</div>
+					</HeaderPanelLink>
+				</HeaderPanelLinks>
+			</HeaderAction>
 		</HeaderUtilities>
 	</Header>
 
@@ -80,9 +102,9 @@
 				<a href="/admin/training-calendar">Training Calendar</a>
 			</SideNavLink>
 			<SideNavDivider />
-			<SideNavMenu text="Training Courses">
+			<SideNavMenu text="Training">
 				<SideNavLink>
-					<a href="/admin/training-course">Training Course</a>
+					<a href="/admin/training-course">Training</a>
 				</SideNavLink>
 				<SideNavLink>
 					<a href="/admin/training-course/1/course-category">Training Category</a>
@@ -183,6 +205,10 @@
 				<a href="/admin/users">Users</a>
 			</SideNavLink>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/trainee-request">Trainee Request</a>
+			</SideNavLink>
+			<SideNavDivider />
 		</SideNavItems>
 	</SideNav>
 
@@ -190,3 +216,5 @@
 		<slot />
 	</Content>
 {/if}
+
+<ChangePassModal bind:open={changePassModal} />

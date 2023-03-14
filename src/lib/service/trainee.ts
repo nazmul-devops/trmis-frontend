@@ -6,7 +6,7 @@ export async function getTrainees() {
 
 		return {
 			status: 200,
-			data: data.map((item, index) => ({ ...item, id: index }))
+			data
 		};
 	} catch (err) {
 		return Promise.resolve({
@@ -41,7 +41,7 @@ export async function deleteTrainee(id: number) {
 
 export async function updateTrainee(payload) {
 	try {
-		const { data } = await http.put(`trainee/${payload.phone}/`, payload);
+		const { data } = await http.put(`trainee/${payload.id}/`, payload);
 		return {
 			status: 204,
 			data
