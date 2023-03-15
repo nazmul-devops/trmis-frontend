@@ -30,7 +30,6 @@
 	];
 
 	let open = false;
-	let loading = false;
 	let deleteModal = false;
 	let batch;
 
@@ -100,5 +99,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:batch on:update-list={batchList} />
+<FormModal bind:open bind:batch  />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

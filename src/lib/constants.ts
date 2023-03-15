@@ -14,3 +14,11 @@ export const MATERIAL_STATUS = [
 	{ id: 1, text: 'Married' },
 	{ id: 2, text: 'UnMarried' }
 ];
+
+export const galleryCategory = [
+	{ id: 1, text: 'Meeting' },
+	{ id: 2, text: 'Orientation' },
+	{ id: 3, text: 'Training' },
+	{ id: 4, text: 'Seminar' },
+	{ id: 5, text: 'Workshop' }
+];

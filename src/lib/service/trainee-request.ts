@@ -6,7 +6,7 @@ export async function getTrainee_Requests() {
 
 		return {
 			status: 200,
-			data: data.map((item, index) => ({ ...item, id: index }))
+			data
 		};
 	} catch (err) {
 		return Promise.resolve({

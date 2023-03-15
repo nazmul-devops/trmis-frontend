@@ -15,12 +15,11 @@
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'name', value: 'Name' },
-		{ key: 'designation', value: 'Designation' },
-		{ key: 'district', value: 'District' },
+		{ key: 'designation_name', value: 'Designation' },
+		{ key: 'district_name', value: 'District' },
 		{ key: 'email', value: 'Email' },
-		{ key: 'gender', value: 'Gender' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'status', value: 'Status' },
+		{ key: 'organization_name', value: 'Organization' },
+		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -42,7 +41,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Pendin Trainee Request"
+		title="Pending Trainee Request"
 		description=""
 		{headers}
 		rows={$traineeRequests.data}
