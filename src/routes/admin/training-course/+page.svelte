@@ -22,10 +22,7 @@
 	let headers = [
 		{ key: 'id', value: 'ID' },
 		{ key: 'title', value: 'Title' },
-		{ key: 'description', value: 'Description' },
 		{ key: 'code', value: 'Code' },
-		// { key: 'pass_mark', value: 'Pass Mark' },
-		// { key: 'objective', value: 'Objective' },
 		{ key: 'course_category_name', value: 'Course Category' },
 		{ key: 'action', value: 'Action' }
 	];

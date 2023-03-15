@@ -3,7 +3,7 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { changePass } from '$lib/service/changePass';
-	import { Modal, TextInput } from 'carbon-components-svelte';
+	import { Modal, PasswordInput, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
@@ -55,31 +55,31 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.old_password}
+		<PasswordInput
 			name="old_password"
-			labelText="Old Password"
-			placeholder="Enter Old Password..."
+			labelText="Password"
+			placeholder="Enter password..."
+			invalid={$errors.password}
 		/>
-		{#if $errors.name}
+		{#if $errors.old_password}
 			<p class="t-text-red-500">{$errors.old_password}</p>
 		{/if}
-		<TextInput
+		<PasswordInput
 			invalid={$errors.new_password}
 			name="new_password"
 			labelText="New Password"
 			placeholder="Enter New Password..."
 		/>
-		{#if $errors.serial_no}
+		{#if $errors.new_password}
 			<p class="t-text-red-500">{$errors.new_password}</p>
 		{/if}
-		<TextInput
+		<PasswordInput
 			invalid={$errors.confirm_password}
 			name="confirm_password"
 			labelText="Confirm Password"
 			placeholder="Enter Confirm Password..."
 		/>
-		{#if $errors.serial_no}
+		{#if $errors.confirm_password}
 			<p class="t-text-red-500">{$errors.confirm_password}</p>
 		{/if}
 	</form>

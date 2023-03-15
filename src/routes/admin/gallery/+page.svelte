@@ -37,6 +37,7 @@
 	function openModalForm(row) {
 		open = true;
 		image = row;
+		// console.log(image);
 	}
 
 	async function doDelete() {
