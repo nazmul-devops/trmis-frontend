@@ -258,6 +258,6 @@
 	</div>
 </div>
 
-<p>{JSON.stringify($errors)}</p>
+<!-- <p>{JSON.stringify($errors)}</p> -->
 <!-- <p>{JSON.stringify($data)}</p> -->
 <!-- </Modal> -->

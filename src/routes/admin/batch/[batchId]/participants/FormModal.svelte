@@ -40,7 +40,7 @@
 		}
 	});
 
-	$: traineesList = $trainees.data.map((item) =>({...item, id: item.phone, text:item.name}))
+	$: traineesList = $trainees.data.map((item) =>({...item,  text:item.name}))
 
 	onMount(async () => {
 		trainees.getTrainees();
@@ -72,7 +72,7 @@
 			{/each}
 		</Select> -->
 
-		<p>{JSON.stringify($errors)}</p>
-		<p>{JSON.stringify($data)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<!-- <p>{JSON.stringify($data)}</p> -->
 	</form>
 </Modal>

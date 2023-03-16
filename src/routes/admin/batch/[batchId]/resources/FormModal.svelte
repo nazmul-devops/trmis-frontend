@@ -43,7 +43,7 @@
 		}
 	});
 
-	$: resourcesList =  $trainers.data.map((item) => ({...item, id: item.phone, text: item.name}))
+	$: resourcesList =  $trainers.data.map((item) => ({...item, text: item.name}))
 
 	onMount(async () => {
 		trainers.getTrainers();
