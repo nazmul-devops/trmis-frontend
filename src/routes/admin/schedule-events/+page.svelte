@@ -17,7 +17,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: '#', value: '#' },
+		// { key: '#', value: '#' },
 		{ key: 'event_venue_name', value: 'Venue' },
 		{ key: 'start_date', value: 'Start Date' },
 		{ key: 'end_date', value: 'End Date' },

@@ -76,7 +76,7 @@
 		gender: yup.number().required().typeError('Select Gender'),
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
-		area_of_specialization: yup.string().required(),
+		// area_of_specialization: yup.string().required(),
 		division: yup.number().required().typeError('Select Division'),
 		address: yup.string().required(),
 		district: yup.number().required().typeError('Select District'),
@@ -164,7 +164,7 @@
 			{#if $errors.address}
 				<p class=" t-text-red-500 ">{$errors.address}</p>
 			{/if}
-			<TextInput
+			<!-- <TextInput
 				bind:value={$data.area_of_specialization}
 				invalid={$errors.area_of_specialization != null}
 				name="area_of_specialization"
@@ -173,7 +173,7 @@
 			/>
 			{#if $errors.area_of_specialization}
 				<p class=" t-text-red-500 ">{$errors.area_of_specialization}</p>
-			{/if}
+			{/if} -->
 			<ComboBox
 				invalid={$errors.gender != null}
 				bind:selectedId={$data.gender}
@@ -247,13 +247,12 @@
 				items={upazilaOptions}
 				{shouldFilterItem}
 			/>
-
-			<div class=" t-flex t-gap-2 t-my-5 ">
-				<Button kind="danger">cancel</Button>
-				<Button on:click={submitHandler}>Submit</Button>
-			</div>
 		</div>
-		<p>{JSON.stringify($data)}</p>
+		<div class=" t-flex t-gap-2 t-my-5 ">
+			<Button kind="danger">cancel</Button>
+			<Button on:click={submitHandler}>Submit</Button>
+		</div>
+		<!-- <p>{JSON.stringify($data)}</p> -->
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 </div>

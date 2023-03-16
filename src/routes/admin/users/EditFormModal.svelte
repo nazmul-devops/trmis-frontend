@@ -108,7 +108,7 @@
 		<Checkbox bind:checked={user.is_staff} name="is_staff" labelText="Is Staff?" />
 		<Checkbox name="is_superuser" labelText="Is Super User?" />
 
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 	<MultiSelect
 		selectedIds={Groups}

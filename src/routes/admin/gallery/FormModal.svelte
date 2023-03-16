@@ -121,5 +121,5 @@
 	</form>
 
 	<!-- {JSON.stringify($data)} -->
-	{JSON.stringify($errors)}
+	<!-- {JSON.stringify($errors)} -->
 </Modal>

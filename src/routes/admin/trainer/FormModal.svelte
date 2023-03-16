@@ -313,6 +313,6 @@
 		/>
 
 		<!-- <p>{JSON.stringify($data)}</p> -->
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 </Modal>
