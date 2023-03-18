@@ -82,6 +82,7 @@
 </script>
 
 <Modal
+	preventCloseOnClickOutside
 	bind:open
 	modalHeading={trainingCourse.id == null ? 'Create training' : 'Edit training'}
 	primaryButtonText={trainingCourse.id == null ? 'Create' : 'Edit'}

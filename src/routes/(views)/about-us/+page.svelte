@@ -16,7 +16,7 @@
 				class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-32 t-grid md:t-grid-cols-2 "
 			>
 				<div
-					class="t-bg-[#44835C]  t-text-white t-text-center t-flex t-justify-center t-flex-col t-col-span-1 t-justify-center t-items-center t-py-4"
+					class="t-bg-[#44835C]  t-text-white t-text-center t-flex t-justify-center t-flex-col t-col-span-1 t-items-center t-py-4"
 				>
 					<h4 class="t-text-xl t-uppercase t-font-light  t-mb-1">hello</h4>
 					<p class="t-font-display t-text-xl sm:t-text-left md:t-text-justify t-px-8">
