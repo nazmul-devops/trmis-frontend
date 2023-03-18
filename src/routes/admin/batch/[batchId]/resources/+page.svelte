@@ -16,6 +16,7 @@
 	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'trainer_name', value: 'Participant' },
 		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'action', value: 'Action' }
@@ -64,7 +65,7 @@
 				>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem
@@ -76,6 +77,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex  + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

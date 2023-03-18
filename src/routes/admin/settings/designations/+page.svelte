@@ -20,8 +20,9 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'serial_no', value: 'Serial No' },
+		{ key: 'rowNumber', value: '#'},
 		{ key: 'name', value: 'Name' },
+		{ key: 'serial_no', value: 'Serial No' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -55,7 +56,7 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Designation</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -69,6 +70,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
