@@ -54,7 +54,7 @@
 {#if $trainees.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Participants" description="" {headers} rows={$trainees.data}>
+	<DataTable size="short" title="Participants" description="" {headers} rows={$trainees.data} zebra>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -89,3 +89,4 @@
 
 <FormModal bind:open bind:trainee />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'participants'} />
+

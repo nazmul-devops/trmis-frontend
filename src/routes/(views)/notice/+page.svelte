@@ -23,7 +23,7 @@
 	</div>
 	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24">
 		{#each noticeData as { title, description, date, files }}
-			<a href={files} class="t-text-gray-500" target="_blank">
+			<a href={files} class="t-text-gray-500" target="_blank" rel="noreferrer" >
 				<div
 					class="t-relative t-p-8 t-overflow-hidden t-border t-bg-white t-border-slate-100 t-rounded-lg t-mt-4 t-shadow-lg"
 				>
@@ -46,6 +46,7 @@
 							href={files}
 							class="t-text-xl t-font-bold  t-text-[#44835C] t-flex t-justify-center"
 							target="_blank"
+							rel="noreferrer"
 						>
 							Open here! <i class="las la-arrow-right t-text-[#F94646] t-font-bold t-text-2xl" />
 						</a>
