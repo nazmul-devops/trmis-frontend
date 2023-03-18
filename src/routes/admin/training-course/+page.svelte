@@ -20,7 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'code', value: 'Code' },
 		{ key: 'course_category_name', value: 'Course Category' },
@@ -50,20 +50,14 @@
 {#if $trainingCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable
-		size="short"
-		title="Training"
-		description=""
-		{headers}
-		rows={$trainingCourses.data}
-	>
+	<DataTable size="short" title="Training" description="" {headers} rows={$trainingCourses.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Course</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -77,6 +71,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
