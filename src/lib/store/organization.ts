@@ -4,10 +4,15 @@ import * as organizationService from '../service/organization';
 function createOrganizationsStore() {
 	const { subscribe, set, update } = writable({ loading: true, data: [] });
 	function setLoading() {
-		update((prev) => ({
-			...prev,
-			loading: true
-		}));
+		// update((prev) => ({
+		// 	...prev,
+		// 	loading: true
+		// }));
+
+		update((prev) => {
+			prev.loading = true;
+			return prev
+		})
 	}
 
 	async function getOrganizations() {

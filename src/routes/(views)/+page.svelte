@@ -1,6 +1,6 @@
 <script lang="ts">
 	import Chart1st from '$lib/Chart1st.svelte';
-	import Map from '../admin/map.svelte';
+	import Map from '../../lib/map.svelte';
 
 	interface homeCard {
 		name: string;
