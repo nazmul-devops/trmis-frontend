@@ -17,7 +17,7 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'username', value: 'Username' },
 		{ key: 'first_name', value: 'FirstName' },
 		{ key: 'last_name', value: 'LasttName' },
@@ -61,7 +61,7 @@
 				<Button on:click={() => openCreateModalForm()}>Add User</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -75,6 +75,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

@@ -17,7 +17,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		// { key: '#', value: '#' },
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'event_venue_name', value: 'Venue' },
 		{ key: 'start_date', value: 'Start Date' },
 		{ key: 'end_date', value: 'End Date' },
@@ -58,7 +58,7 @@
 				>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
@@ -71,6 +71,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

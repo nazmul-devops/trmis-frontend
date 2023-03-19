@@ -67,6 +67,7 @@
 						<div
 							class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5"
 							on:click={logout}
+							on:keypress={logout}
 						>
 							Log Out
 						</div>

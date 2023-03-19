@@ -18,6 +18,7 @@
 	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'name', value: 'Event Name' },
 		{ key: 'coordinator_name', value: 'Coordinator' },
 		{ key: 'organization_name', value: 'Organization' },
@@ -59,7 +60,7 @@
 				<Button on:click={() => goto(`/admin/event/add-event`)}>Add Event</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem on:click={() => goto(`/admin/event/${row.id}/edit`)} text="Edit" />
@@ -72,6 +73,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
