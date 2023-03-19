@@ -115,14 +115,14 @@
 		address: yup.string().required(),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District'),
-		hris: yup.number().nullable()
+		hris: yup.number()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				hris: values.hris ? parseInt(values.hris) : null,
+				// hris: values.hris ? parseInt(values.hris) : null,
 				nid: values.nid ? parseInt(values.nid) : null
 			};
 		},
@@ -188,14 +188,12 @@
 
 		<TextInput
 			bind:value={$data.hris}
+			type="number"
 			invalid={$errors.hris != null}
 			name="hris"
 			labelText="HRIS ID"
 			placeholder="Enter HRIS ID..."
 		/>
-		{#if $errors.phone}
-			<p class=" t-text-red-500 ">{$errors.hris}</p>
-		{/if}
 
 		<TextInput
 			bind:value={$data.nid}

@@ -10,7 +10,8 @@
 		Button,
 		DataTableSkeleton,
 		OverflowMenu,
-		OverflowMenuItem
+		OverflowMenuItem,
+		Row
 	} from 'carbon-components-svelte';
 
 	import { onMount } from 'svelte';
@@ -19,7 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'id', value: 'ID' },
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'description', value: 'Description' },
 		{ key: 'files', value: 'File' },
@@ -63,7 +64,7 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Material</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -77,17 +78,19 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-			<!-- {:else if cell.key === 'files'} -->
-				
+				<!-- {:else if cell.key === 'files'} -->
+
 				<!-- {#each cell.value as item}
 					<ul>
 						<li>{item}</li>
 					</ul>
 				{/each} -->
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:courseMaterial />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"Training Material"} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'Training Material'} />

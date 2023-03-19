@@ -7,13 +7,13 @@
 		Button,
 		DataTableSkeleton,
 		OverflowMenu,
-		OverflowMenuItem
+		OverflowMenuItem,
+		Row
 	} from 'carbon-components-svelte';
 
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { goto } from '$app/navigation';
-	import { batchParticipantsList } from "$lib/store/batch-participants" 
+	import { batchParticipantsList } from '$lib/store/batch-participants';
 	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
@@ -23,24 +23,26 @@
 	];
 
 	let open = false;
-	let loading = false;
 	let deleteModal = false;
 	let participant;
 
 	function openModalForm(row) {
 		open = true;
+		participant = row;
 	}
 
 	async function doDelete() {
-		await batchParticipantsList.deleteBatchParticipant(parseInt($page.params.batchId), participant.id);
+		await batchParticipantsList.deleteBatchParticipant(
+			parseInt($page.params.batchId),
+			participant.id
+		);
 		deleteModal = false;
-		await batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId))
+		await batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId));
 	}
-
 
 	$: {
 		if ($page.params.batchId) {
-			batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId))
+			batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId));
 		}
 	}
 </script>
@@ -48,13 +50,17 @@
 {#if $batchParticipantsList.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="All Participant" description="" {headers} rows={$batchParticipantsList.data}>
+	<DataTable
+		size="short"
+		title="All Participant"
+		description=""
+		{headers}
+		rows={$batchParticipantsList.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ trainee_name: null, batch_name: null })}
-					>Add Participant</Button
-				>
+				<Button on:click={() => openModalForm(Row)}>Add Participant</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
@@ -74,5 +80,5 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open  bind:participant/>
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="participant"/>
+<FormModal bind:open bind:participant />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="participant" />

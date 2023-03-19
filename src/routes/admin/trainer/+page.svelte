@@ -16,10 +16,10 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
-	import { goto } from '$app/navigation';
 
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'organization__name', value: 'Organization' },
 		{ key: 'gender_name', value: 'Gender' },
@@ -65,7 +65,7 @@
 				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Resources</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem
@@ -83,6 +83,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

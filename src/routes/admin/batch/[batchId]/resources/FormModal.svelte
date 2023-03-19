@@ -9,6 +9,12 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { createBatchResource } from '$lib/service/batch-resources';
+
+	function shouldFilterItem(item, value) {
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
+
 	export let open = true;
 	export let resource = {
 		trainer: null
@@ -19,7 +25,7 @@
 	}
 
 	const schema = yup.object({
-		trainer: yup.number().required().typeError("Resources are required")
+		trainer: yup.number().required().typeError('Resources are required')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -43,7 +49,7 @@
 		}
 	});
 
-	$: resourcesList =  $trainers.data.map((item) => ({...item, text: item.name}))
+	$: resourcesList = $trainers.data.map((item) => ({ ...item, text: item.name }));
 
 	onMount(async () => {
 		trainers.getTrainers();
@@ -59,7 +65,7 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<ComboBox 
+		<ComboBox
 			invalid={$errors.trainer != null}
 			invalidText={$errors.trainer}
 			name="trainer"
@@ -67,6 +73,7 @@
 			placeholder="Choose Resources"
 			bind:selectedId={$data.trainer}
 			items={resourcesList}
+			{shouldFilterItem}
 		/>
 		<!-- <Select invalid={$errors.resource != null} name="trainer" labelText="Resources">
 			<SelectItem text="choose Resources" value="" />

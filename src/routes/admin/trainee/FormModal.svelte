@@ -105,7 +105,7 @@
 			.nullable(),
 		email: yup.string().email().nullable(),
 		gender: yup.number().required().typeError('Select Gender'),
-		hris: yup.number().nullable(),
+		hris: yup.number(),
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
@@ -118,7 +118,7 @@
 		transform: (values: any) => {
 			return {
 				...values,
-				hris: values.hris ? parseInt(values.hris) : null,
+				// hris: values.hris ? parseInt(values.hris) : null,
 				nid: values.nid ? parseInt(values.nid) : null
 			};
 		},
@@ -174,14 +174,15 @@
 
 		<TextInput
 			bind:value={$data.hris}
+			type="number"
 			invalid={$errors.hris != null}
 			name="hris"
 			labelText="HRIS ID"
 			placeholder="Enter HRIS ID.."
 		/>
-		{#if $errors.phone}
+		<!-- {#if $errors.phone}
 			<p class=" t-text-red-500 ">{$errors.hris}</p>
-		{/if}
+		{/if} -->
 
 		<TextInput
 			bind:value={$data.phone}
