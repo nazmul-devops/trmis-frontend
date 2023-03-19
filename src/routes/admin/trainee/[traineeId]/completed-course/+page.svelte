@@ -24,6 +24,10 @@
 	onMount(async () => {
 		completedCourses.getCompletedCourses($page.params.traineeId);
 	});
+
+	$: {
+		console.log($completedCourses.data);
+	}
 </script>
 
 {#if $completedCourses.loading}
@@ -44,3 +48,5 @@
 		</Toolbar>
 	</DataTable>
 {/if}
+
+<!-- rows={$completedCourses.data} -->

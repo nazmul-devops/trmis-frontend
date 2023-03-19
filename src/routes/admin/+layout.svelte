@@ -22,6 +22,7 @@
 	import { onMount } from 'svelte';
 	import { setupAuthHeader } from '$lib/service/auth';
 	import ChangePassModal from '$lib/ChangePassModal.svelte';
+	import { permissions, permissionsByGroups } from '$lib/store/permission';
 
 	let isOpen = false;
 	let changePassModal = false;
@@ -42,6 +43,7 @@
 
 	onMount(() => {
 		setAccessToken();
+		permissionsByGroups.getPermissionsByUser();
 	});
 
 	let isSideNavOpen = false;
@@ -132,13 +134,17 @@
 			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavMenu text="Event">
-				<SideNavLink>
-					<a href="/admin/schedule-events">Event Schedule</a>
-				</SideNavLink>
+				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
+					<SideNavLink>
+						<a href="/admin/schedule-events">Event Schedule</a>
+					</SideNavLink>
+				<!-- {/if} -->
 				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/event">Event List</a>
-				</SideNavLink>
+				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_event').length > 0} -->
+					<SideNavLink>
+						<a href="/admin/event">Event List</a>
+					</SideNavLink>
+				<!-- {/if} -->
 			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavMenu text="Reports">

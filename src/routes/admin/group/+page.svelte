@@ -19,7 +19,7 @@
 	let headers = [
 		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'permissions', value: 'Permission' },
+		// { key: 'permissions', value: 'Permission' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -42,6 +42,10 @@
 	onMount(async () => {
 		groupsList.getGroups();
 	});
+
+	$: {
+		console.log($groupsList.data);
+	}
 </script>
 
 {#if $groupsList.loading}
@@ -51,7 +55,7 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Group</Button>
+				<Button on:click={() => openModalForm({})}>Add Group</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row>
