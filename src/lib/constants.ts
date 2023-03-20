@@ -14,3 +14,11 @@ export const MATERIAL_STATUS = [
 	{ id: 1, text: 'Married' },
 	{ id: 2, text: 'UnMarried' }
 ];
+
+export const MAP_VIEW_TYPE = [
+	{ id: 1, text: 'Training Venue View' },
+	{ id: 2, text: 'Batch View' }
+];
+
+export const BATCH_VIEW = MAP_VIEW_TYPE[1].id
+

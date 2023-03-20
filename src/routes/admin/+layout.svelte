@@ -209,6 +209,10 @@
 				<a href="/admin/trainee-request">Trainee Request</a>
 			</SideNavLink>
 			<SideNavDivider />
+			<SideNavLink>
+				<a href="/admin/map">Map</a>
+			</SideNavLink>
+			<SideNavDivider />
 		</SideNavItems>
 	</SideNav>
 

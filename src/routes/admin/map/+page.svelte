@@ -7,7 +7,8 @@
 	import * as yup from 'yup';
 	import { onMount } from 'svelte';
 	import { getLocations } from '$lib/service/locations';
-	import { divisions } from '$lib/store/division';
+	import { DatePicker, DatePickerInput } from 'carbon-components-svelte';
+	import { BATCH_VIEW, MAP_VIEW_TYPE } from '$lib/constants';
 	let zilaOptions = [];
 	let upazilaOptions = [];
 	let locations = [];
@@ -16,11 +17,12 @@
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
-	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
+	// $: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 	$: {
 		getLocations().then((resp) => {
 			locations = resp.data;
 		});
+		// viewType
 	}
 	$: {
 		if ($data.division) {
@@ -49,22 +51,31 @@
 	}
 
 	const schema = yup.object({
-		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
-		district: yup.number().required().typeError('Select District')
+		district: yup.number().required().typeError('Select District'),
+		sub_district: yup.number().required().typeError('Select District')
 	});
+
 	const { form, reset, createSubmitHandler, setFields, setData, errors, data } = createForm({
+		initialValues: {
+			sub_district: null,
+			division: null,
+			district: null,
+			viewType: 1,
+			startDate: null,
+			endDate: null,
+		},
 		extend: validator({ schema })
 	});
 
 	onMount(async () => {
-		organizations.getOrganizations();
+		// organizations.getOrganizations();
 	});
 </script>
 
 <div>
-	<div class="t-grid t-grid-cols-5 t-gap-4 t-mb-4 ">
-		<ComboBox
+	<div class="t-grid t-grid-cols-7 t-gap-4 t-mb-4 ">
+		<!-- <ComboBox
 			invalid={$errors.organization != null}
 			invalidText={$errors.organization}
 			name="organization"
@@ -73,6 +84,12 @@
 			bind:selectedId={$data.organization}
 			items={organizationsList}
 			{shouldFilterItem}
+			/> -->
+		<ComboBox
+			titleText="Map View"
+			placeholder="Select Map View"
+			bind:selectedId={$data.viewType}
+			items={MAP_VIEW_TYPE}
 		/>
 		<ComboBox
 			bind:selectedId={$data.division}
@@ -97,20 +114,31 @@
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>
-		<ComboBox
-			titleText="Map View"		
-			placeholder="Select Map View"
-			items={[
-				{ id: '0', text: 'Batch View' },
-				{ id: '1', text: 'Training Center View' }
-			]}
-		/>
+		{#if $data.viewType == BATCH_VIEW}
+			<div>
+				<DatePicker
+					datePickerType="single"
+					bind:value={$data.startDate}
+					dateFormat="m/Y"
+					on:change
+				>
+					<DatePickerInput labelText="Start date" placeholder="mm/yyyy" />
+				</DatePicker>
+			</div>
+			<div style="margin-left: 80px;">
+				<DatePicker datePickerType="single" bind:value={$data.endDate} dateFormat="m/Y" on:change>
+					<DatePickerInput labelText="End date" placeholder="mm/yyyy" />
+				</DatePicker>
+			</div>
+		{/if}
 	</div>
 
 	<Map
 		bind:district={$data.district}
 		bind:division={$data.division}
 		bind:subDistrict={$data.sub_district}
-		bind:organization={$data.organization}
+		bind:viewType={$data.viewType}
+		bind:startDate={$data.startDate}
+		bind:endDate={$data.endDate}
 	/>
 </div>
