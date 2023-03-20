@@ -126,9 +126,9 @@
 		<PageTitle Title={title} desc="" />
 	</div>
 	<div class="t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-mt-10">
-		<div class="t-flex t-justify-between">
+		<div class="t-grid t-grid-cols-1">
 			<form>
-				<div class="t-flex t-gap-4">
+				<div class="t-grid md:t-grid-cols-2 lg:t-grid-cols-5 t-gap-4">
 					<ComboBox
 						placeholder="Choose Organization"
 						items={organizationsList}
