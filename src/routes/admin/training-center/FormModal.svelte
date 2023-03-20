@@ -53,6 +53,8 @@
 	export let trainingCenter = {
 		id: null,
 		name: null,
+		latitude: null,
+		longitude: null,
 		division: null,
 		district: null,
 		sub_district: null,
@@ -62,6 +64,8 @@
 	$: {
 		if (trainingCenter.id != null) {
 			setData('name', trainingCenter.name);
+			setData('latitude', trainingCenter.latitude);
+			setData('longitude', trainingCenter.longitude);
 			sleep(0)
 				.then(() => {
 					setData('division', trainingCenter.division);
@@ -86,6 +90,8 @@
 
 	const schema = yup.object({
 		name: yup.string().required(),
+		latitude: yup.string().required(),
+		longitude: yup.string().required(),
 		division: yup.number().required(),
 		district: yup.number().required(),
 		sub_district: yup.number().required(),
@@ -93,6 +99,13 @@
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
+		// transform(values : any) {
+		// 	return{
+		// 		...values,
+		// 		latitude: values.latitude ? parseFloat(values.latitude) : null,
+		// 		longitude: values.longitude ? parseFloat(values.longitude) : null,
+		// 	}
+		// },
 		extend: validator({ schema })
 	});
 
@@ -101,7 +114,9 @@
 			if (trainingCenter.id) {
 				await trainingCenters.updateTrainingCenter({ ...data, id: trainingCenter.id });
 			} else {
-				await trainingCenters.createTrainingCenter({ ...data });
+				await trainingCenters.createTrainingCenter({
+					...data
+				});
 			}
 			open = false;
 			reset();
@@ -153,6 +168,20 @@
 			{shouldFilterItem}
 		/>
 		<TextInput
+			bind:value={$data.latitude}
+			invalid={$errors.latitude != null}
+			name="latitude"
+			labelText="Latitute"
+			placeholder="Enter Latitute..."
+		/>
+		<TextInput
+			bind:value={$data.longitude}
+			invalid={$errors.longitude != null}
+			name="longitude"
+			labelText="Longitude"
+			placeholder="Enter Longitude..."
+		/>
+		<TextInput
 			bind:value={$data.address}
 			disabled={!$data.sub_district}
 			invalid={$errors.address != null}
@@ -161,4 +190,6 @@
 			placeholder="Enter Address..."
 		/>
 	</form>
+
+	{JSON.stringify($errors)}
 </Modal>

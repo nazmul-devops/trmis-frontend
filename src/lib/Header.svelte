@@ -32,6 +32,10 @@
 			link: '/training'
 		},
 		{
+			label: 'Event',
+			link: '/event'
+		},
+		{
 			label: 'Downloads',
 			link: '/downloads'
 		},
@@ -85,6 +89,7 @@
 							<li
 								class=" t-rounded-md sm:t-py-2 sm:t-px-11 lg:t-px-1"
 								on:click={() => (showHamBurgerMenu = false)}
+								on:keypress={() => (showHamBurgerMenu = false)}
 								class:active={$page.url.pathname == item.link}
 							>
 								<a
@@ -100,6 +105,7 @@
 				<div
 					class=" t-absolute t-right-[18px] t-top-5 t-m-auto sm:t-block lg:t-hidden "
 					on:click={handleMobileIconClick}
+					on:keypress={handleMobileIconClick}
 				>
 					<button>
 						<i

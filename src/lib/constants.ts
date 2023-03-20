@@ -31,10 +31,26 @@ export const galleryCategory = [
 ];
 
 
-export const timeIntervalDistance = [
-	{ id: 1, text: 'Jan 2020 - Feb 2020'},
-	{ id: 2, text: 'Mar 2020 - April 2020'},
-	{ id: 3, text: 'May 2020 - June 2020'},
-	{ id: 4, text: 'July 2020 - Aug 2020'},
-	{ id: 5, text: 'Sep 2020 - Oct 2020'},
-];
+
+export const EVENTDATA = [
+	{
+		id: 1,
+		title: 'Meeting',
+		link: '/assets/eventIcon1.jpg' 
+	},
+	{
+		id: 2,
+		title: 'Workshop',
+		link: '/assets/eventIcon2.jpg' 
+	},
+	{
+		id: 3,
+		title: 'Orientation',
+		link: '/assets/eventIcon3.jpg' 
+	},
+	{
+		id: 4,
+		title: 'Sensitization',
+		link: '/assets/eventIcon4.jpg' 
+	},
+]
