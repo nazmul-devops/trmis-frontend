@@ -63,7 +63,7 @@
 			district: null,
 			viewType: 1,
 			startDate: null,
-			endDate: null,
+			endDate: null
 		},
 		extend: validator({ schema })
 	});
@@ -73,7 +73,7 @@
 	});
 </script>
 
-<div class="t-container">
+<div class="t-container t-py-11">
 	<div class="t-grid t-grid-cols-4 t-gap-4 t-mb-4 ">
 		<!-- <ComboBox
 			invalid={$errors.organization != null}
@@ -116,12 +116,7 @@
 		/>
 		{#if $data.viewType == BATCH_VIEW}
 			<div>
-				<DatePicker
-					datePickerType="single"
-					bind:value={$data.startDate}
-					dateFormat="m/Y"
-					on:change
-				>
+				<DatePicker datePickerType="single" bind:value={$data.startDate} dateFormat="m/Y" on:change>
 					<DatePickerInput labelText="Start date" placeholder="mm/yyyy" />
 				</DatePicker>
 			</div>
