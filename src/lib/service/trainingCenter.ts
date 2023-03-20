@@ -80,3 +80,19 @@ export async function getTrainingCentersTitles() {
 		});
 	}
 }
+
+export async function getTrainingCenterMap(params) {
+	try {
+		const { data } = await http.get('training-center/map/', { params: params });
+		// console.log(data);
+		return {
+			status: 200,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}

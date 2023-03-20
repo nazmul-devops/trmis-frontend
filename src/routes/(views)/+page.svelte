@@ -1,9 +1,5 @@
 <script lang="ts">
 	import Chart1st from '$lib/Chart1st.svelte';
-	import Map from '../admin/map.svelte';
-	import CourseWiseChart from '$lib/CourseWiseChart.svelte';
-	import GenderWiseChart from '$lib/GenderWiseChart.svelte';
-	import TrainingStatusChart from '$lib/TrainingStatusChart.svelte';
 	import { httpWeb } from '$lib/service/auth';
 	import { onMount } from 'svelte';
 	import AboutContent from './AboutContent.svelte';

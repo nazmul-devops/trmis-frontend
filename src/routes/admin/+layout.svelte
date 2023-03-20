@@ -233,11 +233,10 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-
-			<!-- <SideNavLink>
-				<a href="/admin/event-types">Event Type</a>
+			<SideNavLink>
+				<a href="/admin/map">Map</a>
 			</SideNavLink>
-			<SideNavDivider /> -->
+			<SideNavDivider />
 		</SideNavItems>
 	</SideNav>
 
