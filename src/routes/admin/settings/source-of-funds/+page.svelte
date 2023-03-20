@@ -22,7 +22,7 @@
 	let headers = [
 		{ key: 'rowNumber', value: '#' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'serial_no', value: 'Serial No' },
+		// { key: 'serial_no', value: 'Serial No' },
 		{ key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];

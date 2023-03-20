@@ -5,8 +5,6 @@
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
 		Loading,
@@ -23,8 +21,8 @@
 		{ key: 'rowNumber', value: '#'},
 		{ key: 'name', value: 'Name' },
 		{ key: 'division_name', value: 'Division' },
-		{ key: 'district_name', value: 'District' },
-		{ key: 'sub_district_name', value: 'Sub District' },
+		{ key: 'district_name', value: 'Zilla' },
+		{ key: 'sub_district_name', value: 'Upazilla' },
 		{ key: 'address', value: 'Address' },
 		{ key: 'action', value: 'Action' }
 	];

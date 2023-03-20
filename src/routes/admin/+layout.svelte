@@ -50,7 +50,7 @@
 </script>
 
 {#if $isAuthincated}
-	<Header company="TrMIS" platformName="" bind:isSideNavOpen>
+	<Header company="TB Training Management Information System" platformName="" bind:isSideNavOpen>
 		<svelte:fragment slot="skip-to-content">
 			<SkipToContent />
 		</svelte:fragment>

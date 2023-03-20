@@ -26,7 +26,7 @@
 		{ key: 'title', value: 'Tilte' },
 		{ key: 'description', value: 'Description' },
 		{ key: 'files', value: 'Notice File' },
-		{ key: 'show_in_home_page', value: 'Status' },
+		// { key: 'show_in_home_page', value: 'Status' },
 		// { key: 'expiration_date', value: 'Exp Date' },
 		{ key: 'action', value: 'Action' }
 	];
