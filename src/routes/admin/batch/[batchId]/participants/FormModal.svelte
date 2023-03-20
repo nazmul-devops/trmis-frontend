@@ -18,21 +18,11 @@
 		trainee: null
 	};
 
-	$: {
-		setData('trainee', participant.trainee);
-	}
-
 	const schema = yup.object({
 		trainee: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
-		transform: (values: any) => {
-			return {
-				...values,
-				trainee: parseInt(values.trainee)
-			};
-		},
 		extend: validator({ schema })
 	});
 
@@ -47,6 +37,10 @@
 	});
 
 	$: traineesList = $trainees.data.map((item) => ({ ...item, text: item.name }));
+
+	$: {
+		console.log(traineesList);
+	}
 
 	onMount(async () => {
 		trainees.getTrainees();
@@ -63,12 +57,11 @@
 >
 	<form use:form>
 		<ComboBox
+			bind:selectedId={$data.trainee}
 			invalid={$errors.trainee != null}
 			invalidText={$errors.trainee}
-			name="trainee"
 			titleText="Participant"
 			placeholder="Choose Participant"
-			bind:selectedId={$data.trainee}
 			items={traineesList}
 			{shouldFilterItem}
 		/>

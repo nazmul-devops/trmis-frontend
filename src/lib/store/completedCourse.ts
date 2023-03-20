@@ -19,7 +19,10 @@ function createCompletedCourseStore() {
 			data:
 				resp.data.length == 0
 					? []
-					: resp.data.map((item) => ({ ...item, id: item.training_course_id }))
+					: resp.data.map((item, index) => ({
+							...item,
+							id: `${item.batch}-${item.training_course}-${item.org_id}-${item.training_center}`
+					  }))
 		});
 	}
 

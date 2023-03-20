@@ -15,3 +15,20 @@ export async function getPermissions() {
 		});
 	}
 }
+
+export async function getPermissionsByUser() {
+	console.log('getPermissionsByUser');
+	try {
+		const { data } = await http.get('user-permission/');
+
+		return {
+			status: 200,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}
