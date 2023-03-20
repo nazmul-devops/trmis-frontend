@@ -5,7 +5,6 @@
 	import { ComboBox } from 'carbon-components-svelte';
 	import { getLocations } from '$lib/service/locations';
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
-	import { organizations } from '$lib/store/organization';
 	import { onMount } from 'svelte';
 
 	let title = '2-Day training on EQA Lab';
@@ -113,10 +112,7 @@
 		}
 	];
 
-	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
-
 	onMount(() => {
-		organizations.getOrganizations();
 	});
 </script>
 
@@ -133,7 +129,10 @@
 				<div class="t-grid md:t-grid-cols-2 lg:t-grid-cols-5 t-gap-4">
 					<ComboBox
 						placeholder="Choose Organization"
-						items={organizationsList}
+						items={[
+							{ id: 1, text: 'NTP' },
+							{ id: 2, text: 'Others'}
+						]}
 						{shouldFilterItem}
 					/>
 
