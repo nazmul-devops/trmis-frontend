@@ -9,7 +9,6 @@
 	import * as yup from 'yup';
 	import Chart from '../../lib/Chart.svelte';
 	import Count from './Count.svelte';
-	import Map from './map.svelte';
 
 
 	function shouldFilterItem(item, value) {
@@ -63,5 +62,4 @@
 	</div>
 
 	<Chart />
-	<Map />
 </div>

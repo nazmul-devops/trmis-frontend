@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Chart1st from '$lib/Chart1st.svelte';
-	import Map from '../admin/map.svelte';
 	import { httpWeb } from '$lib/service/auth';
 	import { onMount } from 'svelte';
 
@@ -138,11 +137,5 @@
 				</div>
 			</a>
 		{/each}
-	</div>
-
-	<div class="t-grid t-grid-cols-1 t-gap-4">
-		<div class="t-bg-white t-rounded-md t-p-5">
-			<Map />
-		</div>
 	</div>
 </div>
