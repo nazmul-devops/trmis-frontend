@@ -59,6 +59,7 @@
 		marital_status: null,
 		designation: null,
 		organization: null,
+		remarks: null,
 		division: null,
 		address: null,
 		status: null,
@@ -76,6 +77,7 @@
 		setData('marital_status', traineeRequest.marital_status);
 		setData('designation', traineeRequest.designation);
 		setData('organization', traineeRequest.organization);
+		setData('remarks', traineeRequest.remarks);
 		setData('address', traineeRequest.address);
 
 		sleep(0)
@@ -104,6 +106,7 @@
 		gender: yup.number().required().typeError('Select Gender'),
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
+		remarks: yup.string().required(),
 		division: yup.number().required().typeError('Select Division'),
 		address: yup.string().required(),
 		district: yup.number().required().typeError('Select District'),
@@ -124,6 +127,7 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			await traineeRequests.updateTrainee_Request({ ...data, id: traineeRequest.id });
+			open = false;
 			reset();
 		}
 	});
@@ -178,6 +182,16 @@
 				/>
 				{#if $errors.nid}
 					<p class=" t-text-red-500 ">{$errors.nid}</p>
+				{/if}
+				<TextInput
+					bind:value={$data.remarks}
+					invalid={$errors.remarks != null}
+					name="remarks"
+					labelText="Remarks"
+					placeholder="Remarks"
+				/>
+				{#if $errors.nid}
+					<p class=" t-text-red-500 ">{$errors.remarks}</p>
 				{/if}
 				<TextInput
 					bind:value={$data.email}
@@ -291,7 +305,7 @@
 					{shouldFilterItem}
 				/>
 			</div>
-			<p>{JSON.stringify($data)}</p>
+			<!-- <p>{JSON.stringify($data)}</p> -->
 			<!-- <p>{JSON.stringify($errors)}</p> -->
 		</form>
 	</div>

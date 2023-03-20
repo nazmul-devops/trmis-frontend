@@ -4,29 +4,25 @@
 	import * as yup from 'yup';
 	import { batchParticipantsList } from '$lib/store/batch-participants';
 	import { trainees } from '$lib/store/trainee';
-	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
+	import { Modal, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+
+	function shouldFilterItem(item, value) {
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
+
 	export let open = true;
 	export let participant = {
 		trainee: null
 	};
 
-	$: {
-		setFields('trainee', participant.trainee);
-	}
-
 	const schema = yup.object({
-		trainee: yup.number().required().typeError("Participant is required")
+		trainee: yup.number().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
-		transform: (values: any) => {
-			return {
-				...values,
-				trainee: parseInt(values.trainee)
-			};
-		},
+	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -40,7 +36,11 @@
 		}
 	});
 
-	$: traineesList = $trainees.data.map((item) =>({...item, id: item.phone, text:item.name}))
+	$: traineesList = $trainees.data.map((item) => ({ ...item, text: item.name }));
+
+	$: {
+		console.log(traineesList);
+	}
 
 	onMount(async () => {
 		trainees.getTrainees();
@@ -56,14 +56,14 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<ComboBox 
+		<ComboBox
+			bind:selectedId={$data.trainee}
 			invalid={$errors.trainee != null}
 			invalidText={$errors.trainee}
-			name="trainee"
 			titleText="Participant"
 			placeholder="Choose Participant"
-			bind:selectedId={$data.trainee}
 			items={traineesList}
+			{shouldFilterItem}
 		/>
 		<!-- <Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
 			<SelectItem text="choose Participant" value="" />
@@ -72,7 +72,7 @@
 			{/each}
 		</Select> -->
 
-		<p>{JSON.stringify($errors)}</p>
+		<!-- <p>{JSON.stringify($errors)}</p> -->
 		<p>{JSON.stringify($data)}</p>
 	</form>
 </Modal>

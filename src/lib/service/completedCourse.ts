@@ -2,16 +2,19 @@ import { http } from '$lib/service/auth';
 
 export async function getCompletedCourses(traineeId) {
 	try {
-		const { data } = await http.get(`trainee/${traineeId}/training-course/`);
-
+		const {
+			data: { data, trainee }
+		} = await http.get(`trainee/${traineeId}/training-course/`);
 		return {
 			status: 200,
-			data
+			data,
+			trainee: { ...trainee }
 		};
 	} catch (err) {
 		return Promise.resolve({
 			status: 400,
-			data: []
+			data: [],
+			trainee: { name: '' }
 		});
 	}
 }

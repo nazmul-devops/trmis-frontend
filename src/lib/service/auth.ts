@@ -18,7 +18,11 @@ http.interceptors.response.use(
 					http.defaults.headers.common = {
 						Authorization: `Bearer ${access}`
 					};
-					return http(originalConfig);
+					const config = {
+						...originalConfig,
+						Authorization: `Bearer ${access}`
+					};
+					return http(config);
 				} catch (_error) {
 					if (_error.response && _error.response.data) {
 						return Promise.reject(_error.response.data);

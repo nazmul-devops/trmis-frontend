@@ -14,8 +14,10 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { deleteBatchSession, getBatchSessions } from '$lib/service/batch-sessions-detail';
 	import { page } from '$app/stores';
+	import { Roadmap } from 'carbon-icons-svelte';
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'session_day', value: 'Day' },
 		{ key: 'topic_name', value: 'Topic' },
@@ -67,7 +69,7 @@
 				>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
@@ -80,10 +82,12 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:sessionDetail on:update-list={getBatchSession} />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'session-detail'}/>

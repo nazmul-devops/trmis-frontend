@@ -17,6 +17,7 @@
 	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'duration', value: 'Duration' },
 		{ key: 'initial_cost', value: 'Initial Cost' },
@@ -30,7 +31,6 @@
 	];
 
 	let open = false;
-	let loading = false;
 	let deleteModal = false;
 	let batch;
 
@@ -70,7 +70,7 @@
 				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Batch</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem
@@ -95,10 +95,12 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+				{:else if cell.key === 'rowNumber'}
+					{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:batch />
+<FormModal bind:open bind:batch  />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

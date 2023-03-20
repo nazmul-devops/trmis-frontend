@@ -2,7 +2,7 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-    export let Class = "";
+	export let Class = '';
 	let satisfactionData2021 = [
 		{ framework: 'Jan', score: 96 },
 		{ framework: 'Feb', score: 91 },
@@ -65,7 +65,7 @@
 							},
 							title: {
 								display: true,
-								text: 'Satisfaction (%)',
+								text: 'Training Status (%)',
 								color: 'hsl(43 100% 52% )',
 								font: { size: 24, family: 'Merriweather' }
 							}
@@ -77,8 +77,8 @@
 	});
 </script>
 
-<main class= {Class}>
-	<section >
-		<canvas  bind:this={barChartElement} />
+<main class={Class}>
+	<section>
+		<canvas bind:this={barChartElement} />
 	</section>
 </main>

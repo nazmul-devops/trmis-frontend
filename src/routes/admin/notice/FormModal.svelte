@@ -20,17 +20,17 @@
 
 	$: {
 		if (notice.id != null) {
-			setFields('title', notice.title);
-			setFields('description', notice.description);
-			setFields('expiration_date', notice.expiration_date);
-			setFields('show_in_home_page', notice.show_in_home_page);
+			setData('title', notice.title);
+			setData('description', notice.description);
+			setData('expiration_date', notice.expiration_date);
+			setData('show_in_home_page', notice.show_in_home_page);
 		} else {
 			reset();
 		}
 	}
 
 	$: {
-		setFields('files', files);
+		setData('files', files);
 	}
 
 	const schema = yup.object({
@@ -41,7 +41,7 @@
 		show_in_home_page: yup.boolean()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		// transform: (values: any) => {
 		// 	return {
 		// 		...values,
@@ -77,8 +77,18 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="title" labelText="Title" placeholder="Enter Title..." />
-		<TextInput name="description" labelText="Description" placeholder="Enter Description..." />
+		<TextInput
+			bind:value={$data.title}
+			name="title"
+			labelText="Title"
+			placeholder="Enter Title..."
+		/>
+		<TextInput
+			bind:value={$data.description}
+			name="description"
+			labelText="Description"
+			placeholder="Enter Description..."
+		/>
 		<FileUploader
 			bind:this={fileUploader}
 			labelTitle="Upload files"
@@ -93,10 +103,11 @@
 				class=" t-border t-p-3 t-my-2 "
 				type="datetime-local"
 				id="birthdaytime"
+				bind:value={$data.expiration_date}
 				name="expiration_date"
 			/>
 		</div>
 		<Checkbox name="show_in_home_page" labelText=" Show Public Website ?" />
 	</form>
-	<!-- {JSON.stringify($errors)} -->
+	{JSON.stringify($data)}
 </Modal>

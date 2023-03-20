@@ -26,6 +26,17 @@
 		return fileType;
 	}
 	const handledropdownClick = () => (dropdown = !dropdown);
+	
+	let searchTerm = "";
+	let filteredDownloads = [];
+
+
+	const searchDownload = () =>{
+		return filteredDownloads = courses.filter(course =>{
+			let courseTitle = course.title.toLowerCase();
+			return courseTitle.includes(searchTerm.toLowerCase());
+		}) 
+	}
 
 	onMount(() => {
 		getCourses();
@@ -42,6 +53,18 @@
     sit"
 	/>
 	<div class="md:t-container sm:t-px-4  md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-32">
+		<div class="t-w-full t-mb-3">
+			<input 
+				class="t-px-3 t-py-2" 
+				type="text" 
+				name="searchField" 
+				id="searchField" 
+				placeholder="Enter Search Term"
+				autocomplete="off"
+				bind:value={searchTerm}
+				on:input={searchDownload}
+			/>
+		</div>
 		<div class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 lg:t-gap-4 sm:t-gap-0 ">
 			<div class="sm:t-col-span-1">
 				<div
@@ -53,6 +76,23 @@
 						<ul
 							class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}
 						>
+
+						{#if searchTerm && filteredDownloads.length === 0}
+							<p><strong>No Result</strong>try again!</p>
+						{:else if filteredDownloads.length > 0}
+							{#each filteredDownloads as filteredDownload}
+								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
+									<li
+										on:click={() => getCourseMaterials(filteredDownload.id)}
+										on:keypress={() => getCourseMaterials(filteredDownload.id)}
+										class="t-py-5 t-px-4 t-cursor-pointer "
+									>
+										{filteredDownload.title}
+									</li>
+									<hr />
+								</div>
+							{/each}
+						{:else}
 							{#each courses as course}
 								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
 									<li
@@ -65,6 +105,19 @@
 									<hr />
 								</div>
 							{/each}
+						{/if}
+							<!-- {#each courses as course}
+								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
+									<li
+										on:click={() => getCourseMaterials(course.id)}
+										on:keypress={() => getCourseMaterials(course.id)}
+										class="t-py-5 t-px-4 t-cursor-pointer "
+									>
+										{course.title}
+									</li>
+									<hr />
+								</div>
+							{/each} -->
 						</ul>
 					</div>
 				</div>

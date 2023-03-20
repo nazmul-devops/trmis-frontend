@@ -22,6 +22,7 @@
 	import { onMount } from 'svelte';
 	import { setupAuthHeader } from '$lib/service/auth';
 	import ChangePassModal from '$lib/ChangePassModal.svelte';
+	import { permissions, permissionsByGroups } from '$lib/store/permission';
 
 	let isOpen = false;
 	let changePassModal = false;
@@ -42,6 +43,7 @@
 
 	onMount(() => {
 		setAccessToken();
+		permissionsByGroups.getPermissionsByUser();
 	});
 
 	let isSideNavOpen = false;
@@ -67,6 +69,7 @@
 						<div
 							class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5"
 							on:click={logout}
+							on:keypress={logout}
 						>
 							Log Out
 						</div>
@@ -82,44 +85,108 @@
 				<a href="/admin">DashBoard</a>
 			</SideNavLink>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/trainee">Participants</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/trainer">Resource Person / Facilitator</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/batch">Batch</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-center">Training Venue</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-calendar">Training Calendar</a>
-			</SideNavLink>
-			<SideNavDivider />
 			<SideNavMenu text="Training">
 				<SideNavLink>
-					<a href="/admin/training-course">Training</a>
+					<a href="/admin/training-course">Training Course</a>
 				</SideNavLink>
+				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/training-course/1/course-category">Training Category</a>
+					<a href="/admin/training-course/1/course-topic">Training Topic</a>
 				</SideNavLink>
+				<SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/training-course/1/course-material">Training Material</a>
 				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-course/1/course-category">Training Category</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainee">Participants</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainee-request">Participants Approval List</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainer">Resource Person</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-center">Training Venue</a>
+				</SideNavLink>
+				<SideNavDivider />
 				<!-- <SideNavLink>
 					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
 				</SideNavLink> -->
 				<SideNavLink>
-					<a href="/admin/training-course/1/course-topic">Training Topic</a>
-				</SideNavLink>
-				<SideNavLink>
 					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-calendar">Training Calendar</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/batch">Batch</a>
+				</SideNavLink>
+			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavMenu text="Event">
+				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
+					<SideNavLink>
+						<a href="/admin/schedule-events">Event Schedule</a>
+					</SideNavLink>
+				<!-- {/if} -->
+				<SideNavDivider />
+				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_event').length > 0} -->
+					<SideNavLink>
+						<a href="/admin/event">Event List</a>
+					</SideNavLink>
+				<!-- {/if} -->
+			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavMenu text="Reports">
+				<SideNavLink>
+					<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/designation-wise-trainee">Designation wise Trainee</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/training-schedule">Training Schedule</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/training-name-list">Trainee Name List</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/trainer-report">Trainer Report</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/exam-test-evaluation">Exam Test Evaluation</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/cost-center">Cost Center</a>
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
@@ -130,84 +197,41 @@
 				<SideNavLink>
 					<a href="/admin/settings/designations">Designations</a>
 				</SideNavLink>
+				<SideNavDivider />
 				<!-- <SideNavLink>
 					<a href="/admin/settings/grades">Grades</a>
 				</SideNavLink> -->
 				<SideNavLink>
 					<a href="/admin/settings/organizations">Organization</a>
 				</SideNavLink>
+				<SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/settings/source-of-funds">Source Of Fund</a>
 				</SideNavLink>
+				<SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/settings/training-coordinators">Training Coordinator</a>
 				</SideNavLink>
-			</SideNavMenu>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/event">Event</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/schedule-events">Event Schedule</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<!-- <SideNavLink>
-				<a href="/admin/event-types">Event Type</a>
-			</SideNavLink>
-			<SideNavDivider /> -->
-			<SideNavLink>
-				<a href="/admin/notice">Notice</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/gallery">Gallery</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavMenu text="Reports">
+				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
+					<a href="/admin/notice">Notice</a>
 				</SideNavLink>
+				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/reports/designation-wise-trainee">Designation wise Trainee</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/training-schedule">Training Schedule</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/training-name-list">Trainee Name List</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/trainer-report">Trainer Report</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/exam-test-evaluation">Exam Test Evaluation</a>
-				</SideNavLink>
-				<SideNavLink>
-					<a href="/admin/reports/cost-center">Cost Center</a>
+					<a href="/admin/gallery">Gallery</a>
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/group">Groups</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/users">Users</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/trainee-request">Trainee Request</a>
-			</SideNavLink>
+
+			<SideNavMenu text="MIS Settings">
+				<SideNavLink>
+					<a href="/admin/users">Users</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/group">Groups</a>
+				</SideNavLink>
+			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavLink>
 				<a href="/admin/map">Map</a>

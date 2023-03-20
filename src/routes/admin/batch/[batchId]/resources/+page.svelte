@@ -16,6 +16,7 @@
 	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'trainer_name', value: 'Participant' },
 		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'action', value: 'Action' }
@@ -60,11 +61,11 @@
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
-					>Add Participant</Button
+					>Add Resource</Button
 				>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem
@@ -76,6 +77,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex  + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

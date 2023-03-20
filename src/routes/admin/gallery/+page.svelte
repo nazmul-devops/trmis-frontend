@@ -21,6 +21,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'title', value: 'Tilte' },
 		{ key: 'description', value: 'Description' },
 		{ key: 'images', value: 'Image Url' },
@@ -37,6 +38,7 @@
 	function openModalForm(row) {
 		open = true;
 		image = row;
+		// console.log(image);
 	}
 
 	async function doDelete() {
@@ -65,7 +67,7 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Gallery</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -83,6 +85,8 @@
 				{#each cell.value as item}
 					<li>{item.file}</li>
 				{/each}
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

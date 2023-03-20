@@ -22,6 +22,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'title', value: 'Tilte' },
 		{ key: 'description', value: 'Description' },
 		{ key: 'files', value: 'Notice File' },
@@ -67,7 +68,7 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Notice</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -83,6 +84,8 @@
 				</OverflowMenu>
 			{:else if cell.key === 'show_in_home_page'}
 				<Toggle toggled={cell.value} labelA="Disabled" labelB="Active" disabled />
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

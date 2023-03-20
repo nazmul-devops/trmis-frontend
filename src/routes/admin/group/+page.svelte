@@ -17,9 +17,10 @@
 
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#'},
 		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'permissions', value: 'Permission' },
+		// { key: 'permissions', value: 'Permission' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -42,6 +43,10 @@
 	onMount(async () => {
 		groupsList.getGroups();
 	});
+
+	$: {
+		console.log($groupsList.data);
+	}
 </script>
 
 {#if $groupsList.loading}
@@ -51,10 +56,10 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Group</Button>
+				<Button on:click={() => openModalForm({})}>Add Group</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -74,6 +79,8 @@
 						<li>=> {item.permission_name}</li>
 					</ul>
 				{/each}
+			{:else if cell.key === 'rowNumber'}
+					{ rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

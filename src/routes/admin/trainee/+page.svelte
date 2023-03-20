@@ -22,6 +22,7 @@
 	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'designation_name', value: 'Designation' },
 		{ key: 'organization_name', value: 'Organization' },
@@ -54,14 +55,14 @@
 {#if $trainees.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Participants" description="" {headers} rows={$trainees.data}>
+	<DataTable size="short" title="Participants" description="" {headers} rows={$trainees.data} zebra>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Participants</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem
@@ -82,6 +83,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
@@ -89,3 +92,4 @@
 
 <FormModal bind:open bind:trainee />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'participants'} />
+

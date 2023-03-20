@@ -1,6 +1,6 @@
 <script>
 	import { TextInput, ButtonSet } from 'carbon-components-svelte';
-	import Login from "carbon-icons-svelte/lib/Login.svelte";
+	import Login from 'carbon-icons-svelte/lib/Login.svelte';
 	import { PasswordInput } from 'carbon-components-svelte';
 	import { Button } from 'carbon-components-svelte';
 	import * as yup from 'yup';
@@ -62,9 +62,19 @@
 		{#if message}
 			<p class=" t-text-red-500 ">{message}</p>
 		{/if}
-		<div class=" t-flex ">
+		<div class=" t-flex t-mb-4 ">
 			<ButtonSet stacked>
 				<Button type="submit" class="t-bg-[#22c55e]" icon={Login}>Log in</Button>
+			</ButtonSet>
+		</div>
+		<div class=" w-full ">
+			<ButtonSet stacked>
+				<Button
+					type="Button"
+					on:click={() => goto('/trainee-registration')}
+					class="t-bg-[#22c55e] w-full"
+					icon={Login}>Participants Regirtration Form</Button
+				>
 			</ButtonSet>
 		</div>
 	</form>

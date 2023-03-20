@@ -80,6 +80,6 @@
 			<p class="t-text-red-500">{$errors.serial_no}</p>
 		{/if}
 		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
-		{JSON.stringify($touched)}
+		<!-- {JSON.stringify($touched)} -->
 	</form>
 </Modal>

@@ -67,5 +67,5 @@
 		items={$permissions.data.map((item) => ({ ...item, id: item.value, text: item.title }))}
 		on:select={(e) => setData('permissions', e.detail.selectedIds)}
 	/>
-	{JSON.stringify($data)}
+	<!-- {JSON.stringify($data)} -->
 </Modal>

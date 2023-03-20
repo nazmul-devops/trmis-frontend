@@ -14,13 +14,13 @@
 
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'designation', value: 'Designation' },
-		{ key: 'district', value: 'District' },
+		{ key: 'designation_name', value: 'Designation' },
+		{ key: 'district_name', value: 'District' },
 		{ key: 'email', value: 'Email' },
-		{ key: 'gender', value: 'Gender' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'status', value: 'Status' },
+		{ key: 'organization_name', value: 'Organization' },
+		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -42,7 +42,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Pendin Trainee Request"
+		title="Pending Trainee Request"
 		description=""
 		{headers}
 		rows={$traineeRequests.data}
@@ -52,11 +52,13 @@
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

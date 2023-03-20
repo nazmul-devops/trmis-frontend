@@ -19,7 +19,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		// { key: 'id', value: 'ID' },
+		{ key: 'rowNumber', value: '#' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'description', value: 'Description' },
 		{ key: 'action', value: 'Action' }
@@ -61,7 +61,7 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Category</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
@@ -74,10 +74,12 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:courseCategory />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"training category"} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'training category'} />

@@ -20,6 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
+		{ key: 'rowNumber', value: '#'},
 		{ key: 'name', value: 'Name' },
 		{ key: 'division_name', value: 'Division' },
 		{ key: 'district_name', value: 'District' },
@@ -65,7 +66,7 @@
 				>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
 					<!-- <OverflowMenuItem text="View" /> -->
@@ -79,6 +80,8 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+				{:else if cell.key === 'rowNumber'}
+					{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>

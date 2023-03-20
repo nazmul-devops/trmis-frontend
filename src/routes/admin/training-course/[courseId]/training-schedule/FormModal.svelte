@@ -163,6 +163,6 @@
 
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
-	{JSON.stringify($data)}
-	{JSON.stringify($errors)}
+	<!-- {JSON.stringify($data)} -->
+	<!-- {JSON.stringify($errors)} -->
 </Modal>
