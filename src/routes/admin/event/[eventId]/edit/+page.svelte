@@ -173,8 +173,8 @@
 			placeholder="Select Status"
 			items={[
 				{ id: 1, text: 'Pending' },
-				{ id: 2, text: 'Complete' },
-				{ id: 3, text: 'In progress' }
+				{ id: 2, text: 'In progress' },
+				{ id: 3, text: 'Completed' }
 			]}
 			{shouldFilterItem}
 		/>
