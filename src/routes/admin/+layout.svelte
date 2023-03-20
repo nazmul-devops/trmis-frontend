@@ -82,7 +82,7 @@
 	<SideNav bind:isOpen={isSideNavOpen}>
 		<SideNavItems>
 			<SideNavLink>
-				<a href="/admin">DashBoard</a>
+				<a href="/admin">Dashboard</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavMenu text="Training">
@@ -136,15 +136,15 @@
 			<SideNavDivider />
 			<SideNavMenu text="Event">
 				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
-					<SideNavLink>
-						<a href="/admin/schedule-events">Event Schedule</a>
-					</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/schedule-events">Event Schedule</a>
+				</SideNavLink>
 				<!-- {/if} -->
 				<SideNavDivider />
 				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_event').length > 0} -->
-					<SideNavLink>
-						<a href="/admin/event">Event List</a>
-					</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/event">Event List</a>
+				</SideNavLink>
 				<!-- {/if} -->
 			</SideNavMenu>
 			<SideNavDivider />

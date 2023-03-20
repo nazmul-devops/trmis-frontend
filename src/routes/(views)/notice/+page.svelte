@@ -18,7 +18,7 @@
 	<div>
 		<PageTitle
 			Title="Notice"
-			desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis at natus quibusdam earum blanditiis aliquam!"
+			desc="Checkout all the notices..."
 		/>
 	</div>
 	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24">

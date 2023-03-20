@@ -2,75 +2,57 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-	
-    
-    export let Class = '';
-    const plugin = {
-            id: 'customCanvasBackgroundColor',
-            beforeDraw: (chart, args, options) => {
-                const {ctx} = chart;
-                ctx.save();
-                ctx.globalCompositeOperation = 'destination-over';
-                ctx.fillStyle = options.color || '#fff';
-                ctx.fillRect(0, 0, chart.width, chart.height);
-                ctx.restore();
-            }
-        };
 
-    let labels = ['01', '02', '03','04','05', '06']
+	export let Class = '';
+	const plugin = {
+		id: 'customCanvasBackgroundColor',
+		beforeDraw: (chart, args, options) => {
+			const { ctx } = chart;
+			ctx.save();
+			ctx.globalCompositeOperation = 'destination-over';
+			ctx.fillStyle = options.color || '#fff';
+			ctx.fillRect(0, 0, chart.width, chart.height);
+			ctx.restore();
+		}
+	};
+
+	let labels = ['Plan Batch For 2021', 'Completed Batch In 2021'];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: labels.map(label => label),
+		labels: labels.map((label) => label),
 		datasets: [
-				{
-                    label: 'Planned Schedule',
-                    data: [1, 4, 6, 7, 6, 8, 9],
-                    borderColor:[
-                        '#64D9F9'
-                    ],
-                },
-                {
-                    label: 'Planned Schedule',
-                    data: [1, 2, 3, 4, 5, 6],
-                    borderColor:[
-                        '#F89A9A'
-                    ],
-                }
+			{
+				label: '',
+				data: [800, 700, 550, 450, 350, 300],
+				backgroundColor: ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9']
+			}
 		]
 	};
 	onMount(() => {
 		if (browser) {
 			new Chart(barChartElement, {
-				type: 'line',
+				type: 'bar',
 				data: chartData,
 				options: {
 					plugins: {
 						legend: {
-							display: true,
-                            position: 'bottom',
-							labels : {
-								usePointStyle: false,
-      							boxWidth: 50,
-								padding: 25
-							}
-						},
+							display: false
+						}
 					},
 					scales: {
 						x: {
-                            display: true,
 							grid: {
-								color: '#fff',
+								color: '#fff'
 								// tickColor: 'red'
 							},
 							// ticks: { color: 'hsl(43 100% 52% )' }
-                            title: {
-                                display: true,
-                                text: 'Completed Batch',
+							title: {
+								display: true,
+								text: '',
 								color: '#808083',
-								font: { size: 16, }
-
-                            }
+								font: { size: 16 }
+							}
 						},
 						y: {
 							beginAtZero: false,
@@ -80,14 +62,14 @@
 							},
 							title: {
 								display: true,
-								text: 'Planned Schedule',
+								text: 'No of batch',
 								// color: '#808083',
-								font: { size: 16, }
+								font: { size: 16 }
 							}
 						}
 					}
 				},
-                plugins:[plugin]
+				plugins: [plugin]
 			});
 		}
 	});
@@ -95,9 +77,9 @@
 
 <main class={Class}>
 	<section class="t-bg-white t-h-[50vh] t-flex t-justify-center t-items-center">
-		<canvas class="t-w-full " bind:this={barChartElement} />
+		<canvas class="t-w-full" bind:this={barChartElement} />
 	</section>
-    <p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">
-        Planned Vs Completed Batch
-    </p>
+	<p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">
+		Planned Vs Completed Batch
+	</p>
 </main>

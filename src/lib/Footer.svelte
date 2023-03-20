@@ -7,14 +7,14 @@
 				<img src="/assets/usaid.png" alt="usaid" class="t-w-64 t-h-fit" />
 			</div>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
-				<img src="/assets/jsi.png" alt="ntp" class="t-w-32 t-h-fit" />
+				<img src="/assets/ntp.png" alt="ntp" class="t-w-32 t-h-fit" />
 			</div>
 
 			<div class="t-grid lg:t-col-span-1 md:t-col-span-2 t-items-center t-justify-center">
 				<p class="t-text-4xl  t-text-amber-200 t-font-medium sm:t-py-3">Sponsored by</p>
 			</div>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
-				<img src="/assets/usaid.png" alt="usaid" class="t-w-64 t-h-fit" />
+				<img src="/assets/ntp.png" alt="usaid" class="t-w-32 t-h-fit" />
 			</div>
 			<div class="t-grid t-col-span-1 t-items-center t-justify-center">
 				<img src="/assets/jsi.png" alt="ntp" class="t-w-32 t-h-fit" />

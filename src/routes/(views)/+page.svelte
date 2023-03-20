@@ -50,7 +50,7 @@
 
 	<div class=" t-p-10 t-mb-5 ">
 		<h3 class=" t-text-[#44835C] t-font-bold t-text-center t-mb-11">
-			Figures to Highlight Our Development
+			Figures to Highlight Our Progress
 		</h3>
 		<CourseWiseChart />
 	</div>
@@ -62,6 +62,38 @@
 		<div>
 			<GenderWiseChart />
 		</div>
+	</div>
+
+	<div class="t-grid xl:t-grid-cols-3 md:t-grid-cols-2 t-gap-4 t-my-11 ">
+		{#each homecard as card}
+			<div
+				class="t-bg-gradient-to-b t-from-[#F94646] t-to-[#44835C] t-rounded-md   t-col-span-1 t-w-full"
+			>
+				<div class="t-group  t-duration-200 t-delay-75 t-bg-white t-rounded-md t-py-10 t-px-2">
+					<div class="t-flex t-justify-between t-items-end">
+						<div>
+							<p
+								class="t-text-3xl t-font-bold t-text-[#F94646] group-hover:t-text-gray-700 t-leading-6"
+							>
+								<i class={card.icon} />
+							</p>
+							<p class="t-text-2xl t-font-bold t-text-[#44835C] group-hover:t-text-gray-700 ">
+								{card.name}
+							</p>
+						</div>
+						<div
+							class="t-bg-gradient-to-r t-from-rose-100/[.05] t-to-teal-100/[.5]  t-p-2 t-rounded-md"
+						>
+							<p
+								class="t-text-4xl t-font-bold t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] group-hover:t-text-[#F94646]"
+							>
+								{card.count}
+							</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		{/each}
 	</div>
 
 	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24">
@@ -95,38 +127,5 @@
 				</a>
 			{/each}
 		</div>
-	</div>
-	<div class="t-grid xl:t-grid-cols-3 md:t-grid-cols-2 t-gap-4 t-mb-11 ">
-		{#each homecard as card}
-			<div
-				class="t-bg-gradient-to-b t-from-[#F94646] t-to-[#44835C] t-rounded-md t-pl-2 t-shadow-lg  t-col-span-1 t-w-full"
-			>
-				<div
-					class="t-group t-shadow-lg hover:t-shadow-2xl t-duration-200 t-delay-75 t-bg-white t-rounded-md t-py-10 t-px-2"
-				>
-					<div class="t-flex t-justify-between t-items-end">
-						<div>
-							<p
-								class="t-text-3xl t-font-bold t-text-[#F94646] group-hover:t-text-gray-700 t-leading-6"
-							>
-								<i class={card.icon} />
-							</p>
-							<p class="t-text-2xl t-font-bold t-text-[#44835C] group-hover:t-text-gray-700 ">
-								{card.name}
-							</p>
-						</div>
-						<div
-							class="t-bg-gradient-to-r t-from-rose-100/[.05] t-to-teal-100/[.5]  t-p-2 t-rounded-md"
-						>
-							<p
-								class="t-text-4xl t-font-bold t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] group-hover:t-text-[#F94646]"
-							>
-								{card.count}
-							</p>
-						</div>
-					</div>
-				</div>
-			</div>
-		{/each}
 	</div>
 </div>

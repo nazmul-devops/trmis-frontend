@@ -6,10 +6,9 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-    import { httpWeb } from '$lib/service/auth'
+	import { httpWeb } from '$lib/service/auth';
 
-
-    let trainingData = [];
+	let trainingData = [];
 
 	async function getCourse() {
 		let { data } = await httpWeb.get('training-course/');
@@ -60,7 +59,13 @@
 		}
 	};
 
-	let labels = ['Course', 'Course', 'Course', 'Course', 'Course'];
+	let labels = [
+		'Lab Training',
+		'System Training',
+		'Medicine Training',
+		'Diagnosis Training',
+		'Screening Training'
+	];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
@@ -74,7 +79,7 @@
 		]
 	};
 
-    $: courseList = trainingData.map(item => ({...item, text: item.title}));
+	$: courseList = trainingData.map((item) => ({ ...item, text: item.title }));
 
 	onMount(() => {
 		if (browser) {
@@ -96,7 +101,7 @@
 							// ticks: { color: 'hsl(43 100% 52% )' }
 							title: {
 								display: true,
-								text: 'Training Course Name',
+								text: 'Training Category',
 								color: '#808083',
 								font: { size: 16 }
 							}
@@ -118,29 +123,29 @@
 				},
 				plugins: [plugin]
 			});
-		};
-        
-        getCourse();
+		}
+
+		getCourse();
 	});
 </script>
 
 <main class={Class}>
 	<section class="t-bg-white  t-py-4">
 		<div class="t-grid t-grid-cols-3 t-gap-4">
-            <div class="t-col-start-3 t-px-10">
-                <form use:form>
-                    <ComboBox
-                        bind:selectedId={$data.distance}
-                        placeholder="Choose Specific course"
-                        items={courseList}
-                        {shouldFilterItem}
-                    />
-                </form>
-            </div>
+			<div class="t-col-start-3 t-px-10">
+				<form use:form>
+					<ComboBox
+						bind:selectedId={$data.distance}
+						placeholder="Choose Specific Training Category"
+						items={courseList}
+						{shouldFilterItem}
+					/>
+				</form>
+			</div>
 		</div>
 		<canvas class="t-w-full " bind:this={barChartElement} />
 	</section>
 	<p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">
-		Number of Participants for Different Training
+		Number of Participants for Different Training Categories
 	</p>
 </main>
