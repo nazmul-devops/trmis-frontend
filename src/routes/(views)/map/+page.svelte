@@ -73,7 +73,7 @@
 	});
 </script>
 
-<div>
+<div class="t-container">
 	<div class="t-grid t-grid-cols-4 t-gap-4 t-mb-4 ">
 		<!-- <ComboBox
 			invalid={$errors.organization != null}

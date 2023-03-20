@@ -36,6 +36,10 @@
 			link: '/downloads'
 		},
 		{
+			label: 'Map',
+			link: '/map'
+		},
+		{
 			label: 'Gallery',
 			link: '/gallery'
 		},
