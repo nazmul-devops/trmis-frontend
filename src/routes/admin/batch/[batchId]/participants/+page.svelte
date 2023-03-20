@@ -35,7 +35,7 @@
 	async function doDelete() {
 		await batchParticipantsList.deleteBatchParticipant(
 			parseInt($page.params.batchId),
-			participant.id
+			participant.trainee
 		);
 		deleteModal = false;
 		await batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId));

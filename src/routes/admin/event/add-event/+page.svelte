@@ -176,17 +176,11 @@
 			placeholder="Select Status"
 			items={[
 				{ id: 1, text: 'Pending' },
-				{ id: 2, text: 'Complete' },
-				{ id: 3, text: 'In progress' }
+				{ id: 2, text: 'In progress' },
+				{ id: 3, text: 'Completed' }
 			]}
 			{shouldFilterItem}
 		/>
-		<!-- <Select invalid={$errors.status != null} name="status" labelText="Status">
-			<SelectItem text="Choose Status" value="" />
-			<SelectItem text="Pending" value="1" />
-			<SelectItem text="Complete" value="2" />
-			<SelectItem text="In progress" value="3" />
-		</Select> -->
 
 		<ComboBox
 			invalid={$errors.type != null}
@@ -202,13 +196,6 @@
 			{shouldFilterItem}
 		/>
 
-		<!-- <Select invalid={$errors.type != null} name="type" labelText="Type">
-			<SelectItem text="Choose Type" value="" />
-			<SelectItem text="Meeting" value="1" />
-			<SelectItem text="Workshop" value="2" />
-			<SelectItem text="Orientation" value="3" />
-			<SelectItem text="Sensitization" value="4" />
-		</Select> -->
 		<ComboBox
 			invalid={$errors.organization != null}
 			bind:selectedId={$data.organization}
