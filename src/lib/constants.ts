@@ -22,3 +22,12 @@ export const galleryCategory = [
 	{ id: 4, text: 'Seminar' },
 	{ id: 5, text: 'Workshop' }
 ];
+
+
+export const timeIntervalDistance = [
+	{ id: 1, text: 'Jan 2020 - Feb 2020'},
+	{ id: 2, text: 'Mar 2020 - April 2020'},
+	{ id: 3, text: 'May 2020 - June 2020'},
+	{ id: 4, text: 'July 2020 - Aug 2020'},
+	{ id: 5, text: 'Sep 2020 - Oct 2020'},
+];

@@ -4,36 +4,34 @@
 	import { onMount } from 'svelte';
 	export let Class = '';
 	let satisfactionData2021 = [
-		{ framework: 'Jan', score: 96 },
-		{ framework: 'Feb', score: 91 },
-		{ framework: 'March', score: 91 },
-		{ framework: 'April', score: 91 },
-		{ framework: 'May', score: 91 },
-		{ framework: 'June', score: 88 },
-		{ framework: 'July', score: 85 },
-		{ framework: 'Aug', score: 82 },
-		{ framework: 'Sep', score: 82 },
-		{ framework: 'Oct', score: 76 },
-		{ framework: 'Nov', score: 67 },
-		{ framework: 'Dec', score: 85 }
+		{ framework: 'A', score: 96 },
+		{ framework: 'B', score: 91 },
+		{ framework: 'C', score: 91 },
+		{ framework: 'D', score: 91 }
 	];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
 		labels: satisfactionData2021.map(({ framework }) => framework),
 		datasets: [
-			{
-				label: 'Male (%)',
-				data: satisfactionData2021.map(({ score }) => score),
-				borderRadius: 10,
-				borderWidth: 2
-			},
-			{
-				label: 'Female (%)',
-				data: satisfactionData2021.map(({ score }) => score - 5),
-				borderRadius: 10,
-				borderWidth: 2
-			}
+				{
+					label: 'Male (%)',
+					data: satisfactionData2021.map(({ score }) => score),
+					borderRadius: 10,
+					borderWidth: 2
+				},
+				{
+					label: 'Female (%)',
+					data: satisfactionData2021.map(({ score }) => score - 5),
+					borderRadius: 10,
+					borderWidth: 2
+				},
+				{
+					label: 'Other (%)',
+					data: satisfactionData2021.map(({ score }) => score - 5),
+					borderRadius: 10,
+					borderWidth: 2
+				}
 		]
 	};
 	onMount(() => {
