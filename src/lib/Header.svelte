@@ -73,8 +73,7 @@
 						class=" t-flex
 				 t-items-center  "
 					>
-						<img src="/assets/bdgovt.png" alt="" class="t-w-12 t-py-4" />
-						<h1 class="t-text-3xl t-px-2 t-font-bold t-text-[#22c55e]">TrMIS</h1>
+						<img src="/assets/logo2.jpg" alt="" class=" t-py-4" />
 					</div>
 				</a>
 			</div>

@@ -8,14 +8,13 @@
 <div>
 	<PageTitle
 		Title="Contact Us"
-		desc="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-					laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-					architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-					sit  "
+		desc="If you have any questions or concerns, please feel free to contact us using the information provided below."
 	/>
 
 	<div class=" t-py-32 t-overflow-hidden t-z-10 ">
-		<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-grid lg:t-grid-cols-4 t-items-center lg:t-flex ">
+		<div
+			class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-grid lg:t-grid-cols-4 t-items-center lg:t-flex "
+		>
 			<div class=" t-mb-12 lg:t-mb-0 t-col-span-2">
 				<h2
 					class="
@@ -32,9 +31,8 @@
 					GET IN TOUCH WITH US
 				</h2>
 				<p class="t-text-base t-text-body-color t-leading-relaxed t-mb-9">
-					Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eius tempor
-					incididunt ut labore et dolore magna aliqua. Ut enim adiqua minim veniam quis
-					nostrud exercitation ullamco
+					If you would like to get in touch, please feel free to send us a message via our contact
+					form
 				</p>
 
 				<ContactInfo

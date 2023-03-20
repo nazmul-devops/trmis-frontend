@@ -7,7 +7,6 @@
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { organizations } from '$lib/store/organization';
 	import { onMount } from 'svelte';
-	
 
 	let title = '2-Day training on EQA Lab';
 	let batchesByYear = [];
@@ -79,11 +78,11 @@
 	}
 
 	const YEARINTERVAL = [
-		{ id: 1, text: '2020'},
-		{ id: 2, text: '2021'},
-		{ id: 3, text: '2023'},
-		{ id: 4, text: '2024'},
-		{ id: 5, text: '2025'},
+		{ id: 1, text: '2020' },
+		{ id: 2, text: '2021' },
+		{ id: 3, text: '2023' },
+		{ id: 4, text: '2024' },
+		{ id: 5, text: '2025' }
 	];
 
 	const batches = [
@@ -111,8 +110,8 @@
 			id: 5,
 			name: 'batch 5',
 			trainees: 50
-		},
-	]
+		}
+	];
 
 	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 
@@ -123,7 +122,10 @@
 
 <div class="t-mb-12">
 	<div>
-		<PageTitle Title={title} desc="" />
+		<PageTitle
+			Title={title}
+			desc="The 2-day training EQA Lab is a program designed to provide hands-on training for participants in external quality assurance (EQA) testing methods. The training aims to enhance their knowledge and skills in performing EQA testing and interpreting results."
+		/>
 	</div>
 	<div class="t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-mt-10">
 		<div class="t-grid t-grid-cols-1">
@@ -135,11 +137,7 @@
 						{shouldFilterItem}
 					/>
 
-					<ComboBox
-						placeholder="Select Year"
-						items={YEARINTERVAL}
-						{shouldFilterItem}
-					/>
+					<ComboBox placeholder="Select Year" items={YEARINTERVAL} {shouldFilterItem} />
 					<ComboBox
 						bind:selectedId={selectedDivisionId}
 						placeholder="Select Division"
