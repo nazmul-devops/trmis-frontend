@@ -47,23 +47,24 @@
 <div class="sm:t-relative md:t-block">
 	<PageTitle
 		Title="Downloads"
-		desc="Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-    laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-    architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas
-    sit"
+		desc="To download the content, simply click on the download button after selecting the training course from the sidebar."
 	/>
 	<div class="md:t-container sm:t-px-4  md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-32">
-		<div class="t-w-full t-mb-3">
-			<input 
-				class="t-px-3 t-py-2" 
-				type="text" 
-				name="searchField" 
-				id="searchField" 
-				placeholder="Enter Search Term"
-				autocomplete="off"
-				bind:value={searchTerm}
-				on:input={searchDownload}
-			/>
+		<div class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 t-mb-3 lg:t-gap-4 sm:t-gap-0">
+			<div class="">
+				<form on:submit|preventDefault class="">
+					<input 
+					class="t-px-4 t-py-3 t-rounded-md t-w-full t-border-spacing-0 t-border-none t-outline-none" 
+					type="text" 
+					name="searchField" 
+					id="searchField" 
+					placeholder="Enter Search Term"
+					autocomplete="off"
+					bind:value={searchTerm}
+					on:input={searchDownload}
+				/>
+				</form>
+			</div>
 		</div>
 		<div class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 lg:t-gap-4 sm:t-gap-0 ">
 			<div class="sm:t-col-span-1">
@@ -78,7 +79,7 @@
 						>
 
 						{#if searchTerm && filteredDownloads.length === 0}
-							<p><strong>No Result</strong>try again!</p>
+							<p class="t-px-3 t-py-2"><strong>No Result</strong> try again!</p>
 						{:else if filteredDownloads.length > 0}
 							{#each filteredDownloads as filteredDownload}
 								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
