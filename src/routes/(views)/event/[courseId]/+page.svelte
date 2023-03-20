@@ -2,6 +2,7 @@
 	import { httpWeb } from '$lib/service/auth';
 	import { page } from '$app/stores';
 	import PageTitle from '$lib/PageTitle.svelte';
+	import axios from 'axios';
 	import { ComboBox } from 'carbon-components-svelte';
 	import { getLocations } from '$lib/service/locations';
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
@@ -9,16 +10,16 @@
 	import { onMount } from 'svelte';
 	
 
-	let title = '2-Day training on EQA Lab';
-	let batchesByYear = [];
+	let title = 'Meeting';
+	// let eventsByYear = [];
 
 	// async function getCourseDetails(courseId) {
 	// 	let {
 	// 		data: { data }
-	// 	} = await httpWeb.get(`mock/trainitails`);
+	// 	} = await httpWeb.get(`mock/training-details`);
 	// 	console.log(data);
 	// 	title = data.course.name;
-	// 	batchesByYear = data.batchesByYea r;
+	// 	eventsByYear = data.eventsByYear;
 	// }
 
 	// $: {
@@ -86,30 +87,30 @@
 		{ id: 5, text: '2025'},
 	];
 
-	const batches = [
+	const EVENTS = [
 		{
 			id: 1,
-			name: 'batch 1',
+			name: 'Event 1',
 			trainees: 200
 		},
 		{
 			id: 2,
-			name: 'batch 2',
+			name: 'Event 2',
 			trainees: 100
 		},
 		{
 			id: 3,
-			name: 'batch 3',
+			name: 'Event 3',
 			trainees: 20
 		},
 		{
 			id: 5,
-			name: 'batch 4',
+			name: 'Event 4',
 			trainees: 15
 		},
 		{
 			id: 5,
-			name: 'batch 5',
+			name: 'Event 5',
 			trainees: 50
 		},
 	]
@@ -198,9 +199,9 @@
 		<div class="t-grid t-grid-cols-2 md:t-gap-4 sm:t-gap-1 t-py-5 t-place-items-center">
 			<div class="t-col-span-1  ">
 				<span
-					class="t-font-semibold t-text-transparent t-text-2xl t-text-left t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]"
+					class="t-font-semibold t-text-transparent t-text-2xl t-text-left t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] "
 				>
-					Batch
+					Event Name
 				</span>
 			</div>
 			<div class="t-col-span-1 t-text-right ">
@@ -220,13 +221,13 @@
 				class="t-grid lg:t-grid-cols-2 md:t-grid-cols-1 t-gap-4 t-py-5 t-bg-white t-rounded-md t-px-4"
 			>
 				<div class="lg:t-col-span-2 md:t-col-1 t-text-center">
-					{#each batches as batch}
+					{#each EVENTS as event}
 						<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
 							<div class="t-col-span-1 t-text-2xl t-text-center t-text-[#44835C]">
-								{batch.name}
+								{event.name}
 							</div>
 							<div class="t-col-span-1  t-text-center t-text-2xl t-font-semibold t-text-[#44835C]">
-								{batch.trainees}
+								{event.trainees}
 							</div>
 						</div>
 						<hr class="t-border-[#88C29E] t-border-t-[1.5px]" />
