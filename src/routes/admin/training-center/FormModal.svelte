@@ -154,16 +154,16 @@
 		<ComboBox
 			disabled={!$data.division}
 			bind:selectedId={$data.district}
-			titleText="Zila"
-			placeholder="Select Zila"
+			titleText="Zilla"
+			placeholder="Select Zilla"
 			items={zilaOptions}
 			{shouldFilterItem}
 		/>
 		<ComboBox
 			disabled={!$data.district}
 			bind:selectedId={$data.sub_district}
-			titleText="Upazila"
-			placeholder="Select Upazila"
+			titleText="Upazilla"
+			placeholder="Select Upazilla"
 			items={upazilaOptions}
 			{shouldFilterItem}
 		/>

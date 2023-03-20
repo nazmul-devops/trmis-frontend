@@ -240,8 +240,8 @@
 					disabled={!$data.division}
 					name="district"
 					bind:selectedId={$data.district}
-					titleText="Zila"
-					placeholder="Select Zila"
+					titleText="Zilla"
+					placeholder="Select Zilla"
 					items={zilaOptions}
 					{shouldFilterItem}
 				/>
@@ -251,8 +251,8 @@
 					disabled={!$data.district}
 					name="sub_district"
 					bind:selectedId={$data.sub_district}
-					titleText="Upazila"
-					placeholder="Select Upazila"
+					titleText="Upazilla"
+					placeholder="Select Upazilla"
 					items={upazilaOptions}
 					{shouldFilterItem}
 				/>
