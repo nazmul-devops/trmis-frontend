@@ -17,13 +17,13 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { page } from '$app/stores';
 
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'rowNumber', value: '#' },
 		{ key: 'title', value: 'Title' },
 		{ key: 'description', value: 'Description' },
-		{ key: 'training_course_name', value: 'Course Name' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -43,7 +43,7 @@
 	}
 
 	onMount(async () => {
-		courseTopics.getCourseTopics();
+		courseTopics.getCourseTopics($page.params.courseId);
 	});
 </script>
 

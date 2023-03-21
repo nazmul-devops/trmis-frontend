@@ -1,9 +1,11 @@
 import { http } from '$lib/service/auth';
 import { generateFromData } from '$lib/service/utilities';
 
-export async function getCourseMaterials() {
+export async function getCourseMaterials(trainingCourse) {
 	try {
-		const { data } = await http.get('training-course/course-material/');
+		const { data } = await http.get('training-course/course-material/', {
+			params: { training_course: trainingCourse }
+		});
 		return {
 			status: 200,
 			data

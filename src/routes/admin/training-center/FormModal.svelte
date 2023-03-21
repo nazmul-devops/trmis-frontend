@@ -139,7 +139,7 @@
 	<form use:form>
 		<TextInput
 			bind:value={$data.name}
-			invalid={$errors.name != null}
+			invalid={$errors.name != ''}
 			name="name"
 			labelText="Name"
 			placeholder="Enter Name..."
