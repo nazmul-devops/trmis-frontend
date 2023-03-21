@@ -18,7 +18,7 @@
 
 	let satisfactionData2021 = [
 		{ status: 'Upcoming', score: 75 },
-		{ status: 'Inprogress', score: 96 },
+		{ status: 'In progress', score: 96 },
 		{ status: 'Completed', score: 80 },
 	];
 	Chart.register(...registerables);
