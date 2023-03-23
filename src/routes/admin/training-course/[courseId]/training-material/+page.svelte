@@ -17,6 +17,7 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { page } from '$app/stores';
 
 	let filteredRowIds = [];
 	let headers = [
@@ -44,8 +45,9 @@
 	}
 
 	onMount(async () => {
-		courseMaterials.getCourseMaterials();
+		courseMaterials.getCourseMaterials($page.params.courseId);
 	});
+
 </script>
 
 {#if $courseMaterials.loading}

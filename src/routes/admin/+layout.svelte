@@ -99,9 +99,46 @@
 				<a href="/admin/training-course" >Training Course</a>
 			</SideNavLink>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-course/1/course-topic">Training Topic</a>
-			</SideNavLink>
+			<SideNavMenu text="Training">
+				<SideNavLink>
+					<a href="/admin/training-course">Training Course</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-course/1/training-category">Training Category</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainee">Participants</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainee-request">Participants Approval List</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainer">Resource Person</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-center">Training Venue</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<!-- <SideNavLink>
+					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
+				</SideNavLink> -->
+				<SideNavLink>
+					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-calendar">Training Calendar</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/batch">Batch</a>
+				</SideNavLink>
+			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavLink>
 				<a href="/admin/training-course/1/course-material">Training Material</a>

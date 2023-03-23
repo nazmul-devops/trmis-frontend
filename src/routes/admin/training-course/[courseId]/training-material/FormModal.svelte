@@ -4,9 +4,17 @@
 	import * as yup from 'yup';
 	import { courseMaterials } from '$lib/store/courseMaterial';
 	import { trainingCourses } from '$lib/store/trainingCourse';
-	import { Modal, FileUploader, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
+	import {
+		Modal,
+		FileUploader,
+		TextInput,
+		Select,
+		SelectItem,
+		ComboBox
+	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { bind } from 'svelte/internal';
+	import { page } from '$app/stores';
 
 	let fileUploader;
 	let files = [];
@@ -17,22 +25,19 @@
 		title: null,
 		description: null,
 		files: null,
-		training_course_id: null
 	};
 
 	function formSetFields() {
 		setFields('title', courseMaterial.title);
 		setFields('description', courseMaterial.description);
-		setFields('training_course_id', courseMaterial.training_course_id);
 	}
-
 
 	$: {
 		// formSetFieldsForFile();
 		if (courseMaterial.id != null) {
 			formSetFields();
-		}else{
-			reset()
+		} else {
+			reset();
 		}
 	}
 
@@ -42,10 +47,9 @@
 	}
 
 	const schema = yup.object({
-		title: yup.string().required().typeError("Title is required."),
-		description: yup.string().required().typeError("Description is required."),
+		title: yup.string().required().typeError('Title is required.'),
+		description: yup.string().required().typeError('Description is required.'),
 		files: yup.mixed().required(),
-		training_course_id: yup.number().required().typeError("Training course id is required.")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -63,17 +67,23 @@
 			if (courseMaterial.id) {
 				await courseMaterials.updateCourseMaterial({ ...data, id: courseMaterial.id });
 			} else {
-				await courseMaterials.createCourseMaterial({ ...data });
+				await courseMaterials.createCourseMaterial({
+					...data,
+					training_course_id: parseInt($page.params.courseId)
+				});
 			}
 			open = false;
 			reset();
 		}
 	});
 
-	$: trainingCoursesList = $trainingCourses.data.map((item)=>({...item, text:item.title}))
+	$: trainingCoursesList = $trainingCourses.data.map((item) => ({ ...item, text: item.title }));
+
+	$: {
+		courseMaterials.getCourseMaterials($page.params.courseId);
+	}
 
 	onMount(async () => {
-		courseMaterials.getCourseMaterials();
 		trainingCourses.getTrainingCourses();
 	});
 </script>
@@ -87,35 +97,35 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput 
+		<TextInput
 			invalid={$errors.title != null}
-			name="title" 
-			labelText="title" 
-			placeholder="Enter  Title..." 
+			name="title"
+			labelText="title"
+			placeholder="Enter  Title..."
 		/>
 		{#if $errors.title}
 			<p class="t-text-red-600">{$errors.title}</p>
 		{/if}
-		<TextInput 
+		<TextInput
 			invalid={$errors.description != null}
-			name="description" 
-			labelText="Description" 
-			placeholder="Enter  description..." 
+			name="description"
+			labelText="Description"
+			placeholder="Enter  description..."
 		/>
 		{#if $errors.description}
 			<p class="t-text-red-600">{$errors.description}</p>
 		{/if}
 
-		<ComboBox
+		<!-- <ComboBox
 			titleText="Course"
-			invalid = {$errors.training_course_id != null}
+			invalid={$errors.training_course_id != null}
 			bind:selectedId={$data.training_course_id}
-			placeholder={"Choose Course"}
+			placeholder={'Choose Course'}
 			items={trainingCoursesList}
 		/>
 		{#if $errors.training_course_id}
 			<p class="t-text-red-600">{$errors.training_course_id}</p>
-		{/if}
+		{/if} -->
 		<!-- <Select name="training_course_id" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}

@@ -1,40 +1,40 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import * as CourseTopicsService from '$lib/service/courseTopic';
 
 function createCourseTopicsStore() {
-	const { subscribe, set, update } = writable({ loading: true, data: [] });
+	const topic = writable({ loading: true, data: [], trainingCourseId: null });
 	function setLoading() {
-		update((prev) => ({
+		topic.update((prev) => ({
 			...prev,
 			loading: true
 		}));
 	}
 
-	async function getCourseTopics() {
+	async function getCourseTopics(trainingCourse) {
 		setLoading();
-		const resp = await CourseTopicsService.getCourseTopics();
-		set({ loading: false, data: resp.data });
+		const resp = await CourseTopicsService.getCourseTopics(trainingCourse);
+		topic.set({ loading: false, data: resp.data, trainingCourseId: trainingCourse });
 	}
 
 	async function deleteCourseTopic(id: number) {
 		setLoading();
 		await CourseTopicsService.deleteCourseTopic(id);
-		await getCourseTopics();
+		await getCourseTopics(get(topic).trainingCourseId);
 	}
 
 	async function updateCourseTopic(courseTopic) {
 		setLoading();
 		await CourseTopicsService.updateCourseTopic(courseTopic);
-		await getCourseTopics();
+		await getCourseTopics(get(topic).trainingCourseId);
 	}
 	async function createCourseTopic(courseTopic) {
 		setLoading();
 		await CourseTopicsService.createCourseTopic(courseTopic);
-		await getCourseTopics();
+		await getCourseTopics(get(topic).trainingCourseId);
 	}
 
 	return {
-		subscribe,
+		subscribe: topic.subscribe,
 		getCourseTopics,
 		deleteCourseTopic,
 		updateCourseTopic,
