@@ -91,15 +91,7 @@
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/training-course/1/course-topic">Training Topic</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/training-course/1/course-material">Training Material</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/training-course/1/course-category">Training Category</a>
+					<a href="/admin/training-course/1/training-category">Training Category</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>

@@ -17,6 +17,7 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { goto } from '$app/navigation';
 
 	let filteredRowIds = [];
 	let headers = [
@@ -60,7 +61,14 @@
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped>
-					<!-- <OverflowMenuItem text="View" /> -->
+					<OverflowMenuItem
+						on:click={() => goto(`training-course/${row.id}/training-topic`)}
+						text="Training Topic"
+					/>
+					<OverflowMenuItem
+						on:click={() => goto(`training-course/${row.id}/training-material`)}
+						text="Training Material"
+					/>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {

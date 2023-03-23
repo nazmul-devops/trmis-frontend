@@ -6,6 +6,7 @@
 	import { courseTopics } from '$lib/store/courseTopic';
 	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	export let open = true;
 	export let courseTopic = {
@@ -16,20 +17,21 @@
 		training_course_name: null
 	};
 
+
 	$: {
-		if(courseTopic.id != null){
+		if (courseTopic.id != null) {
 			setFields('title', courseTopic.title);
 			setFields('description', courseTopic.description);
 			setFields('training_course', courseTopic.training_course);
-		}else{
-			reset()
+		} else {
+			reset();
 		}
 	}
 
 	const schema = yup.object({
-		title: yup.string().required().typeError("Title is required."),
-		description: yup.string().required().typeError("Description is required."),
-		training_course: yup.number().required().typeError("Training Course is required.")
+		title: yup.string().required().typeError('Title is required.'),
+		description: yup.string().required().typeError('Description is required.'),
+		training_course: yup.number().required().typeError('Training Course is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -54,11 +56,15 @@
 		}
 	});
 
-	$: trainingCourseList = $trainingCourses.data.map((item) => ({ ...item, text: item.title}))
+	$: trainingCourseList = $trainingCourses.data.map((item) => ({ ...item, text: item.title }));
+
+	$: {
+		courseTopics.getCourseTopics($page.params.courseId);
+	}
 
 	onMount(async () => {
 		trainingCourses.getTrainingCourses();
-		courseTopics.getCourseTopics();
+
 	});
 </script>
 
@@ -71,19 +77,19 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput 
-			name="title" 
-			labelText="title" 
-			placeholder="Enter  Title..." 
+		<TextInput
+			name="title"
+			labelText="title"
+			placeholder="Enter  Title..."
 			invalid={$errors.title != null}
 		/>
 		{#if $errors.title}
 			<p class="t-text-red-600">{$errors.title}</p>
 		{/if}
-		<TextInput 
-			name="description" 
-			labelText="Description" 
-			placeholder="Enter  description..." 
+		<TextInput
+			name="description"
+			labelText="Description"
+			placeholder="Enter  description..."
 			invalid={$errors.description != null}
 		/>
 		{#if $errors.description}
