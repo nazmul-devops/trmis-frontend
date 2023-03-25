@@ -21,11 +21,9 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'title', value: 'Title' },
-		{ key: 'description', value: 'Description' },
-		{ key: 'files', value: 'File' },
-		{ key: 'training_course_name', value: 'Course Name' },
+		{ key: 'files', value: 'File Name' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -47,7 +45,6 @@
 	onMount(async () => {
 		courseMaterials.getCourseMaterials($page.params.courseId);
 	});
-
 </script>
 
 {#if $courseMaterials.loading}

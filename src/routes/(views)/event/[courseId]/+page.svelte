@@ -2,12 +2,11 @@
 	import { httpWeb } from '$lib/service/auth';
 	import { page } from '$app/stores';
 	import PageTitle from '$lib/PageTitle.svelte';
-	import axios from 'axios';
 	import { ComboBox } from 'carbon-components-svelte';
+	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { onMount } from 'svelte';
-	
 
 	let title = 'Meeting';
 	// let eventsByYear = [];
@@ -79,11 +78,11 @@
 	}
 
 	const YEARINTERVAL = [
-		{ id: 1, text: '2020'},
-		{ id: 2, text: '2021'},
-		{ id: 3, text: '2023'},
-		{ id: 4, text: '2024'},
-		{ id: 5, text: '2025'},
+		{ id: 1, text: '2020' },
+		{ id: 2, text: '2021' },
+		{ id: 3, text: '2023' },
+		{ id: 4, text: '2024' },
+		{ id: 5, text: '2025' }
 	];
 
 	const EVENTS = [
@@ -111,11 +110,13 @@
 			id: 5,
 			name: 'Event 5',
 			trainees: 50
-		},
-	]
+		}
+	];
 
+	$: OrganizationList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 
 	onMount(() => {
+		organizations.getOrganizations();
 	});
 </script>
 
@@ -127,20 +128,9 @@
 		<div class="t-grid t-grid-cols-1">
 			<form>
 				<div class="t-grid md:t-grid-cols-2 lg:t-grid-cols-5 t-gap-4">
-					<ComboBox
-						placeholder="Choose Organization"
-						items={[
-							{ id: 1, text: 'NTP' },
-							{ id: 2, text: 'Others'}
-						]}
-						{shouldFilterItem}
-					/>
+					<ComboBox placeholder="Choose Organization" items={OrganizationList} {shouldFilterItem} />
 
-					<ComboBox
-						placeholder="Select Year"
-						items={YEARINTERVAL}
-						{shouldFilterItem}
-					/>
+					<ComboBox placeholder="Select Year" items={YEARINTERVAL} {shouldFilterItem} />
 					<ComboBox
 						bind:selectedId={selectedDivisionId}
 						placeholder="Select Division"
@@ -150,14 +140,14 @@
 					<ComboBox
 						disabled={!selectedDivisionId}
 						bind:selectedId={selectedZilaId}
-						placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
+						placeholder="Select Zilla"
 						items={zilaOptions}
 						{shouldFilterItem}
 					/>
 					<ComboBox
 						disabled={!selectedZilaId}
 						bind:selectedId={selectedUpazilaId}
-						placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
+						placeholder="Select Upazilla"
 						items={upazilaOptions}
 						{shouldFilterItem}
 					/>
@@ -177,7 +167,7 @@
 					<div class="t-flex t-justify-between t-items-center">
 						<div>
 							<p class="t-text-2xl t-font-bold t-text-[#44835C] group-hover:t-text-gray-700 t-pr-8">
-								Total Number of Participant
+								Total Number of Participants
 							</p>
 						</div>
 						<div
@@ -208,7 +198,7 @@
 				<span
 					class="t-font-semibold t-text-transparent t-text-2xl t-text-right t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]"
 				>
-					Participant
+					No. of Participants
 				</span>
 			</div>
 		</div>

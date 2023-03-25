@@ -20,6 +20,8 @@
 		{ key: 'rowNumber', value: '#' },
 		{ key: 'trainee_name', value: 'Participant' },
 		{ key: 'batch_name', value: 'Batch' },
+		{ key: 'pre_test_mark', value: 'Pre Test Mark' },
+		{ key: 'post_test_mark', value: 'Post Test Mark' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -76,12 +78,12 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-				{:else if cell.key === 'rowNumber'}
-					{ rowIndex + 1 }
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:participant />
+<FormModal bind:open />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="participant" />
