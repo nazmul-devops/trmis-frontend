@@ -108,7 +108,7 @@
 		organization: yup.number().required().typeError('Select Organization'),
 		remarks: yup.string().required(),
 		division: yup.number().required().typeError('Select Division'),
-		address: yup.string().required(),
+		address: yup.string().nullable(),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District')
 	});

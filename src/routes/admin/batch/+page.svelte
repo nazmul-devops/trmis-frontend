@@ -55,7 +55,7 @@
 	// }
 
 	onMount(async () => {
-		batchs.getBatches()
+		batchs.getBatches();
 		// batchList();
 	});
 </script>
@@ -95,12 +95,12 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-				{:else if cell.key === 'rowNumber'}
-					{rowIndex + 1}
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:batch  />
+<FormModal bind:open bind:batch />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

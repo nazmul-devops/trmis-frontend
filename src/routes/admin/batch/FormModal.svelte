@@ -6,8 +6,8 @@
 	import { coordinators } from '$lib/store/coordinators';
 	import { organizations } from '$lib/store/organization';
 	import { sourceOfFounds } from '$lib/store/source-of-found';
-	import { getApprovedSchedules, getTrainingSchedules } from '$lib/service/trainingSchedule';
-	import { Modal, TextInput, Select, SelectItem, ComboBox } from 'carbon-components-svelte';
+	import { getApprovedSchedules } from '$lib/service/trainingSchedule';
+	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	let training_course_schedules: any = [];
@@ -22,7 +22,7 @@
 		coordinator_id: null,
 		organization_id: null,
 		source_of_fund_id: null,
-		training_course_schedule: null
+		training_course_schedule_id: null
 	};
 
 	function formSetFields() {
@@ -34,7 +34,7 @@
 		setFields('coordinator', batch.coordinator_id);
 		setFields('organization', batch.organization_id);
 		setFields('source_of_fund', batch.source_of_fund_id);
-		setFields('training_course_schedule', batch.training_course_schedule);
+		setFields('training_course_schedule', batch.training_course_schedule_id);
 	}
 
 	$: {
@@ -45,25 +45,16 @@
 		}
 	}
 
-	$: {
-		// console.log(training_course_schedules);
-		// console.log(batch.training_course_schedule);
-		// console.log(training_course_schedules);
-		// if (batch.training_course_schedule && training_course_schedules.length > 0) {
-		// 	setData('training_course_schedule', batch.training_course_schedule);
-		// }
-	}
-
 	const schema = yup.object({
-		status: yup.number().required().typeError("Status is required."),
-		name: yup.string().required().typeError("Name is required."),
-		duration: yup.number().required().typeError("Duration is required."),
-		initial_cost: yup.number().required().typeError("Initial cost is required."),
+		status: yup.number().required().typeError('Status is required.'),
+		name: yup.string().required().typeError('Name is required.'),
+		duration: yup.number().required().typeError('Duration is required.'),
+		initial_cost: yup.number().required().typeError('Initial cost is required.'),
 		final_cost: yup.number(),
-		coordinator: yup.number().required().typeError("Coordinator is required."),
-		organization: yup.number().required().typeError("Organization is required."),
-		source_of_fund: yup.number().required().typeError("Source of fund is required."),
-		training_course_schedule: yup.number().required().typeError("Training course schedule is required.")
+		coordinator: yup.number().required().typeError('Coordinator is required.'),
+		organization: yup.number().required().typeError('Organization is required.'),
+		source_of_fund: yup.number().required().typeError('Source of fund is required.'),
+		training_course_schedule: yup.number().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, setData, errors, data } = createForm({
@@ -72,17 +63,11 @@
 				...values,
 				duration: values.duration ? parseInt(values.duration) : null,
 				initial_cost: values.initial_cost ? parseInt(values.initial_cost) : null,
-				final_cost: values.final_cost ? parseInt(values.final_cost) : null,
-				status: parseInt(values.status),
-				coordinator: parseInt(values.coordinator),
-				organization: parseInt(values.organization),
-				source_of_fund: parseInt(values.source_of_fund),
-				training_course_schedule: parseInt(values.training_course_schedule)
+				final_cost: values.final_cost ? parseInt(values.final_cost) : null
 			};
 		},
 		extend: validator({ schema })
 	});
-
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
@@ -96,13 +81,21 @@
 		}
 	});
 
-	$: coordinatorsList = $coordinators.data.map((item) => ({...item, text: item.name}));
-	$: organizationsList = $organizations.data.map((item) => ({...item, text: item.name}));
-	$: sourceOfFundList = $sourceOfFounds.data.map((item) => ({...item, text: item.name}));
-	$: trainingScheduleList = training_course_schedules.map((item) => ({...item, id: item.value, text: item.title}));
+	$: coordinatorsList = $coordinators.data.map((item) => ({ ...item, text: item.name }));
+	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
+	$: sourceOfFundList = $sourceOfFounds.data.map((item) => ({ ...item, text: item.name }));
+	$: trainingScheduleList = training_course_schedules.map((item) => ({
+		...item,
+		id: item.value,
+		text: item.title
+	}));
+
+	$: {
+		console.log(batch);
+	}
 
 	onMount(async () => {
-		batchs.getBatches()
+		batchs.getBatches();
 		coordinators.getCoordinators();
 		organizations.getOrganizations();
 		sourceOfFounds.getSourceOfFounds();
@@ -129,26 +122,17 @@
 		/>
 		<ComboBox
 			name="status"
-			invalid ={$errors.status != null}
+			invalid={$errors.status != null}
 			invalidText={$errors.status}
 			titleText="Status"
 			placeholder="Choose Status"
 			bind:selectedId={$data.status}
-			items = {[
-				{ id: 1, text: "Pending" },
-				{ id: 2, text: "In Progress" },
-				{ id: 3, text: "Completed" },
-				{ id: 4, text: "Rejected" },
+			items={[
+				{ id: 1, text: 'Pending' },
+				{ id: 2, text: 'In Progress' },
+				{ id: 3, text: 'Completed' }
 			]}
 		/>
-
-		<!-- <Select invalid={$errors.status != null} name="status" labelText="Status">
-			<SelectItem text="choose status" value="" />
-			<SelectItem text="Pending" value="1" />
-			<SelectItem text="In Progress" value="2" />
-			<SelectItem text="Completed" value="3" />
-			<SelectItem text="Rejected" value="4" />
-		</Select> -->
 		<TextInput
 			invalid={$errors.duration != null}
 			invalidText={$errors.duration}
@@ -179,12 +163,6 @@
 			bind:selectedId={$data.coordinator}
 			items={coordinatorsList}
 		/>
-		<!-- <Select invalid={$errors.coordinator != null} name="coordinator" labelText="Coordinator">
-			<SelectItem text="choose Coordinator" />
-			{#each $coordinators.data as coordinator}
-				<SelectItem value={coordinator.id} text={coordinator.name} />
-			{/each}
-		</Select> -->
 		<ComboBox
 			invalid={$errors.organization != null}
 			invalidText={$errors.organization}
@@ -194,12 +172,6 @@
 			bind:selectedId={$data.organization}
 			items={organizationsList}
 		/>
-		<!-- <Select invalid={$errors.organization != null} name="organization" labelText="Organization">
-			<SelectItem text="choose Organization" />
-			{#each $organizations.data as organization}
-				<SelectItem value={organization.id} text={organization.name} />
-			{/each}
-		</Select> -->
 		<ComboBox
 			invalid={$errors.source_of_fund != null}
 			invalidText={$errors.source_of_fund}
@@ -209,16 +181,6 @@
 			bind:selectedId={$data.source_of_fund}
 			items={sourceOfFundList}
 		/>
-		<!-- <Select
-			invalid={$errors.source_of_fund != null}
-			name="source_of_fund"
-			labelText="Source Of Fund"
-		>
-			<SelectItem text="choose Source Of Fund" />
-			{#each $sourceOfFounds.data as sof}
-				<SelectItem value={sof.id} text={sof.name} />
-			{/each}
-		</Select> -->
 		<ComboBox
 			invalid={$errors.training_course_schedule != null}
 			invalidText={$errors.training_course_schedule}
@@ -228,16 +190,6 @@
 			bind:selectedId={$data.training_course_schedule}
 			items={trainingScheduleList}
 		/>
-		<!-- <Select
-			invalid={$errors.training_course_schedule != null}
-			name="training_course_schedule"
-			labelText="Training Schedule"
-		>
-			<SelectItem text="choose Schedule" />
-			{#each training_course_schedules as Schedule}
-				<SelectItem value={Schedule.value} text={Schedule.title} />
-			{/each}
-		</Select> -->
 
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 		<!-- <p>{JSON.stringify($data)}</p> -->

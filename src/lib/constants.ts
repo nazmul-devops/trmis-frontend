@@ -17,10 +17,10 @@ export const MATERIAL_STATUS = [
 
 export const MAP_VIEW_TYPE = [
 	{ id: 1, text: 'Training Venue View' },
-	{ id: 2, text: 'Batch View' }
+	{ id: 2, text: 'Training Completed' }
 ];
 
-export const BATCH_VIEW = MAP_VIEW_TYPE[1].id
+export const BATCH_VIEW = MAP_VIEW_TYPE[1].id;
 
 export const galleryCategory = [
 	{ id: 1, text: 'Meeting' },
@@ -30,27 +30,25 @@ export const galleryCategory = [
 	{ id: 5, text: 'Workshop' }
 ];
 
-
-
 export const EVENTDATA = [
 	{
 		id: 1,
 		title: 'Meeting',
-		link: '/assets/eventIcon1.jpg' 
+		link: '/assets/eventIcon1.jpg'
 	},
 	{
 		id: 2,
 		title: 'Workshop',
-		link: '/assets/eventIcon2.jpg' 
+		link: '/assets/eventIcon2.jpg'
 	},
 	{
 		id: 3,
 		title: 'Orientation',
-		link: '/assets/eventIcon3.jpg' 
+		link: '/assets/eventIcon3.jpg'
 	},
 	{
 		id: 4,
 		title: 'Sensitization',
-		link: '/assets/eventIcon4.jpg' 
-	},
-]
+		link: '/assets/eventIcon4.jpg'
+	}
+];

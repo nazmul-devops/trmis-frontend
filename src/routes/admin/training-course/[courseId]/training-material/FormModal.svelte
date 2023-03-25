@@ -13,7 +13,6 @@
 		ComboBox
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { bind } from 'svelte/internal';
 	import { page } from '$app/stores';
 
 	let fileUploader;
@@ -77,7 +76,6 @@
 		}
 	});
 
-	$: trainingCoursesList = $trainingCourses.data.map((item) => ({ ...item, text: item.title }));
 
 	$: {
 		courseMaterials.getCourseMaterials($page.params.courseId);

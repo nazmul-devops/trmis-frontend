@@ -12,17 +12,13 @@
 	export let courseTopic = {
 		id: null,
 		title: null,
-		description: null,
-		training_course: null,
-		training_course_name: null
+		description: null
 	};
-
 
 	$: {
 		if (courseTopic.id != null) {
 			setFields('title', courseTopic.title);
 			setFields('description', courseTopic.description);
-			setFields('training_course', courseTopic.training_course);
 		} else {
 			reset();
 		}
@@ -30,15 +26,14 @@
 
 	const schema = yup.object({
 		title: yup.string().required().typeError('Title is required.'),
-		description: yup.string().required().typeError('Description is required.'),
-		training_course: yup.number().required().typeError('Training Course is required.')
+		description: yup.string().required().typeError('Description is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				training_course: parseInt(values.training_course)
+				training_course: parseInt(values.training_course_id)
 			};
 		},
 		extend: validator({ schema })
@@ -49,14 +44,15 @@
 			if (courseTopic.id) {
 				await courseTopics.updateCourseTopic({ ...data, id: courseTopic.id });
 			} else {
-				await courseTopics.createCourseTopic({ ...data });
+				await courseTopics.createCourseTopic({
+					...data,
+					training_course: parseInt($page.params.courseId)
+				});
 			}
 			open = false;
 			reset();
 		}
 	});
-
-	$: trainingCourseList = $trainingCourses.data.map((item) => ({ ...item, text: item.title }));
 
 	$: {
 		courseTopics.getCourseTopics($page.params.courseId);
@@ -64,7 +60,6 @@
 
 	onMount(async () => {
 		trainingCourses.getTrainingCourses();
-
 	});
 </script>
 
@@ -95,17 +90,6 @@
 		{#if $errors.description}
 			<p class="t-text-red-600">{$errors.description}</p>
 		{/if}
-		<ComboBox
-			name="training_course"
-			invalid={$errors.training_course != null}
-			bind:selectedId={$data.training_course}
-			titleText="Training Course"
-			placeholder="Select Training Course"
-			items={trainingCourseList}
-		/>
-		{#if $errors.training_course}
-			<p class="t-text-red-600">{$errors.training_course}</p>
-		{/if}
 		<!-- <Select name="training_course" labelText="Course">
 			<SelectItem text="choose Course" />
 			{#each $trainingCourses.data as course}
@@ -113,5 +97,5 @@
 			{/each}
 		</Select> -->
 	</form>
-	<!-- {JSON.stringify($errors)} -->
+	{JSON.stringify($errors)}
 </Modal>

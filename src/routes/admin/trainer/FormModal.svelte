@@ -6,7 +6,6 @@
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
-	import { MATERIAL_STATUS } from '$lib/constants';
 	import { Modal, TextInput, ComboBox } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { sleep } from '$lib/service/utilities';
@@ -112,7 +111,7 @@
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
-		address: yup.string().required(),
+		address: yup.string().nullable(),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District'),
 		hris: yup.number()

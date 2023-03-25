@@ -4,9 +4,10 @@
 	import * as yup from 'yup';
 	import { batchParticipantsList } from '$lib/store/batch-participants';
 	import { trainees } from '$lib/store/trainee';
-	import { Modal, ComboBox } from 'carbon-components-svelte';
+	import { Modal, ComboBox, NumberInput, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
+	import { TextIndent } from 'carbon-icons-svelte';
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -14,12 +15,11 @@
 	}
 
 	export let open = true;
-	export let participant = {
-		trainee: null
-	};
 
 	const schema = yup.object({
-		trainee: yup.number().required()
+		trainee: yup.number().required(),
+		pre_test_mark: yup.number().nullable(),
+		post_test_mark: yup.number().nullable()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
@@ -64,6 +64,18 @@
 			placeholder="Choose Participant"
 			items={traineesList}
 			{shouldFilterItem}
+		/>
+		<TextInput
+			type="number"
+			bind:value={$data.pre_test_mark}
+			labelText=" Pre Test Mark"
+			placeholder="Enter Pre test Mark"
+		/>
+		<TextInput
+			type="number"
+			bind:value={$data.post_test_mark}
+			labelText=" Post Test Mark"
+			placeholder="Enter Post test Mark"
 		/>
 		<!-- <Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
 			<SelectItem text="choose Participant" value="" />
