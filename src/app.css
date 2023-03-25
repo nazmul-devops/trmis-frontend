@@ -7,3 +7,39 @@
 	background-color: transparent;
 
 }
+
+/*Admin panel sidebar link color */
+.bx--side-nav__submenu-title,
+.bx--side-nav__link-text a {
+	font-size: 16px;
+	color: #808083 !important;
+	font-weight: 500 !important;
+}
+
+.bx--side-nav__icon svg{
+	height: 50px !important;
+}
+
+/* Admin panel Header */
+
+.bx--header{
+	border-bottom: none;
+	background-color: white;
+}
+
+.bx--header__global {
+	background: white;
+	
+}
+
+
+.bx--header__action{
+	margin: 0 25px 0 0 ;
+	padding: 5px;
+}
+.bx--header__global button svg{
+	background: black !important;
+	height: 100% !important;
+	width: 56px !important;
+	border-radius: 50% !important;
+}

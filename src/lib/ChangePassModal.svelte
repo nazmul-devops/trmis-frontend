@@ -59,13 +59,13 @@
 			name="old_password"
 			labelText="Password"
 			placeholder="Enter password..."
-			invalid={$errors.password}
+			invalid={$errors.password != null}
 		/>
 		{#if $errors.old_password}
 			<p class="t-text-red-500">{$errors.old_password}</p>
 		{/if}
 		<PasswordInput
-			invalid={$errors.new_password}
+			invalid={$errors.new_password != null}
 			name="new_password"
 			labelText="New Password"
 			placeholder="Enter New Password..."
@@ -74,7 +74,7 @@
 			<p class="t-text-red-500">{$errors.new_password}</p>
 		{/if}
 		<PasswordInput
-			invalid={$errors.confirm_password}
+			invalid={$errors.confirm_password != null}
 			name="confirm_password"
 			labelText="Confirm Password"
 			placeholder="Enter Confirm Password..."
