@@ -17,7 +17,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#'},
+		{ key: 'rowNumber', value: 'Serial No.'},
 		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
 		// { key: 'permissions', value: 'Permission' },

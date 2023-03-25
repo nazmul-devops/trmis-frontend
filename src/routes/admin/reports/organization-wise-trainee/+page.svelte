@@ -53,7 +53,7 @@
 		<h4>Organization Wise Trainee Report</h4>
 	</div>
 	<form use:form>
-		<div class="t-flex t-gap-4 t-items-center">
+		<div class="t-flex t-gap-4 t-items-end">
 			<div>
 				<ComboBox
 					bind:selectedId={organization_id}
@@ -63,7 +63,7 @@
 					{shouldFilterItem}
 				/>
 			</div>
-			<div>
+			<div class="custom">
 				<DatePicker datePickerType="single">
 					<DatePickerInput
 						name="start_date"
@@ -73,13 +73,13 @@
 					/>
 				</DatePicker>
 			</div>
-			<div>
+			<div class="custom">
 				<DatePicker datePickerType="single">
 					<DatePickerInput name="end_date" labelText="End date" placeholder="mm/dd/yyyy" />
 				</DatePicker>
 			</div>
 			<div class="">
-				<Button on:click={submitHandler}>Generate</Button>
+				<Button on:click={submitHandler} class='t-rounded-lg'>Generate</Button>
 			</div>
 		</div>
 	</form>

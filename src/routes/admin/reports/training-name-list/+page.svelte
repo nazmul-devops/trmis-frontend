@@ -98,7 +98,7 @@
 	<div class=" t-my-5">
 		<h4>Training Name List</h4>
 	</div>
-	<div class="t-flex t-gap-4 t-items-center   ">
+	<div class="t-flex t-gap-4 t-items-end">
 		<ComboBox
 			bind:selectedId={division_id}
 			titleText="Division"
@@ -137,7 +137,7 @@
 			{shouldFilterItem}
 		/>
 		<div class="">
-			<Button on:click={submitHandler}>Generate</Button>
+			<Button on:click={submitHandler} class='t-rounded-lg'>Generate</Button>
 		</div>
 	</div>
 </div>

@@ -22,7 +22,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'title', value: 'Tilte' },
 		{ key: 'description', value: 'Description' },
 		{ key: 'files', value: 'Notice File' },

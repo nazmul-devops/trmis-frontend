@@ -22,7 +22,7 @@
 	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'designation_name', value: 'Designation' },
 		{ key: 'organization_name', value: 'Organization' },

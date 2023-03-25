@@ -95,57 +95,12 @@
 			</SideNavLink>
 		<SideNavDivider />
 		<SideNavMenu icon={Events} text="Training">
-			<SideNavLink>
+			<SideNavLink class='t-mt-3'>
 				<a href="/admin/training-course" >Training Course</a>
 			</SideNavLink>
 			<SideNavDivider />
-			<SideNavMenu text="Training">
-				<SideNavLink>
-					<a href="/admin/training-course">Training Course</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/training-course/1/training-category">Training Category</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/trainee">Participants</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/trainee-request">Participants Approval List</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/trainer">Resource Person</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/training-center">Training Venue</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<!-- <SideNavLink>
-					<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
-				</SideNavLink> -->
-				<SideNavLink>
-					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/training-calendar">Training Calendar</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/batch">Batch</a>
-				</SideNavLink>
-			</SideNavMenu>
-			<SideNavDivider />
 			<SideNavLink>
-				<a href="/admin/training-course/1/course-material">Training Material</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-course/1/course-category">Training Category</a>
+				<a href="/admin/training-category">Training Category</a>
 			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink>
@@ -182,7 +137,7 @@
 		<SideNavDivider />
 		<SideNavMenu icon={Calendar} text="Event">
 			<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
-			<SideNavLink>
+			<SideNavLink class='t-mt-3'>
 				<a href="/admin/schedule-events">Event Schedule</a>
 			</SideNavLink>
 			<!-- {/if} -->
@@ -195,7 +150,7 @@
 		</SideNavMenu>
 		<SideNavDivider />
 		<SideNavMenu icon={ReportData} text="Reports">
-			<SideNavLink>
+			<SideNavLink class='t-mt-3'>
 				<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
 			</SideNavLink>
 			<SideNavDivider />
@@ -240,7 +195,7 @@
 			<!-- <SideNavLink>
 				<a href="/admin/settings/collaborations">Collaborations</a>
 			</SideNavLink> -->
-			<SideNavLink>
+			<SideNavLink class='t-mt-3'>
 				<a href="/admin/settings/designations">Designations</a>
 			</SideNavLink>
 			<SideNavDivider />
@@ -270,7 +225,7 @@
 		<SideNavDivider />
 
 		<SideNavMenu icon={UserSettings} text="MIS Settings">
-			<SideNavLink>
+			<SideNavLink class='t-mt-3'>
 				<a href="/admin/users">Users</a>
 			</SideNavLink>
 			<SideNavDivider />

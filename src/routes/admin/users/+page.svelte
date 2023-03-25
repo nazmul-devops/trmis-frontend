@@ -17,7 +17,7 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'username', value: 'Username' },
 		{ key: 'first_name', value: 'FirstName' },
 		{ key: 'last_name', value: 'LasttName' },
