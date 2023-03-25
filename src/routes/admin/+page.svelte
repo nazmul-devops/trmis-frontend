@@ -55,36 +55,42 @@
 
 <div>
 	<Count />
-	<div class="t-grid md:t-grid-cols-2 t-gap-4 t-my-8">
+	<div class="t-my-8">
 		<div class="">
 			<form use:form>
-				<div class=" t-flex t-gap-2 ">
-					<ComboBox
-						bind:selectedId={$data.distance}
-						titleText="Year"
-						placeholder="Choose Year"
-						items={timeIntervalLists}
-						{shouldFilterItem}
-					/>
-					<div>
-						<DatePicker
-							datePickerType="single"
-							bind:value={$data.endDate}
-							dateFormat="m/Y"
-							on:change
-						>
-							<DatePickerInput labelText="From Month" placeholder="mm/yyyy" />
-						</DatePicker>
+				<div class=" t-grid t-grid-cols-2 md:t-grid-cols-4 lg:t-grid-cols-5">
+					<div class="t-col-span-1 customComboBox">
+						<ComboBox
+							bind:selectedId={$data.distance}
+							titleText="Year"
+							placeholder="Choose Year"
+							items={timeIntervalLists}
+							{shouldFilterItem}
+						/>
 					</div>
-					<div>
-						<DatePicker
-							datePickerType="single"
-							bind:value={$data.endDate}
-							dateFormat="m/Y"
-							on:change
-						>
-							<DatePickerInput labelText="To Month" placeholder="mm/yyyy" />
-						</DatePicker>
+					<div class="t-col-span-3 customDatePicker">
+						<div class="t-grid t-grid-cols-2">
+							<div class="datePicker1">
+								<DatePicker
+									datePickerType="single"
+									bind:value={$data.endDate}
+									dateFormat="m/Y"
+									on:change
+								>
+									<DatePickerInput labelText="From Month" placeholder="mm/yyyy" />
+								</DatePicker>
+							</div>
+							<div class="datePicker2">
+								<DatePicker
+									datePickerType="single"
+									bind:value={$data.endDate}
+									dateFormat="m/Y"
+									on:change
+								>
+									<DatePickerInput labelText="To Month" placeholder="mm/yyyy" />
+								</DatePicker>
+							</div>
+						</div>
 					</div>
 				</div>
 			</form>

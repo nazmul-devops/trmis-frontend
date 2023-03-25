@@ -72,7 +72,8 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<DatePicker
+		<div class="custom">
+			<DatePicker
 			bind:value={$data.start_date}
 			name="start_date"
 			dateFormat="Y-m-d"
@@ -98,8 +99,9 @@
 				placeholder="YYYY-mm-dd"
 			/>
 		</DatePicker>
+		</div>
 		<Select invalid={$errors.event_venue != null} name="event_venue" labelText="Event Venue">
-			<SelectItem text="choose Venue" value="" />
+			<SelectItem text="Choose Venue" value="" />
 			{#each $trainingCenters.data as item}
 				<SelectItem text={item.name} value={item.id} />
 			{/each}

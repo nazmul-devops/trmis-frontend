@@ -49,7 +49,7 @@
 	<div class=" t-my-5">
 		<h4>Training Course Curriculum Report</h4>
 	</div>
-	<div class="t-flex t-gap-4 t-items-center   ">
+	<div class="t-flex t-gap-4 t-items-end   ">
 		<div>
 			<ComboBox
 				titleText="Training"
@@ -59,7 +59,7 @@
 			/>
 		</div>
 		<div class="">
-			<Button on:click={submitHandler}>Generate</Button>
+			<Button on:click={submitHandler} class='t-rounded-lg'>Generate</Button>
 		</div>
 	</div>
 </div>

@@ -17,7 +17,7 @@
 	import { Roadmap } from 'carbon-icons-svelte';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'session_day', value: 'Day' },
 		{ key: 'topic_name', value: 'Topic' },

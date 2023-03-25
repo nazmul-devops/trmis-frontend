@@ -82,7 +82,7 @@
 		<h4>Trainee Attendence Report</h4>
 	</div>
 	<form use:form>
-		<div class="t-flex t-gap-4 t-items-center   ">
+		<div class="t-flex t-gap-4 t-items-end  ">
 			<ComboBox
 				bind:selectedId={division_id}
 				titleText="Division"
@@ -106,18 +106,18 @@
 				items={upazilaOptions}
 				{shouldFilterItem}
 			/>
-			<div>
+			<div class="custom">
 				<DatePicker datePickerType="single" name="start_date" on:change>
 					<DatePickerInput class="t-w-full" labelText="Start date" placeholder="mm/dd/yyyy" />
 				</DatePicker>
 			</div>
-			<div>
+			<div class="custom">
 				<DatePicker datePickerType="single" name="end_date" on:change>
 					<DatePickerInput labelText="End date" placeholder="mm/dd/yyyy" />
 				</DatePicker>
 			</div>
 			<div class="">
-				<Button on:click={submitHandler}>Generate</Button>
+				<Button on:click={submitHandler} class='t-rounded-lg'>Generate</Button>
 			</div>
 		</div>
 	</form>

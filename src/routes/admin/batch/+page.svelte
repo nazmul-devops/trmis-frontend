@@ -17,7 +17,7 @@
 	import { goto } from '$app/navigation';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'duration', value: 'Duration' },
 		{ key: 'initial_cost', value: 'Budget In Taka' },

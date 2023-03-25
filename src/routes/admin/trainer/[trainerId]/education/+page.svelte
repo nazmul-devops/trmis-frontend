@@ -77,4 +77,4 @@
 {/if}
 
 <FormModal bind:open bind:education />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="trainer education"/>

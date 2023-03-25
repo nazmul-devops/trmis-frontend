@@ -63,7 +63,7 @@
 	<div class=" t-my-5">
 		<h4>Cost Center Report</h4>
 	</div>
-	<div class="t-flex t-gap-4 t-items-center   ">
+	<div class="t-flex t-gap-4 t-items-end   ">
 		<ComboBox
 			bind:selectedId={selectedDivisionId}
 			titleText="Division"
@@ -95,7 +95,7 @@
 		/>
 		<ComboBox titleText="Batch" placeholder="Select Batch" items={Batch} {shouldFilterItem} />
 		<div class="">
-			<Button>Generate</Button>
+			<Button class='t-rounded-lg'>Generate</Button>
 		</div>
 	</div>
 </div>

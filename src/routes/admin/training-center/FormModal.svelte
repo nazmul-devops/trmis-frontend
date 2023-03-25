@@ -139,11 +139,14 @@
 	<form use:form>
 		<TextInput
 			bind:value={$data.name}
-			invalid={$errors.name != ''}
+			invalid={$errors.name != null}
 			name="name"
 			labelText="Name"
 			placeholder="Enter Name..."
 		/>
+		{#if $errors.name}
+			<p>{$errors.name}</p>
+		{/if}
 		<ComboBox
 			bind:selectedId={$data.division}
 			titleText="Division"

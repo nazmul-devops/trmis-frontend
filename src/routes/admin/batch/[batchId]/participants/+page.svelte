@@ -17,7 +17,7 @@
 	import { page } from '$app/stores';
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: '#' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'trainee_name', value: 'Participant' },
 		{ key: 'batch_name', value: 'Batch' },
 		{ key: 'action', value: 'Action' }

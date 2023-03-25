@@ -57,7 +57,7 @@
 	<div class=" t-my-5">
 		<h4>Trainer Report</h4>
 	</div>
-	<div class="t-flex t-gap-4 t-items-center">
+	<div class="t-flex t-gap-4 t-items-end">
 		<div>
 			<ComboBox
 				bind:selectedId={batch_id}
@@ -67,18 +67,18 @@
 				{shouldFilterItem}
 			/>
 		</div>
-		<div>
+		<div class="custom">
 			<DatePicker datePickerType="single" name="start_date" on:change>
 				<DatePickerInput class="t-w-full" labelText="Start date" placeholder="mm/dd/yyyy" />
 			</DatePicker>
 		</div>
-		<div>
+		<div class="custom">
 			<DatePicker datePickerType="single" name="end_date" on:change>
 				<DatePickerInput labelText="End date" placeholder="mm/dd/yyyy" />
 			</DatePicker>
 		</div>
 		<div class="">
-			<Button on:click={submitHandler}>Generate</Button>
+			<Button on:click={submitHandler} class='t-rounded-lg'>Generate</Button>
 		</div>
 	</div>
 </div>

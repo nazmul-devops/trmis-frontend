@@ -11,13 +11,19 @@
 /*Admin panel sidebar link color */
 .bx--side-nav__submenu-title,
 .bx--side-nav__link-text a {
-	font-size: 16px;
+	font-size: 14px;
 	color: #808083 !important;
 	font-weight: 500 !important;
 }
 
 .bx--side-nav__icon svg{
 	height: 50px !important;
+}
+
+
+.bx--side-nav__item.bx--side-nav__item--icon a.bx--side-nav__link {
+	padding-left: 40px;
+	font-size: 14px;
 }
 
 /* Admin panel Header */
@@ -31,6 +37,9 @@
 	background: white;
 	
 }
+.bx--header__menu-toggle {
+	background-color: black;
+}
 
 
 .bx--header__action{
@@ -43,3 +52,53 @@
 	width: 56px !important;
 	border-radius: 50% !important;
 }
+
+/* Dashboard date-picker width */
+
+
+.bx--date-picker{
+	display: block;
+	width: 100%;
+}
+.flatpickr-wrapper, .flatpickr-calendar.static.open{
+	width: 100%;
+}
+
+.bx--date-picker.bx--date-picker--single .bx--date-picker__input {
+	width: 100%;
+}
+.datePicker1 .flatpickr-input {
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border: 1px solid black;
+}
+.datePicker2 .flatpickr-input {
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border: 1px solid black;
+}
+/*ComboBox padding */
+
+.customComboBox .bx--list-box__wrapper{
+	margin-right: 24px;
+	border-radius: 8px;
+}
+
+.bx--combo-box{
+	border-bottom: none;
+}
+
+.bx--text-input input{
+	background: white;
+}
+
+.custom .bx--date-picker__input , .bx--text-input, .bx--text-area, .bx--select-input{
+	border-radius: 8px;
+	border: 1px solid black;
+	background: white;
+}
+
+.bx--text-area{
+	resize: none;
+}
+
