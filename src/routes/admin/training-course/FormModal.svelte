@@ -71,9 +71,6 @@
 	});
 
 	$: CourseCategories = $courseCategories.data.map((item) => ({ ...item, text: item.title }));
-	$: {
-		console.log('Hello', CourseCategories);
-	}
 
 	onMount(async () => {
 		trainingCourses.getTrainingCourses();

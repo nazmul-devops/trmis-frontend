@@ -2,20 +2,17 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import { ComboBox, DatePicker, DatePickerInput } from 'carbon-components-svelte';
-
 	import * as yup from 'yup';
 	import Chart from '../../lib/Chart.svelte';
 	import Count from './Count.svelte';
+	
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	// export let timeInterval = {
-	// 	id: null,
-	// 	distance: null
-	// };
+
 	const timeIntervalDistance = [
 		{ id: 1, text: '2015' },
 		{ id: 2, text: '2016' },
