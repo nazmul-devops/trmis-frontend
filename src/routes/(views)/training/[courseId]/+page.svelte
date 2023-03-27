@@ -1,38 +1,24 @@
 <script>
-	import { httpWeb } from '$lib/service/auth';
 	import { page } from '$app/stores';
 	import PageTitle from '$lib/PageTitle.svelte';
-	import { ComboBox } from 'carbon-components-svelte';
+	import { CodeSnippet, ComboBox, InlineLoading } from 'carbon-components-svelte';
+	import { trainingBatches } from '$lib/store/trainingBatch';
 	import { getLocations } from '$lib/service/locations';
 	import { organizations } from '$lib/store/organization';
-	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { onMount } from 'svelte';
+	// import { batchParticipantsList } from '$lib/store/batch-participants';
 
 	let title = '2-Day training on EQA Lab';
-	let batchesByYear = [];
 
-	// async function getCourseDetails(courseId) {
-	// 	let {
-	// 		data: { data }
-	// 	} = await httpWeb.get(`mock/trainitails`);
-	// 	console.log(data);
-	// 	title = data.course.name;
-	// 	batchesByYear = data.batchesByYea r;
-	// }
-
-	// $: {
-	// 	if ($page.params) {
-	// 		getCourseDetails($page.params.courseId);
-	// 	}
-	// }
+	let batchDetails;
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	let trainingCenterId;
-	let trainingCenter = [];
+	let organizationId;
+	let yearId;
 	let selectedDivisionId;
 	let selectedZilaId;
 	let selectedUpazilaId;
@@ -67,56 +53,19 @@
 		}
 	}
 
-	$: {
-		if (selectedUpazilaId) {
-			getTrainingCenters(selectedUpazilaId).then((resp) => {
-				trainingCenter = resp.data.map((item) => ({ ...item, text: item.name }));
-			});
-		} else {
-			trainingCenterId = null;
-		}
+	let years = [];
+	const currentYear = new Date().getFullYear();
+
+	for (let year = currentYear; year >= 2000; year--) {
+		years = [...years, { id: year, test: year }];
 	}
 
-	const YEARINTERVAL = [
-		{ id: 1, text: '2020' },
-		{ id: 2, text: '2021' },
-		{ id: 3, text: '2023' },
-		{ id: 4, text: '2024' },
-		{ id: 5, text: '2025' }
-	];
-
-	const batches = [
-		{
-			id: 1,
-			name: 'batch 1',
-			trainees: 200
-		},
-		{
-			id: 2,
-			name: 'batch 2',
-			trainees: 100
-		},
-		{
-			id: 3,
-			name: 'batch 3',
-			trainees: 20
-		},
-		{
-			id: 5,
-			name: 'batch 4',
-			trainees: 15
-		},
-		{
-			id: 5,
-			name: 'batch 5',
-			trainees: 50
-		}
-	];
-
 	$: OrganizationList = $organizations.data.map((item) => ({ ...item, text: item.name }));
+	$: batchDetails = $trainingBatches.data;
 
 	onMount(async () => {
 		organizations.getOrganizations();
+		trainingBatches.getTarainingBatch($page.params.courseId);
 	});
 </script>
 
@@ -133,7 +82,7 @@
 				<div class="t-grid md:t-grid-cols-2 lg:t-grid-cols-5 t-gap-4">
 					<ComboBox placeholder="Choose Organization" items={OrganizationList} {shouldFilterItem} />
 
-					<ComboBox placeholder="Select Year" items={YEARINTERVAL} {shouldFilterItem} />
+					<ComboBox placeholder="Select Year" items={years} {shouldFilterItem} />
 					<ComboBox
 						bind:selectedId={selectedDivisionId}
 						placeholder="Select Division"
@@ -179,7 +128,11 @@
 							<p
 								class="t-text-4xl t-font-bold t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] group-hover:t-text-[#F94646]"
 							>
-								1000
+								{#if $trainingBatches.loading}
+									<InlineLoading />
+								{:else}
+									{batchDetails.total_trainee}
+								{/if}
 							</p>
 						</div>
 					</div>
@@ -214,17 +167,23 @@
 				class="t-grid lg:t-grid-cols-2 md:t-grid-cols-1 t-gap-4 t-py-5 t-bg-white t-rounded-md t-px-4"
 			>
 				<div class="lg:t-col-span-2 md:t-col-1 t-text-center">
-					{#each batches as batch}
-						<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
-							<div class="t-col-span-1 t-text-2xl t-text-center t-text-[#44835C]">
-								{batch.name}
+					{#if $trainingBatches.loading}
+						<CodeSnippet skeleton />
+					{:else}
+						{#each batchDetails.batch_data as item}
+							<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
+								<div class="t-col-span-1 t-text-2xl t-text-center t-text-[#44835C]">
+									{item.batch}
+								</div>
+								<div
+									class="t-col-span-1  t-text-center t-text-2xl t-font-semibold t-text-[#44835C]"
+								>
+									{item.no_of_trainee}
+								</div>
 							</div>
-							<div class="t-col-span-1  t-text-center t-text-2xl t-font-semibold t-text-[#44835C]">
-								{batch.trainees}
-							</div>
-						</div>
-						<hr class="t-border-[#88C29E] t-border-t-[1.5px]" />
-					{/each}
+							<hr class="t-border-[#88C29E] t-border-t-[1.5px]" />
+						{/each}
+					{/if}
 				</div>
 			</div>
 		</div>

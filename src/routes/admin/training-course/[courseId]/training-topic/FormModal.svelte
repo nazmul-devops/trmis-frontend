@@ -46,7 +46,8 @@
 			} else {
 				await courseTopics.createCourseTopic({
 					...data,
-					training_course: parseInt($page.params.courseId)
+					// training_course: parseInt($page.params.courseId)
+					title: courseTopic.title
 				});
 			}
 			open = false;
@@ -56,6 +57,10 @@
 
 	$: {
 		courseTopics.getCourseTopics($page.params.courseId);
+	}
+
+	$: {
+		console.log($page.params.courseId);
 	}
 
 	onMount(async () => {
