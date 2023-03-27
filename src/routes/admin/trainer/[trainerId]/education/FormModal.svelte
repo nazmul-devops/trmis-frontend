@@ -89,6 +89,7 @@
 	bind:open
 	modalHeading="Create Education"
 	primaryButtonText={education.id == null ? 'Create' : 'Edit'}
+	preventCloseOnClickOutside
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}

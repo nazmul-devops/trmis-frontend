@@ -56,11 +56,13 @@
 	modalHeading="Create Group"
 	primaryButtonText={group.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<TextInput bind:value={group.name} labelText="Name" placeholder="Enter Name" />
 	<MultiSelect
+		direction="top"
 		selectedIds={groups}
 		titleText="Prerequisite"
 		label="Select Prerequisite..."

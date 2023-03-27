@@ -91,57 +91,72 @@
 	modalHeading="Create User"
 	primaryButtonText={user.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.username != null}
-			bind:value={user.username}
-			name="username"
-			labelText=" User Name"
-			placeholder="Enter username..."
-		/>
-		<TextInput
-			invalid={$errors.first_name != null}
-			bind:value={user.first_name}
-			name="first_name"
-			labelText="First Name"
-			placeholder="Enter  name..."
-		/>
-		<TextInput
-			invalid={$errors.last_name != null}
-			bind:value={user.last_name}
-			name="last_name"
-			labelText="Last Name"
-			placeholder="Enter  name..."
-		/>
-		<TextInput
-			invalid={$errors.email != null}
-			bind:value={user.email}
-			name="email"
-			labelText=" Email"
-			placeholder="Enter  name..."
-		/>
-		{#if user.id == null}
-			<PasswordInput
-				invalid={$errors.password != null}
-				bind:value={user.password}
-				name="password"
-				labelText="Password"
-				placeholder="Enter password..."
-			/>
-		{/if}
-		<Checkbox name="is_staff" labelText="Is Staff?" />
-		<Checkbox name="is_superuser" labelText="Is Super User?" />
-		<MultiSelect
-			selectedIds={Groups}
-			titleText="Groups"
-			label="Select Group..."
-			items={$groupsList.data.map((item) => ({ ...item, text: item.name }))}
-			on:select={(e) => setData('groups', e.detail.selectedIds)}
-		/>
-
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					invalid={$errors.username != null}
+					bind:value={user.username}
+					name="username"
+					labelText=" User Name"
+					placeholder="Enter username..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.first_name != null}
+					bind:value={user.first_name}
+					name="first_name"
+					labelText="First Name"
+					placeholder="Enter  name..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.last_name != null}
+					bind:value={user.last_name}
+					name="last_name"
+					labelText="Last Name"
+					placeholder="Enter  name..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.email != null}
+					bind:value={user.email}
+					name="email"
+					labelText=" Email"
+					placeholder="Enter  name..."
+				/>
+			</div>
+			<div>
+				{#if user.id == null}
+					<PasswordInput
+						invalid={$errors.password != null}
+						bind:value={user.password}
+						name="password"
+						labelText="Password"
+						placeholder="Enter password..."
+					/>
+				{/if}
+			</div>
+		</div>
+		<div class="t-mt-2">
+			<Checkbox name="is_staff" labelText="Is Staff?" />
+			<Checkbox name="is_superuser" labelText="Is Super User?" />
+		</div>
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
+	<MultiSelect
+		direction="top"
+		selectedIds={Groups}
+		titleText="Groups"
+		label="Select Group..."
+		items={$groupsList.data.map((item) => ({ ...item, text: item.name }))}
+		on:select={(e) => setData('groups', e.detail.selectedIds)}
+	/>
 </Modal>

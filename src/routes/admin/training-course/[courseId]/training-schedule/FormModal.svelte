@@ -78,90 +78,70 @@
 	bind:open
 	modalHeading={schedule.id == null ? 'Create Training Schedule' : 'Edit Trining Schedule'}
 	primaryButtonText={schedule.id == null ? 'Create' : 'Edit'}
+	preventCloseOnClickOutside
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<ComboBox
-			invalid={$errors.training_course}
-			bind:selectedId={$data.training_course}
-			placeholder="Select Training Course"
-			items={trainingCourseList}
-		/>
-		<!-- <Select
-			invalid={$errors.training_course != null}
-			name="training_course"
-			labelText="Training Course"
-		>
-			<SelectItem text="choose course" />
-			{#each $trainingCourses.data as Course}
-				<SelectItem value={Course.id} text={Course.title} />
-			{/each}
-		</Select> -->
-		<ComboBox
-			name="training_center"
-			bind:selectedId={$data.training_center}
-			titleText="Training Center"
-			placeholder="Select Training Center"
-			items={trainingCenterList}
-		/>
-		<!-- <Select
-			invalid={$errors.training_center != null}
-			name="training_center"
-			labelText="Training Center"
-		>
-			<SelectItem text="choose Center" />
-			{#each $trainingCenters.data as center}
-				<SelectItem value={center.id} text={center.name} />
-			{/each}
-		</Select> -->
-		<ComboBox
-			name="status"
-			invalid={$errors.status != null}
-			bind:selectedId={$data.status}
-			titleText="Status"
-			placeholder="Select Status"
-			items={[
-				{ id: 1, text: 'Pending' },
-				{ id: 2, text: 'Approved' },
-				{ id: 3, text: 'Rejected' }
-			]}
-		/>
-		<!-- <Select invalid={$errors.status != null} name="status" labelText="Status">
-			<SelectItem text="choose Status" />
-			<SelectItem text="Pending" value="1" />
-			<SelectItem text="Approved" value="2" />
-			<SelectItem text="Rejected" value="3" />
-		</Select> -->
-		<DatePicker
-			bind:value={$data.start_date}
-			name="start_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.start_date != null}
-				labelText="Start Date"
-				placeholder="YYYY-mm-dd"
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<ComboBox
+				invalid={$errors.training_course != null}
+				bind:selectedId={$data.training_course}
+				titleText="Training Course"
+				placeholder="Select Training Course"
+				items={trainingCourseList}
 			/>
-		</DatePicker>
-		<DatePicker
-			bind:value={$data.end_date}
-			name="end_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.end_date != null}
-				labelText="End Date"
-				placeholder="YYYY-mm-dd"
+			<ComboBox
+				name="training_center"
+				bind:selectedId={$data.training_center}
+				titleText="Training Center"
+				placeholder="Select Training Center"
+				items={trainingCenterList}
 			/>
-		</DatePicker>
-
-		<!-- <p>{JSON.stringify($errors)}</p> -->
+			<ComboBox
+				name="status"
+				invalid={$errors.status != null}
+				bind:selectedId={$data.status}
+				titleText="Status"
+				placeholder="Select Status"
+				items={[
+					{ id: 1, text: 'Pending' },
+					{ id: 2, text: 'Approved' },
+					{ id: 3, text: 'Rejected' }
+				]}
+			/>
+			<div class="custom">
+				<DatePicker
+					bind:value={$data.start_date}
+					name="start_date"
+					dateFormat="Y-m-d"
+					datePickerType="single"
+					on:change
+				>
+					<DatePickerInput
+						invalid={$errors.start_date != null}
+						labelText="Start Date"
+						placeholder="YYYY-mm-dd"
+					/>
+				</DatePicker>
+			</div>
+			<div class="custom">
+				<DatePicker
+					bind:value={$data.end_date}
+					name="end_date"
+					dateFormat="Y-m-d"
+					datePickerType="single"
+					on:change
+				>
+					<DatePickerInput
+						invalid={$errors.end_date != null}
+						labelText="End Date"
+						placeholder="YYYY-mm-dd"
+					/>
+				</DatePicker>
+			</div>
+		</div>
 	</form>
 	<!-- {JSON.stringify($data)} -->
 	<!-- {JSON.stringify($errors)} -->

@@ -47,11 +47,11 @@
 	});
 
 	const { form, reset, createSubmitHandler, setFields, data, errors } = createForm({
-		transform: ( values : any ) =>{
+		transform: (values: any) => {
 			return {
 				...values,
-				category : parseInt( values.category )
-			}
+				category: parseInt(values.category)
+			};
 		},
 		extend: validator({ schema })
 	});
@@ -77,47 +77,57 @@
 	modalHeading={image.id == null ? 'Upload Images' : 'Edit Images'}
 	primaryButtonText={image.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.title != null}
-			name="title"
-			labelText="Title"
-			placeholder="Enter Title..."
-		/>
-		{#if $errors.title}
-			<p class="t-text-red-500">{$errors.title}</p>
-		{/if}
-		<TextInput
-			invalid={$errors.description != null}
-			name="description"
-			labelText="Description"
-			placeholder="Enter Description..."
-		/>
-		{#if $errors.description}
-			<p class="t-text-red-500">{$errors.description}</p>
-		{/if}
+		<div class="t-grid t-grid-cols-2 t-gap-6">
+			<div>
+				<TextInput
+					invalid={$errors.title != null}
+					name="title"
+					labelText="Title"
+					placeholder="Enter Title..."
+				/>
+				{#if $errors.title}
+					<p class="t-text-red-500">{$errors.title}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.description != null}
+					name="description"
+					labelText="Description"
+					placeholder="Enter Description..."
+				/>
+				{#if $errors.description}
+					<p class="t-text-red-500">{$errors.description}</p>
+				{/if}
+			</div>
 
-		<Select selected={image.category} labelText="Course" name="category">
-			<SelectItem text="choose Course" />
-			<SelectItem value="1" text="Meeting" />
-			<SelectItem value="2" text="Orientation" />
-			<SelectItem value="3" text="Training" />
-			<SelectItem value="4" text="Seminar" />
-			<SelectItem value="5" text="Workshop" />
-		</Select>
-
-		<FileUploader
-			bind:this={fileUploader}
-			multiple
-			labelTitle="Upload files"
-			buttonLabel="Add files"
-			bind:files
-			status="complete"
-			type="file"
-		/>
+			<div>
+				<Select selected={image.category} labelText="Course" name="category">
+					<SelectItem text="choose Course" />
+					<SelectItem value="1" text="Meeting" />
+					<SelectItem value="2" text="Orientation" />
+					<SelectItem value="3" text="Training" />
+					<SelectItem value="4" text="Seminar" />
+					<SelectItem value="5" text="Workshop" />
+				</Select>
+			</div>
+			<div>
+				<FileUploader
+					bind:this={fileUploader}
+					multiple
+					labelTitle="Upload files"
+					buttonLabel="Add files"
+					bind:files
+					status="complete"
+					type="file"
+				/>
+			</div>
+		</div>
 	</form>
 
 	<!-- {JSON.stringify($data)} -->

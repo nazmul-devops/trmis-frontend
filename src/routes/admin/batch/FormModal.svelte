@@ -108,90 +108,113 @@
 	bind:open
 	modalHeading={batch.id == null ? 'Create Batch' : 'Edit Batch'}
 	primaryButtonText={batch.id == null ? 'Create' : 'Edit'}
+	preventCloseOnClickOutside
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.name != null}
-			invalidText={$errors.name}
-			name="name"
-			labelText="Name"
-			placeholder="Enter Name..."
-		/>
-		<ComboBox
-			name="status"
-			invalid={$errors.status != null}
-			invalidText={$errors.status}
-			titleText="Status"
-			placeholder="Choose Status"
-			bind:selectedId={$data.status}
-			items={[
-				{ id: 1, text: 'Pending' },
-				{ id: 2, text: 'In Progress' },
-				{ id: 3, text: 'Completed' }
-			]}
-		/>
-		<TextInput
-			invalid={$errors.duration != null}
-			invalidText={$errors.duration}
-			name="duration"
-			labelText="Duration"
-			placeholder="Enter Duration..."
-		/>
-		<TextInput
-			invalid={$errors.initial_cost != null}
-			invalidText={$errors.initial_cost}
-			name="initial_cost"
-			labelText="Initial Cost"
-			placeholder="Enter Initial Cost..."
-		/>
-		<TextInput
-			invalid={$errors.final_cost != null}
-			invalidText={$errors.final_cost}
-			name="final_cost"
-			labelText="Final Cost"
-			placeholder="Enter Final Cost..."
-		/>
-		<ComboBox
-			invalid={$errors.coordinator != null}
-			invalidText={$errors.coordinator}
-			name="coordinator"
-			titleText="Coordinator"
-			placeholder="Choose Coordinator"
-			bind:selectedId={$data.coordinator}
-			items={coordinatorsList}
-		/>
-		<ComboBox
-			invalid={$errors.organization != null}
-			invalidText={$errors.organization}
-			name="organization"
-			titleText="Organization"
-			placeholder="Choose Organization"
-			bind:selectedId={$data.organization}
-			items={organizationsList}
-		/>
-		<ComboBox
-			invalid={$errors.source_of_fund != null}
-			invalidText={$errors.source_of_fund}
-			name="source_of_fund"
-			titleText="Source Of Fund"
-			placeholder="Choose Source Of Fund"
-			bind:selectedId={$data.source_of_fund}
-			items={sourceOfFundList}
-		/>
-		<ComboBox
-			invalid={$errors.training_course_schedule != null}
-			invalidText={$errors.training_course_schedule}
-			name="training_course_schedule"
-			titleText="Training Schedule"
-			placeholder="Choose Schedule"
-			bind:selectedId={$data.training_course_schedule}
-			items={trainingScheduleList}
-		/>
-
-		<!-- <p>{JSON.stringify($errors)}</p> -->
-		<!-- <p>{JSON.stringify($data)}</p> -->
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					invalid={$errors.name != null}
+					invalidText={$errors.name}
+					name="name"
+					labelText="Name"
+					placeholder="Enter Name..."
+				/>
+			</div>
+			<div>
+				<ComboBox
+					name="status"
+					invalid={$errors.status != null}
+					invalidText={$errors.status}
+					titleText="Status"
+					placeholder="Choose Status"
+					bind:selectedId={$data.status}
+					items={[
+						{ id: 1, text: 'Pending' },
+						{ id: 2, text: 'In Progress' },
+						{ id: 3, text: 'Completed' }
+					]}
+				/>
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.duration != null}
+					invalidText={$errors.duration}
+					name="duration"
+					labelText="Duration"
+					placeholder="Enter Duration..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.initial_cost != null}
+					invalidText={$errors.initial_cost}
+					name="initial_cost"
+					labelText="Initial Cost"
+					placeholder="Enter Initial Cost..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.final_cost != null}
+					invalidText={$errors.final_cost}
+					name="final_cost"
+					labelText="Final Cost"
+					placeholder="Enter Final Cost..."
+				/>
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.coordinator != null}
+					invalidText={$errors.coordinator}
+					name="coordinator"
+					titleText="Coordinator"
+					placeholder="Choose Coordinator"
+					bind:selectedId={$data.coordinator}
+					items={coordinatorsList}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.organization != null}
+					invalidText={$errors.organization}
+					direction="top"
+					name="organization"
+					titleText="Organization"
+					placeholder="Choose Organization"
+					bind:selectedId={$data.organization}
+					items={organizationsList}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.source_of_fund != null}
+					invalidText={$errors.source_of_fund}
+					direction="top"
+					name="source_of_fund"
+					titleText="Source Of Fund"
+					placeholder="Choose Source Of Fund"
+					bind:selectedId={$data.source_of_fund}
+					items={sourceOfFundList}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.training_course_schedule != null}
+					invalidText={$errors.training_course_schedule}
+					direction="top"
+					name="training_course_schedule"
+					titleText="Training Schedule"
+					placeholder="Choose Schedule"
+					bind:selectedId={$data.training_course_schedule}
+					items={trainingScheduleList}
+				/>
+			</div>
+			<!-- <p>{JSON.stringify($errors)}</p> -->
+			<!-- <p>{JSON.stringify($data)}</p> -->
+		</div>
 	</form>
 </Modal>

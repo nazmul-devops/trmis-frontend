@@ -54,12 +54,19 @@
 	modalHeading="Create Grades"
 	primaryButtonText={grade.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  Serial_No..." />
-		<TextInput name="remarks" labelText="Remarks" placeholder="Enter  Remarks..." />
+		<div>
+			<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
+		</div>
+		<div>
+			<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  Serial_No..." />
+		</div>
+		<div>
+			<TextInput name="remarks" labelText="Remarks" placeholder="Enter  Remarks..." />
+		</div>
 	</form>
 </Modal>

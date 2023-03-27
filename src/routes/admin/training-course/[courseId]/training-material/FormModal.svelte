@@ -23,7 +23,7 @@
 		id: null,
 		title: null,
 		description: null,
-		files: null,
+		files: null
 	};
 
 	function formSetFields() {
@@ -48,7 +48,7 @@
 	const schema = yup.object({
 		title: yup.string().required().typeError('Title is required.'),
 		description: yup.string().required().typeError('Description is required.'),
-		files: yup.mixed().required(),
+		files: yup.mixed().required()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -76,7 +76,6 @@
 		}
 	});
 
-
 	$: {
 		courseMaterials.getCourseMaterials($page.params.courseId);
 	}
@@ -90,54 +89,46 @@
 	bind:open
 	modalHeading={courseMaterial.id == null ? 'Create Training Material' : 'Edit Training Material'}
 	primaryButtonText={courseMaterial.id == null ? 'Create' : 'Edit'}
+	preventCloseOnClickOutside
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.title != null}
-			name="title"
-			labelText="title"
-			placeholder="Enter  Title..."
-		/>
-		{#if $errors.title}
-			<p class="t-text-red-600">{$errors.title}</p>
-		{/if}
-		<TextInput
-			invalid={$errors.description != null}
-			name="description"
-			labelText="Description"
-			placeholder="Enter  description..."
-		/>
-		{#if $errors.description}
-			<p class="t-text-red-600">{$errors.description}</p>
-		{/if}
-
-		<!-- <ComboBox
-			titleText="Course"
-			invalid={$errors.training_course_id != null}
-			bind:selectedId={$data.training_course_id}
-			placeholder={'Choose Course'}
-			items={trainingCoursesList}
-		/>
-		{#if $errors.training_course_id}
-			<p class="t-text-red-600">{$errors.training_course_id}</p>
-		{/if} -->
-		<!-- <Select name="training_course_id" labelText="Course">
-			<SelectItem text="choose Course" />
-			{#each $trainingCourses.data as course}
-				<SelectItem value={course.id} text={course.title} />
-			{/each}
-		</Select> -->
-		<FileUploader
-			bind:this={fileUploader}
-			labelTitle="Upload files"
-			buttonLabel="Add files"
-			bind:files
-			status="complete"
-			type="file"
-		/>
-		<!-- {JSON.stringify($errors, $data)} -->
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					invalid={$errors.title != null}
+					name="title"
+					labelText="title"
+					placeholder="Enter  Title..."
+				/>
+				{#if $errors.title}
+					<p class="t-text-red-600">{$errors.title}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					invalid={$errors.description != null}
+					name="description"
+					labelText="Description"
+					placeholder="Enter  description..."
+				/>
+				{#if $errors.description}
+					<p class="t-text-red-600">{$errors.description}</p>
+				{/if}
+			</div>
+			<div>
+				<FileUploader
+					bind:this={fileUploader}
+					labelTitle="Upload files"
+					buttonLabel="Add files"
+					bind:files
+					status="complete"
+					type="file"
+				/>
+			</div>
+			<!-- {JSON.stringify($errors, $data)} -->
+		</div>
 	</form>
 </Modal>

@@ -73,41 +73,50 @@
 	modalHeading="Create Notice"
 	primaryButtonText={notice.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			bind:value={$data.title}
-			name="title"
-			labelText="Title"
-			placeholder="Enter Title..."
-		/>
-		<TextInput
-			bind:value={$data.description}
-			name="description"
-			labelText="Description"
-			placeholder="Enter Description..."
-		/>
-		<FileUploader
-			bind:this={fileUploader}
-			labelTitle="Upload files"
-			buttonLabel="Add files"
-			bind:files
-			status="complete"
-			type="file"
-		/>
-		<div>
-			<label for="">Expiration Date</label> <br />
-			<input
-				class=" t-border t-p-3 t-my-2 "
-				type="datetime-local"
-				id="birthdaytime"
-				bind:value={$data.expiration_date}
-				name="expiration_date"
-			/>
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					bind:value={$data.title}
+					name="title"
+					labelText="Title"
+					placeholder="Enter Title..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.description}
+					name="description"
+					labelText="Description"
+					placeholder="Enter Description..."
+				/>
+			</div>
+			<div>
+				<label for="">Expiration Date</label> <br />
+				<input
+					class=" t-border t-p-3 t-my-2 "
+					type="datetime-local"
+					id="birthdaytime"
+					bind:value={$data.expiration_date}
+					name="expiration_date"
+				/>
+			</div>
+			<div>
+				<FileUploader
+					bind:this={fileUploader}
+					labelTitle="Upload files"
+					buttonLabel="Add files"
+					bind:files
+					status="complete"
+					type="file"
+				/>
+			</div>
 		</div>
 		<Checkbox name="show_in_home_page" labelText=" Show Public Website ?" />
 	</form>
-	{JSON.stringify($data)}
+	<!-- {JSON.stringify($data)} -->
 </Modal>

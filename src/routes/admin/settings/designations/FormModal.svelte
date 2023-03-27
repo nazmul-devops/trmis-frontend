@@ -59,22 +59,34 @@
 	modalHeading={designation.id == null ? 'Create Designations' : 'Edit Designations'}
 	primaryButtonText={designation.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput invalid={$errors.name} name="name" labelText=" name" placeholder="Enter  name..." />
-		{#if $errors.name}
-			<p class="t-text-red-500">{$errors.name}</p>
-		{/if}
-		<TextInput
-			invalid={$errors.serial_no}
-			name="serial_no"
-			labelText="Serial_No"
-			placeholder="Enter  serial_no..."
-		/>
-		{#if $errors.serial_no}
-			<p class="t-text-red-500">{$errors.serial_no}</p>
-		{/if}
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+				invalid={$errors.name}
+				name="name"
+				labelText=" name"
+				placeholder="Enter  name..."
+			/>
+			{#if $errors.name}
+				<p class="t-text-red-500">{$errors.name}</p>
+			{/if}
+			</div>
+			<div>
+				<TextInput
+				invalid={$errors.serial_no}
+				name="serial_no"
+				labelText="Serial_No"
+				placeholder="Enter  serial_no..."
+			/>
+			{#if $errors.serial_no}
+				<p class="t-text-red-500">{$errors.serial_no}</p>
+			{/if}
+			</div>
+		</div>
 	</form>
 </Modal>

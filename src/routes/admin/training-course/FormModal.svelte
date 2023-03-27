@@ -91,33 +91,36 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<TextInput
 			invalid={$errors.title != null}
 			name="title"
 			labelText="title"
 			placeholder="Enter Title..."
-		/>
-		<TextInput
-			invalid={$errors.description != null}
-			name="description"
-			labelText="Description"
-			placeholder="Enter description..."
-		/>
-		<TextInput
-			invalid={$errors.code != null}
-			name="code"
-			labelText="Code"
-			placeholder="Enter 	Code..."
-		/>
+			/>
+			<TextInput
+				invalid={$errors.description != null}
+				name="description"
+				labelText="Description"
+				placeholder="Enter description..."
+			/>
+			<TextInput
+				invalid={$errors.code != null}
+				name="code"
+				labelText="Code"
+				placeholder="Enter 	Code..."
+			/>
 
-		<ComboBox
-			bind:selectedId={$data.course_category}
-			titleText="Course Category"
-			placeholder="Select Course Category"
-			items={CourseCategories}
-			{shouldFilterItem}
-		/>
+			<ComboBox
+				bind:selectedId={$data.course_category}
+				direction='top'
+				titleText="Course Category"
+				placeholder="Select Course Category"
+				items={CourseCategories}
+				{shouldFilterItem}
+			/>
 
+		</div>
 		<!-- {JSON.stringify($errors)} -->
 	</form>
 </Modal>

@@ -68,34 +68,35 @@
 	modalHeading={courseTopic.id === null ? 'Create training Topic' : 'Edit training Topic'}
 	primaryButtonText={courseTopic.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			name="title"
-			labelText="title"
-			placeholder="Enter  Title..."
-			invalid={$errors.title != null}
-		/>
-		{#if $errors.title}
-			<p class="t-text-red-600">{$errors.title}</p>
-		{/if}
-		<TextInput
-			name="description"
-			labelText="Description"
-			placeholder="Enter  description..."
-			invalid={$errors.description != null}
-		/>
-		{#if $errors.description}
-			<p class="t-text-red-600">{$errors.description}</p>
-		{/if}
-		<!-- <Select name="training_course" labelText="Course">
-			<SelectItem text="choose Course" />
-			{#each $trainingCourses.data as course}
-				<SelectItem value={course.id} text={course.title} />
-			{/each}
-		</Select> -->
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					name="title"
+					labelText="title"
+					placeholder="Enter  Title..."
+					invalid={$errors.title != null}
+				/>
+				{#if $errors.title}
+					<p class="t-text-red-600">{$errors.title}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					name="description"
+					labelText="Description"
+					placeholder="Enter  description..."
+					invalid={$errors.description != null}
+				/>
+				{#if $errors.description}
+					<p class="t-text-red-600">{$errors.description}</p>
+				{/if}
+			</div>
+			<!-- {JSON.stringify($errors)} -->
+		</div>
 	</form>
-	{JSON.stringify($errors)}
 </Modal>
