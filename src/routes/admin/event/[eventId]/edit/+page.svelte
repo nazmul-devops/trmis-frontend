@@ -178,17 +178,6 @@
 			]}
 			{shouldFilterItem}
 		/>
-		<!-- <Select
-			invalid={$errors.status != null}
-			bind:value={$data.status}
-			name="status"
-			labelText="Status"
-		>
-			<SelectItem text="Choose Status" value="" />
-			<SelectItem text="Pending" value="1" />
-			<SelectItem text="Complete" value="2" />
-			<SelectItem text="In progress" value="3" />
-		</Select> -->
 		<ComboBox
 			invalid={$errors.type != null}
 			bind:selectedId={$data.type}
@@ -202,14 +191,6 @@
 			]}
 			{shouldFilterItem}
 		/>
-		<!-- <Select invalid={$errors.type != null} bind:selected={$data.type} name="type" labelText="Type">
-			<SelectItem text="Choose Type" value="" />
-			<SelectItem text="Meeting" value="1" />
-			<SelectItem text="Workshop" value="2" />
-			<SelectItem text="Orientation" value="3" />
-			<SelectItem text="Sensitization" value="4" />
-		</Select> -->
-
 		<ComboBox
 			invalid={$errors.organization != null}
 			bind:selectedId={$data.organization}
@@ -218,18 +199,6 @@
 			items={organizationsList}
 			{shouldFilterItem}
 		/>
-		<!-- <Select
-			invalid={$errors.organization != null}
-			bind:value={$data.organization}
-			name="organization"
-			labelText="Organizations"
-		>
-			<SelectItem text="Choose Organization" value="" />
-			{#each $organizations.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
-
 		<ComboBox
 			invalid={$errors.coordinator != null}
 			bind:selectedId={$data.coordinator}
@@ -238,17 +207,6 @@
 			items={coordinatorList}
 			{shouldFilterItem}
 		/>
-		<!-- <Select
-			invalid={$errors.coordinator != null}
-			bind:value={$data.coordinator}
-			name="coordinator"
-			labelText="Coordinator"
-		>
-			<SelectItem text="Choose Coordinator" value="" />
-			{#each $coordinators.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
 		<ComboBox
 			invalid={$errors.schedule != null}
 			bind:selectedId={$data.schedule}
@@ -257,17 +215,7 @@
 			items={schedules}
 			{shouldFilterItem}
 		/>
-		<!-- <Select
-			invalid={$errors.schedule != null}
-			bind:value={$data.schedule}
-			name="schedule"
-			labelText="Schedule"
-		>
-			<SelectItem text="Choose schedule" value="" />
-			{#each eventSchedule as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
+
 	</div>
 	<div class="t-my-5 ">
 		<DataTable
@@ -334,5 +282,5 @@
 </div>
 
 <!-- <p>{JSON.stringify($errors)}</p> -->
-<p>{JSON.stringify($data)}</p>
+<!-- <p>{JSON.stringify($data)}</p> -->
 <!-- </Modal> -->

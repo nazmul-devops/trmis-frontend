@@ -12,11 +12,18 @@
 		Select,
 		SelectItem,
 		DatePicker,
-		DatePickerInput
+		DatePickerInput,
+		ComboBox
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { createBatchSession, updateBatchSession } from '$lib/service/batch-sessions-detail';
+
+	function shouldFilterItem(item, value) {
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
+
 	export let open = true;
 	export let sessionDetail = {
 		id: null,
@@ -84,6 +91,9 @@
 		}
 	});
 
+	$: trainer = $trainers.data.map((item) => ({ ...item, text: item.name }));
+	$: courseTopic = $courseTopics.data.map((item) => ({ ...item, text: item.title }));
+
 	onMount(async () => {
 		trainers.getTrainers();
 		courseTopics.getCourseTopics();
@@ -95,61 +105,81 @@
 	modalHeading="Create Session Details"
 	primaryButtonText="ADD"
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			invalid={$errors.name != null}
-			name="session_day"
-			labelText="Session Day Number"
-			placeholder="Enter Session Day..."
-		/>
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<div class="t-col-span-2">
+					<TextInput
+						invalid={$errors.name != null}
+						name="session_day"
+						labelText="Session Day Number"
+						placeholder="Enter Session Day..."
+					/>
+				</div>
+			</div>
 
-		<DatePicker
-			bind:value={$data.session_date}
-			name="session_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.session_date != null}
-				labelText="Session Date"
-				placeholder="YYYY-mm-dd"
-			/>
-		</DatePicker>
+			<div>
+				<DatePicker
+					bind:value={$data.session_date}
+					name="session_date"
+					dateFormat="Y-m-d"
+					datePickerType="single"
+					on:change
+				>
+					<DatePickerInput
+						invalid={$errors.session_date != null}
+						labelText="Session Date"
+						placeholder="YYYY-mm-dd"
+					/>
+				</DatePicker>
+			</div>
 
-		<TextInput
-			invalid={$errors.session_no != null}
-			name="session_no"
-			labelText="Session NO"
-			placeholder="Enter Session No..."
-		/>
+			<div>
+				<TextInput
+					invalid={$errors.session_no != null}
+					name="session_no"
+					labelText="Session NO"
+					placeholder="Enter Session No..."
+				/>
+			</div>
 
-		<div class=" t-p-3 t-border ">
-			<label for="">Start Time</label>
-			<input type="time" name="from_time" />
+			<div class=" t-p-3 t-border ">
+				<label for="">Start Time</label>
+				<input type="time" name="from_time" />
+			</div>
+			<div class="t-p-3 t-border">
+				<label for="">End Time</label>
+				<input type="time" name="to_time" />
+			</div>
+
+			<div>
+				<ComboBox
+					invalid={$errors.trainers != null}
+					direction="top"
+					bind:selectedId={$data.trainer}
+					titleText="Trainer"
+					placeholder="Choose Trainer"
+					items={trainer}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.topic != null}
+					direction="top"
+					bind:selectedId={$data.topic}
+					titleText="Topic"
+					placeholder="Choose Topic"
+					items={courseTopic}
+					{shouldFilterItem}
+				/>
+			</div>
+			<!-- <p>{JSON.stringify($errors)}</p> -->
+			<!-- <p>{JSON.stringify($data)}</p> -->
 		</div>
-		<div class="t-p-3 t-border">
-			<label for="">End Time</label>
-			<input type="time" name="to_time" />
-		</div>
-
-		<Select invalid={$errors.trainer != null} name="trainer" labelText="Trainer">
-			<SelectItem text="choose Trainer" value="" />
-			{#each $trainers.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select>
-		<Select invalid={$errors.topic != null} name="topic" labelText="Topic">
-			<SelectItem text="choose Topic" value="" />
-			{#each $courseTopics.data as item}
-				<SelectItem text={item.title} value={item.id} />
-			{/each}
-		</Select>
-
-		<!-- <p>{JSON.stringify($errors)}</p> -->
-		<!-- <p>{JSON.stringify($data)}</p> -->
 	</form>
 </Modal>

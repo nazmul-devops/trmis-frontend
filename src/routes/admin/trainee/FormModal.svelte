@@ -161,150 +161,173 @@
 	on:click:button--secondary={Cancel}
 	on:submit={submitHandler}
 >
-<form use:form>
-	<div class="t-grid t-grid-cols-2 t-gap-2">
-	<div class="t-col-span-2">
-		<TextInput
-		bind:value={$data.name}
-		invalid={$errors.name != null}
-		name="name"
-		labelText="Name"
-		placeholder="Enter Name..."
-	/>
-	{#if $errors.name}
-		<p class=" t-text-red-500 ">{$errors.name}</p>
-	{/if}
-	</div>
-	<TextInput
-		bind:value={$data.hris}
-		type="number"
-		invalid={$errors.hris != null}
-		name="hris"
-		labelText="HRIS ID"
-		placeholder="Enter HRIS ID.."
-	/>
-	<!-- {#if $errors.phone}
+	<form use:form>
+		<div class="t-grid t-grid-cols-2 t-gap-2">
+			<div class="t-col-span-2">
+				<TextInput
+					bind:value={$data.name}
+					invalid={$errors.name != null}
+					name="name"
+					labelText="Name"
+					placeholder="Enter Name..."
+				/>
+				{#if $errors.name}
+					<p class=" t-text-red-500 ">{$errors.name}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.hris}
+					type="number"
+					invalid={$errors.hris != null}
+					name="hris"
+					labelText="HRIS ID"
+					placeholder="Enter HRIS ID.."
+				/>
+				<!-- {#if $errors.phone}
 		<p class=" t-text-red-500 ">{$errors.hris}</p>
 	{/if} -->
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.phone}
+					invalid={$errors.phone != null}
+					name="phone"
+					labelText="Phone"
+					placeholder="Enter  Phone..."
+				/>
+				{#if $errors.phone}
+					<p class=" t-text-red-500 ">{$errors.phone}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.nid}
+					type="number"
+					invalid={$errors.nid != null}
+					name="nid"
+					labelText="NID"
+					placeholder="Enter  NID No..."
+				/>
+				{#if $errors.nid}
+					<p class=" t-text-red-500 ">{$errors.nid}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.email}
+					invalid={$errors.email != null}
+					name="email"
+					labelText="Email"
+					placeholder="Enter  Email..."
+				/>
+				{#if $errors.email}
+					<p class=" t-text-red-500 ">{$errors.email}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.address}
+					invalid={$errors.address != null}
+					name="address"
+					labelText="Address"
+					placeholder="Enter  Address..."
+				/>
+				{#if $errors.address}
+					<p class=" t-text-red-500 ">{$errors.address}</p>
+				{/if}
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.gender != null}
+					bind:selectedId={$data.gender}
+					titleText="Gender"
+					placeholder="Select Gender"
+					items={[
+						{ id: 1, text: 'Male' },
+						{ id: 2, text: 'Female' },
+						{ id: 3, text: 'Other' }
+					]}
+					{shouldFilterItem}
+				/>
 
-	<TextInput
-		bind:value={$data.phone}
-		invalid={$errors.phone != null}
-		name="phone"
-		labelText="Phone"
-		placeholder="Enter  Phone..."
-	/>
-	{#if $errors.phone}
-		<p class=" t-text-red-500 ">{$errors.phone}</p>
-	{/if}
-	<TextInput
-		bind:value={$data.nid}
-		type="number"
-		invalid={$errors.nid != null}
-		name="nid"
-		labelText="NID"
-		placeholder="Enter  NID No..."
-	/>
-	{#if $errors.nid}
-		<p class=" t-text-red-500 ">{$errors.nid}</p>
-	{/if}
-	<TextInput
-		bind:value={$data.email}
-		invalid={$errors.email != null}
-		name="email"
-		labelText="Email"
-		placeholder="Enter  Email..."
-	/>
-	{#if $errors.email}
-		<p class=" t-text-red-500 ">{$errors.email}</p>
-	{/if}
-	<TextInput
-		bind:value={$data.address}
-		invalid={$errors.address != null}
-		name="address"
-		labelText="Address"
-		placeholder="Enter  Address..."
-	/>
-	{#if $errors.address}
-		<p class=" t-text-red-500 ">{$errors.address}</p>
-	{/if}
-	<ComboBox
-		invalid={$errors.gender != null}
-		bind:selectedId={$data.gender}
-		titleText="Gender"
-		placeholder="Select Gender"
-		items={[
-			{ id: 1, text: 'Male' },
-			{ id: 2, text: 'Female' },
-			{ id: 3, text: 'Other' }
-		]}
-		{shouldFilterItem}
-	/>
+				{#if $errors.gender}
+					<p class=" t-text-red-500 ">{$errors.gender}</p>
+				{/if}
+			</div>
 
-	{#if $errors.gender}
-		<p class=" t-text-red-500 ">{$errors.gender}</p>
-	{/if}
+			<div>
+				<ComboBox
+					invalid={$errors.designation != null}
+					bind:selectedId={$data.designation}
+					titleText="Designations"
+					placeholder="Select Designations"
+					items={Designations}
+					{shouldFilterItem}
+				/>
 
-	<ComboBox
-		invalid={$errors.designation != null}
-		bind:selectedId={$data.designation}
-		titleText="Designations"
-		placeholder="Select Designations"
-		items={Designations}
-		{shouldFilterItem}
-	/>
+				{#if $errors.designation}
+					<p class=" t-text-red-500 ">{$errors.designation}</p>
+				{/if}
+			</div>
+			<div>
+				<ComboBox
+					invalid={$errors.organization != null}
+					bind:selectedId={$data.organization}
+					titleText="Organizations"
+					placeholder="Select Organizations"
+					items={Organizations}
+					{shouldFilterItem}
+				/>
+				{#if $errors.organization}
+					<p class=" t-text-red-500 ">{$errors.organization}</p>
+				{/if}
+			</div>
+			<div class="t-col-span-2">
+				<p class="t-text-2xl t-font-medium t-text-[#161616] t-py-2">Place of Posting</p>
+			</div>
+			<div>
+				<ComboBox
+					name="division"
+					direction="top"
+					invalid={$errors.division != null}
+					bind:selectedId={$data.division}
+					titleText="Division"
+					placeholder="Select Division"
+					items={locations}
+					{shouldFilterItem}
+				/>
 
-	{#if $errors.designation}
-		<p class=" t-text-red-500 ">{$errors.designation}</p>
-	{/if}
-	<ComboBox
-		invalid={$errors.organization != null}
-		bind:selectedId={$data.organization}
-		titleText="Organizations"
-		placeholder="Select Organizations"
-		items={Organizations}
-		{shouldFilterItem}
-	/>
-	{#if $errors.organization}
-		<p class=" t-text-red-500 ">{$errors.organization}</p>
-	{/if}
-	<div class="t-col-span-2">
-		<p class="t-text-2xl t-font-medium t-text-[#161616] t-py-2">Place of Posting</p>
-	</div>
-	<ComboBox
-		name="division"
-		invalid={$errors.division != null}
-		bind:selectedId={$data.division}
-		titleText="Division"
-		placeholder="Select Division"
-		items={locations}
-		{shouldFilterItem}
-	/>
+				{#if $errors.division}
+					<p class=" t-text-red-500 ">{$errors.division}</p>
+				{/if}
+			</div>
 
-	{#if $errors.division}
-		<p class=" t-text-red-500 ">{$errors.division}</p>
-	{/if}
-
-	<ComboBox
-		disabled={!$data.division}
-		name="district"
-		bind:selectedId={$data.district}
-		titleText="Zilla"
-		placeholder="Select Zilla"
-		items={zilaOptions}
-		{shouldFilterItem}
-	/>
-	<ComboBox
-		disabled={!$data.district}
-		name="sub_district"
-		bind:selectedId={$data.sub_district}
-		titleText="Upazilla"
-		placeholder="Select Upazilla"
-		items={upazilaOptions}
-		{shouldFilterItem}
-	/>
-
-	</div>
+			<div>
+				<ComboBox
+					disabled={!$data.division}
+					direction="top"
+					name="district"
+					bind:selectedId={$data.district}
+					titleText="Zilla"
+					placeholder="Select Zilla"
+					items={zilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					disabled={!$data.district}
+					direction="top"
+					name="sub_district"
+					bind:selectedId={$data.sub_district}
+					titleText="Upazilla"
+					placeholder="Select Upazilla"
+					items={upazilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+		</div>
 		<!-- <p>{JSON.stringify($data)}</p> -->
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>

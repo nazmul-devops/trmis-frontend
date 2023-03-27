@@ -132,67 +132,86 @@
 	bind:open
 	modalHeading={trainingCenter.id == null ? 'Create Training Venue' : 'Edit Training Venue'}
 	primaryButtonText={trainingCenter.id == null ? 'Create' : 'Edit'}
+	preventCloseOnClickOutside
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput
-			bind:value={$data.name}
-			invalid={$errors.name != null}
-			name="name"
-			labelText="Name"
-			placeholder="Enter Name..."
-		/>
-		{#if $errors.name}
-			<p>{$errors.name}</p>
-		{/if}
-		<ComboBox
-			bind:selectedId={$data.division}
-			titleText="Division"
-			placeholder="Select Division"
-			items={locations}
-			{shouldFilterItem}
-		/>
-		<ComboBox
-			disabled={!$data.division}
-			bind:selectedId={$data.district}
-			titleText="Zilla"
-			placeholder="Select Zilla"
-			items={zilaOptions}
-			{shouldFilterItem}
-		/>
-		<ComboBox
-			disabled={!$data.district}
-			bind:selectedId={$data.sub_district}
-			titleText="Upazilla"
-			placeholder="Select Upazilla"
-			items={upazilaOptions}
-			{shouldFilterItem}
-		/>
-		<TextInput
-			bind:value={$data.latitude}
-			invalid={$errors.latitude != null}
-			name="latitude"
-			labelText="Latitute"
-			placeholder="Enter Latitute..."
-		/>
-		<TextInput
-			bind:value={$data.longitude}
-			invalid={$errors.longitude != null}
-			name="longitude"
-			labelText="Longitude"
-			placeholder="Enter Longitude..."
-		/>
-		<TextInput
-			bind:value={$data.address}
-			disabled={!$data.sub_district}
-			invalid={$errors.address != null}
-			name="address"
-			labelText="Address"
-			placeholder="Enter Address..."
-		/>
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					bind:value={$data.name}
+					invalid={$errors.name != null}
+					name="name"
+					labelText="Name"
+					placeholder="Enter Name..."
+				/>
+				{#if $errors.name}
+					<p>{$errors.name}</p>
+				{/if}
+			</div>
+			<div>
+				<ComboBox
+					bind:selectedId={$data.division}
+					titleText="Division"
+					placeholder="Select Division"
+					items={locations}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					disabled={!$data.division}
+					bind:selectedId={$data.district}
+					titleText="Zilla"
+					placeholder="Select Zilla"
+					items={zilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div>
+				<ComboBox
+					disabled={!$data.district}
+					bind:selectedId={$data.sub_district}
+					titleText="Upazilla"
+					placeholder="Select Upazilla"
+					items={upazilaOptions}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div class="t-col-span-2">
+				<div>
+					<TextInput
+						bind:value={$data.address}
+						disabled={!$data.sub_district}
+						invalid={$errors.address != null}
+						name="address"
+						labelText="Address"
+						placeholder="Enter Address..."
+					/>
+				</div>
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.latitude}
+					invalid={$errors.latitude != null}
+					name="latitude"
+					labelText="Latitute"
+					placeholder="Enter Latitute..."
+				/>
+			</div>
+			<div>
+				<TextInput
+					bind:value={$data.longitude}
+					invalid={$errors.longitude != null}
+					name="longitude"
+					labelText="Longitude"
+					placeholder="Enter Longitude..."
+				/>
+			</div>
+		</div>
 	</form>
 
-	{JSON.stringify($errors)}
+	<!-- {JSON.stringify($errors)} -->
 </Modal>

@@ -30,9 +30,8 @@
 		transform: (values: any) => {
 			return {
 				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
-
-			}
+				serial_no: values.serial_no ? parseInt(values.serial_no) : null
+			};
 		},
 		extend: validator({ schema })
 	});
@@ -59,12 +58,21 @@
 	modalHeading="Create Collaborations"
 	primaryButtonText={collaboration.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
-		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
+			</div>
+			<div>
+				<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+			</div>
+			<div>
+				<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
+			</div>
+		</div>
 	</form>
 </Modal>

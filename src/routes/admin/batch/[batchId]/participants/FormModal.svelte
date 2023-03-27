@@ -51,40 +51,42 @@
 	bind:open
 	modalHeading="Create Participant"
 	primaryButtonText="ADD"
+	preventCloseOnClickOutside
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<ComboBox
-			bind:selectedId={$data.trainee}
-			invalid={$errors.trainee != null}
-			invalidText={$errors.trainee}
-			titleText="Participant"
-			placeholder="Choose Participant"
-			items={traineesList}
-			{shouldFilterItem}
-		/>
-		<TextInput
-			type="number"
-			bind:value={$data.pre_test_mark}
-			labelText=" Pre Test Mark"
-			placeholder="Enter Pre test Mark"
-		/>
-		<TextInput
-			type="number"
-			bind:value={$data.post_test_mark}
-			labelText=" Post Test Mark"
-			placeholder="Enter Post test Mark"
-		/>
-		<!-- <Select invalid={$errors.participant != null} name="trainee" labelText="Participant">
-			<SelectItem text="choose Participant" value="" />
-			{#each $trainees.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
-
-		<!-- <p>{JSON.stringify($errors)}</p> -->
-		<p>{JSON.stringify($data)}</p>
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<ComboBox
+					bind:selectedId={$data.trainee}
+					invalid={$errors.trainee != null}
+					invalidText={$errors.trainee}
+					titleText="Participant"
+					placeholder="Choose Participant"
+					items={traineesList}
+					{shouldFilterItem}
+				/>
+			</div>
+			<div>
+				<TextInput
+					type="number"
+					bind:value={$data.pre_test_mark}
+					labelText=" Pre Test Mark"
+					placeholder="Enter Pre test Mark"
+				/>
+			</div>
+			<div>
+				<TextInput
+					type="number"
+					bind:value={$data.post_test_mark}
+					labelText=" Post Test Mark"
+					placeholder="Enter Post test Mark"
+				/>
+			</div>
+			<!-- <p>{JSON.stringify($errors)}</p> -->
+			<!-- <p>{JSON.stringify($data)}</p> -->
+		</div>
 	</form>
 </Modal>

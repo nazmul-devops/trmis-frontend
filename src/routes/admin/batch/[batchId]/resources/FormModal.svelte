@@ -61,27 +61,23 @@
 	modalHeading="Create Participant"
 	primaryButtonText="ADD"
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<ComboBox
-			invalid={$errors.trainer != null}
-			invalidText={$errors.trainer}
-			name="trainer"
-			titleText="Resources"
-			placeholder="Choose Resources"
-			bind:selectedId={$data.trainer}
-			items={resourcesList}
-			{shouldFilterItem}
-		/>
-		<!-- <Select invalid={$errors.resource != null} name="trainer" labelText="Resources">
-			<SelectItem text="choose Resources" value="" />
-			{#each $trainers.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
-
+		<div>
+			<ComboBox
+				invalid={$errors.trainer != null}
+				invalidText={$errors.trainer}
+				name="trainer"
+				titleText="Resources"
+				placeholder="Choose Resources"
+				bind:selectedId={$data.trainer}
+				items={resourcesList}
+				{shouldFilterItem}
+			/>
+		</div>
 		<!-- <p>{JSON.stringify($errors)}</p>
 		<p>{JSON.stringify($data)}</p> -->
 	</form>

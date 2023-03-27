@@ -3,9 +3,22 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { trainingCenters } from '$lib/store/trainingCenter';
-	import { Modal, Select, SelectItem, DatePicker, DatePickerInput } from 'carbon-components-svelte';
+	import {
+		Modal,
+		Select,
+		SelectItem,
+		DatePicker,
+		DatePickerInput,
+		ComboBox
+	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { scheduleEventsLists } from "$lib/store/schedule-events"
+	import { scheduleEventsLists } from '$lib/store/schedule-events';
+
+	function shouldFilterItem(item, value) {
+		if (!value) return true;
+		return item.text.toLowerCase().includes(value.toLowerCase());
+	}
+
 	export let open = true;
 	export let eventSchedule = {
 		id: null,
@@ -44,7 +57,6 @@
 		extend: validator({ schema })
 	});
 
-
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (eventSchedule.id) {
@@ -57,57 +69,71 @@
 		}
 	});
 
+	$: scheduleEventsList = $scheduleEventsLists.data.map((item) => ({
+		...item,
+		text: item.event_venue_name
+	}));
+
 	onMount(async () => {
 		trainingCenters.getTrainingCenters();
-		scheduleEventsLists.getEventSchedules()
+		scheduleEventsLists.getEventSchedules();
 	});
 </script>
 
 <Modal
 	bind:open
-	modalHeading={eventSchedule.id == null ? "Create Schedule" : "Edit Schedule"}
-	primaryButtonText={eventSchedule.id == null ? "ADD" : "Edit"}
+	modalHeading={eventSchedule.id == null ? 'Create Schedule' : 'Edit Schedule'}
+	primaryButtonText={eventSchedule.id == null ? 'ADD' : 'Edit'}
 	secondaryButtonText="Cancel"
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<div class="custom">
-			<DatePicker
-			bind:value={$data.start_date}
-			name="start_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.start_date != null}
-				labelText="Start Date"
-				placeholder="YYYY-mm-dd"
-			/>
-		</DatePicker>
-		<DatePicker
-			bind:value={$data.end_date}
-			name="end_date"
-			dateFormat="Y-m-d"
-			datePickerType="single"
-			on:change
-		>
-			<DatePickerInput
-				invalid={$errors.end_date != null}
-				labelText="End Date"
-				placeholder="YYYY-mm-dd"
-			/>
-		</DatePicker>
-		</div>
-		<Select invalid={$errors.event_venue != null} name="event_venue" labelText="Event Venue">
-			<SelectItem text="Choose Venue" value="" />
-			{#each $trainingCenters.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select>
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div class="custom">
+				<DatePicker
+					bind:value={$data.start_date}
+					name="start_date"
+					dateFormat="Y-m-d"
+					datePickerType="single"
+					on:change
+				>
+					<DatePickerInput
+						invalid={$errors.start_date != null}
+						labelText="Start Date"
+						placeholder="YYYY-mm-dd"
+					/>
+				</DatePicker>
+			</div>
+			<div class="custom">
+				<DatePicker
+					bind:value={$data.end_date}
+					name="end_date"
+					dateFormat="Y-m-d"
+					datePickerType="single"
+					on:change
+				>
+					<DatePickerInput
+						invalid={$errors.end_date != null}
+						labelText="End Date"
+						placeholder="YYYY-mm-dd"
+					/>
+				</DatePicker>
+			</div>
 
-		<!-- <p>{JSON.stringify($errors)}</p> -->
-		<!-- <p>{JSON.stringify($data)}</p> -->
+			<div>
+				<ComboBox
+					invalid={$errors.event_venue != null}
+					direction="bottom"
+					bind:selectedId={$data.event_venue}
+					titleText="Event Venue"
+					placeholder="Choose Venue"
+					items={scheduleEventsList}
+					{shouldFilterItem}
+				/>
+			</div>
+			<!-- <p>{JSON.stringify($errors)}</p> -->
+			<!-- <p>{JSON.stringify($data)}</p> -->
+		</div>
 	</form>
 </Modal>
