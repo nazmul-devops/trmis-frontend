@@ -239,7 +239,7 @@
 			{/each}
 		</Select> -->
 	</div>
-	<div class=" t-my-5 ">
+	<div class=" t-my-5 customDataTable">
 		<DataTable
 			headers={[
 				{
@@ -284,6 +284,7 @@
 
 <MultiSelect
 	bind:selectedIds={facilators}
+	direction='top'
 	titleText="Facilators"
 	placeholder="Select Facilators..."
 	filterable={true}
@@ -295,7 +296,7 @@
 
 <div class=" t-flex t-gap-3 t-my-5">
 	<div>
-		<Button on:click={submitHandler}>submit</Button>
+		<Button on:click={submitHandler}>Submit</Button>
 	</div>
 	<div>
 		<Button kind="danger">Cancel</Button>

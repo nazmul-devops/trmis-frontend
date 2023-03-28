@@ -70,13 +70,13 @@
 				icon={UserAvatarFilledAlt}
 				closeIcon={UserAvatarFilledAlt}
 			>
-				<HeaderPanelLinks class=" t-h-[18vh] ">
+				<HeaderPanelLinks class=" t-h-[30vh] ">
 					<HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
 					<HeaderPanelLink>Edit Details</HeaderPanelLink>
 					<HeaderPanelLink on:click={openPassModal}>Change Password</HeaderPanelLink>
 					<HeaderPanelLink>
 						<div
-							class="t-text-white t-cursor-pointer t-flex t-items-center t-mr-5"
+							class="t-text-black t-cursor-pointer t-flex t-items-center t-mr-5"
 							on:click={logout}
 							on:keypress={logout}
 						>
