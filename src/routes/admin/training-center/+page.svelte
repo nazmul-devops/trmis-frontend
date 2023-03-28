@@ -23,7 +23,7 @@
 		{ key: 'division_name', value: 'Division' },
 		{ key: 'district_name', value: 'Zilla' },
 		{ key: 'sub_district_name', value: 'Upazilla' },
-		{ key: 'address', value: 'Address' },
+		// { key: 'address', value: 'Address' },
 		{ key: 'action', value: 'Action' }
 	];
 
