@@ -65,6 +65,7 @@
 	// };
 
 	const schema = yup.object({
+		name: yup.string().typeError("Name is Required").required(),
 		phone: yup.string().typeError('Phone number is required!').required(),
 		nid: yup.string().required().typeError('NID is required!'),
 		email: yup.string().email().required(),
@@ -100,9 +101,10 @@
 </script>
 
 <div class=" t-mx-[100px] t-my-[40px] ">
+	<p class="t-text-3xl t-font-medium t-text-[#161616] t-py-2">Self Enrollment</p>
 	<form use:form>
-		<div class="t-grid t-grid-cols-2 t-gap-4">
-			<div>
+		<div class="t-grid t-grid-cols-2 t-gap-4 ">
+			<div class="registrationPanel">
 				<TextInput
 					bind:value={$data.name}
 					invalid={$errors.name != null}
@@ -114,7 +116,7 @@
 					<p class=" t-text-red-500 ">{$errors.name}</p>
 				{/if}
 			</div>
-			<div>
+			<div class="registrationPanel">
 				<TextInput
 					bind:value={$data.phone}
 					invalid={$errors.phone != null}
@@ -126,7 +128,7 @@
 					<p class=" t-text-red-500 ">{$errors.phone}</p>
 				{/if}
 			</div>
-			<div>
+			<div class="registrationPanel">
 				<TextInput
 					bind:value={$data.nid}
 					invalid={$errors.nid != null}
@@ -138,7 +140,7 @@
 					<p class=" t-text-red-500 ">{$errors.nid}</p>
 				{/if}
 			</div>
-			<div>
+			<div class="registrationPanel">
 				<TextInput
 					bind:value={$data.email}
 					invalid={$errors.email != null}
@@ -150,7 +152,7 @@
 					<p class=" t-text-red-500 ">{$errors.email}</p>
 				{/if}
 			</div>
-			<div>
+			<div class="registrationPanel">
 				<TextInput
 					bind:value={$data.address}
 					invalid={$errors.address != null}
@@ -172,7 +174,7 @@
 			{#if $errors.area_of_specialization}
 				<p class=" t-text-red-500 ">{$errors.area_of_specialization}</p>
 			{/if} -->
-			<div>
+			<div class="registrationPanel">
 				<ComboBox
 					invalid={$errors.gender != null}
 					bind:selectedId={$data.gender}
@@ -191,7 +193,7 @@
 				{/if}
 			</div>
 
-			<div>
+			<div class="registrationPanel">
 				<ComboBox
 					invalid={$errors.designation != null}
 					bind:selectedId={$data.designation}
@@ -205,7 +207,7 @@
 					<p class=" t-text-red-500 ">{$errors.designation}</p>
 				{/if}
 			</div>
-			<div>
+			<div class="registrationPanel">
 				<ComboBox
 					invalid={$errors.organization != null}
 					bind:selectedId={$data.organization}
@@ -218,8 +220,10 @@
 					<p class=" t-text-red-500 ">{$errors.organization}</p>
 				{/if}
 			</div>
-
-			<div>
+			<div class="t-col-span-2">
+				<p class="t-text-2xl t-font-medium t-text-[#161616] t-py-2">Place of Posting</p>
+			</div>
+			<div class="registrationPanel">
 				<ComboBox
 					name="division"
 					invalid={$errors.division != null}
@@ -235,7 +239,7 @@
 				{/if}
 			</div>
 
-			<div>
+			<div class="registrationPanel">
 				<ComboBox
 					disabled={!$data.division}
 					name="district"
@@ -246,7 +250,7 @@
 					{shouldFilterItem}
 				/>
 			</div>
-			<div>
+			<div class="registrationPanel">
 				<ComboBox
 					disabled={!$data.district}
 					name="sub_district"
@@ -258,7 +262,7 @@
 				/>
 			</div>
 		</div>
-		<div class=" t-flex t-gap-2 t-my-5 ">
+		<div class=" t-flex t-gap-2 t-my-10 t-justify-center">
 			<Button kind="danger">cancel</Button>
 			<Button on:click={submitHandler}>Submit</Button>
 		</div>
