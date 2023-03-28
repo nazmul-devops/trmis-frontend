@@ -193,7 +193,7 @@
 			{#each { length: 7 } as d, idxd (idxd)}
 				{#if current[idxw][idxd] != 0}
 					<span
-						class=" t-h-full md:t-h-36 t-text-sm  t-border-solid t-border t-p-3 t-border-gray-400 t-text-semibold "
+						class=" t-h-full md:t-h-36 t-text-sm  t-border-solid t-border t-p-3 t-border-[#ADD4F7] t-text-semibold t-bg-white "
 						class:today={isToday(current[idxw][idxd])}
 					>
 						<span>
@@ -239,4 +239,9 @@
 </Modal>
 
 <style>
+
+.today{
+	background-color: #57AAF7 !important;
+}
+
 </style>

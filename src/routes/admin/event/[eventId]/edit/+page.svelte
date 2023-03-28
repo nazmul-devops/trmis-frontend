@@ -217,7 +217,7 @@
 		/>
 
 	</div>
-	<div class="t-my-5 ">
+	<div class="t-my-5 customDataTable">
 		<DataTable
 			size="short"
 			headers={[
@@ -263,6 +263,7 @@
 
 <MultiSelect
 	bind:selectedIds={$data.facilitator}
+	direction='top'
 	titleText="Facilators"
 	placeholder="Select Facilators..."
 	filterable={true}
