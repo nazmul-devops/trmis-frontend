@@ -23,11 +23,13 @@
 			? [0, 0, 0, 0]
 			: $dashboardData.participantFromOrganization.map((item) => item.participant);
 
-	$: status = $dashboardData.trainingStatus.entries;
+	// $: statusList = Object.entries($dashboardData.trainingStatus);
+	$: status = $dashboardData.trainingStatus.map((item) => item[0]);
+	$: statusData = $dashboardData.trainingStatus.map((item) => item[1]);
 
 	$: {
-		console.log(Object.entries(status).map((item) => item[0]));
-		console.log(Object.entries(status).map((item) => item[1]));
+		console.log($dashboardData.trainingStatus);
+		// console.log(statusData);
 	}
 </script>
 
@@ -35,7 +37,7 @@
 	<!-- <Chart1st Class={'t-col-span-3'} /> -->
 	<OrganizationalChart Class={'t-col-span-3 '} {labels} {data} />
 	<!-- <Chart2nd Class={'t-col-span-2'} /> -->
-	<TrainingStatusChart Class={'t-col-span-2'} />
+	<TrainingStatusChart Class={'t-col-span-2'} {status} {statusData} />
 	<GenderWiseChart Class={'t-col-span-2'} />
 	<PlannedChart Class={'t-col-span-3'} />
 	<CourseWiseChart Class={'t-col-span-5'} />

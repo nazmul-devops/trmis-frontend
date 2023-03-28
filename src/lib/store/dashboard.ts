@@ -6,7 +6,11 @@ function dcreateDashboardStore() {
 		loading: true,
 		participantAndResource: [],
 		participantFromOrganization: [],
-		trainingStatus: [],
+		trainingStatus: [
+			['---', 1],
+			['---', 1],
+			['---', 1]
+		],
 		genderWiseTraining: [],
 		planedBatch: []
 	});
@@ -38,7 +42,7 @@ function dcreateDashboardStore() {
 	async function getTrainingStatus() {
 		const resp = await dashboardService.getTraininjgStatus();
 		update((prev) => {
-			prev.trainingStatus = resp.data;
+			prev.trainingStatus = Object.entries(resp.data);
 			prev.loading = false;
 			return prev;
 		});

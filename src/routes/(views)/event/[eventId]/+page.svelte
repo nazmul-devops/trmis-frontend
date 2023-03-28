@@ -1,41 +1,27 @@
 <script>
-	import { httpWeb } from '$lib/service/auth';
-	import { page } from '$app/stores';
 	import PageTitle from '$lib/PageTitle.svelte';
-	import { ComboBox } from 'carbon-components-svelte';
+	import { CodeSnippet, ComboBox, InlineLoading } from 'carbon-components-svelte';
+	import { singleEvents } from '$lib/store/singleEvent';
 	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	let title = 'Meeting';
-	// let eventsByYear = [];
 
-	// async function getCourseDetails(courseId) {
-	// 	let {
-	// 		data: { data }
-	// 	} = await httpWeb.get(`mock/training-details`);
-	// 	console.log(data);
-	// 	title = data.course.name;
-	// 	eventsByYear = data.eventsByYear;
-	// }
-
-	// $: {
-	// 	if ($page.params) {
-	// 		getCourseDetails($page.params.courseId);
-	// 	}
-	// }
+	let eventList;
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	let trainingCenterId;
-	let trainingCenter = [];
-	let selectedDivisionId;
-	let selectedZilaId;
-	let selectedUpazilaId;
+	let organizationId = null;
+	let yearId = null;
+	let selectedDivisionId = null;
+	let selectedZilaId = null;
+	let selectedUpazilaId = null;
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
@@ -67,57 +53,32 @@
 		}
 	}
 
-	$: {
-		if (selectedUpazilaId) {
-			getTrainingCenters(selectedUpazilaId).then((resp) => {
-				trainingCenter = resp.data.map((item) => ({ ...item, text: item.name }));
-			});
-		} else {
-			trainingCenterId = null;
-		}
+	let years = [];
+	const currentYear = new Date().getFullYear();
+
+	for (let year = currentYear; year >= 2000; year--) {
+		years = [...years, { id: year, text: year.toString() }];
 	}
 
-	const YEARINTERVAL = [
-		{ id: 1, text: '2020' },
-		{ id: 2, text: '2021' },
-		{ id: 3, text: '2023' },
-		{ id: 4, text: '2024' },
-		{ id: 5, text: '2025' }
-	];
-
-	const EVENTS = [
-		{
-			id: 1,
-			name: 'Event 1',
-			trainees: 200
-		},
-		{
-			id: 2,
-			name: 'Event 2',
-			trainees: 100
-		},
-		{
-			id: 3,
-			name: 'Event 3',
-			trainees: 20
-		},
-		{
-			id: 5,
-			name: 'Event 4',
-			trainees: 15
-		},
-		{
-			id: 5,
-			name: 'Event 5',
-			trainees: 50
-		}
-	];
-
 	$: OrganizationList = $organizations.data.map((item) => ({ ...item, text: item.name }));
-
+	$: eventList = $singleEvents.data;
+	$: {
+		singleEvents.getSingleEvent(
+			$page.params.eventId,
+			organizationId,
+			yearId,
+			selectedDivisionId,
+			selectedZilaId,
+			selectedUpazilaId
+		);
+	}
 	onMount(() => {
 		organizations.getOrganizations();
 	});
+
+	$: {
+		console.log(eventList);
+	}
 </script>
 
 <div class="t-mb-12">
@@ -128,9 +89,19 @@
 		<div class="t-grid t-grid-cols-1">
 			<form>
 				<div class="t-grid md:t-grid-cols-2 lg:t-grid-cols-5 t-gap-4">
-					<ComboBox placeholder="Choose Organization" items={OrganizationList} {shouldFilterItem} />
+					<ComboBox
+						bind:selectedId={organizationId}
+						placeholder="Choose Organization"
+						items={OrganizationList}
+						{shouldFilterItem}
+					/>
 
-					<ComboBox placeholder="Select Year" items={YEARINTERVAL} {shouldFilterItem} />
+					<ComboBox
+						bind:selectedId={yearId}
+						placeholder="Select Year"
+						items={years}
+						{shouldFilterItem}
+					/>
 					<ComboBox
 						bind:selectedId={selectedDivisionId}
 						placeholder="Select Division"
@@ -176,6 +147,11 @@
 							<p
 								class="t-text-4xl t-font-bold t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] group-hover:t-text-[#F94646]"
 							>
+								<!-- {#if eventList.loading}
+									<InlineLoading />
+								{:else}
+									{eventList.number_of_participants}
+								{/if} -->
 								1000
 							</p>
 						</div>
@@ -211,17 +187,25 @@
 				class="t-grid lg:t-grid-cols-2 md:t-grid-cols-1 t-gap-4 t-py-5 t-bg-white t-rounded-md t-px-4"
 			>
 				<div class="lg:t-col-span-2 md:t-col-1 t-text-center">
-					{#each EVENTS as event}
-						<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
-							<div class="t-col-span-1 t-text-2xl t-text-center t-text-[#44835C]">
-								{event.name}
-							</div>
-							<div class="t-col-span-1  t-text-center t-text-2xl t-font-semibold t-text-[#44835C]">
-								{event.trainees}
-							</div>
+					{#if $singleEvents.loading}
+						<div class=" t-flex t-justify-center ">
+							<CodeSnippet skeleton />
 						</div>
-						<hr class="t-border-[#88C29E] t-border-t-[1.5px]" />
-					{/each}
+					{:else}
+						{#each eventList as item}
+							<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
+								<div class="t-col-span-1 t-text-2xl t-text-center t-text-[#44835C]">
+									{item.name}
+								</div>
+								<div
+									class="t-col-span-1  t-text-center t-text-2xl t-font-semibold t-text-[#44835C]"
+								>
+									{item.number_of_participants}
+								</div>
+							</div>
+							<hr class="t-border-[#88C29E] t-border-t-[1.5px]" />
+						{/each}
+					{/if}
 				</div>
 			</div>
 		</div>

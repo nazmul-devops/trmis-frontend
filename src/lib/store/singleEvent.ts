@@ -1,7 +1,7 @@
 import { writable } from 'svelte/store';
-import * as TrainingBatchService from '$lib/service/trainingBatch';
+import * as singleEventService from '$lib/service/singleEvent';
 
-function createTrainingBatchStore() {
+function createSingleEventStore() {
 	const { subscribe, set, update } = writable({ loading: true, data: [] });
 	function setLoading() {
 		update((prev) => ({
@@ -10,10 +10,10 @@ function createTrainingBatchStore() {
 		}));
 	}
 
-	async function getTarainingBatch(courseId, organization, year, division, district, sub_district) {
+	async function getSingleEvent(eventId, organization, year, division, district, sub_district) {
 		setLoading();
-		const resp = await TrainingBatchService.getTrainingBatch(
-			courseId,
+        const resp = await singleEventService.getSingleEvent(
+            eventId,
 			organization,
 			year,
 			division,
@@ -28,8 +28,8 @@ function createTrainingBatchStore() {
 
 	return {
 		subscribe,
-		getTarainingBatch
+		getSingleEvent
 	};
 }
 
-export const trainingBatches = createTrainingBatchStore();
+export const singleEvents = createSingleEventStore();
