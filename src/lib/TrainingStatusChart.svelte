@@ -4,6 +4,8 @@
 	import { onMount } from 'svelte';
 	export let Class = '';
 
+	const BACKGROUND_COLOR = ['#EFFCEF', '#FFEFE2', '#FACECE'];
+
 	const plugin = {
 		id: 'customCanvasBackgroundColor',
 		beforeDraw: (chart, args, options) => {
@@ -16,27 +18,36 @@
 		}
 	};
 
-	let satisfactionData2021 = [
-		{ status: 'Upcoming', score: 75 },
-		{ status: 'In progress', score: 96 },
-		{ status: 'Completed', score: 80 },
-	];
+	export let status = [];
+	export let statusData = [];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: satisfactionData2021.map(({ status }) => status),
+		labels: status.map(({ status }) => status),
 		datasets: [
 			{
 				label: '',
-				data: satisfactionData2021.map(({ score }) => score),
-				backgroundColor: [
-                    '#EFFCEF', 
-                    '#FFEFE2',
-                    '#FACECE', 
-                ]
+				data: statusData,
+				backgroundColor: BACKGROUND_COLOR
 			}
 		]
 	};
+
+	let chart: Chart = null;
+
+	$: {
+		if (chart) {
+			chart.data.labels = status;
+			chart.data.datasets = [
+				{
+					data: statusData,
+					backgroundColor: BACKGROUND_COLOR
+				}
+			];
+			chart.update();
+		}
+	}
+
 	onMount(() => {
 		if (browser) {
 			new Chart(barChartElement, {
@@ -47,16 +58,16 @@
 						legend: {
 							display: true,
 							position: 'bottom',
-							labels : {
+							labels: {
 								usePointStyle: true,
-      							boxWidth: 6,
+								boxWidth: 6,
 								padding: 25
 							}
 						}
 					},
 					scales: {
 						x: {
-                            display: false,
+							display: false,
 							grid: {
 								color: '#fff'
 								// tickColor: 'red'
@@ -64,7 +75,7 @@
 							ticks: { display: false }
 						},
 						y: {
-                            display: false,
+							display: false,
 							beginAtZero: false,
 							ticks: {
 								display: false
@@ -88,7 +99,5 @@
 	<section class="t-bg-white t-h-[50vh] t-flex t-justify-center t-items-center">
 		<canvas bind:this={barChartElement} />
 	</section>
-    <p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">
-        Training Status
-    </p>
+	<p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">Training Status</p>
 </main>

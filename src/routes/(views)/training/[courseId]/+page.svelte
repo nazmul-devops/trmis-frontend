@@ -1,14 +1,11 @@
-<script>
+<script lang="ts">
 	import { page } from '$app/stores';
 	import PageTitle from '$lib/PageTitle.svelte';
-	import { CodeSnippet, ComboBox, InlineLoading } from 'carbon-components-svelte';
+	import { CodeSnippet, ComboBox, InlineLoading, SkeletonText } from 'carbon-components-svelte';
 	import { trainingBatches } from '$lib/store/trainingBatch';
 	import { getLocations } from '$lib/service/locations';
 	import { organizations } from '$lib/store/organization';
 	import { onMount } from 'svelte';
-	// import { batchParticipantsList } from '$lib/store/batch-participants';
-
-	let title = '2-Day training on EQA Lab';
 
 	let batchDetails;
 
@@ -17,11 +14,11 @@
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	let organizationId;
-	let yearId;
-	let selectedDivisionId;
-	let selectedZilaId;
-	let selectedUpazilaId;
+	let organizationId = null;
+	let yearId = null;
+	let selectedDivisionId = null;
+	let selectedZilaId = null;
+	let selectedUpazilaId = null;
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
@@ -57,32 +54,58 @@
 	const currentYear = new Date().getFullYear();
 
 	for (let year = currentYear; year >= 2000; year--) {
-		years = [...years, { id: year, test: year }];
+		years = [...years, { id: year, text: year.toString() }];
 	}
 
 	$: OrganizationList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 	$: batchDetails = $trainingBatches.data;
 
+	$: {
+		trainingBatches.getTarainingBatch(
+			$page.params.courseId,
+			organizationId,
+			yearId,
+			selectedDivisionId,
+			selectedZilaId,
+			selectedUpazilaId
+		);
+	}
+
 	onMount(async () => {
 		organizations.getOrganizations();
-		trainingBatches.getTarainingBatch($page.params.courseId);
 	});
 </script>
 
 <div class="t-mb-12">
 	<div>
-		<PageTitle
-			Title={title}
-			desc="The 2-day training EQA Lab is a program designed to provide hands-on training for participants in external quality assurance (EQA) testing methods. The training aims to enhance their knowledge and skills in performing EQA testing and interpreting results."
-		/>
+		{#if $trainingBatches.loading}
+			<div class=" t-container t-mx-auto t-my-3 ">
+				<SkeletonText paragraph lines={6} />
+			</div>
+		{:else}
+			<PageTitle
+				Title={batchDetails.course_data.name}
+				desc={batchDetails.course_data.description}
+			/>
+		{/if}
 	</div>
 	<div class="t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-mt-10">
 		<div class="t-grid t-grid-cols-1">
 			<form>
 				<div class="t-grid md:t-grid-cols-2 lg:t-grid-cols-5 t-gap-4">
-					<ComboBox placeholder="Choose Organization" items={OrganizationList} {shouldFilterItem} />
+					<ComboBox
+						bind:selectedId={organizationId}
+						placeholder="Choose Organization"
+						items={OrganizationList}
+						{shouldFilterItem}
+					/>
 
-					<ComboBox placeholder="Select Year" items={years} {shouldFilterItem} />
+					<ComboBox
+						bind:selectedId={yearId}
+						placeholder="Select Year"
+						items={years}
+						{shouldFilterItem}
+					/>
 					<ComboBox
 						bind:selectedId={selectedDivisionId}
 						placeholder="Select Division"
@@ -131,7 +154,7 @@
 								{#if $trainingBatches.loading}
 									<InlineLoading />
 								{:else}
-									{batchDetails.total_trainee}
+									{batchDetails.course_data.total_trainee}
 								{/if}
 							</p>
 						</div>
@@ -168,7 +191,9 @@
 			>
 				<div class="lg:t-col-span-2 md:t-col-1 t-text-center">
 					{#if $trainingBatches.loading}
-						<CodeSnippet skeleton />
+						<div class=" t-flex t-justify-center ">
+							<CodeSnippet skeleton />
+						</div>
 					{:else}
 						{#each batchDetails.batch_data as item}
 							<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
@@ -189,3 +214,4 @@
 		</div>
 	</div>
 </div>
+<!-- {/if} -->

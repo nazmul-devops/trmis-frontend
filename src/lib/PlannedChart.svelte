@@ -24,8 +24,8 @@
 		datasets: [
 			{
 				label: '',
-				data: [800, 700, 550, 450, 350, 300],
-				backgroundColor: ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9']
+				data: [2, 4],
+				backgroundColor: ['#FFEFE2', '#EFFCEF']
 			}
 		]
 	};
@@ -55,7 +55,7 @@
 							}
 						},
 						y: {
-							beginAtZero: false,
+							beginAtZero: true,
 							// ticks: { color: 'hsl(43 100% 52% )', font: { size: 18 } },
 							grid: {
 								color: '#ffffff'
