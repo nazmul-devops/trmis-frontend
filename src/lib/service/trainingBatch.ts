@@ -2,7 +2,8 @@ import { http } from '$lib/service/auth';
 
 export async function getTrainingBatch(
 	courseId,
-	trainingCenter = null,
+	organization = null,
+	year = null,
 	division = null,
 	district = null,
 	subDistrict = null
@@ -10,7 +11,8 @@ export async function getTrainingBatch(
 	try {
 		const { data } = await http.get(`training-course/${courseId}/batch-data/`, {
 			params: {
-				trainingCenter,
+				organization,
+				year,
 				division,
 				district,
 				sub_district: subDistrict

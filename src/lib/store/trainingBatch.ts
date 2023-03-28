@@ -10,9 +10,16 @@ function createTrainingBatchStore() {
 		}));
 	}
 
-	async function getTarainingBatch(courseId) {
+	async function getTarainingBatch(courseId, organization, year, division, district, sub_district) {
 		setLoading();
-		const resp = await completedTrainingBatchService.getTrainingBatch(courseId);
+		const resp = await completedTrainingBatchService.getTrainingBatch(
+			courseId,
+			organization,
+			year,
+			division,
+			district,
+			sub_district
+		);
 		set({
 			loading: false,
 			data: resp.data

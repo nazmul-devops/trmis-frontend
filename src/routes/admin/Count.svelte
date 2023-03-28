@@ -9,7 +9,7 @@
 
 	let CountList;
 
-	$: CountList = $dashboardData.data;
+	$: CountList = $dashboardData.participantAndResource;
 
 	onMount(async () => {
 		dashboardData.getParticipantsAndResources();

@@ -6,14 +6,10 @@
 	import { courseCategories } from '$lib/store/courseCategory';
 	import {
 		Modal,
-		NumberInput,
 		TextInput,
-		Select,
-		SelectItem,
 		ComboBox
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { Course } from 'carbon-icons-svelte';
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
