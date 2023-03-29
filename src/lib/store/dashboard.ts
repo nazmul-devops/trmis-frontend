@@ -6,13 +6,10 @@ function dcreateDashboardStore() {
 		loading: true,
 		participantAndResource: [],
 		participantFromOrganization: [],
-		trainingStatus: [
-			['---', 1],
-			['---', 1],
-			['---', 1]
-		],
+		trainingStatus: [],
 		genderWiseTraining: [],
-		planedBatch: []
+		planedBatch: [],
+		participantFromCategory: []
 	});
 	function setLoading() {
 		update((prev) => ({
@@ -42,7 +39,7 @@ function dcreateDashboardStore() {
 	async function getTrainingStatus() {
 		const resp = await dashboardService.getTraininjgStatus();
 		update((prev) => {
-			prev.trainingStatus = Object.entries(resp.data);
+			prev.trainingStatus = resp.data;
 			prev.loading = false;
 			return prev;
 		});
@@ -65,12 +62,22 @@ function dcreateDashboardStore() {
 		});
 	}
 
+	async function getParticipantFromCategories() {
+		const resp = await dashboardService.getParticipantFromCategories();
+		update((prev) => {
+			prev.participantFromCategory = resp.data;
+			prev.loading = false;
+			return prev;
+		});
+	}
+
 	return {
 		subscribe,
 		getParticipantsAndResources,
 		getParticipantsFromOrganization,
 		getTrainingStatus,
 		getGenderWiseTraining,
+		getParticipantFromCategories,
 		getPlannedBatch
 	};
 }

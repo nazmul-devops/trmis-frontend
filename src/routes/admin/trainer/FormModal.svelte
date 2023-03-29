@@ -242,8 +242,8 @@
 					bind:value={$data.address}
 					invalid={$errors.address != null}
 					name="address"
-					labelText="Address"
-					placeholder="Enter  Address..."
+					labelText="Personal Address"
+					placeholder="Enter Personal Address..."
 				/>
 				{#if $errors.address}
 					<p class=" t-text-red-500 ">{$errors.address}</p>
@@ -272,8 +272,8 @@
 				<ComboBox
 					invalid={$errors.designation != null}
 					bind:selectedId={$data.designation}
-					titleText="Designations"
-					placeholder="Select Designations"
+					titleText="Designation"
+					placeholder="Select Designation"
 					items={Designations}
 					{shouldFilterItem}
 				/>
@@ -286,8 +286,8 @@
 				<ComboBox
 					invalid={$errors.organization != null}
 					bind:selectedId={$data.organization}
-					titleText="Organizations"
-					placeholder="Select Organizations"
+					titleText="Organization"
+					placeholder="Select Organization"
 					items={Organizations}
 					{shouldFilterItem}
 				/>

@@ -1,5 +1,4 @@
 <script>
-	import { httpWeb } from '$lib/service/auth';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { onMount } from 'svelte';
 	import EventCard from './EventCard.svelte';

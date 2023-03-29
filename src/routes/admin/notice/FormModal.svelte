@@ -118,5 +118,5 @@
 		</div>
 		<Checkbox name="show_in_home_page" labelText=" Show Public Website ?" />
 	</form>
-	<!-- {JSON.stringify($data)} -->
+	{JSON.stringify($data)}
 </Modal>

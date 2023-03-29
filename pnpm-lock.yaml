@@ -21,6 +21,7 @@ specifiers:
   js-file-download: ^0.4.12
   leaflet: ^1.9.3
   luxon: ^3.2.1
+  mitt: 1.0.1
   postcss: ^8.4.14
   postcss-load-config: ^4.0.1
   prettier: ^2.8.0
@@ -57,6 +58,7 @@ devDependencies:
   js-file-download: 0.4.12
   leaflet: 1.9.3
   luxon: 3.2.1
+  mitt: 1.0.1
   postcss: 8.4.20
   postcss-load-config: 4.0.1_postcss@8.4.20
   prettier: 2.8.1
@@ -1582,6 +1584,10 @@ packages:
 
   /minimist/1.2.7:
     resolution: {integrity: sha512-bzfL1YUZsP41gmu/qjrEk0Q6i2ix/cVeAhbCbqH9u3zYutS1cLg00qhrD0M2MVdCcx4Sc0UpP2eBWo9rotpq6g==}
+    dev: true
+
+  /mitt/1.0.1:
+    resolution: {integrity: sha512-ZEi5LQpYnEYMJTP8/lsN2QQw7+pDuGmALS4j8YILoKePw0tmTc3uzRbNb0HyNFt8Iix0iWm0aDv0rGN3kUk8Yw==}
     dev: true
 
   /mkdirp/0.5.6:

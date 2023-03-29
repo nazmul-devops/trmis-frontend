@@ -9,7 +9,7 @@ export async function getSingleEvent(
 	subDistrict = null
 ) {
 	try {
-		const { data } = await http.get(`event/${eventId}/events/`, {
+		const { data } = await http.get(`event/events/${eventId}/`, {
 			params: {
 				organization,
 				year,
