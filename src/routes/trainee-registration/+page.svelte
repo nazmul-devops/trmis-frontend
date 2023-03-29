@@ -164,16 +164,6 @@
 					<p class=" t-text-red-500 ">{$errors.address}</p>
 				{/if}
 			</div>
-			<!-- <TextInput
-				bind:value={$data.area_of_specialization}
-				invalid={$errors.area_of_specialization != null}
-				name="area_of_specialization"
-				labelText="Specialization"
-				placeholder="Enter Area Of Specializayion..."
-			/>
-			{#if $errors.area_of_specialization}
-				<p class=" t-text-red-500 ">{$errors.area_of_specialization}</p>
-			{/if} -->
 			<div class="registrationPanel">
 				<ComboBox
 					invalid={$errors.gender != null}

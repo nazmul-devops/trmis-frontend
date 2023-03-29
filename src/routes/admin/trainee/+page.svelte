@@ -5,11 +5,8 @@
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
@@ -55,7 +52,7 @@
 {#if $trainees.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Participants" description="" {headers} rows={$trainees.data} zebra>
+	<DataTable size="short" title="Participants" description="" {headers} rows={$trainees.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -92,4 +89,3 @@
 
 <FormModal bind:open bind:trainee />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'participants'} />
-

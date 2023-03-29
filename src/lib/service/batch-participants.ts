@@ -3,6 +3,7 @@ import { http } from '$lib/service/auth';
 export async function getBatchParticipants(id) {
 	try {
 		const { data } = await http.get(`batch/${id}/batch-trainee/`);
+		console.log(data)
 		return {
 			status: 200,
 			data

@@ -10,13 +10,13 @@
 	export let designation = {
 		id: null,
 		name: null,
-		serial_no: null
+		// serial_no: null
 	};
 
 	$: {
 		if (designation.id != null) {
 			setFields('name', designation.name);
-			setFields('serial_no', designation.serial_no);
+			// setFields('serial_no', designation.serial_no);
 		} else {
 			reset();
 		}
@@ -24,16 +24,16 @@
 
 	const schema = yup.object({
 		name: yup.string().required().typeError('Nama is required'),
-		serial_no: yup.number().required('').typeError('Serial No. must be a number')
+		// serial_no: yup.number().required('').typeError('Serial No. must be a number')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
-		transform: (values: any) => {
-			return {
-				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null
-			};
-		},
+		// transform: (values: any) => {
+		// 	return {
+		// 		...values,
+		// 		serial_no: values.serial_no ? parseInt(values.serial_no) : null
+		// 	};
+		// },
 		extend: validator({ schema })
 	});
 
@@ -56,6 +56,7 @@
 
 <Modal
 	bind:open
+	size="xs"
 	modalHeading={designation.id == null ? 'Create Designations' : 'Edit Designations'}
 	primaryButtonText={designation.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
@@ -64,10 +65,10 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<div class="t-grid t-grid-cols-2 t-gap-4">
+		<div class="t-grid t-grid-cols-1 t-gap-4">
 			<div>
 				<TextInput
-				invalid={$errors.name}
+				invalid={$errors.name != null}
 				name="name"
 				labelText=" name"
 				placeholder="Enter  name..."
@@ -76,7 +77,7 @@
 				<p class="t-text-red-500">{$errors.name}</p>
 			{/if}
 			</div>
-			<div>
+			<!-- <div>
 				<TextInput
 				invalid={$errors.serial_no}
 				name="serial_no"
@@ -86,7 +87,7 @@
 			{#if $errors.serial_no}
 				<p class="t-text-red-500">{$errors.serial_no}</p>
 			{/if}
-			</div>
+			</div> -->
 		</div>
 	</form>
 </Modal>

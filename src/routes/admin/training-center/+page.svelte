@@ -7,7 +7,6 @@
 		ToolbarSearch,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';

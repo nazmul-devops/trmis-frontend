@@ -19,7 +19,7 @@
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'duration', value: 'Duration' },
+		{ key: 'duration', value: 'Duration (in Days)' },
 		// { key: 'initial_cost', value: 'Budget In Taka' },
 		// { key: 'final_cost', value: 'Expenditure In Taka' },
 		{ key: 'coordinator', value: 'Coordinator' },
@@ -103,4 +103,4 @@
 {/if}
 
 <FormModal bind:open bind:batch />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />
+<DeleteModal  bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

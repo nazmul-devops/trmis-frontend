@@ -66,7 +66,7 @@
 						/>
 					</div>
 					<div class="t-col-span-3 customDatePicker">
-						<div class="t-grid t-grid-cols-2">
+						<div class="t-flex">
 							<div class="datePicker1">
 								<DatePicker
 									datePickerType="single"

@@ -1,5 +1,6 @@
 <script>
 	import {
+		Button,
 		Header,
 		HeaderUtilities,
 		HeaderAction,
@@ -14,14 +15,14 @@
 		SkipToContent,
 		Content
 	} from 'carbon-components-svelte';
-	import Grid from "carbon-icons-svelte/lib/Grid.svelte";
-	import Events from "carbon-icons-svelte/lib/Events.svelte";
-	import Calendar from "carbon-icons-svelte/lib/Calendar.svelte";
-	import ReportData from "carbon-icons-svelte/lib/ReportData.svelte";
-	import Settings from "carbon-icons-svelte/lib/Settings.svelte";
-	import UserSettings from "carbon-icons-svelte/lib/UserSettings.svelte";
-	
-	import Location from "carbon-icons-svelte/lib/Location.svelte";
+	import Grid from 'carbon-icons-svelte/lib/Grid.svelte';
+	import Events from 'carbon-icons-svelte/lib/Events.svelte';
+	import Event from 'carbon-icons-svelte/lib/Event.svelte';
+	import ReportData from 'carbon-icons-svelte/lib/ReportData.svelte';
+	import Settings from 'carbon-icons-svelte/lib/Settings.svelte';
+	import UserSettings from 'carbon-icons-svelte/lib/UserSettings.svelte';
+
+	import Location from 'carbon-icons-svelte/lib/Location.svelte';
 	import { expoIn } from 'svelte/easing';
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 	import { isAuthincated, setAccessToken, logout } from '$lib/store/auth';
@@ -59,7 +60,12 @@
 </script>
 
 {#if $isAuthincated}
-	<Header class="t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-font-bold t-text-base t-border-b-0" company="TB Training Management Information System" platformName="" bind:isSideNavOpen>
+	<Header
+		class="t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-font-bold t-text-base t-border-b-0"
+		company="TB Training Management Information System"
+		platformName=""
+		bind:isSideNavOpen
+	>
 		<svelte:fragment slot="skip-to-content">
 			<SkipToContent />
 		</svelte:fragment>
@@ -70,18 +76,17 @@
 				icon={UserAvatarFilledAlt}
 				closeIcon={UserAvatarFilledAlt}
 			>
-				<HeaderPanelLinks class=" t-h-[30vh] ">
-					<HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
-					<HeaderPanelLink>Edit Details</HeaderPanelLink>
-					<HeaderPanelLink on:click={openPassModal}>Change Password</HeaderPanelLink>
-					<HeaderPanelLink>
-						<div
-							class="t-text-black t-cursor-pointer t-flex t-items-center t-mr-5"
-							on:click={logout}
-							on:keypress={logout}
-						>
-							Log Out
-						</div>
+				<HeaderPanelLinks class=" t-h-[30vh]">
+
+					<!-- <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider> -->
+					<HeaderPanelLink class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						Edit Details
+					</HeaderPanelLink>
+					<HeaderPanelLink on:click={openPassModal} class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						Change Password
+					</HeaderPanelLink>
+					<HeaderPanelLink class="t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						<div on:click={logout} on:keypress={logout} class="t-w-full">Log Out</div>
 					</HeaderPanelLink>
 				</HeaderPanelLinks>
 			</HeaderAction>
@@ -93,142 +98,142 @@
 			<SideNavLink icon={Grid}>
 				<a href="/admin" class="t-text-[#808083] t-font-medium">Dashboard</a>
 			</SideNavLink>
-		<SideNavDivider />
-		<SideNavMenu icon={Events} text="Training">
-			<SideNavLink class='t-mt-3'>
-				<a href="/admin/training-course" >Training Course</a>
-			</SideNavLink>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-category">Training Category</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/trainee">Participants</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/trainee-request">Participants Approval List</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/trainer">Resource Person</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-center">Training Venue</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<!-- <SideNavLink>
+			<SideNavMenu icon={Events} text="Training">
+				<SideNavLink class="t-mt-3">
+					<a href="/admin/training-course">Training Course</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-category">Training Category</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainee">Participants</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainee-request">Participants Approval List</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/trainer">Resource Person</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-center">Training Venue</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<!-- <SideNavLink>
 				<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
 			</SideNavLink> -->
-			<SideNavLink>
-				<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
-			</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/training-calendar">Training Calendar</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/batch">Batch</a>
+				</SideNavLink>
+			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/training-calendar">Training Calendar</a>
-			</SideNavLink>
+			<SideNavMenu icon={Event} text="Event">
+				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
+				<SideNavLink class="t-mt-3">
+					<a href="/admin/schedule-events">Event Schedule</a>
+				</SideNavLink>
+				<!-- {/if} -->
+				<SideNavDivider />
+				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_event').length > 0} -->
+				<SideNavLink>
+					<a href="/admin/event">Event List</a>
+				</SideNavLink>
+				<!-- {/if} -->
+			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/batch">Batch</a>
-			</SideNavLink>
-		</SideNavMenu>
-		<SideNavDivider />
-		<SideNavMenu icon={Calendar} text="Event">
-			<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
-			<SideNavLink class='t-mt-3'>
-				<a href="/admin/schedule-events">Event Schedule</a>
-			</SideNavLink>
-			<!-- {/if} -->
+			<SideNavMenu icon={ReportData} text="Reports">
+				<SideNavLink class="t-mt-3">
+					<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/designation-wise-trainee">Designation wise Trainee</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/training-schedule">Training Schedule</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/training-name-list">Trainee Name List</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/trainer-report">Trainer Report</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/exam-test-evaluation">Exam Test Evaluation</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/reports/cost-center">Cost Center</a>
+				</SideNavLink>
+			</SideNavMenu>
 			<SideNavDivider />
-			<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_event').length > 0} -->
-			<SideNavLink>
-				<a href="/admin/event">Event List</a>
-			</SideNavLink>
-			<!-- {/if} -->
-		</SideNavMenu>
-		<SideNavDivider />
-		<SideNavMenu icon={ReportData} text="Reports">
-			<SideNavLink class='t-mt-3'>
-				<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/designation-wise-trainee">Designation wise Trainee</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/training-schedule">Training Schedule</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/training-name-list">Trainee Name List</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/trainer-report">Trainer Report</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/exam-test-evaluation">Exam Test Evaluation</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/reports/cost-center">Cost Center</a>
-			</SideNavLink>
-		</SideNavMenu>
-		<SideNavDivider />
-		<SideNavMenu icon={Settings} text="Settings">
-			<!-- <SideNavLink>
+			<SideNavMenu icon={Settings} text="Settings">
+				<!-- <SideNavLink>
 				<a href="/admin/settings/collaborations">Collaborations</a>
 			</SideNavLink> -->
-			<SideNavLink class='t-mt-3'>
-				<a href="/admin/settings/designations">Designations</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<!-- <SideNavLink>
+				<SideNavLink class="t-mt-3">
+					<a href="/admin/settings/designations">Designations</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<!-- <SideNavLink>
 				<a href="/admin/settings/grades">Grades</a>
 			</SideNavLink> -->
-			<SideNavLink>
-				<a href="/admin/settings/organizations">Organization</a>
-			</SideNavLink>
+				<SideNavLink>
+					<a href="/admin/settings/organizations">Organization</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/settings/source-of-funds">Source Of Fund</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/settings/training-coordinators">Training Coordinator</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/notice">Notice</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/gallery">Gallery</a>
+				</SideNavLink>
+			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/settings/source-of-funds">Source Of Fund</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/settings/training-coordinators">Training Coordinator</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/notice">Notice</a>
-			</SideNavLink>
-			<SideNavDivider />
-			<SideNavLink>
-				<a href="/admin/gallery">Gallery</a>
-			</SideNavLink>
-		</SideNavMenu>
-		<SideNavDivider />
 
-		<SideNavMenu icon={UserSettings} text="MIS Settings">
-			<SideNavLink class='t-mt-3'>
-				<a href="/admin/users">Users</a>
-			</SideNavLink>
-			<SideNavDivider />
+			<SideNavMenu icon={UserSettings} text="MIS Settings">
+				<SideNavLink class="t-mt-3">
+					<a href="/admin/users">Users</a>
+				</SideNavLink>
+				<SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/group">Groups</a>
 				</SideNavLink>

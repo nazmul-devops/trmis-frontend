@@ -43,6 +43,11 @@
 	margin: 0 25px 0 0 ;
 	padding: 5px;
 }
+
+.bx--header__action:hover{
+	background: none;
+}
+
 .bx--header__global button svg{
 	background: black !important;
 	height: 100% !important;
@@ -52,16 +57,19 @@
 /* header user icon */
 .bx--header-panel {
 	background-color: white;
-	max-height: 300px ;
+	max-height: 150px ;
 	border: none;
 	right: 5px;
 	box-shadow: 0px 4px 20px 5px rgba(6, 55, 124, 0.24) ;
 }
 .bx--switcher__item span{
 	color: black !important;
-}
-.bx--switcher__item-link{
+} */
+/* .bx--switcher__item-link{
 	color: black
+}
+.bx--switcher__item-link:hover:not(.bx--switcher__item-link--selected){
+	width: 100%;
 }
 /* Dashboard date-picker width */
 
@@ -168,8 +176,43 @@ input::-webkit-inner-spin-button {
 /* Modal view design */
 
 .bx--modal-content{
-	padding: 50px 20px;
+	padding: 50px 20px 10px;
 }
+
+/* Delete Modal */
+.deleteModal .bx--modal-content{
+	padding: 0;
+}
+
+/* change password modal */
+
+.changePasswordModal .bx--modal-content{
+	overflow-y: hidden !important;
+	padding: 10px 40px;
+	overflow-x: hidden;
+	margin-bottom: 1.5rem;
+}
+
+.changePasswordModal .bx--text-input{
+	border-radius: 0;
+	border: none;
+	border-bottom: 1px solid #57AAF7;
+}
+
+.changePasswordModal .bx--text-input:focus{
+	outline: none;
+	border-bottom: 1px solid green;
+}
+
+.changePasswordModal .bx--text-input--invalid{
+	outline: none;
+	border-bottom: 2px solid #da1e28 !important;
+}
+
+.changePasswordModal input[data-invalid]:not(:focus), .changePasswordModal .bx--text-input__field-wrapper[data-invalid]>.bx--text-input--invalid:not(:focus){
+	outline: none;
+}
+
 
 /* Public registration design */
 
@@ -196,3 +239,4 @@ input::-webkit-inner-spin-button {
 	background-color: transparent;
 	color: #2D2D2D;
 }
+
