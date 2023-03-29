@@ -6,13 +6,16 @@
 	const dispatch = createEventDispatcher();
 </script>
 
-<Modal
-	danger
-	bind:open
-	modalHeading="Do you want to delete this {name} record?"
-	primaryButtonText="Delete"
-	secondaryButtonText="Cancel"
-	on:click:button--secondary={() => (open = false)}
-	on:close
-	on:submit={() => dispatch('deleteConfirm')}
-/>
+<div class="deleteModal">
+	<Modal
+		danger
+		bind:open
+		size="sm"
+		modalHeading="Do you want to delete this {name} record?"
+		primaryButtonText="Delete"
+		secondaryButtonText="Cancel"
+		on:click:button--secondary={() => (open = false)}
+		on:close
+		on:submit={() => dispatch('deleteConfirm')}
+	/>
+</div>

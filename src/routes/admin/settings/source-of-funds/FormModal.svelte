@@ -10,15 +10,12 @@
 	export let sourceOfFound = {
 		id: null,
 		name: null,
-		serial_no: null,
-		remarks: null
+	
 	};
 
 	$: {
 		if (sourceOfFound.id) {
 			setFields('name', sourceOfFound.name);
-			setFields('serial_no', sourceOfFound.serial_no);
-			setFields('remarks', sourceOfFound.remarks);
 		} else {
 			reset();
 		}
@@ -26,17 +23,9 @@
 
 	const schema = yup.object({
 		name: yup.string().required().typeError('Name is required'),
-		serial_no: yup.number().required().typeError('Serial Number must be a number'),
-		remarks: yup.string().required()
 	});
 
 	const { form, touched, reset, errors, createSubmitHandler, setFields } = createForm({
-		transform: (values: any) => {
-			return {
-				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null
-			};
-		},
 		extend: validator({ schema })
 	});
 
@@ -59,6 +48,7 @@
 
 <Modal
 	bind:open
+	size="xs"
 	modalHeading={sourceOfFound.id == null ? 'Create Source Of Fund' : 'Edit Source Of Fund'}
 	primaryButtonText={sourceOfFound.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
@@ -67,10 +57,10 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<div class="t-grid t-grid-cols-2 t-gap-4">
+		<div class="t-grid t-grid-cols-1 t-gap-4">
 			<div>
 				<TextInput
-					invalid={$errors.name}
+					invalid={$errors.name != null}
 					name="name"
 					labelText=" name"
 					placeholder="Enter  name..."
@@ -78,20 +68,6 @@
 				{#if $errors.name}
 					<p class="t-text-red-500">{$errors.name}</p>
 				{/if}
-			</div>
-			<div>
-				<TextInput
-					invalid={$errors.serial_no}
-					name="serial_no"
-					labelText="Serial_No"
-					placeholder="Enter  serial_no..."
-				/>
-				{#if $errors.serial_no}
-					<p class="t-text-red-500">{$errors.serial_no}</p>
-				{/if}
-			</div>
-			<div>
-				<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
 			</div>
 		</div>
 		<!-- {JSON.stringify($touched)} -->

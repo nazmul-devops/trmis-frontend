@@ -1,5 +1,6 @@
 <script>
 	import {
+		Button,
 		Header,
 		HeaderUtilities,
 		HeaderAction,
@@ -17,7 +18,7 @@
 	} from 'carbon-components-svelte';
 	import Grid from 'carbon-icons-svelte/lib/Grid.svelte';
 	import Events from 'carbon-icons-svelte/lib/Events.svelte';
-	import Calendar from 'carbon-icons-svelte/lib/Calendar.svelte';
+	import Event from 'carbon-icons-svelte/lib/Event.svelte';
 	import ReportData from 'carbon-icons-svelte/lib/ReportData.svelte';
 	import Settings from 'carbon-icons-svelte/lib/Settings.svelte';
 	import UserSettings from 'carbon-icons-svelte/lib/UserSettings.svelte';
@@ -86,18 +87,17 @@
 				icon={UserAvatarFilledAlt}
 				closeIcon={UserAvatarFilledAlt}
 			>
-				<HeaderPanelLinks class=" t-h-[30vh] ">
-					<HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider>
-					<HeaderPanelLink>Edit Details</HeaderPanelLink>
-					<HeaderPanelLink on:click={openPassModal}>Change Password</HeaderPanelLink>
-					<HeaderPanelLink>
-						<div
-							class="t-text-black t-cursor-pointer t-flex t-items-center t-mr-5"
-							on:click={logout}
-							on:keypress={logout}
-						>
-							Log Out
-						</div>
+				<HeaderPanelLinks class=" t-h-[30vh]">
+
+					<!-- <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider> -->
+					<HeaderPanelLink class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						Edit Details
+					</HeaderPanelLink>
+					<HeaderPanelLink on:click={openPassModal} class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						Change Password
+					</HeaderPanelLink>
+					<HeaderPanelLink class="t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						<div on:click={logout} on:keypress={logout} class="t-w-full">Log Out</div>
 					</HeaderPanelLink>
 				</HeaderPanelLinks>
 			</HeaderAction>
@@ -151,7 +151,7 @@
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
-			<SideNavMenu icon={Calendar} text="Event">
+			<SideNavMenu icon={Event} text="Event">
 				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
 				<SideNavLink class="t-mt-3">
 					<a href="/admin/schedule-events">Event Schedule</a>

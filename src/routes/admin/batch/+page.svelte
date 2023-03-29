@@ -101,4 +101,4 @@
 {/if}
 
 <FormModal bind:open bind:batch />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />
+<DeleteModal  bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

@@ -24,9 +24,9 @@
 	// }
 
 	const schema = yup.object({
-		old_password: yup.string().required(),
-		new_password: yup.string().required('Password is required'),
-		confirm_password: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match')
+		old_password: yup.string().required('Old password is required'),
+		new_password: yup.string().required('New password is required'),
+		confirm_password: yup.string().oneOf([yup.ref('new_password'), null], 'Passwords must match').required("Password is required.")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
@@ -46,41 +46,52 @@
 	// });
 </script>
 
-<Modal
-	bind:open
-	modalHeading="Change Password"
-	primaryButtonText="Save"
-	secondaryButtonText="Cancel"
-	on:click:button--secondary={() => (open = false)}
-	on:submit={submitHandler}
->
-	<form use:form>
-		<PasswordInput
-			name="old_password"
-			labelText="Password"
-			placeholder="Enter password..."
-			invalid={$errors.password != null}
-		/>
-		{#if $errors.old_password}
-			<p class="t-text-red-500">{$errors.old_password}</p>
-		{/if}
-		<PasswordInput
-			invalid={$errors.new_password != null}
-			name="new_password"
-			labelText="New Password"
-			placeholder="Enter New Password..."
-		/>
-		{#if $errors.new_password}
-			<p class="t-text-red-500">{$errors.new_password}</p>
-		{/if}
-		<PasswordInput
-			invalid={$errors.confirm_password != null}
-			name="confirm_password"
-			labelText="Confirm Password"
-			placeholder="Enter Confirm Password..."
-		/>
-		{#if $errors.confirm_password}
-			<p class="t-text-red-500">{$errors.confirm_password}</p>
-		{/if}
-	</form>
-</Modal>
+<div class="changePasswordModal">
+	<Modal
+		size="xs"
+		bind:open
+		modalHeading="Change Password"
+		primaryButtonText="Change"
+		secondaryButtonText="Cancel"
+		on:click:button--secondary={() => (open = false)}
+		on:submit={submitHandler}
+	>
+		<form use:form>
+			<div class=" t-grid t-grid-cols-1 changePasswordModalForm">
+				<div class="t-mb-2">
+					<PasswordInput
+						invalid={$errors.old_password != null}
+						name="old_password"
+						labelText=""
+						placeholder="Enter Old Password..."
+					/>
+					{#if $errors.old_password}
+						<p class="t-text-red-500">{$errors.old_password}</p>
+					{/if}
+				</div>
+				<div class="t-mb-2">
+					<PasswordInput
+						invalid={$errors.new_password != null}
+						name="new_password"
+						labelText=""
+						placeholder="Enter New Password..."
+					/>
+					{#if $errors.new_password}
+						<p class="t-text-red-500">{$errors.new_password}</p>
+					{/if}
+				</div>
+				<div class="t-mb-2">
+					<PasswordInput
+						invalid={$errors.confirm_password != null}
+						name="confirm_password"
+						labelText=""
+						placeholder="Enter Confirm Password..."
+					/>
+					{#if $errors.confirm_password}
+						<p class="t-text-red-500">{$errors.confirm_password}</p>
+					{/if}
+				</div>
+			</div>
+		</form>
+	</Modal>
+</div>

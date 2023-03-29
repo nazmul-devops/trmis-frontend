@@ -197,8 +197,8 @@
 					bind:value={$data.latitude}
 					invalid={$errors.latitude != null}
 					name="latitude"
-					labelText="Latitute"
-					placeholder="Enter Latitute..."
+					labelText="Latitude"
+					placeholder="Enter Latitude..."
 				/>
 			</div>
 			<div>
