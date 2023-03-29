@@ -20,9 +20,8 @@
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Event Name' },
-		{ key: 'coordinator_name', value: 'Coordinator' },
-		{ key: 'organization_name', value: 'Organization' },
-		// { key: 'schedule', value: 'Schedule' },
+		{ key: 'coordinator_name', value: 'Event Coordinators' },
+		{ key: 'organization_name', value: 'Organizations' },
 		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];

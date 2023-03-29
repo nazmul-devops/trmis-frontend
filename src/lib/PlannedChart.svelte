@@ -3,6 +3,8 @@
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
 
+	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF'];
+
 	export let Class = '';
 	const plugin = {
 		id: 'customCanvasBackgroundColor',
@@ -16,22 +18,39 @@
 		}
 	};
 
-	let labels = ['Plan Batch For 2021', 'Completed Batch In 2021'];
+	export let plannedLabels = [];
+	export let plannedData = [];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: labels.map((label) => label),
+		labels: plannedLabels,
 		datasets: [
 			{
 				label: '',
-				data: [2, 4],
+				data: plannedData,
 				backgroundColor: ['#FFEFE2', '#EFFCEF']
 			}
 		]
 	};
+
+	let chart: Chart = null;
+
+	$: {
+		if (chart) {
+			chart.data.labels = plannedLabels;
+			chart.data.datasets = [
+				{
+					data: plannedData,
+					backgroundColor: BACKGROUND_COLOR
+				}
+			];
+			chart.update();
+		}
+	}
+
 	onMount(() => {
 		if (browser) {
-			new Chart(barChartElement, {
+			chart = new Chart(barChartElement, {
 				type: 'bar',
 				data: chartData,
 				options: {

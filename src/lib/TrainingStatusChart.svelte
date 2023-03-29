@@ -23,7 +23,7 @@
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: status,
+		labels: status.map((label) => label),
 		datasets: [
 			{
 				label: '',
@@ -50,7 +50,7 @@
 
 	onMount(() => {
 		if (browser) {
-			new Chart(barChartElement, {
+			chart = new Chart(barChartElement, {
 				type: 'pie',
 				data: chartData,
 				options: {
