@@ -13,7 +13,8 @@
 		SideNavLink,
 		SideNavDivider,
 		SkipToContent,
-		Content
+		Content,
+		Modal
 	} from 'carbon-components-svelte';
 	import Grid from 'carbon-icons-svelte/lib/Grid.svelte';
 	import Events from 'carbon-icons-svelte/lib/Events.svelte';
@@ -23,16 +24,17 @@
 	import UserSettings from 'carbon-icons-svelte/lib/UserSettings.svelte';
 
 	import Location from 'carbon-icons-svelte/lib/Location.svelte';
-	import { expoIn } from 'svelte/easing';
 	import UserAvatarFilledAlt from 'carbon-icons-svelte/lib/UserAvatarFilledAlt.svelte';
 	import { isAuthincated, setAccessToken, logout } from '$lib/store/auth';
 	import { goto } from '$app/navigation';
 	import { browser } from '$app/environment';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { setupAuthHeader } from '$lib/service/auth';
 	import ChangePassModal from '$lib/ChangePassModal.svelte';
-	import { permissions, permissionsByGroups } from '$lib/store/permission';
+	import { permissionsByGroups } from '$lib/store/permission';
+	import { emitter } from '$lib/service/event-bus';
 
+	let open = false;
 	let isOpen = false;
 	let changePassModal = false;
 
@@ -50,9 +52,18 @@
 		changePassModal = true;
 	}
 
+	function accessForbiddenHandler() {
+		open = true;
+	}
+
 	onMount(() => {
 		setAccessToken();
 		permissionsByGroups.getPermissionsByUser();
+		emitter.on('http_403:access_forbidden', accessForbiddenHandler);
+	});
+
+	onDestroy(() => {
+		emitter.off('http_403:access_forbidden', accessForbiddenHandler);
 	});
 
 	let isSideNavOpen = false;
@@ -220,6 +231,10 @@
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
+					<a href="/admin/planned-batch/">Planned Batch</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
 					<a href="/admin/notice">Notice</a>
 				</SideNavLink>
 				<SideNavDivider />
@@ -252,3 +267,7 @@
 {/if}
 
 <ChangePassModal bind:open={changePassModal} />
+
+<Modal passiveModal bind:open modalHeading="UnAuthorized" on:open on:close>
+	<p>You are not permitted for this action.</p>
+</Modal>

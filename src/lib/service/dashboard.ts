@@ -60,7 +60,24 @@ export async function getGenderWiseTraining() {
 }
 export async function getPlannedBatch() {
 	try {
-		const { data } = await http.get('dashboard/planned-batch/');
+		const { data } = await http.get('dashboard/planned-completed-batch/');
+		return {
+			status: 200,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}
+
+export async function getParticipantFromCategories() {
+	try {
+		const { data } = await http.get(
+			'dashboard/number-of-participant-for-different-training-course-category/'
+		);
 		return {
 			status: 200,
 			data

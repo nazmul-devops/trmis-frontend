@@ -109,7 +109,7 @@
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
-		address: yup.string().nullable(),
+		address: yup.string().nullable(true),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District')
 	});
@@ -127,10 +127,14 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
+			const payload = {
+				...data,
+				address: data.address.length == 0 ? null : data.address
+			};
 			if (trainee.id) {
-				await trainees.updateTrainee({ ...data, id: trainee.id });
+				await trainees.updateTrainee({...payload, id: trainee.id});
 			} else {
-				await trainees.createTrainee({ ...data });
+				await trainees.createTrainee(payload);
 			}
 			open = false;
 			reset();
@@ -230,8 +234,8 @@
 					bind:value={$data.address}
 					invalid={$errors.address != null}
 					name="address"
-					labelText="Address"
-					placeholder="Enter  Address..."
+					labelText="Personal Address"
+					placeholder="Enter Personal Address..."
 				/>
 				{#if $errors.address}
 					<p class=" t-text-red-500 ">{$errors.address}</p>
@@ -260,8 +264,8 @@
 				<ComboBox
 					invalid={$errors.designation != null}
 					bind:selectedId={$data.designation}
-					titleText="Designations"
-					placeholder="Select Designations"
+					titleText="Designation"
+					placeholder="Select Designation"
 					items={Designations}
 					{shouldFilterItem}
 				/>
@@ -274,8 +278,8 @@
 				<ComboBox
 					invalid={$errors.organization != null}
 					bind:selectedId={$data.organization}
-					titleText="Organizations"
-					placeholder="Select Organizations"
+					titleText="Organization"
+					placeholder="Select Organization"
 					items={Organizations}
 					{shouldFilterItem}
 				/>
@@ -329,6 +333,6 @@
 			</div>
 		</div>
 		<!-- <p>{JSON.stringify($data)}</p> -->
-		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<p>{JSON.stringify($errors)}</p>
 	</form>
 </Modal>

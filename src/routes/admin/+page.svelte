@@ -5,13 +5,13 @@
 	import * as yup from 'yup';
 	import Chart from '../../lib/Chart.svelte';
 	import Count from './Count.svelte';
-	
+	import { onMount } from 'svelte';
+	import { dashboardData } from '$lib/store/dashboard';
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
-
 
 	const timeIntervalDistance = [
 		{ id: 1, text: '2015' },
@@ -48,6 +48,14 @@
 	});
 
 	$: timeIntervalLists = timeIntervalDistance.map((items) => ({ ...items }));
+
+	onMount(() => {
+		dashboardData.getParticipantsFromOrganization();
+		dashboardData.getTrainingStatus();
+		dashboardData.getGenderWiseTraining();
+		dashboardData.getPlannedBatch();
+		dashboardData.getParticipantFromCategories();
+	});
 </script>
 
 <div>

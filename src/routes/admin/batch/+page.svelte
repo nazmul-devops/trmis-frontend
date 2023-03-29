@@ -19,13 +19,11 @@
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'duration', value: 'Duration (in Days)' },
-		// { key: 'initial_cost', value: 'Budget In Taka' },
-		// { key: 'final_cost', value: 'Expenditure In Taka' },
-		{ key: 'coordinator', value: 'Coordinator' },
-		{ key: 'organization', value: 'Organization' },
-		{ key: 'source_of_fund', value: 'Source Of Fund' },
-		{ key: 'training_center', value: 'Training Schedule' },
+		{ key: 'duration', value: 'Duration' },
+		{ key: 'coordinator', value: 'Training Coordinators' },
+		{ key: 'organization', value: 'Organizations' },
+		{ key: 'source_of_fund', value: 'Sources Of Fund' },
+		{ key: 'training_center', value: 'Training Schedules' },
 		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];

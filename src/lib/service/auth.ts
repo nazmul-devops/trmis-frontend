@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { emitter } from './event-bus';
 
 export const httpWeb = axios.create({ baseURL: 'https://trmisapi.inneedcloud.com/api/' });
 
@@ -31,6 +32,7 @@ http.interceptors.response.use(
 				}
 			}
 			if (err.response.status === 403 && err.response.data) {
+				emitter.emit('http_403:access_forbidden');
 				return Promise.reject(err.response.data);
 			}
 		}

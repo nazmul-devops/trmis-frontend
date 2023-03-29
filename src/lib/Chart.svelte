@@ -6,12 +6,6 @@
 	import PlannedChart from './PlannedChart.svelte';
 	import CourseWiseChart from './CourseWiseChart.svelte';
 
-	$: {
-		dashboardData.getParticipantsFromOrganization();
-		dashboardData.getTrainingStatus();
-		dashboardData.getGenderWiseTraining();
-		dashboardData.getPlannedBatch();
-	}
 	//Organization Chart
 	$: labels =
 		$dashboardData.participantFromOrganization.length == 0
@@ -23,22 +17,47 @@
 			? [0, 0, 0, 0]
 			: $dashboardData.participantFromOrganization.map((item) => item.participant);
 
-	// $: statusList = Object.entries($dashboardData.trainingStatus);
-	$: status = $dashboardData.trainingStatus.map((item) => item[0]);
-	$: statusData = $dashboardData.trainingStatus.map((item) => item[1]);
+	//Training Status Chart
 
-	$: {
-		console.log($dashboardData.trainingStatus);
-		// console.log(statusData);
-	}
+	$: status =
+		$dashboardData.trainingStatus.length == 0
+			? ['---', '---', '---']
+			: $dashboardData.trainingStatus.map((item) => item.name);
+
+	$: statusData =
+		$dashboardData.trainingStatus.length == 0
+			? [0, 0, 0]
+			: $dashboardData.trainingStatus.map((item) => item.value);
+
+	//Gender Wise Chart
+
+	$: genderName =
+		$dashboardData.genderWiseTraining.length == 0
+			? ['---', '---']
+			: $dashboardData.genderWiseTraining.map((item) => item.name);
+
+	$: genderData =
+		$dashboardData.genderWiseTraining.length == 0
+			? [0, 0]
+			: $dashboardData.genderWiseTraining.map((item) => item.value);
+
+	//Number Of Participant From Diffrent Categories Chart
+
+	$: plannedLabels =
+		$dashboardData.genderWiseTraining.length == 0
+			? ['---', '---']
+			: $dashboardData.genderWiseTraining.map((item) => item.name);
+
+	$: plannedData =
+		$dashboardData.planedBatch.length == 0
+			? [0, 0]
+			: $dashboardData.planedBatch.map((item) => item.value);
 </script>
 
 <div class="t-grid t-grid-cols-5 t-gap-4 t-content-center t-items-center t-mb-6">
-	<!-- <Chart1st Class={'t-col-span-3'} /> -->
 	<OrganizationalChart Class={'t-col-span-3 '} {labels} {data} />
-	<!-- <Chart2nd Class={'t-col-span-2'} /> -->
 	<TrainingStatusChart Class={'t-col-span-2'} {status} {statusData} />
-	<GenderWiseChart Class={'t-col-span-2'} />
-	<PlannedChart Class={'t-col-span-3'} />
+	<GenderWiseChart Class={'t-col-span-2'} {genderName} {genderData} />
+	<PlannedChart Class={'t-col-span-3'} {plannedLabels} {plannedData} />
 	<CourseWiseChart Class={'t-col-span-5'} />
 </div>

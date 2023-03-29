@@ -34,6 +34,7 @@
 		"js-file-download": "^0.4.12",
 		"leaflet": "^1.9.3",
 		"luxon": "^3.2.1",
+		"mitt": "1.0.1",
 		"postcss": "^8.4.14",
 		"postcss-load-config": "^4.0.1",
 		"prettier": "^2.8.0",

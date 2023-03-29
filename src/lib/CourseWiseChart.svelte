@@ -8,6 +8,8 @@
 	import { onMount } from 'svelte';
 	import { httpWeb } from '$lib/service/auth';
 
+	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9'];
+
 	let trainingData = [];
 
 	async function getCourse() {
@@ -21,29 +23,12 @@
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	// export let timeInterval = {
-	// 	id: null,
-	// 	distance: null
-	// };
-
 	const schema = yup.object({
 		distance: yup.string()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		extend: validator({ schema })
-	});
-
-	const submitHandler = createSubmitHandler({
-		onSubmit: async (data) => {
-			// if (timeInterval.id) {
-			// 	await trainingCenters.updateTrainingCenter({ ...data, id: trainingCenter.id });
-			// } else {
-			// 	await trainingCenters.createTrainingCenter({ ...data });
-			// }
-			// open = false;
-			reset();
-		}
 	});
 
 	export let Class = '';
@@ -59,31 +44,41 @@
 		}
 	};
 
-	let labels = [
-		'Lab Training',
-		'System Training',
-		'Medicine Training',
-		'Diagnosis Training',
-		'Screening Training'
-	];
+	let courseLabels = [];
+	let courseData = [];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: labels.map((label) => label),
+		labels: courseLabels,
 		datasets: [
 			{
 				label: '',
-				data: [795, 650, 550, 450, 350, 300],
-				backgroundColor: ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9']
+				data: courseData,
+				backgroundColor: BACKGROUND_COLOR
 			}
 		]
 	};
+
+	let chart: Chart = null;
+
+	$: {
+		if (chart) {
+			chart.data.labels = courseLabels;
+			chart.data.datasets = [
+				{
+					data: courseData,
+					backgroundColor: BACKGROUND_COLOR
+				}
+			];
+			chart.update();
+		}
+	}
 
 	$: courseList = trainingData.map((item) => ({ ...item, text: item.title }));
 
 	onMount(() => {
 		if (browser) {
-			new Chart(barChartElement, {
+			chart = new Chart(barChartElement, {
 				type: 'bar',
 				data: chartData,
 				options: {
