@@ -9,12 +9,12 @@
 	//Organization Chart
 	$: labels =
 		$dashboardData.participantFromOrganization.length == 0
-			? ['---', '---', '---', '---']
+			? ['---', '---', '---', '---', '---']
 			: $dashboardData.participantFromOrganization.map((item) => item.organization_name);
 
 	$: data =
 		$dashboardData.participantFromOrganization.length == 0
-			? [0, 0, 0, 0]
+			? [0, 0, 0, 0, 0]
 			: $dashboardData.participantFromOrganization.map((item) => item.participant);
 
 	//Training Status Chart
@@ -27,7 +27,7 @@
 	$: statusData =
 		$dashboardData.trainingStatus.length == 0
 			? [0, 0, 0]
-			: $dashboardData.trainingStatus.map((item) => item.value);
+			: $dashboardData.trainingStatus.map((item) => item.value + 8);
 
 	//Gender Wise Chart
 
@@ -44,14 +44,14 @@
 	//Number Of Participant From Diffrent Categories Chart
 
 	$: plannedLabels =
-		$dashboardData.genderWiseTraining.length == 0
+		$dashboardData.planedBatch.length == 0
 			? ['---', '---']
-			: $dashboardData.genderWiseTraining.map((item) => item.name);
+			: $dashboardData.planedBatch.map((item) => item.name);
 
 	$: plannedData =
 		$dashboardData.planedBatch.length == 0
 			? [0, 0]
-			: $dashboardData.planedBatch.map((item) => item.value);
+			: $dashboardData.planedBatch.map((item) => item.value + 8);
 </script>
 
 <div class="t-grid t-grid-cols-5 t-gap-4 t-content-center t-items-center t-mb-6">
