@@ -30,7 +30,7 @@ function dcreateDashboardStore() {
 	async function getParticipantsFromOrganization() {
 		const resp = await dashboardService.getParticipantsFromOrganization();
 		update((prev) => {
-			prev.participantFromOrganization = resp.data.top_four_organizations;
+			prev.participantFromOrganization = resp.data.top_five_organizations;
 			prev.loading = false;
 			return prev;
 		});

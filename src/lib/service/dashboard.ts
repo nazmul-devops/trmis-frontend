@@ -17,7 +17,9 @@ export async function getParticipantsAndResources() {
 
 export async function getParticipantsFromOrganization() {
 	try {
-		const { data } = await http.get('dashboard/top-four-organization/');
+		const { data } = await http.get(
+			'dashboard/top-organizations/?year=2023&start_month=1&end_month=4'
+		);
 		return {
 			status: 200,
 			data
@@ -32,7 +34,9 @@ export async function getParticipantsFromOrganization() {
 
 export async function getTraininjgStatus() {
 	try {
-		const { data } = await http.get('dashboard/training-course-status/');
+		const { data } = await http.get(
+			'dashboard/training-course-status/?year=2023&start_month=1&end_month=4'
+		);
 		return {
 			status: 200,
 			data
@@ -46,7 +50,9 @@ export async function getTraininjgStatus() {
 }
 export async function getGenderWiseTraining() {
 	try {
-		const { data } = await http.get('dashboard/gender-wise-training/');
+		const { data } = await http.get(
+			'dashboard/gender-wise-training/?year=2023&start_month=1&end_month=4'
+		);
 		return {
 			status: 200,
 			data
@@ -60,7 +66,9 @@ export async function getGenderWiseTraining() {
 }
 export async function getPlannedBatch() {
 	try {
-		const { data } = await http.get('dashboard/planned-completed-batch/');
+		const { data } = await http.get(
+			'dashboard/planned-completed-batch/?year=2023&start_month=1&end_month=4'
+		);
 		return {
 			status: 200,
 			data
