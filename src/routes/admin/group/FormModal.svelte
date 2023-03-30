@@ -60,14 +60,20 @@
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
-	<TextInput bind:value={group.name} labelText="Name" placeholder="Enter Name" />
-	<MultiSelect
-		direction="top"
-		selectedIds={groups}
-		titleText="Prerequisite"
-		label="Select Prerequisite..."
-		items={$permissions.data.map((item) => ({ ...item, id: item.value, text: item.title }))}
-		on:select={(e) => setData('permissions', e.detail.selectedIds)}
-	/>
+	<div class="t-grid t-grid-cols-2 t-gap-4">
+		<div>
+			<TextInput bind:value={group.name} labelText="Name" placeholder="Enter Name" />
+		</div>
+		<div>
+			<MultiSelect
+				direction="top"
+				selectedIds={groups}
+				titleText="Prerequisite"
+				label="Select Prerequisite..."
+				items={$permissions.data.map((item) => ({ ...item, id: item.value, text: item.title }))}
+				on:select={(e) => setData('permissions', e.detail.selectedIds)}
+			/>
+		</div>
+	</div>
 	<!-- {JSON.stringify($data)} -->
 </Modal>

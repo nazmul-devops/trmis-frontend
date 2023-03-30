@@ -48,7 +48,7 @@
 {:else}
 	<DataTable
 		size="short"
-		title="Planned Bagtch"
+		title="Planned Batch"
 		description=""
 		{headers}
 		rows={$plannedBatches.data}

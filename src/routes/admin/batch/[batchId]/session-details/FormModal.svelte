@@ -122,7 +122,7 @@
 				</div>
 			</div>
 
-			<div>
+			<div class="custom">
 				<DatePicker
 					bind:value={$data.session_date}
 					name="session_date"
@@ -142,18 +142,26 @@
 				<TextInput
 					invalid={$errors.session_no != null}
 					name="session_no"
-					labelText="Session NO"
+					labelText="Session No"
 					placeholder="Enter Session No..."
 				/>
 			</div>
 
-			<div class=" t-p-3 t-border ">
-				<label for="">Start Time</label>
-				<input type="time" name="from_time" />
+			<div class=" t-border t-flex t-flex-col t-w-full">
+				<label for="" class="t-text-[#525252] t-text-xs">Start Time</label>
+				<input
+					type="time"
+					name="from_time"
+					class="t-border-[1px] t-mt-2 t-border-[#525252] t-text-[#525252] t-rounded-lg t-px-6 t-py-2"
+				/>
 			</div>
-			<div class="t-p-3 t-border">
-				<label for="">End Time</label>
-				<input type="time" name="to_time" />
+			<div class=" t-border t-flex t-flex-col t-w-full">
+				<label for="" class="t-text-[#525252] t-text-xs">End Time</label>
+				<input
+					type="time"
+					name="from_time"
+					class="t-border-[1px] t-mt-3 t-border-[#525252] t-text-[#525252] t-rounded-lg t-px-6 t-py-2"
+				/>
 			</div>
 
 			<div>

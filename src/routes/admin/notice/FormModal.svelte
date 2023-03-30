@@ -95,10 +95,10 @@
 					placeholder="Enter Description..."
 				/>
 			</div>
-			<div>
-				<label for="">Expiration Date</label> <br />
+			<div class="t-w-full">
+				<label for="" class="t-text-[#525252] t-text-xs">Expiration Date</label> <br />
 				<input
-					class=" t-border t-p-3 t-my-2 "
+					class=" t-border-[1px] t-w-full t-mt-3 t-border-[#525252] t-text-[#525252] t-rounded-lg t-px-6 t-py-2 "
 					type="datetime-local"
 					id="birthdaytime"
 					bind:value={$data.expiration_date}
@@ -118,5 +118,5 @@
 		</div>
 		<Checkbox name="show_in_home_page" labelText=" Show Public Website ?" />
 	</form>
-	{JSON.stringify($data)}
+	<!-- {JSON.stringify($data)} -->
 </Modal>
