@@ -70,7 +70,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped>
+				<OverflowMenu flipped direction='top' size="sm">
 					<OverflowMenuItem
 						on:click={() => goto(`/admin/batch/${row.id}/participants`)}
 						text="Participants"

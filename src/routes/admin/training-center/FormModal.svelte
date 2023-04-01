@@ -89,13 +89,13 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		latitude: yup.string().required(),
-		longitude: yup.string().required(),
-		division: yup.number().required(),
-		district: yup.number().required(),
-		sub_district: yup.number().required(),
-		address: yup.string().required()
+		name: yup.string().required("Training venue name is required."),
+		latitude: yup.string().required("Latitude is required."),
+		longitude: yup.string().required("Longtitude is required."),
+		division: yup.number().required('Division is required.'),
+		district: yup.number().required('Distric is required.'),
+		sub_district: yup.number().required("Sub district is required."),
+		address: yup.string().required('Address is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
@@ -153,15 +153,20 @@
 			</div>
 			<div>
 				<ComboBox
+					invalid={$errors.division != null}
 					bind:selectedId={$data.division}
 					titleText="Division"
 					placeholder="Select Division"
 					items={locations}
 					{shouldFilterItem}
 				/>
+				{#if $errors.division}
+					<p class="t-text-red-500 t-text-sm">{$errors.division}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
+					invalid={$errors.district != null}
 					disabled={!$data.division}
 					bind:selectedId={$data.district}
 					titleText="Zilla"
@@ -169,9 +174,13 @@
 					items={zilaOptions}
 					{shouldFilterItem}
 				/>
+				{#if $errors.district}
+					<p class="t-text-red-500">{$errors.district}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
+					invalid={$errors.sub_district != null}
 					disabled={!$data.district}
 					bind:selectedId={$data.sub_district}
 					titleText="Upazilla"
@@ -179,6 +188,9 @@
 					items={upazilaOptions}
 					{shouldFilterItem}
 				/>
+				{#if $errors.sub_district}
+					<p class="t-text-red-500">{$errors.sub_district}</p>
+				{/if}
 			</div>
 			<div class="t-col-span-2">
 				<div>
@@ -191,6 +203,9 @@
 						placeholder="Enter Address..."
 					/>
 				</div>
+				{#if $errors.address}
+					<p class='t-text-red-500'>{$errors.address}</p>
+				{/if}
 			</div>
 			<div>
 				<TextInput
@@ -200,6 +215,9 @@
 					labelText="Latitude"
 					placeholder="Enter Latitude..."
 				/>
+				{#if $errors.latitude}
+					<p class="t-text-red">{$errors.latitude}</p>
+				{/if}
 			</div>
 			<div>
 				<TextInput
@@ -209,6 +227,9 @@
 					labelText="Longitude"
 					placeholder="Enter Longitude..."
 				/>
+				{#if $errors.longitude}
+					<p class="t-text-red-500">{$errors.longitude}</p>
+				{/if}
 			</div>
 		</div>
 	</form>

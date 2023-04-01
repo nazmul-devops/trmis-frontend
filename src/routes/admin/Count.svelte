@@ -16,7 +16,7 @@
 	});
 </script>
 
-<div class="t-grid t-grid-cols-2 t-gap-4">
+<div class="t-grid md:t-grid-cols-2 t-gap-4">
 	<div class="t-py-2">
 		<div class="t-bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] t-py-6 t-rounded-lg">
 			<div class="t-text-center t-font-semibold t-py-2">

@@ -72,7 +72,7 @@
 
 {#if $isAuthincated}
 	<Header
-		class="t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-font-bold t-text-base t-border-b-0"
+		class="t-hidden md:t-block t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-font-bold t-text-base t-border-b-0"
 		company="TB Training Management Information System"
 		platformName=""
 		bind:isSideNavOpen

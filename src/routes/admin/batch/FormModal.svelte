@@ -46,15 +46,15 @@
 	}
 
 	const schema = yup.object({
-		status: yup.number().required().typeError('Status is required.'),
-		name: yup.string().required().typeError('Name is required.'),
-		duration: yup.number().required().typeError('Duration is required.'),
-		initial_cost: yup.number().required().typeError('Initial cost is required.'),
+		status: yup.number().required('Status is required.'),
+		name: yup.string().required('Name is required.'),
+		duration: yup.number().required('Duration is required.'),
+		initial_cost: yup.number().required('Initial cost is required.'),
 		final_cost: yup.number(),
-		coordinator: yup.number().required().typeError('Coordinator is required.'),
-		organization: yup.number().required().typeError('Organization is required.'),
-		source_of_fund: yup.number().required().typeError('Source of fund is required.'),
-		training_course_schedule: yup.number().required()
+		coordinator: yup.number().required('Coordinator is required.'),
+		organization: yup.number().required('Organization is required.'),
+		source_of_fund: yup.number().required('Source of fund is required.'),
+		training_course_schedule: yup.number().required('Training course schedule is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, setData, errors, data } = createForm({
@@ -123,6 +123,9 @@
 					labelText="Name"
 					placeholder="Enter Name..."
 				/>
+				{#if $errors.name}
+					<p class="t-text-red-500">{$errors.name}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
@@ -138,6 +141,9 @@
 						{ id: 3, text: 'Completed' }
 					]}
 				/>
+				{#if $errors.status}
+					<p class="t-text-red-500">{$errors.status}</p>
+				{/if}
 			</div>
 			<div>
 				<TextInput
@@ -147,6 +153,9 @@
 					labelText="Duration"
 					placeholder="Enter Duration..."
 				/>
+				{#if $errors.duration}
+					<p class="t-text-red-500">{$errors.duration}</p>
+				{/if}
 			</div>
 			<div>
 				<TextInput
@@ -156,6 +165,9 @@
 					labelText="Initial Cost"
 					placeholder="Enter Initial Cost..."
 				/>
+				{#if $errors.initial_cost}
+					<p class="t-text-red-500">{$errors.initial_cost}</p>
+				{/if}
 			</div>
 			<div>
 				<TextInput
@@ -176,6 +188,9 @@
 					bind:selectedId={$data.coordinator}
 					items={coordinatorsList}
 				/>
+				{#if $errors.coordinator}
+					<p class="t-text-red-500">{$errors.coordinator}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
@@ -188,6 +203,9 @@
 					bind:selectedId={$data.organization}
 					items={organizationsList}
 				/>
+				{#if $errors.organization}
+					<p class="t-text-red-500">{$errors.organization}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
@@ -200,6 +218,9 @@
 					bind:selectedId={$data.source_of_fund}
 					items={sourceOfFundList}
 				/>
+				{#if $errors.source_of_fund}
+					<p class="t-text-red-500">{$errors.source_of_fund}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
@@ -212,6 +233,9 @@
 					bind:selectedId={$data.training_course_schedule}
 					items={trainingScheduleList}
 				/>
+				{#if $errors.training_course_schedule}
+					<p class="t-text-red-500">{$errors.training_course_schedule}</p>
+				{/if}
 			</div>
 			<!-- <p>{JSON.stringify($errors)}</p> -->
 			<!-- <p>{JSON.stringify($data)}</p> -->

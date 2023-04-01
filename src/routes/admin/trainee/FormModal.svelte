@@ -94,19 +94,20 @@
 	}
 
 	const schema = yup.object({
+		name: yup.string().required('Name is required.'),
 		phone: yup
 			.string()
 			.matches(new RegExp(/^\+?(88)?0?1[3456789][0-9]{8}\b/), 'Not valid format')
-			.required(),
+			.required('Phone is required.'),
 		nid: yup
 			.number()
 			.min(1000000000, 'Enter A Valid NID')
 			.max(9999999999, 'Enter A Valid NID')
 			.nullable(),
 		email: yup.string().email().nullable(),
-		gender: yup.number().required().typeError('Select Gender'),
+		gender: yup.number().required('Select Gender'),
 		hris: yup.number(),
-		designation: yup.number().required().typeError('Select Designation'),
+		designation: yup.number().required('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
 		address: yup.string().nullable(true),

@@ -41,9 +41,9 @@
 	}
 
 	const schema = yup.object({
-		training_course: yup.number().required(),
-		training_center: yup.number().required(),
-		status: yup.number().required(),
+		training_course: yup.number().required("Training course is required."),
+		training_center: yup.number().required("Training center is required."),
+		status: yup.number().required("Status is required."),
 		start_date: yup.string().required(),
 		end_date: yup.string().required()
 	});
@@ -85,21 +85,32 @@
 >
 	<form use:form>
 		<div class="t-grid t-grid-cols-2 t-gap-4">
-			<ComboBox
-				invalid={$errors.training_course != null}
+			<div>
+				<ComboBox
+				
 				bind:selectedId={$data.training_course}
 				titleText="Training Course"
 				placeholder="Select Training Course"
 				items={trainingCourseList}
 			/>
-			<ComboBox
+			{#if $errors.training_course}
+				<p class="t-text-red-500">{$errors.training_course}</p>
+			{/if}
+			</div>
+			<div>
+				<ComboBox
 				name="training_center"
 				bind:selectedId={$data.training_center}
 				titleText="Training Center"
 				placeholder="Select Training Center"
 				items={trainingCenterList}
 			/>
-			<ComboBox
+			{#if $errors.training_center}
+				<p class="t-text-red-500">{$errors.training_center}</p>
+			{/if}
+			</div>
+			<div>
+				<ComboBox
 				name="status"
 				invalid={$errors.status != null}
 				bind:selectedId={$data.status}
@@ -111,6 +122,10 @@
 					{ id: 3, text: 'Rejected' }
 				]}
 			/>
+			{#if $errors.status}
+				<p class="t-text-red-500">{$errors.status}</p>
+			{/if}
+			</div>
 			<div class="custom">
 				<DatePicker
 					bind:value={$data.start_date}

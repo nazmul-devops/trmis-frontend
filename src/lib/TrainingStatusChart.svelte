@@ -99,5 +99,5 @@
 	<section class="t-bg-white t-h-[50vh] t-flex t-justify-center t-items-center">
 		<canvas bind:this={barChartElement} />
 	</section>
-	<p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">Training Status</p>
+	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">Training Status</p>
 </main>
