@@ -42,7 +42,7 @@
 
 	$: {
 		setFields('files', files[0]);
-		console.log(files[0]);
+		console.log(files);
 	}
 
 	const schema = yup.object({
