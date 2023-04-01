@@ -30,6 +30,7 @@
 
 	let open = false;
 	let deleteModal = false;
+	let bulkUpModal = false;
 	let batch;
 
 	function openModalForm(row) {
@@ -37,20 +38,14 @@
 		batch = row;
 	}
 
+	function openBulkForm() {
+		bulkUpModal = true;
+	}
+
 	async function doDelete() {
 		await batchs.deleteBatch(batch.id);
 		deleteModal = false;
-		// batchList();
 	}
-
-	// let batches = [];
-
-	// async function batchList() {
-	// 	loading = true;
-	// 	const { data } = await getBatches();
-	// 	batches = data;
-	// 	loading = false;
-	// }
 
 	onMount(async () => {
 		batchs.getBatches();
@@ -70,7 +65,11 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top' size="sm">
+				<OverflowMenu flipped direction="top" size="sm">
+					<OverflowMenuItem
+						on:click={() => goto(`/adminbatch/${row.id}/upload-excel/`)}
+						text="Bulk Upload"
+					/>
 					<OverflowMenuItem
 						on:click={() => goto(`/admin/batch/${row.id}/participants`)}
 						text="Participants"
@@ -101,4 +100,4 @@
 {/if}
 
 <FormModal bind:open bind:batch />
-<DeleteModal  bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

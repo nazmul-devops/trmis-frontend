@@ -1,58 +1,74 @@
 import { writable } from 'svelte/store';
 import * as batchServieces from '../service/batch';
 
-function createBatchStore(){
-    const { subscribe, set, update } = writable({
-        loading: true,
-        data: []
-    });
-    
-    function setLoading(){
-        update(prev =>({
-            ...prev,
-            loading: true
-        }));
-    }
+function createBatchStore() {
+	const { subscribe, update } = writable({
+		loading: true,
+		data: [],
+		upload: { status: null, errorRows: [], errorMessage: null, successRows: null }
+	});
 
-    async function getBatches(){
-        setLoading()
-        const resp = await batchServieces.getBatches();
-        set({
-            loading: false,
-            data: resp.data
-        });
-    }
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
 
-    // async function getBatch(id: number){
-    //     setLoading();
-    //     await batchServieces.getBatch(id)
-    // }
+	async function getBatches() {
+		setLoading();
+		const resp = await batchServieces.getBatches();
+		update((prev) => {
+			prev.loading = false;
+			prev.data = resp.data;
+			return prev;
+		});
+	}
 
-    async function deleteBatch(id: number){
-        setLoading();
-        await batchServieces.deleteBatch(id)
-        getBatches()
-    }
+	async function deleteBatch(id: number) {
+		setLoading();
+		await batchServieces.deleteBatch(id);
+		getBatches();
+	}
 
-    async function updateBatch(payload){
-        setLoading();
-        await batchServieces.updateBatch(payload);
-        getBatches()
-    }
+	async function updateBatch(payload) {
+		setLoading();
+		await batchServieces.updateBatch(payload);
+		getBatches();
+	}
 
-    async function createBatch(payload){
-        setLoading();
-        await batchServieces.createBatch(payload)
-        getBatches();
-    }
+	async function createBatch(payload) {
+		setLoading();
+		await batchServieces.createBatch(payload);
+		getBatches();
+	}
 
-    return {
-        subscribe,
-        getBatches,
-        deleteBatch,
-        updateBatch,
-        createBatch
-    }
+	async function uploadExel(payload, id) {
+		setLoading();
+
+		const { errorMessage, errorRows, status, successRows } = await batchServieces.uploadExel(
+			payload, id
+		);
+
+		update((prev) => {
+			prev.upload.errorMessage = errorMessage;
+			prev.upload.errorRows = errorRows;
+			prev.upload.status = status;
+			prev.upload.successRows = successRows;
+			return prev;
+		});
+
+		await getBatches();
+	}
+
+	return {
+		subscribe,
+		getBatches,
+		deleteBatch,
+		updateBatch,
+		createBatch,
+		uploadExel
+	};
 }
 
-export const batchs = createBatchStore()
+export const batchs = createBatchStore();

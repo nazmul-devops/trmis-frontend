@@ -1,4 +1,5 @@
 import { http } from '$lib/service/auth';
+import { generateFromData } from '$lib/service/utilities';
 
 export async function getTrainers() {
 	try {
@@ -63,6 +64,31 @@ export async function createTrainer(payload) {
 	} catch (err) {
 		return Promise.resolve({
 			status: 403
+		});
+	}
+}
+
+export async function uploadExel(payload) {
+	try {
+		const formData = await generateFromData(payload);
+		const { data } = await http({
+			method: 'POST',
+			url: 'trainer/upload-excel/',
+			data: formData,
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return {
+			status: 201,
+			errorRows: data.error,
+			errorMessage: data.error_msg,
+			successRows: data.success
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 403,
+			errorRows: [],
+			errorMessage: 'No Message',
+			successRows: 0
 		});
 	}
 }

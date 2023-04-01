@@ -72,6 +72,7 @@
 			selectedUpazilaId
 		);
 	}
+
 	onMount(() => {
 		organizations.getOrganizations();
 	});

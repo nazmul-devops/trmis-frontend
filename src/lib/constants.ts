@@ -20,6 +20,11 @@ export const MAP_VIEW_TYPE = [
 	{ id: 2, text: 'Training Completed' }
 ];
 
+export const CALENDER_VIEW_TYPE = [
+	{ id: 1, text: 'Training Calender' },
+	{ id: 2, text: 'Event Calender' }
+];
+
 export const BATCH_VIEW = MAP_VIEW_TYPE[1].id;
 
 export const galleryCategory = [
@@ -32,22 +37,22 @@ export const galleryCategory = [
 
 export const EVENTDATA = [
 	{
-		id: 1,
+		id: 'meeting',
 		title: 'Meeting',
 		link: '/assets/eventIcon1.jpg'
 	},
 	{
-		id: 2,
+		id: 'workshop',
 		title: 'Workshop',
 		link: '/assets/eventIcon2.jpg'
 	},
 	{
-		id: 3,
+		id: 'orientation',
 		title: 'Orientation',
 		link: '/assets/eventIcon3.jpg'
 	},
 	{
-		id: 4,
+		id: 'sensitization',
 		title: 'Sensitization',
 		link: '/assets/eventIcon4.jpg'
 	}

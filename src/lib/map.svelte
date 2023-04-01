@@ -4,8 +4,6 @@
 	import L from 'leaflet';
 	import { browser } from '$app/environment';
 	import * as trainingCenter from '../lib/service/trainingCenter';
-	import { get } from 'svelte/store';
-	import { json } from '@sveltejs/kit';
 	import axios from 'axios';
 	// import { trainingCenters } from './store/trainingCenter';
 	export let division = null;
