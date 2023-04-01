@@ -8,6 +8,17 @@
 	import { onMount } from 'svelte';
 	import { dashboardData } from '$lib/store/dashboard';
 
+
+	let schedule ={
+		start_date: null,
+		end_date: null
+	}
+
+	$: {
+		setData("start_date", schedule.start_date);
+		setData("end_date", schedule.end_date)
+	}
+
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
@@ -28,7 +39,9 @@
 	];
 
 	const schema = yup.object({
-		distance: yup.string()
+		distance: yup.string(),
+		start_date: yup.string(),
+		end_date: yup.string()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
@@ -73,13 +86,13 @@
 							{shouldFilterItem}
 						/>
 					</div>
-					<div class="t-col-span-3 customDatePicker">
+					<div class="t-my-4 md:t-my-0 t-col-span-3 customDatePicker">
 						<div class="t-flex">
 							<div class="datePicker1">
 								<DatePicker
 									datePickerType="single"
-									bind:value={$data.endDate}
-									dateFormat="m/Y"
+									bind:value={$data.start_date}
+									dateFormat="mm"
 									on:change
 								>
 									<DatePickerInput labelText="From Month" placeholder="mm/yyyy" />
@@ -88,11 +101,11 @@
 							<div class="datePicker2">
 								<DatePicker
 									datePickerType="single"
-									bind:value={$data.endDate}
-									dateFormat="m/Y"
+									bind:value={$data.end_date}
+									dateFormat="mm"
 									on:change
 								>
-									<DatePickerInput labelText="To Month" placeholder="mm/yyyy" />
+									<DatePickerInput labelText="To Month" placeholder="" />
 								</DatePicker>
 							</div>
 						</div>

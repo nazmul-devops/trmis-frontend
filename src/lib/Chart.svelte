@@ -54,10 +54,10 @@
 			: $dashboardData.planedBatch.map((item) => item.value + 8);
 </script>
 
-<div class="t-grid t-grid-cols-5 t-gap-4 t-content-center t-items-center t-mb-6">
-	<OrganizationalChart Class={'t-col-span-3 '} {labels} {data} />
-	<TrainingStatusChart Class={'t-col-span-2'} {status} {statusData} />
-	<GenderWiseChart Class={'t-col-span-2'} {genderName} {genderData} />
-	<PlannedChart Class={'t-col-span-3'} {plannedLabels} {plannedData} />
-	<CourseWiseChart Class={'t-col-span-5'} />
+<div class="t-grid t-grid-cols-1 md:t-grid-cols-3 lg:t-grid-cols-5 t-gap-4 t-content-center t-items-center t-mb-6">
+	<OrganizationalChart Class={'md:t-col-span-2 lg:t-col-span-3 '} {labels} {data} />
+	<TrainingStatusChart Class={'md:t-col-span-1 lg:t-col-span-2'} {status} {statusData} />
+	<GenderWiseChart Class={'md:t-col-span-1 lg:t-col-span-2'} {genderName} {genderData} />
+	<PlannedChart Class={'md:t-col-span-2 lg:t-col-span-3'} {plannedLabels} {plannedData} />
+	<CourseWiseChart Class={'md:t-col-span-3 lg:t-col-span-5'} />
 </div>

@@ -28,6 +28,7 @@
 	let resource;
 
 	function openModalForm(row) {
+		resource = { ...row };
 		open = true;
 	}
 
@@ -60,14 +61,12 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
-					>Add Resource</Button
-				>
+				<Button on:click={() => openModalForm({ trainer: null })}>Add Resource</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem
 						on:click={() => {
 							resource = { ...row };
@@ -78,11 +77,11 @@
 					/>
 				</OverflowMenu>
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex  + 1}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open on:update-list={getBatchResource} />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="resouce person"/>
+<FormModal {resource} bind:open on:update-list={getBatchResource} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="resouce person" />

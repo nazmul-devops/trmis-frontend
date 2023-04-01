@@ -139,7 +139,7 @@
 
 <div class="">
 	<form>
-		<div class=" t-grid t-grid-cols-1 t-gap-4 md:t-grid-col-2 lg:t-grid-cols-4">
+		<div class=" t-grid t-grid-cols-2 t-gap-4 lg:t-grid-cols-4">
 			<div class="t-my-2">
 				<ComboBox
 				bind:selectedId={selectedDivisionId}
@@ -189,55 +189,57 @@
 		<Arrow on:click={toNext} />
 	</header>	
 </div>
-<div class="t-grid t-grid-cols-7 t-text-right t-gap-1">
-	{#each labels as txt, idx (txt)}
-		<span class="t-text-semibold t-text-center t-uppercase t-mb-5 "
-			>{labels[(idx + offset) % 7]}</span
-		>
-	{/each}
-
-	{#each { length: 6 } as w, idxw (idxw)}
-		{#if current[idxw]}
-			{#each { length: 7 } as d, idxd (idxd)}
-				{#if current[idxw][idxd] != 0}
-					<span
-						class=" t-h-full md:t-h-36 t-text-sm  t-border-solid t-border t-p-3 t-border-[#ADD4F7] t-text-semibold t-bg-white "
-						class:today={isToday(current[idxw][idxd])}
-					>
-						<span>
-							{current[idxw][idxd]}
-						</span>
-						<div
-							class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar t-cursor-pointer"
-							on:keypress={() => {
-								trainingScheduleList = courses[parseInt(current[idxw][idxd])];
-								open = true;
-							}}
-							on:click={() => {
-								thisDate = current[idxw][idxd];
-								trainingScheduleList = courses[parseInt(current[idxw][idxd])];
-								open = true;
-							}}
+<div class="t-overflow-x-auto">
+	<div class="t-grid t-grid-cols-7 t-text-right t-gap-1">
+		{#each labels as txt, idx (txt)}
+			<span class="t-text-semibold t-text-center t-uppercase t-mb-5 "
+				>{labels[(idx + offset) % 7]}</span
+			>
+		{/each}
+	
+		{#each { length: 6 } as w, idxw (idxw)}
+			{#if current[idxw]}
+				{#each { length: 7 } as d, idxd (idxd)}
+					{#if current[idxw][idxd] != 0}
+						<span
+							class="t-min-w-[100px] t-h-full md:t-h-36 t-text-sm  t-border-solid t-border t-p-3 t-rounded-lg t-border-[#ADD4F7] t-text-semibold t-bg-white "
+							class:today={isToday(current[idxw][idxd])}
 						>
-							{#if Object.keys(courses).length != 0}
-								{#each courses[parseInt(current[idxw][idxd])] ?? [] as schedule}
-									<li class="">
-										{schedule}
-									</li>
-								{/each}
-							{/if}
-						</div>
-					</span>
-				{:else if idxw < 1}
-					<span class="t-text-[#a6b1c9] t-p-3">{prev[prev.length - 1][idxd]}</span>
-				{:else}
-					<span class="t-text-[#a6b1c9] t-p-3">{next[0][idxd]}</span>
-				{/if}
-			{/each}
-		{/if}
-	{/each}
+							<span>
+								{current[idxw][idxd]}
+							</span>
+							<div
+								class="t-max-h-[90%] t-text-left t-overflow-y-auto calendarBar t-cursor-pointer"
+								on:keypress={() => {
+									trainingScheduleList = courses[parseInt(current[idxw][idxd])];
+									open = true;
+								}}
+								on:click={() => {
+									thisDate = current[idxw][idxd];
+									trainingScheduleList = courses[parseInt(current[idxw][idxd])];
+									open = true;
+								}}
+							>
+								{#if Object.keys(courses).length != 0}
+									{#each courses[parseInt(current[idxw][idxd])] ?? [] as schedule}
+										<li class="">
+											{schedule}
+										</li>
+									{/each}
+								{/if}
+							</div>
+						</span>
+					{:else if idxw < 1}
+						<span class="t-text-[#a6b1c9] t-p-3">{prev[prev.length - 1][idxd]}</span>
+					{:else}
+						<span class="t-text-[#a6b1c9] t-p-3">{next[0][idxd]}</span>
+					{/if}
+				{/each}
+			{/if}
+		{/each}
+	</div>
+	
 </div>
-
 <Modal passiveModal bind:open modalHeading={`${months[month]} ${thisDate}`} on:open on:close>
 	{#each trainingScheduleList as item}
 		<li>

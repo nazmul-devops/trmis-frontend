@@ -25,8 +25,8 @@
 	}
 
 	const schema = yup.object({
-		title: yup.string().required().typeError('Title is required.'),
-		description: yup.string().required().typeError('Description is required.')
+		title: yup.string().required('Title is required.'),
+		description: yup.string().required('Description is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({

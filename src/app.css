@@ -152,7 +152,7 @@ input::-webkit-inner-spin-button {
 
  /* Data table header button */
 .bx--data-table-container{
-	overflow: auto;
+	overflow-x: auto;
 }
  .bx--btn--primary{
 	background: #57AAF7;
@@ -184,6 +184,10 @@ input::-webkit-inner-spin-button {
 
 
 /* Modal view design */
+.bx--modal-container{
+	height: auto;
+	top: auto;
+}
 .bx--modal-content{
 	padding: 10px;
 }
@@ -251,6 +255,14 @@ input[type=number]{
 	background-color: transparent;
 	color: #2D2D2D;
 }
+
+/*File uploader selected file field*/
+/* .bx--file__selected-file{
+	border-radius: 8px;
+	border-bottom: 1px solid#57AAF7;
+	background: #BEDCF7;
+	box-shadow: 8px 8px 35px gray;
+} */
 
 @media screen and (min-width:1024px) {
 	

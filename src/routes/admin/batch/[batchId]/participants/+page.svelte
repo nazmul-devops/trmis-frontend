@@ -67,7 +67,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped>
+				<OverflowMenu flipped direction='top'>
 					<OverflowMenuItem
 						on:click={() => {
 							participant = { ...row };

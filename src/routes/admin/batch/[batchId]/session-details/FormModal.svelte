@@ -55,13 +55,13 @@
 	}
 
 	const schema = yup.object({
-		session_day: yup.string().required(),
+		session_day: yup.string().required("Session day is required."),
 		session_date: yup.string().required(),
-		session_no: yup.number().required(),
-		from_time: yup.string().required(),
-		to_time: yup.string().required(),
-		trainer: yup.number().required(),
-		topic: yup.number().required()
+		session_no: yup.number().required("Session No is required"),
+		from_time: yup.string().required("Start time is required."),
+		to_time: yup.string().required("End time is required."),
+		trainer: yup.number().required().typeError("Trainer is required."),
+		topic: yup.number().required().typeError("Topic is required.")
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -114,11 +114,15 @@
 			<div>
 				<div class="t-col-span-2">
 					<TextInput
-						invalid={$errors.name != null}
+						invalid={$errors.session_day != null}
+						bind:value={$data.session_day}
 						name="session_day"
 						labelText="Session Day Number"
 						placeholder="Enter Session Day..."
 					/>
+					{#if $errors.session_day}
+						<p class="t-text-red-500">{$errors.session_day}</p>
+					{/if}
 				</div>
 			</div>
 
@@ -141,10 +145,14 @@
 			<div>
 				<TextInput
 					invalid={$errors.session_no != null}
+					bind:value={$data.session_no}
 					name="session_no"
 					labelText="Session No"
 					placeholder="Enter Session No..."
 				/>
+				{#if $errors.session_no}
+					<p class="t-text-red-500">{$errors.session_no}</p>
+				{/if}
 			</div>
 
 			<div class=" t-border t-flex t-flex-col t-w-full">
@@ -152,16 +160,24 @@
 				<input
 					type="time"
 					name="from_time"
+					bind:value={$data.from_time}
 					class="t-border-[1px] t-mt-2 t-border-[#525252] t-text-[#525252] t-rounded-lg t-px-6 t-py-2"
 				/>
+				{#if $errors.from_time}
+					<p class="t-text-red-500 t-my-1">{$errors.from_time}</p>
+				{/if}
 			</div>
 			<div class=" t-border t-flex t-flex-col t-w-full">
 				<label for="" class="t-text-[#525252] t-text-xs">End Time</label>
 				<input
 					type="time"
-					name="from_time"
-					class="t-border-[1px] t-mt-3 t-border-[#525252] t-text-[#525252] t-rounded-lg t-px-6 t-py-2"
+					name="to_time"
+					bind:value={$data.to_time}
+					class="t-border-[1px] t-w-full t-mt-3 t-border-[#525252] t-text-[#525252] t-rounded-lg t-px-6 t-py-2"
 				/>
+				{#if $errors.to_time}
+					<p class="t-text-red-500 t-my-1">{$errors.to_time}</p>
+				{/if}
 			</div>
 
 			<div>
@@ -174,6 +190,9 @@
 					items={trainer}
 					{shouldFilterItem}
 				/>
+				{#if $errors.trainers}
+					<p class="t-text-red-500">{$errors.trainers}</p>
+				{/if}
 			</div>
 			<div>
 				<ComboBox
@@ -185,6 +204,9 @@
 					items={courseTopic}
 					{shouldFilterItem}
 				/>
+				{#if $errors.topic}
+					<p class="t-text-red-500">{$errors.topic}</p>
+				{/if}
 			</div>
 			<!-- <p>{JSON.stringify($errors)}</p> -->
 			<!-- <p>{JSON.stringify($data)}</p> -->

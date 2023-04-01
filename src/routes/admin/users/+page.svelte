@@ -20,7 +20,7 @@
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'username', value: 'Username' },
 		{ key: 'first_name', value: 'FirstName' },
-		{ key: 'last_name', value: 'LasttName' },
+		{ key: 'last_name', value: 'LastName' },
 		{ key: 'email', value: 'Email' },
 		{ key: 'action', value: 'Action' }
 	];

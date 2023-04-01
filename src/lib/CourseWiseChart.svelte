@@ -125,9 +125,9 @@
 </script>
 
 <main class={Class}>
-	<section class="t-bg-white  t-py-4">
-		<div class="t-grid t-grid-cols-3 t-gap-4">
-			<div class="t-col-start-3 t-px-10">
+	<section class="t-bg-white t-py-4">
+		<div class="t-grid t-grid-cols-2 md:t-grid-cols-3 t-gap-4">
+			<div class="t-col-start-2 md:t-col-start-3 t-px-2 md:t-px-10 t-mb-3">
 				<form use:form>
 					<ComboBox
 						bind:selectedId={$data.distance}
@@ -140,7 +140,7 @@
 		</div>
 		<canvas class="t-w-full " bind:this={barChartElement} />
 	</section>
-	<p class="t-mx-auto t-text-center t-py-3 t-text-2xl t-text-black t-font-bold">
+	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
 		Number of Participants for Different Training Categories
 	</p>
 </main>

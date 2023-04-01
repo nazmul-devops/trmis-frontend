@@ -21,14 +21,18 @@
 	};
 
 	$: {
-		setFields('trainer', resource.trainer);
+		if (resource.trainer != null) {
+			setData('trainer', resource.trainer);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
 		trainer: yup.number().required().typeError('Resources are required')
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
+	const { form, reset, createSubmitHandler, setFields, setData, errors, data } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
@@ -69,7 +73,6 @@
 		<div>
 			<ComboBox
 				invalid={$errors.trainer != null}
-				invalidText={$errors.trainer}
 				name="trainer"
 				titleText="Resources"
 				placeholder="Choose Resources"
@@ -77,8 +80,11 @@
 				items={resourcesList}
 				{shouldFilterItem}
 			/>
+			{#if $errors.trainer}
+				<p class="t-text-red-500">{$errors.trainer}</p>
+			{/if}
 		</div>
-		<!-- <p>{JSON.stringify($errors)}</p>
-		<p>{JSON.stringify($data)}</p> -->
+		<!-- <p>{JSON.stringify($errors)}</p> -->
+		<!-- <p>{JSON.stringify($data)}</p> -->
 	</form>
 </Modal>

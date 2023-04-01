@@ -17,7 +17,7 @@
 	export let open = true;
 
 	const schema = yup.object({
-		trainee: yup.number().required(),
+		trainee: yup.number().required("Trainee is required."),
 		pre_test_mark: yup.number().nullable(),
 		post_test_mark: yup.number().nullable()
 	});
@@ -62,12 +62,14 @@
 				<ComboBox
 					bind:selectedId={$data.trainee}
 					invalid={$errors.trainee != null}
-					invalidText={$errors.trainee}
 					titleText="Participant"
 					placeholder="Choose Participant"
 					items={traineesList}
 					{shouldFilterItem}
 				/>
+				{#if $errors.trainee}
+					<p class="t-text-red-500">{$errors.trainee}</p>
+				{/if}
 			</div>
 			<div>
 				<TextInput
