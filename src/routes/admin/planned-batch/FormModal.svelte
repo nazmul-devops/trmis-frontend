@@ -48,21 +48,28 @@
 	bind:open
 	modalHeading={planned.id == null ? 'Create Planned' : 'Edit Planned'}
 	primaryButtonText={planned.id == null ? 'Create' : 'Edit'}
+	size='sm'
 	secondaryButtonText="Cancel"
 	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<DatePicker datePickerType="single" bind:value={$data.year} dateFormat="Y-m-d" on:change>
-			<DatePickerInput labelText="Year" placeholder="mm/dd/yyyy" />
-		</DatePicker>
-		<TextInput
-			type="number"
-			bind:value={$data.no_of_batch}
-			name="no_of_batch"
-			labelText=" No Of batch"
-			placeholder="Enter No Of Batch..."
-		/>
+		<div class="custom t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<DatePicker datePickerType="single" bind:value={$data.year} dateFormat="Y-m-d" on:change>
+					<DatePickerInput labelText="Year" placeholder="mm/dd/yyyy" />
+				</DatePicker>
+			</div>
+			<div>
+				<TextInput
+					type="number"
+					bind:value={$data.no_of_batch}
+					name="no_of_batch"
+					labelText=" No Of batch"
+					placeholder="Enter No Of Batch..."
+				/>
+			</div>
+		</div>
 	</form>
 </Modal>

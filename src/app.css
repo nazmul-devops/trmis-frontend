@@ -23,6 +23,9 @@
 	font-size: 14px;
 }
 
+.bx--side-nav__overlay-active{
+	background: none;
+}
 /* Admin panel Header */
 
 .bx--header{
@@ -39,12 +42,12 @@
 }
 
 
-.bx--header__action{
+.avatar .bx--header__action{
 	margin: 0 25px 0 0 ;
 	padding: 5px;
 }
 
-.bx--header__action:hover{
+.avatar .bx--header__action:hover{
 	background: none;
 }
 
@@ -65,25 +68,19 @@
 .bx--switcher__item span{
 	color: black !important;
 } */
-/* .bx--switcher__item-link{
-	color: black
-}
-.bx--switcher__item-link:hover:not(.bx--switcher__item-link--selected){
-	width: 100%;
-}
+
+
 /* Dashboard date-picker width */
 
 
 .bx--date-picker{
 	display: block;
-	width: 100%;
 }
 .flatpickr-wrapper, .flatpickr-calendar.static.open{
 	width: 100%;
 }
-
-.bx--date-picker.bx--date-picker--single .bx--date-picker__input {
-	width: 100%;
+.bx--date-picker,.bx--date-picker.bx--date-picker--single .bx--date-picker__input {
+	width: 100% !important;
 }
 .datePicker1 .flatpickr-input {
 	border-top-left-radius: 8px;
@@ -106,10 +103,15 @@
 
 .bx--combo-box{
 	border-bottom: none;
+	background: transparent;
 }
 
 .bx--text-input:disabled {
 	border: none;
+}
+
+.bx--combo-box[data-invalid] .bx--text-input:focus{
+	outline: 2px solid #da1e28;
 }
 .bx--list-box--expanded {
 	padding-top: 0 !important;
@@ -119,10 +121,13 @@
 	background: white;
 }
 
-.custom .bx--date-picker__input , .bx--text-input, .bx--text-area, .bx--select-input{
+.custom .bx--date-picker__input , .bx--text-input, .bx--text-area, .bx--select-input, .bx--modal .bx--multi-select{
 	border-radius: 8px;
 	border: 1px solid #525252;
 	background: white !important;
+}
+.custom .bx--date-picker-container{
+	width: 100%;
 }
 .bx--multi-select--filterable.bx--combo-box .bx--text-input{
 	border: 1px solid #525252;
@@ -146,6 +151,9 @@ input::-webkit-inner-spin-button {
 
 
  /* Data table header button */
+.bx--data-table-container{
+	overflow: auto;
+}
  .bx--btn--primary{
 	background: #57AAF7;
 }
@@ -156,6 +164,7 @@ input::-webkit-inner-spin-button {
 	background: white;
 }
 /* Table data design */
+
 .bx--data-table thead{
 	background: #57AAF7;
 }
@@ -173,10 +182,10 @@ input::-webkit-inner-spin-button {
 }
 
 
-/* Modal view design */
 
+/* Modal view design */
 .bx--modal-content{
-	padding: 50px 20px 10px;
+	padding: 10px;
 }
 
 /* Delete Modal */
@@ -184,6 +193,9 @@ input::-webkit-inner-spin-button {
 	padding: 0;
 }
 
+input[type=number]{
+	font-family: inherit;
+}
 /* change password modal */
 
 .changePasswordModal .bx--modal-content{
@@ -240,3 +252,9 @@ input::-webkit-inner-spin-button {
 	color: #2D2D2D;
 }
 
+@media screen and (min-width:1024px) {
+	
+	.bx--modal-content{
+		padding: 50px 20px 10px;
+	}	
+}

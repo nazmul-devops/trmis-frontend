@@ -137,17 +137,20 @@
 	onMount(async () => {});
 </script>
 
-<div class=" t-flex t-justify-between  t-mb-5">
+<div class="">
 	<form>
-		<div class=" t-flex t-gap-2 ">
-			<ComboBox
+		<div class=" t-grid t-grid-cols-1 t-gap-4 md:t-grid-col-2 lg:t-grid-cols-4">
+			<div class="t-my-2">
+				<ComboBox
 				bind:selectedId={selectedDivisionId}
 				titleText="Division"
 				placeholder="Select Division"
 				items={locations}
 				{shouldFilterItem}
 			/>
-			<ComboBox
+			</div>
+			<div class="t-my-2">
+				<ComboBox
 				disabled={!selectedDivisionId}
 				bind:selectedId={selectedZilaId}
 				titleText="Training District"
@@ -155,7 +158,9 @@
 				items={zilaOptions}
 				{shouldFilterItem}
 			/>
-			<ComboBox
+			</div>
+			<div class="t-my-2">
+				<ComboBox
 				disabled={!selectedZilaId}
 				bind:selectedId={selectedUpazilaId}
 				titleText="Training Sub-District"
@@ -163,7 +168,9 @@
 				items={upazilaOptions}
 				{shouldFilterItem}
 			/>
-			<ComboBox
+			</div>
+			<div class="t-my-2">
+				<ComboBox
 				disabled={!selectedUpazilaId}
 				bind:selectedId={trainingCenterId}
 				titleText="Training Center"
@@ -171,16 +178,17 @@
 				items={trainingCenter}
 				{shouldFilterItem}
 			/>
+			</div>
 		</div>
 	</form>
-
-	<header class="t-my-5 t-flex t-items-center t-select-none">
+</div>
+<div class="t-flex t-justify-center">
+	<header class="t-my-8 t-flex t-items-center t-select-none">
 		<Arrow left on:click={toPrev} />
 		<h4 class="t-block t-text-center t-uppercase t-text-4xl">{months[month]} {year}</h4>
 		<Arrow on:click={toNext} />
-	</header>
+	</header>	
 </div>
-
 <div class="t-grid t-grid-cols-7 t-text-right t-gap-1">
 	{#each labels as txt, idx (txt)}
 		<span class="t-text-semibold t-text-center t-uppercase t-mb-5 "

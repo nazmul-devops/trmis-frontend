@@ -101,7 +101,7 @@
 				invalid={$errors.code != null}
 				name="code"
 				labelText="Code"
-				placeholder="Enter 	Code..."
+				placeholder="Enter Code..."
 			/>
 
 			<ComboBox

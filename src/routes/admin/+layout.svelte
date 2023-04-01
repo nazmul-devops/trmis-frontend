@@ -81,26 +81,30 @@
 			<SkipToContent />
 		</svelte:fragment>
 		<HeaderUtilities>
-			<HeaderAction
-				class=" t-flex t-justify-center t-items-center"
-				bind:isOpen
-				icon={UserAvatarFilledAlt}
-				closeIcon={UserAvatarFilledAlt}
-			>
-				<HeaderPanelLinks class=" t-h-[30vh]">
-
-					<!-- <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider> -->
-					<HeaderPanelLink class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
-						Edit Details
-					</HeaderPanelLink>
-					<HeaderPanelLink on:click={openPassModal} class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
-						Change Password
-					</HeaderPanelLink>
-					<HeaderPanelLink class="t-text-[#2D2D2D] hover:t-text-white t-font-medium">
-						<div on:click={logout} on:keypress={logout} class="t-w-full">Log Out</div>
-					</HeaderPanelLink>
-				</HeaderPanelLinks>
-			</HeaderAction>
+			<div class="avatar">
+				<HeaderAction
+					class=" t-flex t-justify-center t-items-center"
+					bind:isOpen
+					icon={UserAvatarFilledAlt}
+					closeIcon={UserAvatarFilledAlt}
+				>
+					<HeaderPanelLinks class=" t-h-[30vh]">
+						<!-- <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider> -->
+						<HeaderPanelLink class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+							Edit Details
+						</HeaderPanelLink>
+						<HeaderPanelLink
+							on:click={openPassModal}
+							class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium"
+						>
+							Change Password
+						</HeaderPanelLink>
+						<HeaderPanelLink class="t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+							<div on:click={logout} on:keypress={logout} class="t-w-full">Log Out</div>
+						</HeaderPanelLink>
+					</HeaderPanelLinks>
+				</HeaderAction>
+			</div>
 		</HeaderUtilities>
 	</Header>
 
