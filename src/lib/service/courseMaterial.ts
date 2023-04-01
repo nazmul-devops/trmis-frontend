@@ -4,7 +4,7 @@ import { generateFromData } from '$lib/service/utilities';
 export async function getCourseMaterials(trainingCourse) {
 	try {
 		const { data } = await http.get('training-course/course-material/', {
-			params: { training_course: trainingCourse }
+			params: { training_course_id: trainingCourse }
 		});
 		return {
 			status: 200,

@@ -21,6 +21,7 @@ http.interceptors.response.use(
 					};
 					const config = {
 						...originalConfig,
+						_retry: true,
 						Authorization: `Bearer ${access}`
 					};
 					return http(config);
