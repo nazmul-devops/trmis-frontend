@@ -62,6 +62,7 @@
 		division: null,
 		address: null,
 		district: null,
+		bmdc_code: null,
 		sub_district: null
 	};
 
@@ -77,6 +78,7 @@
 			setData('designation', trainer.designation);
 			setData('organization', trainer.organization);
 			setData('address', trainer.address);
+			setData('bmdc_code', trainer.bmdc_code);
 
 			sleep(0)
 				.then(() => {
@@ -96,18 +98,18 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required("Name is required."),
+		name: yup.string().required('Name is required.'),
 		phone: yup
 			.string()
 			.matches(new RegExp(/^\+?(88)?0?1[3456789][0-9]{8}\b/), 'Not valid format')
-			.required("Phone is required."),
+			.required('Phone is required.'),
 		nid: yup
 			.number()
 			.nullable()
 			.min(1000000000, 'Enter A Valid NID')
 			.max(9999999999, 'Enter A Valid NID'),
-		area_of_specialization: yup.string().required("Area of specialization is required."),
-		email: yup.string().email().required("Email is required."),
+		area_of_specialization: yup.string().required('Area of specialization is required.'),
+		email: yup.string().email().required('Email is required.'),
 		gender: yup.number().required().typeError('Select Gender'),
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
@@ -281,6 +283,19 @@
 
 				{#if $errors.designation}
 					<p class=" t-text-red-500 ">{$errors.designation}</p>
+				{/if}
+			</div>
+			<div>
+				<TextInput
+				type="number"
+					bind:value={$data.bmdc_code}
+					invalid={$errors.bmdc_code != null}
+					name="bmdc_code"
+					labelText="Personal BMDC Code"
+					placeholder="Enter BMDC Code..."
+				/>
+				{#if $errors.bmdc_code}
+					<p class=" t-text-red-500 ">{$errors.bmdc_code}</p>
 				{/if}
 			</div>
 			<div>

@@ -83,7 +83,7 @@
 	function mapBangladesh() {
 		if (browser) {
 			axios.get(bangldesh).then((resp) => {
-				L.geoJson(resp.data, { color: 'green', fillColor: '#BDD8A1'}).addTo(map);
+				L.geoJson(resp.data, { color: 'green', fillColor: '#BDD8A1' }).addTo(map);
 			});
 
 			// axios.get(bangladeshZillas).then((resp) => {

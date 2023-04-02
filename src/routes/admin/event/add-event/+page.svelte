@@ -5,6 +5,7 @@
 	import { organizations } from '$lib/store/organization';
 	import { coordinators } from '$lib/store/coordinators';
 	import { trainers } from '$lib/store/trainer';
+	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { getEventSchedules } from '$lib/service/schedule-events';
 	import {
 		TextInput,
@@ -23,43 +24,14 @@
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	// export let event = {
-	// 	id: null,
-	// 	status: null,
-	// 	name: null,
-	// 	number_of_participants: null,
-	// 	participants: [],
-	// 	description: null,
-	// 	budget: null,
-	// 	type: null,
-	// 	organization: null,
-	// 	coordinator: null,
-	// 	schedule: null,
-	// 	facilitator: []
-	// };
-
-	// function formDetails() {
-	// 	setFields('status', event.status);
-	// 	setFields('name', event.name);
-	// 	setFields('number_of_participants', event.number_of_participants);
-	// 	setFields('description', event.description);
-	// 	setFields('budget', event.budget);
-	// 	setFields('type', event.type);
-	// 	setFields('organization', event.organization);
-	// 	setFields('coordinator', event.coordinator);
-	// 	setFields('schedule', event.schedule);
-	// }
-
-	// $: {
-	// 	formDetails();
-	// }
-
 	const schema = yup.object({
 		status: yup.number().required(),
 		name: yup.string().required(),
 		number_of_participants: yup.number().required(),
 		participants: yup.array().min(1),
 		description: yup.string().required(),
+		source_of_fund: yup.number().required(),
+		expenditure: yup.number().nullable(),
 		budget: yup.number().required(),
 		type: yup.number().required(),
 		organization: yup.number().required(),
@@ -81,7 +53,8 @@
 				type: parseInt(values.type),
 				organization: parseInt(values.organization),
 				coordinator: parseInt(values.coordinator),
-				schedule: parseInt(values.schedule)
+				schedule: parseInt(values.schedule),
+				expenditure: values.expenditure ? parseInt(values.expenditure) : null
 			};
 		},
 		extend: validator({ schema })
@@ -139,24 +112,18 @@
 	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 	$: coordinatorList = $coordinators.data.map((item) => ({ ...item, text: item.name }));
 	$: schedules = eventSchedule.map((item) => ({ ...item, text: item.event_venue_name }));
+	$: sourceFunds = $sourceOfFounds.data.map((item) => ({ ...item, text: item.name }));
 
 	onMount(async () => {
 		organizations.getOrganizations();
 		coordinators.getCoordinators();
 		trainers.getTrainers();
+		sourceOfFounds.getSourceOfFounds();
 		const { data } = await getEventSchedules();
 		eventSchedule = data;
 	});
 </script>
 
-<!-- <Modal
-	bind:open
-	modalHeading="Create Event"
-	primaryButtonText="ADD"
-	secondaryButtonText="Cancel"
-	on:click:button--secondary={() => (open = false)}
-	on:submit={submitHandler}
-> -->
 <h4 class="t-pb-4">Create Event</h4>
 <form use:form>
 	<div class="t-grid t-grid-cols-2 t-gap-4">
@@ -166,8 +133,6 @@
 			name="number_of_participants"
 			placeholder="Number Of Participants"
 		/>
-
-		<TextArea labelText="Description" name="description" placeholder="Enter a description..." />
 		<TextInput labelText="Budget" name="budget" placeholder="Budget" />
 		<ComboBox
 			invalid={$errors.status != null}
@@ -204,26 +169,14 @@
 			items={organizationsList}
 			{shouldFilterItem}
 		/>
-		<!-- <Select invalid={$errors.organization != null} name="organization" labelText="Organizations">
-			<SelectItem text="Choose Organization" value="" />
-			{#each $organizations.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
 		<ComboBox
 			invalid={$errors.coordinator != null}
 			bind:selectedId={$data.coordinator}
 			titleText="Coordinator"
-			placeholder="Choode Coordinator"
+			placeholder="Choose Coordinator"
 			items={coordinatorList}
 			{shouldFilterItem}
 		/>
-		<!-- <Select invalid={$errors.coordinator != null} name="coordinator" labelText="Coordinator">
-			<SelectItem text="Choose Coordinator" value="" />
-			{#each $coordinators.data as item}
-				<SelectItem text={item.name} value={item.id} />
-			{/each}
-		</Select> -->
 		<ComboBox
 			invalid={$errors.schedule != null}
 			bind:selectedId={$data.schedule}
@@ -232,12 +185,16 @@
 			items={schedules}
 			{shouldFilterItem}
 		/>
-		<!-- <Select invalid={$errors.schedule != null} name="schedule" labelText="Schedule">
-			<SelectItem text="Choose schedule" value="" />
-			{#each eventSchedule as item}
-				<SelectItem text={item.event_venue_name} value={item.id} />
-			{/each}
-		</Select> -->
+		<ComboBox
+			invalid={$errors.source_of_fund != null}
+			bind:selectedId={$data.source_of_fund}
+			titleText="Source Of Funds"
+			placeholder="Choose Source Of Fund"
+			items={sourceFunds}
+			{shouldFilterItem}
+		/>
+		<TextInput labelText="Expenditure" name="expenditure" placeholder="Enter Expenditure" />
+		<TextArea labelText="Description" name="description" placeholder="Enter a description..." />
 	</div>
 	<div class=" t-my-5 customDataTable">
 		<DataTable
@@ -284,7 +241,7 @@
 
 <MultiSelect
 	bind:selectedIds={facilators}
-	direction='top'
+	direction="top"
 	titleText="Facilators"
 	placeholder="Select Facilators..."
 	filterable={true}
@@ -303,6 +260,6 @@
 	</div>
 </div>
 
-<!-- <p>{JSON.stringify($errors)}</p> -->
+<p>{JSON.stringify($errors)}</p>
 <!-- <p>{JSON.stringify($data)}</p> -->
 <!-- </Modal> -->

@@ -1,16 +1,11 @@
-<script>
+<script lang="ts">
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { CodeSnippet, ComboBox, InlineLoading } from 'carbon-components-svelte';
 	import { singleEvents } from '$lib/store/singleEvent';
 	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
-	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-
-	let title = 'Meeting';
-
-	let eventList;
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -61,7 +56,6 @@
 	}
 
 	$: OrganizationList = $organizations.data.map((item) => ({ ...item, text: item.name }));
-	$: eventList = $singleEvents.data;
 	$: {
 		singleEvents.getSingleEvent(
 			$page.params.eventId,
@@ -76,15 +70,11 @@
 	onMount(() => {
 		organizations.getOrganizations();
 	});
-
-	$: {
-		console.log(eventList);
-	}
 </script>
 
 <div class="t-mb-12">
 	<div>
-		<PageTitle Title={title} desc="" />
+		<PageTitle Title={$page.params.eventId} desc="" />
 	</div>
 	<div class="t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-mt-10">
 		<div class="t-grid t-grid-cols-1">
@@ -148,12 +138,11 @@
 							<p
 								class="t-text-4xl t-font-bold t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] group-hover:t-text-[#F94646]"
 							>
-								<!-- {#if eventList.loading}
+								{#if $singleEvents.loading}
 									<InlineLoading />
 								{:else}
-									{eventList.number_of_participants}
-								{/if} -->
-								1000
+									{$singleEvents.data.number_of_participants}
+								{/if}
 							</p>
 						</div>
 					</div>
@@ -193,7 +182,7 @@
 							<CodeSnippet skeleton />
 						</div>
 					{:else}
-						{#each eventList as item}
+						{#each $singleEvents.data.data as item}
 							<div class="t-grid t-grid-cols-2  t-mx-auto t-py-2 ">
 								<div class="t-col-span-1 t-text-2xl t-text-center t-text-[#44835C]">
 									{item.name}

@@ -5,7 +5,7 @@
 	import { ComboBox, Modal } from 'carbon-components-svelte';
 	import calendarize from './test';
 	import Arrow from './Arrow.svelte';
-	import { getCalenders } from '$lib/service/calendar';
+	import { getCalenders, getEventCalenders } from '$lib/service/calendar';
 	import { getLocations } from '$lib/service/locations';
 	import { getTrainingCenters } from '$lib/service/trainingCenter';
 	import { CALENDER_VIEW_TYPE } from '$lib/constants';
@@ -39,19 +39,29 @@
 	let thisDate;
 
 	$: {
-	}
-
-	$: {
-		getCalenders(
-			trainingCenterId,
-			selectedDivisionId,
-			selectedZilaId,
-			selectedUpazilaId,
-			year,
-			month + 1
-		).then((resp) => {
-			courses = resp.data;
-		});
+		if ($data.viewType === CALENDER_VIEW_TYPE[0].id) {
+			getCalenders(
+				trainingCenterId,
+				selectedDivisionId,
+				selectedZilaId,
+				selectedUpazilaId,
+				year,
+				month + 1
+			).then((resp) => {
+				courses = resp.data;
+			});
+		} else {
+			getEventCalenders(
+				trainingCenterId,
+				selectedDivisionId,
+				selectedZilaId,
+				selectedUpazilaId,
+				year,
+				month + 1
+			).then((resp) => {
+				courses = resp.data;
+			});
+		}
 	}
 
 	let prev = calendarize(new Date(year, month - 1), offset);
@@ -151,7 +161,7 @@
 			division: null,
 			district: null,
 			viewType: 1,
-			trainingCenter: null,
+			trainingCenter: null
 		},
 		extend: validator({ schema })
 	});
@@ -161,7 +171,7 @@
 
 <div class="">
 	<form>
-		<div class=" t-grid t-grid-cols-2 t-gap-4 lg:t-grid-cols-4">
+		<div class=" t-grid t-grid-cols-2 t-gap-4 lg:t-grid-cols-5">
 			<div class="t-my-2">
 				<ComboBox
 					titleText="Calender View"
@@ -172,7 +182,7 @@
 			</div>
 			<div class="t-my-2">
 				<ComboBox
-					bind:selectedId={$data.division}
+					bind:selectedId={selectedDivisionId}
 					titleText="Division"
 					placeholder="Select Division"
 					items={locations}
@@ -182,7 +192,7 @@
 			<div class="t-my-2">
 				<ComboBox
 					disabled={!selectedDivisionId}
-					bind:selectedId={$data.district}
+					bind:selectedId={selectedZilaId}
 					titleText="Training District"
 					placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
 					items={zilaOptions}
@@ -191,7 +201,7 @@
 			</div>
 			<div class="t-my-2">
 				<ComboBox
-					disabled={!selectedZilaId}
+					disabled={!selectedUpazilaId}
 					bind:selectedId={$data.sub_district}
 					titleText="Training Sub-District"
 					placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
@@ -202,7 +212,7 @@
 			<div class="t-my-2">
 				<ComboBox
 					disabled={!selectedUpazilaId}
-					bind:selectedId={$data.trainingCenter}
+					bind:selectedId={trainingCenterId}
 					titleText="Training Center"
 					placeholder="Select Training center"
 					items={trainingCenter}

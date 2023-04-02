@@ -52,8 +52,59 @@ export const EVENTDATA = [
 		link: '/assets/eventIcon3.jpg'
 	},
 	{
-		id: 'sensitization',
+		id: 'senstization',
 		title: 'Sensitization',
 		link: '/assets/eventIcon4.jpg'
+	}
+];
+
+export const MONTH_NAME = [
+	{
+		id: 1,
+		text: 'January'
+	},
+	{
+		id: 2,
+		text: 'February'
+	},
+	{
+		id: 3,
+		text: 'March'
+	},
+	{
+		id: 4,
+		text: 'April'
+	},
+	{
+		id: 5,
+		text: 'May'
+	},
+	{
+		id: 6,
+		text: 'June'
+	},
+	{
+		id: 7,
+		text: 'July'
+	},
+	{
+		id: 8,
+		text: 'August'
+	},
+	{
+		id: 9,
+		text: 'September'
+	},
+	{
+		id: 10,
+		text: 'Octobar'
+	},
+	{
+		id: 11,
+		text: 'November'
+	},
+	{
+		id: 12,
+		text: 'December'
 	}
 ];
