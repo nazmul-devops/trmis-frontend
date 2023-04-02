@@ -2,18 +2,24 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { changePass } from '$lib/service/changePass';
+	import { getDetails, changeDetails } from '$lib/service/changeDetails';
 	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { string } from 'yup/lib/locale';
 
 	export let open = true;
-	export let designation = {
+	export let userDetails = {
 		id: null,
 		first_name: null,
 		last_name: null,
 		email: null
 	};
+
+	$: {
+		setData('first_name', userDetails.first_name);
+		setData('last_name', userDetails.last_name);
+		setData('email', userDetails.email);
+	}
 
 	// $: {
 	// 	if (designation.id != null) {
@@ -30,24 +36,32 @@
 		email: yup.string().email().required()
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+	const { form, data, reset, createSubmitHandler, setData, errors } = createForm({
 		extend: validator({ schema })
 	});
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			await changePass({ ...data });
+			await changeDetails({ ...data });
 			open = false;
 			reset();
+			getDetails();
 		}
 	});
+	 
+	$: {
+		getDetails().then(resp => {
+			userDetails = resp.data[0];
+		})
+		
+	}
 
 	// onMount(async () => {
-	// 	designations.getDesignations();
+		
 	// });
 </script>
 
-<div class="changePasswordModal">
+<div class="changeDetailsModal">
 	<Modal
 		size="xs"
 		bind:open
@@ -56,44 +70,46 @@
 		secondaryButtonText="Cancel"
 		on:click:button--secondary={() => (open = false)}
 		on:submit={submitHandler}
-        >
-        <!--
-        <form use:form>
-                <div class=" t-grid t-grid-cols-1 changePasswordModalForm">
-                    <div class="t-mb-2">
-                        <TextInput
-                            invalid={$errors.Firt_name != null}
-                            name="old_password"
-                            labelText=""
-                            placeholder="Enter First Name..."
-                        />
-                        {#if $errors.old_password}
-                            <p class="t-text-red-500">{$errors.old_password}</p>
-                        {/if}
-                    </div>
-                    <div class="t-mb-2">
-                        <PasswordInput
-                            invalid={$errors.new_password != null}
-                            name="new_password"
-                            labelText=""
-                            placeholder="Enter New Password..."
-                        />
-                        {#if $errors.new_password}
-                            <p class="t-text-red-500">{$errors.new_password}</p>
-                        {/if}
-                    </div>
-                    <div class="t-mb-2">
-                        <PasswordInput
-                            invalid={$errors.confirm_password != null}
-                            name="confirm_password"
-                            labelText=""
-                            placeholder="Enter Confirm Password..."
-                        />
-                        {#if $errors.confirm_password}
-                            <p class="t-text-red-500">{$errors.confirm_password}</p>
-                        {/if}
-                    </div>
-                </div>
-            </form> -->
-        </Modal>
+	>
+		<form use:form>
+			<div class=" t-grid t-grid-cols-1 changeDetailsModalForm">
+				<div class="t-mb-2">
+					<TextInput
+						bind:value={$data.first_name}
+						invalid={$errors.firt_name != null}
+						name="first_name"
+						labelText=""
+						placeholder="Enter First Name..."
+					/>
+					{#if $errors.first_name}
+						<p class="t-text-red-500">{$errors.first_name}</p>
+					{/if}
+				</div>
+				<div class="t-mb-2">
+					<TextInput
+						bind:value={$data.last_name}
+						invalid={$errors.last_name != null}
+						name="last_name"
+						labelText=""
+						placeholder="Enter Last Name..."
+					/>
+					{#if $errors.last_name}
+						<p class="t-text-red-500">{$errors.last_name}</p>
+					{/if}
+				</div>
+				<div class="t-mb-2">
+					<TextInput
+						bind:value={$data.email}
+						invalid={$errors.email != null}
+						name="email"
+						labelText=""
+						placeholder="Enter Email Address..."
+					/>
+					{#if $errors.email}
+						<p class="t-text-red-500">{$errors.email}</p>
+					{/if}
+				</div>
+			</div>
+		</form>
+	</Modal>
 </div>

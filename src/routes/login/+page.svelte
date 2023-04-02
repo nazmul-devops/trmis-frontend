@@ -38,8 +38,9 @@
 
 <div class=" t-h-[100vh] t-flex t-items-center">
 	<form class="t-p-5 t-shadow-xl" style="width: 600px; margin: auto;" use:form>
-		<div class=" t-text-[#22c55e] t-mb-5 ">
-			<h2 class="t-font-bold">TrMIS Admin</h2>
+		<div class=" t-text-center t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C]  t-mb-5 ">
+			<h2 class="t-font-bold t-text-2xl">TB Training Management Information System</h2>
+			<h2 class="t-text-[#22c55e] t-font-bold t-text-2xl">Admin</h2>
 		</div>
 		<div class="t-mb-5">
 			<TextInput

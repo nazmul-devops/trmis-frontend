@@ -31,12 +31,14 @@
 	import { onDestroy, onMount } from 'svelte';
 	import { setupAuthHeader } from '$lib/service/auth';
 	import ChangePassModal from '$lib/ChangePassModal.svelte';
+	import EditDetailsModal from '$lib/EditDetailsModal.svelte';
 	import { permissionsByGroups } from '$lib/store/permission';
 	import { emitter } from '$lib/service/event-bus';
 
 	let open = false;
 	let isOpen = false;
 	let changePassModal = false;
+	let changeUserDetailsModal = false;
 
 	$: {
 		if (!$isAuthincated) {
@@ -47,7 +49,9 @@
 			setupAuthHeader();
 		}
 	}
-
+	function openUserDetailsModal(){
+		changeUserDetailsModal = true;
+	}
 	function openPassModal() {
 		changePassModal = true;
 	}
@@ -90,7 +94,8 @@
 				>
 					<HeaderPanelLinks class=" t-h-[30vh]">
 						<!-- <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider> -->
-						<HeaderPanelLink class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+						<HeaderPanelLink
+						on:click={openUserDetailsModal} class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
 							Edit Details
 						</HeaderPanelLink>
 						<HeaderPanelLink
@@ -116,55 +121,51 @@
 			<SideNavDivider />
 			<SideNavMenu icon={Events} text="Training">
 				<SideNavLink class="t-mt-3">
-					<a href="/admin/training-course">Training Course</a>
+					<a href="/admin/training/training-course">Training Course</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/training-category">Training Category</a>
+					<a href="/admin/training/trainee">Participants</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/trainee">Participants</a>
+					<a href="/admin/training/trainee-request">Participants Approval List</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/trainee-request">Participants Approval List</a>
+					<a href="/admin/training/trainer">Resource Person</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/trainer">Resource Person</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/training-center">Training Venue</a>
+					<a href="/admin/training/training-center">Training Venue</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<!-- <SideNavLink>
 				<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
 			</SideNavLink> -->
 				<SideNavLink>
-					<a href="/admin/training-course/1/training-schedule">Training Schedule</a>
+					<a href="/admin/training/training-course/1/training-schedule">Training Schedule</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/training-calendar">Training Calendar</a>
+					<a href="/admin/training/training-calendar">Training Calendar</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/batch">Batch</a>
+					<a href="/admin/training/batch">Batch</a>
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
 			<SideNavMenu icon={Event} text="Event">
 				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_eventschedule').length > 0} -->
 				<SideNavLink class="t-mt-3">
-					<a href="/admin/schedule-events">Event Schedule</a>
+					<a href="/admin/event/schedule-events">Event Schedule</a>
 				</SideNavLink>
 				<!-- {/if} -->
 				<SideNavDivider />
 				<!-- {#if $permissionsByGroups.filter((item) => item.permission_code == 'add_event').length > 0} -->
 				<SideNavLink>
-					<a href="/admin/event">Event List</a>
+					<a href="/admin/event/event-list">Event List</a>
 				</SideNavLink>
 				<!-- {/if} -->
 			</SideNavMenu>
@@ -181,10 +182,10 @@
 				<SideNavLink>
 					<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
 				</SideNavLink>
-				<SideNavDivider />
+				<!-- <SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
-				</SideNavLink>
+				</SideNavLink> -->
 				<SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
@@ -235,26 +236,30 @@
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/planned-batch/">Planned Batch</a>
+					<a href="/admin/settings/training-category">Training Category</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/notice">Notice</a>
+					<a href="/admin/settings/planned-batch/">Planned Batch</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/gallery">Gallery</a>
+					<a href="/admin/settings/notice">Notice</a>
+				</SideNavLink>
+				<SideNavDivider />
+				<SideNavLink>
+					<a href="/admin/settings/gallery">Gallery</a>
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
 
 			<SideNavMenu icon={UserSettings} text="MIS Settings">
 				<SideNavLink class="t-mt-3">
-					<a href="/admin/users">Users</a>
+					<a href="/admin/mis-settings/users">Users</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/group">Groups</a>
+					<a href="/admin/mis-settings/group">Groups</a>
 				</SideNavLink>
 			</SideNavMenu>
 			<SideNavDivider />
@@ -270,6 +275,7 @@
 	</Content>
 {/if}
 
+<EditDetailsModal bind:open={changeUserDetailsModal} />
 <ChangePassModal bind:open={changePassModal} />
 
 <Modal passiveModal bind:open modalHeading="UnAuthorized" on:open on:close>

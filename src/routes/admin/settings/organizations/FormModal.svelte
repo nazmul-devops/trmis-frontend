@@ -21,10 +21,10 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required().typeError('Name is required.'),
+		name: yup.string().required('Organization name is required.'),
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
+	const { form, reset, createSubmitHandler, setFields, data, errors } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -60,8 +60,9 @@
 			<div>
 				<TextInput
 					invalid={$errors.name != null}
+					bind:value={$data.name}
 					name="name"
-					labelText="name"
+					labelText="Name"
 					placeholder="Enter  name..."
 				/>
 				{#if $errors.name}

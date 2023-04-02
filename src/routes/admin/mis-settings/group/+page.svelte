@@ -1,15 +1,12 @@
 <script lang="ts">
-	import { organizations } from '$lib/store/organization';
+	import { groupsList } from '$lib/store/group';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
@@ -20,62 +17,73 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{key: 'rowNumber', value: 'Serial No.' },
+		{ key: 'rowNumber', value: 'Serial No.'},
+		// { key: 'id', value: 'ID' },
 		{ key: 'name', value: 'Name' },
-		// { key: 'serial_no', value: 'Serial No' },
-		// { key: 'remarks', value: 'Remarks' },
+		// { key: 'permissions', value: 'Permission' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let organization;
+	let group;
 
 	function openModalForm(row) {
 		open = true;
-		organization = row;
+		group = row;
+		console.log(row);
 	}
 
 	async function doDelete() {
-		await organizations.deleteOrganization(organization.id);
+		await groupsList.deleteGroup(group.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		organizations.getOrganizations();
+		groupsList.getGroups();
 	});
+
+	$: {
+		console.log($groupsList.data);
+	}
 </script>
 
-{#if $organizations.loading}
+{#if $groupsList.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Organization" description="" {headers} rows={$organizations.data}>
+	<DataTable size="short" title="Course Group" description="" {headers} rows={$groupsList.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
+				<Button on:click={() => openModalForm({})}>Add Group</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							organization = { ...row };
+							group = { ...row };
 							deleteModal = true;
 						}}
 						danger
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'permissions'}
+				{#each cell.value as item}
+					<ul>
+						<li>=> {item.permission_name}</li>
+					</ul>
+				{/each}
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1}
+					{ rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"organization"} />
+<FormModal bind:open bind:group />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'group'} />

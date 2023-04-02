@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { organizations } from '$lib/store/organization';
+	import { deleteImage, getImages } from '$lib/service/gallery';
 	import {
 		DataTable,
 		Toolbar,
@@ -11,7 +11,8 @@
 		DataTableSkeleton,
 		Loading,
 		OverflowMenu,
-		OverflowMenuItem
+		OverflowMenuItem,
+		Toggle
 	} from 'carbon-components-svelte';
 
 	import { onMount } from 'svelte';
@@ -20,41 +21,49 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{key: 'rowNumber', value: 'Serial No.' },
-		{ key: 'name', value: 'Name' },
-		// { key: 'serial_no', value: 'Serial No' },
-		// { key: 'remarks', value: 'Remarks' },
+		{ key: 'rowNumber', value: 'Serial No.' },
+		{ key: 'title', value: 'Tilte' },
+		{ key: 'description', value: 'Description' },
+		{ key: 'images', value: 'Image Url' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let organization;
+	let Images: any = [];
+
+	let image: any;
 
 	function openModalForm(row) {
 		open = true;
-		organization = row;
+		image = row;
 	}
 
 	async function doDelete() {
-		await organizations.deleteOrganization(organization.id);
+		await deleteImage(image.id);
 		deleteModal = false;
+		getImageList();
+	}
+
+	async function getImageList() {
+		const { data } = await getImages();
+		Images = data;
 	}
 
 	onMount(async () => {
-		organizations.getOrganizations();
+		getImageList();
 	});
 </script>
 
-{#if $organizations.loading}
+{#if Images.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Organization" description="" {headers} rows={$organizations.data}>
+	<DataTable size="short" title="Gallery" description="" {headers} rows={Images}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Gallery</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
@@ -63,19 +72,23 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							organization = { ...row };
+							image = { ...row };
 							deleteModal = true;
 						}}
 						danger
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'images'}
+				{#each cell.value as item}
+					<li>{item.file}</li>
+				{/each}
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"organization"} />
+<FormModal bind:open bind:image on:update-list={getImageList} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"gallery"}/>

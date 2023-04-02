@@ -1,15 +1,12 @@
 <script lang="ts">
-	import { organizations } from '$lib/store/organization';
+	import { trainers } from '$lib/store/trainer';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
@@ -17,53 +14,69 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { designations } from '$lib/store/designations';
+	import { organizations } from '$lib/store/organization';
 
 	let filteredRowIds = [];
 	let headers = [
-		{key: 'rowNumber', value: 'Serial No.' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		// { key: 'serial_no', value: 'Serial No' },
-		// { key: 'remarks', value: 'Remarks' },
+		{ key: 'organization__name', value: 'Organizations' },
+		{ key: 'gender_name', value: 'Gender' },
+		{ key: 'phone', value: 'Phone' },
+		{ key: 'division_name', value: 'Division' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
-
-	let organization;
+	let trainer;
 
 	function openModalForm(row) {
 		open = true;
-		organization = row;
+		trainer = row;
 	}
 
 	async function doDelete() {
-		await organizations.deleteOrganization(organization.id);
+		await trainers.deleteTrainer(trainer.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
+		trainers.getTrainers();
+		designations.getDesignations();
 		organizations.getOrganizations();
 	});
 </script>
 
-{#if $organizations.loading}
+{#if $trainers.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Organization" description="" {headers} rows={$organizations.data}>
+	<DataTable
+		size="short"
+		title="Resource Person / Facilitator"
+		description=""
+		{headers}
+		rows={$trainers.data}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
+				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Resources</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
+					<!-- <OverflowMenuItem
+						on:click={() => goto(`/admin/trainer/${row.phone}/education`)}
+						text="Education"
+					/> -->
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							organization = { ...row };
+							console.log(row);
+							trainer = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -71,11 +84,15 @@
 					/>
 				</OverflowMenu>
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"organization"} />
+<FormModal bind:open bind:trainer />
+<DeleteModal
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'Resource Person / Facilitator'}
+/>

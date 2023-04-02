@@ -25,12 +25,12 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required().typeError('Name is required'),
+		name: yup.string().required('Name is required'),
 		phone: yup.number().required().typeError('Phone number is required.'),
-		email: yup.string().email().required()
+		email: yup.string().email().required("Email is required.")
 	});
 
-	const { form, reset, errors, createSubmitHandler, setFields } = createForm({
+	const { form, reset,data, errors, createSubmitHandler, setFields } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
@@ -73,8 +73,9 @@
 			<div>
 				<TextInput
 					invalid={$errors.name}
+					bind:value={$data.name}
 					name="name"
-					labelText=" name"
+					labelText="Name"
 					placeholder="Enter  name..."
 				/>
 				{#if $errors.name}
@@ -85,8 +86,9 @@
 			<div>
 				<TextInput
 					invalid={$errors.phone}
+					bind:value={$data.phone}
 					name="phone"
-					labelText="phone"
+					labelText="Phone"
 					placeholder="Enter  phone..."
 				/>
 				{#if $errors.phone}
@@ -97,6 +99,7 @@
 			<div>
 				<TextInput
 					invalid={$errors.email}
+					bind:value={$data.email}
 					name="email"
 					labelText="Email"
 					placeholder="Enter  Email..."
