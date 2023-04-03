@@ -1,60 +1,61 @@
 <script lang="ts">
-	import { organizations } from '$lib/store/organization';
+	import { scheduleEventsLists } from "$lib/store/schedule-events"
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
 
-	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { onMount } from 'svelte';
 
 	let filteredRowIds = [];
 	let headers = [
-		{key: 'rowNumber', value: 'Serial No.' },
-		{ key: 'name', value: 'Name' },
-		// { key: 'serial_no', value: 'Serial No' },
-		// { key: 'remarks', value: 'Remarks' },
+		{ key: 'rowNumber', value: 'Serial No.' },
+		{ key: 'event_venue_name', value: 'Event Venues' },
+		{ key: 'start_date', value: 'Start Date' },
+		{ key: 'end_date', value: 'End Date' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let organization;
+	let eventSchedule;
 
 	function openModalForm(row) {
+		eventSchedule = row;
 		open = true;
-		organization = row;
 	}
 
 	async function doDelete() {
-		await organizations.deleteOrganization(organization.id);
+		await scheduleEventsLists.deleteEventSchedule(eventSchedule.id);
 		deleteModal = false;
 	}
 
-	onMount(async () => {
-		organizations.getOrganizations();
+	// let eventSchedules = [];
+
+	onMount(async ()=>{
+		scheduleEventsLists.getEventSchedules()
 	});
 </script>
 
-{#if $organizations.loading}
+{#if $scheduleEventsLists.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Organization" description="" {headers} rows={$organizations.data}>
+	<DataTable size="short" title="All Event Schedule" description="" {headers} rows={$scheduleEventsLists.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
+				<Button on:click={() => openModalForm({ trainer_name: null, batch_name: null })}
+					>Add Schedule</Button
+				>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
@@ -63,7 +64,7 @@
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							organization = { ...row };
+							eventSchedule = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -71,11 +72,11 @@
 					/>
 				</OverflowMenu>
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1}
+				{rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"organization"} />
+<FormModal bind:open bind:eventSchedule />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"event schedule"} />

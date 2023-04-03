@@ -1,76 +1,73 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { users } from '$lib/store/users';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
 
 	import { onMount } from 'svelte';
-	import FormModal from './FormModal.svelte';
+	import CreateFormModal from './CreateFormModal.svelte';
+	import EditFormModal from './EditFormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 
-	let filteredRowIds = [];
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
-		{ key: 'name', value: 'Name' },
-		{ key: 'phone', value: 'Phone' },
+		{ key: 'username', value: 'Username' },
+		{ key: 'first_name', value: 'FirstName' },
+		{ key: 'last_name', value: 'LastName' },
 		{ key: 'email', value: 'Email' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
+	let editModal = false;
 
-	let coordinator;
+	let user;
 
-	function openModalForm(row) {
+	function openCreateModalForm() {
 		open = true;
-		coordinator = row;
+	}
+
+	function openEditModalForm(row) {
+		editModal = true;
+		user = row;
 	}
 
 	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
+		await users.deleteUser(user.id);
 		deleteModal = false;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		users.getUsers();
+		console.log($users);
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $users.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable
-		size="short"
-		title="Training Coordinator"
-		description=""
-		{headers}
-		rows={$coordinators.data}
-	>
+	<DataTable size="short" title="Users" description="" {headers} rows={$users.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
-				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Coordinator</Button>
+				<ToolbarSearch />
+				<Button on:click={() => openCreateModalForm()}>Add User</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped direction='top'>
-					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
+					<OverflowMenuItem on:click={() => openEditModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							coordinator = { ...row };
+							user = { ...row };
 							deleteModal = true;
 						}}
 						danger
@@ -84,5 +81,6 @@
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'coordinator'} />
+<CreateFormModal bind:open />
+<EditFormModal bind:user bind:open={editModal} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'user'} />

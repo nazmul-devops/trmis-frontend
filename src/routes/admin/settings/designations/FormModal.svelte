@@ -9,7 +9,7 @@
 	export let open = true;
 	export let designation = {
 		id: null,
-		name: null,
+		name: null
 		// serial_no: null
 	};
 
@@ -23,17 +23,10 @@
 	}
 
 	const schema = yup.object({
-		name: yup.string().required().typeError('Nama is required'),
-		// serial_no: yup.number().required('').typeError('Serial No. must be a number')
+		name: yup.string().required('Nama is required')
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors } = createForm({
-		// transform: (values: any) => {
-		// 	return {
-		// 		...values,
-		// 		serial_no: values.serial_no ? parseInt(values.serial_no) : null
-		// 	};
-		// },
+	const { form, reset, createSubmitHandler, setFields, data,errors } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -68,26 +61,16 @@
 		<div class="t-grid t-grid-cols-1 t-gap-4">
 			<div>
 				<TextInput
-				invalid={$errors.name != null}
-				name="name"
-				labelText=" name"
-				placeholder="Enter  name..."
-			/>
-			{#if $errors.name}
-				<p class="t-text-red-500">{$errors.name}</p>
-			{/if}
+					invalid={$errors.name != null}
+					bind:value={$data.name}
+					name="name"
+					labelText="Name"
+					placeholder="Enter  name..."
+				/>
+				{#if $errors.name}
+					<p class="t-text-red-500">{$errors.name}</p>
+				{/if}
 			</div>
-			<!-- <div>
-				<TextInput
-				invalid={$errors.serial_no}
-				name="serial_no"
-				labelText="Serial_No"
-				placeholder="Enter  serial_no..."
-			/>
-			{#if $errors.serial_no}
-				<p class="t-text-red-500">{$errors.serial_no}</p>
-			{/if}
-			</div> -->
 		</div>
 	</form>
 </Modal>

@@ -229,6 +229,35 @@ input[type=number]{
 	outline: none;
 }
 
+/*Change Details Modal */
+
+.changeDetailsModal .bx--modal-content{
+	overflow-y: hidden !important;
+	padding: 10px 40px;
+	overflow-x: hidden;
+	margin-bottom: 1.5rem;
+}
+
+.changeDetailsModal .bx--text-input{
+	margin: 10px 0px;
+	border-radius: 0;
+	border: none;
+	border-bottom: 1px solid #57AAF7;
+}
+
+.changeDetailsModal .bx--text-input:focus{
+	outline: none;
+	border-bottom: 1px solid green;
+}
+
+.changeDetailsModal .bx--text-input--invalid{
+	outline: none;
+	border-bottom: 2px solid #da1e28 !important;
+}
+
+.changeDetailsModal input[data-invalid]:not(:focus), .changeDetailsModal .bx--text-input__field-wrapper[data-invalid]>.bx--text-input--invalid:not(:focus){
+	outline: none;
+}
 
 /* Public registration design */
 
@@ -257,12 +286,13 @@ input[type=number]{
 }
 
 /*File uploader selected file field*/
-/* .bx--file__selected-file{
-	border-radius: 8px;
-	border-bottom: 1px solid#57AAF7;
-	background: #BEDCF7;
-	box-shadow: 8px 8px 35px gray;
-} */
+.bx--modal-content p{
+	color: #525252;
+	font-size: 12px;
+}
+.bx--file__selected-file .bx--file-filename {
+	color: #0f62fe;
+}
 
 @media screen and (min-width:1024px) {
 	

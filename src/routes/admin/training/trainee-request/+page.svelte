@@ -1,88 +1,67 @@
 <script lang="ts">
-	import { coordinators } from '$lib/store/coordinators';
+	import { traineeRequests } from '$lib/store/trainee-request';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
-		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
-
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
-	import DeleteModal from '$lib/DeleteModal.svelte';
 
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'phone', value: 'Phone' },
+		{ key: 'designation_name', value: 'Designations' },
+		{ key: 'district_name', value: 'Zilla' },
 		{ key: 'email', value: 'Email' },
+		{ key: 'organization_name', value: 'Organizations' },
+		{ key: 'status_name', value: 'Status' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
-	let deleteModal = false;
-
-	let coordinator;
+	let traineeRequest;
 
 	function openModalForm(row) {
 		open = true;
-		coordinator = row;
-	}
-
-	async function doDelete() {
-		await coordinators.deleteCoordinator(coordinator.id);
-		deleteModal = false;
+		traineeRequest = row;
 	}
 
 	onMount(async () => {
-		coordinators.getCoordinators();
-		console.log($coordinators);
+		traineeRequests.getTrainee_Requests();
 	});
 </script>
 
-{#if $coordinators.loading}
+{#if $traineeRequests.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
 	<DataTable
 		size="short"
-		title="Training Coordinator"
+		title="Pending Trainee Request"
 		description=""
 		{headers}
-		rows={$coordinators.data}
+		rows={$traineeRequests.data}
 	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Coordinator</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
-					<OverflowMenuItem
-						on:click={() => {
-							coordinator = { ...row };
-							deleteModal = true;
-						}}
-						danger
-						text="Delete"
-					/>
 				</OverflowMenu>
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1 }
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:coordinator />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'coordinator'} />
+<FormModal bind:open bind:traineeRequest />

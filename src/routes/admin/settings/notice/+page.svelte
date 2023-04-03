@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { organizations } from '$lib/store/organization';
+	import { notices } from '$lib/store/notice';
 	import {
 		DataTable,
 		Toolbar,
@@ -11,71 +11,82 @@
 		DataTableSkeleton,
 		Loading,
 		OverflowMenu,
-		OverflowMenuItem
+		OverflowMenuItem,
+		Toggle
 	} from 'carbon-components-svelte';
 
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
+	import { CellTower } from 'carbon-icons-svelte';
 
 	let filteredRowIds = [];
 	let headers = [
-		{key: 'rowNumber', value: 'Serial No.' },
-		{ key: 'name', value: 'Name' },
-		// { key: 'serial_no', value: 'Serial No' },
-		// { key: 'remarks', value: 'Remarks' },
+		{ key: 'rowNumber', value: 'Serial No.' },
+		{ key: 'title', value: 'Tilte' },
+		{ key: 'description', value: 'Description' },
+		{ key: 'files', value: 'Notice File' },
 		{ key: 'action', value: 'Action' }
 	];
 
 	let open = false;
 	let deleteModal = false;
 
-	let organization;
+	let Notices: any = [];
+
+	let notice;
 
 	function openModalForm(row) {
 		open = true;
-		organization = row;
+		notice = row;
 	}
 
 	async function doDelete() {
-		await organizations.deleteOrganization(organization.id);
+		await notices.deleteNotice(notice.id);
 		deleteModal = false;
 	}
 
+	// async function getNoticeList() {
+	// 	const { data } = await getNotices();
+	// 	Notices = data;
+	// }
+
 	onMount(async () => {
-		organizations.getOrganizations();
+		notices.getNotices();
 	});
 </script>
 
-{#if $organizations.loading}
+{#if $notices.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Organization" description="" {headers} rows={$organizations.data}>
+	<DataTable size="short" title="Notice" description="" {headers} rows={$notices.data}>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Notice</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
-							organization = { ...row };
+							notice = { ...row };
 							deleteModal = true;
 						}}
 						danger
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'show_in_home_page'}
+				<Toggle toggled={cell.value} labelA="Disabled" labelB="Active" disabled />
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
-<FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"organization"} />
+<FormModal bind:open bind:notice />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'notice'} />
