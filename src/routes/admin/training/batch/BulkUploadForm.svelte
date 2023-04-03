@@ -4,11 +4,11 @@
 	import * as yup from 'yup';
 	import { batchs } from '$lib/store/batch';
 	import { FileUploader, Modal } from 'carbon-components-svelte';
-	import { page } from '$app/stores';
 	export let open = true;
 	export let confirmModal = false;
 	let fileUploader;
 	let excel_file = [];
+	export let batchId;
 
 	const schema = yup.object({
 		excel_file: yup
@@ -28,7 +28,7 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			await batchs.uploadExel({ ...data, id: $page.params.batchId });
+			await batchs.uploadExel(batchId, { ...data });
 			open = false;
 			reset();
 			confirmModal = true;
@@ -37,7 +37,6 @@
 
 	$: {
 		setFields('excel_file', excel_file[0]);
-		console.log($page.params.batchId);
 	}
 </script>
 

@@ -67,7 +67,7 @@ export async function createBatch(payload) {
 	}
 }
 
-export async function uploadExel(payload, id) {
+export async function uploadExel(id, payload) {
 	try {
 		const formData = await generateFromData(payload);
 		const { data } = await http({

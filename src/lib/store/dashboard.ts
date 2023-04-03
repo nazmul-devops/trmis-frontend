@@ -27,8 +27,12 @@ function dcreateDashboardStore() {
 			return prev;
 		});
 	}
-	async function getParticipantsFromOrganization(year, start_month, end_month) {
-		const resp = await dashboardService.getParticipantsFromOrganization(year, start_month, end_month);
+	async function getParticipantsFromOrganization(year, start_month = null, end_month = null) {
+		const resp = await dashboardService.getParticipantsFromOrganization(
+			year,
+			start_month,
+			end_month
+		);
 		update((prev) => {
 			prev.participantFromOrganization = resp.data.top_five_organizations;
 			prev.loading = false;
@@ -36,7 +40,7 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getTrainingStatus(year, start_month, end_month) {
+	async function getTrainingStatus(year, start_month = null, end_month = null) {
 		const resp = await dashboardService.getTraininjgStatus(year, start_month, end_month);
 		update((prev) => {
 			prev.trainingStatus = resp.data;
@@ -45,7 +49,7 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getGenderWiseTraining(year, start_month, end_month) {
+	async function getGenderWiseTraining(year, start_month = null, end_month = null) {
 		const resp = await dashboardService.getGenderWiseTraining(year, start_month, end_month);
 		update((prev) => {
 			prev.genderWiseTraining = resp.data;
@@ -53,7 +57,7 @@ function dcreateDashboardStore() {
 			return prev;
 		});
 	}
-	async function getPlannedBatch(year, start_month, end_month) {
+	async function getPlannedBatch(year, start_month = null, end_month = null) {
 		const resp = await dashboardService.getPlannedBatch(year, start_month, end_month);
 		update((prev) => {
 			prev.planedBatch = resp.data;
@@ -62,7 +66,7 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getParticipantFromCategories(year, start_month, end_month) {
+	async function getParticipantFromCategories(year, start_month = null, end_month = null) {
 		const resp = await dashboardService.getParticipantFromCategories(year, start_month, end_month);
 		update((prev) => {
 			prev.participantFromCategory = resp.data;

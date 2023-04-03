@@ -1,8 +1,12 @@
 import { http } from '$lib/service/auth';
 
-export async function getTrainingCourses() {
+export async function getTrainingCourses(courseCategory = null) {
 	try {
-		const { data } = await http.get('training-course/');
+		const { data } = await http.get('training-course/', {
+			params: {
+				course_category: courseCategory
+			}
+		});
 		return {
 			status: 200,
 			data
@@ -15,19 +19,7 @@ export async function getTrainingCourses() {
 	}
 }
 
-export async function getTrainingCourse(id) {
-	try {
-		const { data } = await http.get(`training-course/${id}/`);
-		return {
-			status: 200,
-			data
-		};
-	} catch (err) {
-		return Promise.resolve({
-			status: 400
-		});
-	}
-}
+
 
 export async function updateTrainingCourse(payload) {
 	try {

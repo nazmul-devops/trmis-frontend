@@ -5,6 +5,7 @@
 	import * as yup from 'yup';
 	import { notices } from '$lib/store/notice';
 	import { Checkbox, FileUploader, Modal, TextInput } from 'carbon-components-svelte';
+	import axios from 'axios';
 
 	let fileUploader;
 	let files = [];
@@ -30,14 +31,21 @@
 	}
 
 	$: {
+		console.log(notice.files);
+		axios.get(notice.files).then((resp) => {
+			console.log(resp);
+		});
+	}
+
+	$: {
 		setData('files', files);
 	}
 
 	const schema = yup.object({
-		title: yup.string().required("Title is required."),
-		description: yup.string().required("Description is required."),
+		title: yup.string().required('Title is required.'),
+		description: yup.string().required('Description is required.'),
 		files: yup.mixed().required(),
-		expiration_date: yup.string().required("Expiration date is required."),
+		expiration_date: yup.string().required('Expiration date is required.'),
 		show_in_home_page: yup.boolean()
 	});
 

@@ -121,7 +121,7 @@
 			<SideNavDivider />
 			<SideNavMenu icon={Events} text="Training">
 				<SideNavLink class="t-mt-3">
-					<a href="/admin/training/training-course">Training Course</a>
+					<a href="/admin/training/training-courses">Training Courses</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>

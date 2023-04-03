@@ -153,6 +153,15 @@
 		reset();
 	}
 
+	let isDoctor = false;
+
+	$: {
+		let index = Designations.findIndex((item) => item.id == $data.designation);
+		if (index >= 0) {
+			isDoctor = Designations[index].name.toLowerCase() == 'doctor';
+		}
+	}
+
 	onMount(async () => {
 		trainers.getTrainers();
 		designations.getDesignations();
@@ -287,19 +296,21 @@
 					<p class=" t-text-red-500 ">{$errors.designation}</p>
 				{/if}
 			</div>
-			<div>
-				<TextInput
-				type="number"
-					bind:value={$data.bmdc_code}
-					invalid={$errors.bmdc_code != null}
-					name="bmdc_code"
-					labelText="Personal BMDC Code"
-					placeholder="Enter BMDC Code..."
-				/>
-				{#if $errors.bmdc_code}
-					<p class=" t-text-red-500 ">{$errors.bmdc_code}</p>
-				{/if}
-			</div>
+			{#if isDoctor == true}
+				<div>
+					<TextInput
+						type="number"
+						bind:value={$data.bmdc_code}
+						invalid={$errors.bmdc_code != null}
+						name="bmdc_code"
+						labelText="Personal BMDC Code"
+						placeholder="Enter BMDC Code..."
+					/>
+					{#if $errors.bmdc_code}
+						<p class=" t-text-red-500 ">{$errors.bmdc_code}</p>
+					{/if}
+				</div>
+			{/if}
 			<div>
 				<ComboBox
 					invalid={$errors.organization != null}

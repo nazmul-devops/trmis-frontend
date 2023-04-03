@@ -1,15 +1,13 @@
 <script lang="ts">
 	import { trainingCourses } from '$lib/store/trainingCourse';
+	import { getCourseCategory } from '$lib/service/courseCategory';
 	import {
 		DataTable,
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem
 	} from 'carbon-components-svelte';
@@ -18,7 +16,17 @@
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { goto } from '$app/navigation';
+	import { page } from '$app/stores';
 
+	interface Category {
+		title?: string;
+	}
+
+	$: {
+		console.log(singleCategory);
+	}
+
+	let singleCategory: Category = {};
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
@@ -43,15 +51,26 @@
 		deleteModal = false;
 	}
 
+	$: TrainingCourse = $trainingCourses.data;
+
 	onMount(async () => {
-		trainingCourses.getTrainingCourses();
+		trainingCourses.getTrainingCourses($page.params.coursesId);
+		getCourseCategory($page.params.coursesId).then((resp) => {
+			singleCategory = resp.data;
+		});
 	});
 </script>
 
 {#if $trainingCourses.loading}
 	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
 {:else}
-	<DataTable size="short" title="Training Course" description="" {headers} rows={$trainingCourses.data}>
+	<DataTable
+		size="short"
+		title={`Training Course By ${singleCategory?.title}`}
+		description=""
+		{headers}
+		rows={TrainingCourse}
+	>
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
@@ -60,7 +79,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem
 						on:click={() => goto(`training-course/${row.id}/training-material`)}
 						text="Training Material"
