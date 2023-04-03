@@ -63,7 +63,7 @@
 </script>
 
 <header class="t-sticky t-top-0 t-z-50">
-	<div class="t-shadow-md t-shadow-[#d1fae5] t-bg-white ">
+	<div class="t-bg-white ">
 		<div
 			class="lg:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24  t-grid lg:t-grid-cols-4 xl:t-grid-cols-3 sm:t-relative "
 		>
