@@ -2,10 +2,9 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { trainees } from '$lib/store/trainee';
+	import { batchs } from '$lib/store/batch';
 	import { FileUploader, Modal } from 'carbon-components-svelte';
-	import { onMount } from 'svelte';
-
+	import { page } from '$app/stores';
 	export let open = true;
 	export let confirmModal = false;
 	let fileUploader;
@@ -29,7 +28,7 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			await trainees.uploadExel({ ...data });
+			await batchs.uploadExel({ ...data, id: $page.params.batchId });
 			open = false;
 			reset();
 			confirmModal = true;
@@ -38,6 +37,7 @@
 
 	$: {
 		setFields('excel_file', excel_file[0]);
+		console.log($page.params.batchId);
 	}
 </script>
 
@@ -70,12 +70,12 @@
 
 <Modal passiveModal bind:open={confirmModal} modalHeading="IBM Cloudant" on:open on:close>
 	<p>
-		=> Successfully Upload {$trainees.upload.successRows} Participants
+		=> Successfully Upload {$batchs.upload.successRows} Participants
 	</p>
 	<p>
-		=> {$trainees.upload.errorMessage}
+		=> {$batchs.upload.errorMessage}
 	</p>
 	<p>
-		=> Error At Row Number {$trainees.upload.errorRows} From Excel File.
+		=> Error At Row Number {$batchs.upload.errorRows} From Excel File.
 	</p>
 </Modal>

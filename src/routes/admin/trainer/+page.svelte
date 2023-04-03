@@ -16,6 +16,7 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
+	import BulkUploadForm from '../trainee/BulkUploadForm.svelte';
 
 	let filteredRowIds = [];
 	let headers = [
@@ -30,6 +31,7 @@
 
 	let open = false;
 	let deleteModal = false;
+	let bulkUpModal = false;
 	let trainer;
 
 	function openModalForm(row) {
@@ -40,6 +42,10 @@
 	async function doDelete() {
 		await trainers.deleteTrainer(trainer.id);
 		deleteModal = false;
+	}
+
+	function openBulkForm() {
+		bulkUpModal = true;
 	}
 
 	onMount(async () => {
@@ -62,7 +68,10 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Resources</Button>
+				<Button class="t-mr-2" on:click={() => openModalForm({ name: null, nid: null })}
+					>Add Resources</Button
+				>
+				<Button on:click={() => openBulkForm()}>Bulk Upload</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
@@ -91,6 +100,7 @@
 {/if}
 
 <FormModal bind:open bind:trainer />
+<BulkUploadForm bind:open={bulkUpModal} />
 <DeleteModal
 	bind:open={deleteModal}
 	on:deleteConfirm={doDelete}

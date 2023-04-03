@@ -2,9 +2,8 @@
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
-	import { trainees } from '$lib/store/trainee';
+	import { trainers } from '$lib/store/trainer';
 	import { FileUploader, Modal } from 'carbon-components-svelte';
-	import { onMount } from 'svelte';
 
 	export let open = true;
 	export let confirmModal = false;
@@ -29,7 +28,7 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			await trainees.uploadExel({ ...data });
+			await trainers.uploadExel({ ...data });
 			open = false;
 			reset();
 			confirmModal = true;
@@ -39,6 +38,7 @@
 	$: {
 		setFields('excel_file', excel_file[0]);
 	}
+
 </script>
 
 <Modal
@@ -70,12 +70,12 @@
 
 <Modal passiveModal bind:open={confirmModal} modalHeading="IBM Cloudant" on:open on:close>
 	<p>
-		=> Successfully Upload {$trainees.upload.successRows} Participants
+		=> Successfully Upload {$trainers.upload.successRows} Participants
 	</p>
 	<p>
-		=> {$trainees.upload.errorMessage}
+		=> {$trainers.upload.errorMessage}
 	</p>
 	<p>
-		=> Error At Row Number {$trainees.upload.errorRows} From Excel File.
+		=> Error At Row Number {$trainers.upload.errorRows} From Excel File.
 	</p>
 </Modal>

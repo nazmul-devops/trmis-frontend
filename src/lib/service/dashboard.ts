@@ -15,11 +15,15 @@ export async function getParticipantsAndResources() {
 	}
 }
 
-export async function getParticipantsFromOrganization() {
+export async function getParticipantsFromOrganization(year, startMonth, endMonth) {
 	try {
-		const { data } = await http.get(
-			'dashboard/top-organizations/?year=2023&start_month=1&end_month=4'
-		);
+		const { data } = await http.get('dashboard/top-organizations/', {
+			params: {
+				year,
+				start_month: startMonth,
+				end_month: endMonth
+			}
+		});
 		return {
 			status: 200,
 			data
@@ -32,11 +36,15 @@ export async function getParticipantsFromOrganization() {
 	}
 }
 
-export async function getTraininjgStatus() {
+export async function getTraininjgStatus(year, startMonth, endMonth) {
 	try {
-		const { data } = await http.get(
-			'dashboard/training-course-status/?year=2023&start_month=1&end_month=4'
-		);
+		const { data } = await http.get('dashboard/training-course-status/', {
+			params: {
+				year,
+				start_month: startMonth,
+				end_month: endMonth
+			}
+		});
 		return {
 			status: 200,
 			data
@@ -48,11 +56,15 @@ export async function getTraininjgStatus() {
 		});
 	}
 }
-export async function getGenderWiseTraining() {
+export async function getGenderWiseTraining(year, startMonth, endMonth) {
 	try {
-		const { data } = await http.get(
-			'dashboard/gender-wise-training/?year=2023&start_month=1&end_month=4'
-		);
+		const { data } = await http.get('dashboard/gender-wise-training/', {
+			params: {
+				year,
+				start_month: startMonth,
+				end_month: endMonth
+			}
+		});
 		return {
 			status: 200,
 			data
@@ -64,11 +76,15 @@ export async function getGenderWiseTraining() {
 		});
 	}
 }
-export async function getPlannedBatch() {
+export async function getPlannedBatch(year, startMonth, endMonth) {
 	try {
-		const { data } = await http.get(
-			'dashboard/planned-completed-batch/?year=2023&start_month=1&end_month=4'
-		);
+		const { data } = await http.get('dashboard/planned-completed-batch/', {
+			params: {
+				year,
+				start_month: startMonth,
+				end_month: endMonth
+			}
+		});
 		return {
 			status: 200,
 			data
@@ -81,10 +97,17 @@ export async function getPlannedBatch() {
 	}
 }
 
-export async function getParticipantFromCategories() {
+export async function getParticipantFromCategories(year, startMonth, endMonth) {
 	try {
 		const { data } = await http.get(
-			'dashboard/number-of-participant-for-different-training-course-category/'
+			'dashboard/number-of-participant-for-different-training-course-category/',
+			{
+				params: {
+					year,
+					start_month: startMonth,
+					end_month: endMonth
+				}
+			}
 		);
 		return {
 			status: 200,
