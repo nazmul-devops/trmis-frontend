@@ -5,69 +5,46 @@
 	import * as yup from 'yup';
 	import Chart from '../../lib/Chart.svelte';
 	import Count from './Count.svelte';
+	import { MONTH_NAME } from '$lib/constants';
 	import { onMount } from 'svelte';
 	import { dashboardData } from '$lib/store/dashboard';
 
-
-	let schedule ={
-		start_date: null,
-		end_date: null
-	}
-
-	$: {
-		setData("start_date", schedule.start_date);
-		setData("end_date", schedule.end_date)
-	}
+	let yearId;
+	let startMonthId;
+	let endMonthId;
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
-	const timeIntervalDistance = [
-		{ id: 1, text: '2015' },
-		{ id: 2, text: '2016' },
-		{ id: 3, text: '2017' },
-		{ id: 4, text: '2018' },
-		{ id: 5, text: '2019' },
-		{ id: 6, text: '2020' },
-		{ id: 7, text: '2021' },
-		{ id: 8, text: '2022' },
-		{ id: 9, text: '2023' },
-		{ id: 10, text: '2024' },
-		{ id: 11, text: '2025' }
-	];
+	let years = [];
+	const currentYear = new Date().getFullYear();
+
+	for (let year = currentYear; year >= 2000; year--) {
+		years = [...years, { id: year, text: year.toString() }];
+	}
 
 	const schema = yup.object({
-		distance: yup.string(),
-		start_date: yup.string(),
-		end_date: yup.string()
+		year: yup.string(),
+		start_month: yup.string(),
+		end_month: yup.string()
 	});
 
 	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
 		extend: validator({ schema })
 	});
 
-	const submitHandler = createSubmitHandler({
-		onSubmit: async (data) => {
-			// if (timeInterval.id) {
-			// 	await trainingCenters.updateTrainingCenter({ ...data, id: trainingCenter.id });
-			// } else {
-			// 	await trainingCenters.createTrainingCenter({ ...data });
-			// }
-			// open = false;
-			reset();
-		}
-	});
-
-	$: timeIntervalLists = timeIntervalDistance.map((items) => ({ ...items }));
+	$: {
+		dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
+		dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
+		dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
+		dashboardData.getPlannedBatch(yearId, startMonthId, endMonthId);
+		dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+	}
 
 	onMount(() => {
-		dashboardData.getParticipantsFromOrganization();
-		dashboardData.getTrainingStatus();
-		dashboardData.getGenderWiseTraining();
-		dashboardData.getPlannedBatch();
-		dashboardData.getParticipantFromCategories();
+		
 	});
 </script>
 
@@ -79,35 +56,29 @@
 				<div class=" t-grid t-grid-cols-2 md:t-grid-cols-4 lg:t-grid-cols-5">
 					<div class="t-col-span-1 customComboBox">
 						<ComboBox
-							bind:selectedId={$data.distance}
+							bind:selectedId={yearId}
 							titleText="Year"
 							placeholder="Choose Year"
-							items={timeIntervalLists}
+							items={years}
 							{shouldFilterItem}
 						/>
 					</div>
 					<div class="t-my-4 md:t-my-0 t-col-span-3 customDatePicker">
 						<div class="t-flex">
-							<div class="datePicker1">
-								<DatePicker
-									datePickerType="single"
-									bind:value={$data.start_date}
-									dateFormat="mm"
-									on:change
-								>
-									<DatePickerInput labelText="From Month" placeholder="mm/yyyy" />
-								</DatePicker>
-							</div>
-							<div class="datePicker2">
-								<DatePicker
-									datePickerType="single"
-									bind:value={$data.end_date}
-									dateFormat="mm"
-									on:change
-								>
-									<DatePickerInput labelText="To Month" placeholder="" />
-								</DatePicker>
-							</div>
+							<ComboBox
+								bind:selectedId={startMonthId}
+								titleText="From Month"
+								placeholder="Choose Month"
+								items={MONTH_NAME}
+								{shouldFilterItem}
+							/>
+							<ComboBox
+								bind:selectedId={endMonthId}
+								titleText="To Month"
+								placeholder="Choose Month"
+								items={MONTH_NAME}
+								{shouldFilterItem}
+							/>
 						</div>
 					</div>
 				</div>

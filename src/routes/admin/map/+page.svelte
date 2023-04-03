@@ -1,6 +1,5 @@
 <script>
 	import { ComboBox } from 'carbon-components-svelte';
-	import { organizations } from '$lib/store/organization';
 	import Map from '$lib/map.svelte';
 	import { createForm } from 'felte';
 	import { validator } from '@felte/validator-yup';

@@ -27,8 +27,8 @@ function dcreateDashboardStore() {
 			return prev;
 		});
 	}
-	async function getParticipantsFromOrganization() {
-		const resp = await dashboardService.getParticipantsFromOrganization();
+	async function getParticipantsFromOrganization(year, start_month, end_month) {
+		const resp = await dashboardService.getParticipantsFromOrganization(year, start_month, end_month);
 		update((prev) => {
 			prev.participantFromOrganization = resp.data.top_five_organizations;
 			prev.loading = false;
@@ -36,8 +36,8 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getTrainingStatus() {
-		const resp = await dashboardService.getTraininjgStatus();
+	async function getTrainingStatus(year, start_month, end_month) {
+		const resp = await dashboardService.getTraininjgStatus(year, start_month, end_month);
 		update((prev) => {
 			prev.trainingStatus = resp.data;
 			prev.loading = false;
@@ -45,16 +45,16 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getGenderWiseTraining() {
-		const resp = await dashboardService.getGenderWiseTraining();
+	async function getGenderWiseTraining(year, start_month, end_month) {
+		const resp = await dashboardService.getGenderWiseTraining(year, start_month, end_month);
 		update((prev) => {
 			prev.genderWiseTraining = resp.data;
 			prev.loading = false;
 			return prev;
 		});
 	}
-	async function getPlannedBatch() {
-		const resp = await dashboardService.getPlannedBatch();
+	async function getPlannedBatch(year, start_month, end_month) {
+		const resp = await dashboardService.getPlannedBatch(year, start_month, end_month);
 		update((prev) => {
 			prev.planedBatch = resp.data;
 			prev.loading = false;
@@ -62,8 +62,8 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getParticipantFromCategories() {
-		const resp = await dashboardService.getParticipantFromCategories();
+	async function getParticipantFromCategories(year, start_month, end_month) {
+		const resp = await dashboardService.getParticipantFromCategories(year, start_month, end_month);
 		update((prev) => {
 			prev.participantFromCategory = resp.data;
 			prev.loading = false;

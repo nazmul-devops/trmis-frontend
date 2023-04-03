@@ -5,6 +5,7 @@
 	import { organizations } from '$lib/store/organization';
 	import { coordinators } from '$lib/store/coordinators';
 	import { trainers } from '$lib/store/trainer';
+	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { getEventSchedules } from '$lib/service/schedule-events';
 	import {
 		TextInput,
@@ -22,37 +23,6 @@
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
-
-	// export let event = {
-	// 	id: null,
-	// 	status: null,
-	// 	name: null,
-	// 	number_of_participants: null,
-	// 	participants: [],
-	// 	description: null,
-	// 	budget: null,
-	// 	type: null,
-	// 	organization: null,
-	// 	coordinator: null,
-	// 	schedule: null,
-	// 	facilitator: []
-	// };
-
-	// function formDetails() {
-	// 	setFields('status', event.status);
-	// 	setFields('name', event.name);
-	// 	setFields('number_of_participants', event.number_of_participants);
-	// 	setFields('description', event.description);
-	// 	setFields('budget', event.budget);
-	// 	setFields('type', event.type);
-	// 	setFields('organization', event.organization);
-	// 	setFields('coordinator', event.coordinator);
-	// 	setFields('schedule', event.schedule);
-	// }
-
-	// $: {
-	// 	formDetails();
-	// }
 
 	const schema = yup.object({
 		status: yup.number().required('Status is required.'),
@@ -81,7 +51,8 @@
 				type: parseInt(values.type),
 				organization: parseInt(values.organization),
 				coordinator: parseInt(values.coordinator),
-				schedule: parseInt(values.schedule)
+				schedule: parseInt(values.schedule),
+				expenditure: values.expenditure ? parseInt(values.expenditure) : null
 			};
 		},
 		extend: validator({ schema })
@@ -139,11 +110,13 @@
 	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 	$: coordinatorList = $coordinators.data.map((item) => ({ ...item, text: item.name }));
 	$: schedules = eventSchedule.map((item) => ({ ...item, text: item.event_venue_name }));
+	$: sourceFunds = $sourceOfFounds.data.map((item) => ({ ...item, text: item.name }));
 
 	onMount(async () => {
 		organizations.getOrganizations();
 		coordinators.getCoordinators();
 		trainers.getTrainers();
+		sourceOfFounds.getSourceOfFounds();
 		const { data } = await getEventSchedules();
 		eventSchedule = data;
 	});
@@ -338,5 +311,5 @@
 	</div>
 </div>
 
-<!-- <p>{JSON.stringify($errors)}</p> -->
+<p>{JSON.stringify($errors)}</p>
 <!-- <p>{JSON.stringify($data)}</p> -->

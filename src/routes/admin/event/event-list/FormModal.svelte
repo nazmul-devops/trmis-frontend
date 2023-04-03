@@ -9,8 +9,6 @@
 	import { createEventDispatcher } from 'svelte';
 	import {
 		Modal,
-		Select,
-		SelectItem,
 		TextInput,
 		TextArea,
 		DataTable,
@@ -32,6 +30,8 @@
 		type: null,
 		organization: null,
 		coordinator: null,
+		source_of_fund: null,
+		expenditure: null,
 		schedule: null,
 		facilitator: []
 	};
@@ -47,6 +47,8 @@
 		setFields('organization', event.organization);
 		setFields('coordinator', event.coordinator);
 		setFields('schedule', event.schedule);
+		setFields('source_of_fund', event.source_of_fund);
+		setFields('expenditure', event.expenditure);
 	}
 
 	$: {
@@ -130,10 +132,9 @@
 
 	let eventSchedule = [];
 
-	$: organizationsList = $organizations.data.map((item) => ({...item, text: item.title}));
-	$: coordinatorsList = $coordinators.data.map((item) => ({...item, text: item.name}));
-	$: eventScheduleList = eventSchedule.map((item) => ({ ...item, tex: item.name}))
-	
+	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.title }));
+	$: coordinatorsList = $coordinators.data.map((item) => ({ ...item, text: item.name }));
+	$: eventScheduleList = eventSchedule.map((item) => ({ ...item, tex: item.name }));
 
 	onMount(async () => {
 		organizations.getOrganizations();
@@ -153,18 +154,18 @@
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput 
-			labelText="Name" 
-			name="name" 
+		<TextInput
+			labelText="Name"
+			name="name"
 			placeholder="Enter Event Name"
-			invalid={ $errors.name != null }
+			invalid={$errors.name != null}
 			invalidText={$errors.name}
 		/>
 		<TextInput
 			labelText="Number Of Participants"
 			name="number_of_participants"
 			placeholder="Number Of Participants"
-			invalid={ $errors.number_of_participants}
+			invalid={$errors.number_of_participants}
 		/>
 
 		<div>
@@ -195,32 +196,32 @@
 			</div>
 		</div>
 
-		<TextArea 
-			labelText="Description" 
-			name="description" 
-			placeholder="Enter a description..." 
+		<TextArea
+			labelText="Description"
+			name="description"
+			placeholder="Enter a description..."
 			invalid={$errors.description != null}
 			invalidText={$errors.description}
 		/>
-		<TextInput 
-			labelText="Budget" 
-			name="budget" 
-			placeholder="Budget" 
+		<TextInput
+			labelText="Budget"
+			name="budget"
+			placeholder="Budget"
 			invalid={$errors.budget != null}
 			invalidText={$errors.budget}
 		/>
 		<ComboBox
 			name="status"
-			invalid ={$errors.status != null}
+			invalid={$errors.status != null}
 			invalidText={$errors.status}
 			titleText="Status"
 			placeholder="Choose Status"
 			bind:selectedId={$data.status}
-			items = {[
-				{ id: 1, text: "Pending" },
-				{ id: 2, text: "In Progress" },
-				{ id: 3, text: "Completed" },
-				{ id: 4, text: "Rejected" },
+			items={[
+				{ id: 1, text: 'Pending' },
+				{ id: 2, text: 'In Progress' },
+				{ id: 3, text: 'Completed' },
+				{ id: 4, text: 'Rejected' }
 			]}
 		/>
 		<!-- <Select invalid={$errors.status != null} name="status" labelText="Status">
@@ -231,16 +232,16 @@
 		</Select> -->
 		<ComboBox
 			name="type"
-			invalid ={$errors.type != null}
+			invalid={$errors.type != null}
 			invalidText={$errors.type}
 			titleText="Type"
 			placeholder="Choose Type"
 			bind:selectedId={$data.type}
-			items = {[
-				{ id: 1, text: "Meeting" },
-				{ id: 2, text: "Workshop" },
-				{ id: 3, text: "Orientation" },
-				{ id: 4, text: "Sensitization" },
+			items={[
+				{ id: 1, text: 'Meeting' },
+				{ id: 2, text: 'Workshop' },
+				{ id: 3, text: 'Orientation' },
+				{ id: 4, text: 'Sensitization' }
 			]}
 		/>
 		<!-- <Select invalid={$errors.type != null} name="type" labelText="Type">
@@ -283,8 +284,8 @@
 			{/each}
 		</Select> -->
 		<ComboBox
-			invalid={ $errors.schedule != null }
-			invalidText={ $errors.schedule}
+			invalid={$errors.schedule != null}
+			invalidText={$errors.schedule}
 			name="schedule"
 			titleText="Schedule"
 			placeholder="Choose Organization"
