@@ -47,7 +47,7 @@
 
 <div class="">
 	<div class=" t-my-5">
-		<h4>Training Course Curriculum Report</h4>
+		<h4>Training Curriculum Report</h4>
 	</div>
 	<div class="t-flex t-gap-4 t-items-end   ">
 		<div>

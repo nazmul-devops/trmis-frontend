@@ -3,7 +3,7 @@ import { http } from '$lib/service/auth';
 export async function getBatchParticipants(id) {
 	try {
 		const { data } = await http.get(`batch/${id}/batch-trainee/`);
-		console.log(data)
+		console.log(data);
 		return {
 			status: 200,
 			data
@@ -16,20 +16,6 @@ export async function getBatchParticipants(id) {
 	}
 }
 
-// export async function getBatchParticipant(id) {
-// 	try {
-// 		const { data } = await http.get(`batch/batch-trainee/${id}/`);
-// 		return {
-// 			status: 200,
-// 			data: data
-// 		};
-// 	} catch (error) {
-// 		return Promise.resolve({
-// 			status: 400,
-// 			data: []
-// 		});
-// 	}
-// }
 
 export async function deleteBatchParticipant(batchId: number, participantId: number) {
 	try {
@@ -44,11 +30,14 @@ export async function createBatchParticipant(batchId, payload) {
 		const { data } = await http.post(`batch/${batchId}/batch-trainee/`, payload);
 		return {
 			status: 201,
-			data
+			data,
+			errorMessage: null
 		};
 	} catch (err) {
 		return Promise.resolve({
-			status: 403
+			status: 403,
+			errorMessage: err.response.data.detail,
+			data: []
 		});
 	}
 }

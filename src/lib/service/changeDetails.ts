@@ -9,7 +9,8 @@ export async function getDetails() {
         };
     }catch (err) {
         return Promise.resolve({
-            status: 403
+            status: 403,
+            data: []
         });
     }
 }

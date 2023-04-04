@@ -3,8 +3,6 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { trainers } from '$lib/store/trainer';
-	import { courseTopics } from '$lib/store/courseTopic';
-	import { getBatches } from '$lib/service/batch';
 	import { createEventDispatcher } from 'svelte';
 	import {
 		Modal,
@@ -16,18 +14,19 @@
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { createBatchSession, updateBatchSession } from '$lib/service/batch-sessions-detail';
+	import { batchSession } from '$lib/store/batch-sessions-detail';
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
+	export let errorModal = false;
 	export let open = true;
 	export let sessionDetail = {
 		id: null,
 		session_day: null,
 		session_date: null,
-		session_no: null,
 		from_time: null,
 		to_time: null,
 		trainer: null,
@@ -37,7 +36,6 @@
 	function formDetails() {
 		setFields('session_day', sessionDetail.session_day);
 		setFields('session_date', sessionDetail.session_date);
-		setFields('session_no', sessionDetail.session_no);
 		setFields('from_time', sessionDetail.from_time);
 		setFields('to_time', sessionDetail.to_time);
 		setFields('trainer', sessionDetail.trainer);
@@ -53,13 +51,12 @@
 	}
 
 	const schema = yup.object({
-		session_day: yup.string().required("Session day is required."),
+		session_day: yup.string().required('Session day is required.'),
 		session_date: yup.string().required(),
-		session_no: yup.number().required("Session No is required"),
-		from_time: yup.string().required("Start time is required."),
-		to_time: yup.string().required("End time is required."),
-		trainer: yup.number().required().typeError("Trainer is required."),
-		topic: yup.string().required().typeError("Topic is required.")
+		from_time: yup.string().required('Start time is required.'),
+		to_time: yup.string().required('End time is required.'),
+		trainer: yup.number().required().typeError('Trainer is required.'),
+		topic: yup.string().required().typeError('Topic is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -78,18 +75,21 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (sessionDetail.id) {
-				await updateBatchSession($page.params.batchId, { ...data, id: sessionDetail.id });
+				await batchSession.updateBatchSession(parseInt($page.params.batchId), {
+					...data,
+					id: sessionDetail.id
+				});
 			} else {
-				await createBatchSession($page.params.batchId, { ...data });
+				await batchSession.createBatchSession(parseInt($page.params.batchId), { ...data });
 			}
 			open = false;
 			dispatch('update-list');
 			reset();
+			errorModal = true;
 		}
 	});
 
 	$: trainer = $trainers.data.map((item) => ({ ...item, text: item.name }));
-	$: courseTopic = $courseTopics.data.map((item) => ({ ...item, text: item.title }));
 
 	onMount(async () => {
 		trainers.getTrainers();
@@ -136,19 +136,6 @@
 						placeholder="YYYY-mm-dd"
 					/>
 				</DatePicker>
-			</div>
-
-			<div>
-				<TextInput
-					invalid={$errors.session_no != null}
-					bind:value={$data.session_no}
-					name="session_no"
-					labelText="Session No"
-					placeholder="Enter Session No..."
-				/>
-				{#if $errors.session_no}
-					<p class="t-text-red-500">{$errors.session_no}</p>
-				{/if}
 			</div>
 
 			<div class=" t-border t-flex t-flex-col t-w-full">
@@ -199,7 +186,7 @@
 				/>
 				{#if $errors.topic}
 					<p class="t-text-red-500">{$errors.topic}</p>
-				{/if} 
+				{/if}
 				<!-- <ComboBox
 					invalid={$errors.topic != null}
 					direction="top"
@@ -215,4 +202,8 @@
 			<!-- <p>{JSON.stringify($data)}</p> -->
 		</div>
 	</form>
+</Modal>
+
+<Modal passiveModal bind:open={errorModal} modalHeading="" on:open on:close>
+	<p class=" t-text-red-500 t-text-lg ">{$batchSession.errorData.errorMessage}</p>
 </Modal>

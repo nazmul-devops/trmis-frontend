@@ -6,10 +6,8 @@
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
 	import { getLocations } from '$lib/service/locations';
-	import { MATERIAL_STATUS } from '$lib/constants';
-	import { Modal, TextInput, ComboBox, Button } from 'carbon-components-svelte';
+	import { TextInput, ComboBox, Button } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
-	import { sleep } from '$lib/service/utilities';
 
 	let zilaOptions = [];
 	let upazilaOptions = [];
@@ -48,24 +46,8 @@
 		}
 	}
 
-	// export let traineeRequest = {
-	// 	id: null,
-	// 	phone: null,
-	// 	name: null,
-	// 	nid: null,
-	// 	email: null,
-	// 	gender: null,
-	// 	marital_status: null,
-	// 	designation: null,
-	// 	organization: null,
-	// 	division: null,
-	// 	address: null,
-	// 	district: null,
-	// 	sub_district: null
-	// };
-
 	const schema = yup.object({
-		name: yup.string().typeError("Name is Required").required(),
+		name: yup.string().typeError('Name is Required').required(),
 		phone: yup.string().typeError('Phone number is required!').required(),
 		nid: yup.string().required().typeError('NID is required!'),
 		email: yup.string().email().required(),
@@ -74,7 +56,7 @@
 		organization: yup.number().required().typeError('Select Organization'),
 		// area_of_specialization: yup.string().required(),
 		division: yup.number().required().typeError('Select Division'),
-		address: yup.string().required(),
+		address: yup.string().nullable(true),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District')
 	});
@@ -85,7 +67,11 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
-			await traineeRequests.createTrainee_Request({ ...data });
+			const payload = {
+				...data,
+				address: data.address.length == 0 ? null : data.address
+			};
+			await traineeRequests.createTrainee_Request({ ...payload });
 			reset();
 		}
 	});

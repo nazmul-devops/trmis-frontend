@@ -2,9 +2,10 @@ import { writable } from 'svelte/store';
 import * as batchParticipants from '../service/batch-participants';
 
 function createBatchParticipantStore() {
-	const { subscribe, set, update } = writable({
+	const { subscribe, update } = writable({
 		loading: true,
-		data: []
+		data: [],
+		errorData: { status: null, errorMessage: null }
 	});
 
 	function setLoading() {
@@ -17,9 +18,10 @@ function createBatchParticipantStore() {
 	async function getBatchParticipants(id: number) {
 		setLoading();
 		const res = await batchParticipants.getBatchParticipants(id);
-		set({
-			loading: false,
-			data: res.data.map((item) => ({ ...item, id: `${item.batch}-${item.trainee}` }))
+		update((prev) => {
+			prev.loading = false;
+			prev.data = res.data.map((item) => ({ ...item, id: `${item.batch}-${item.trainee}` }));
+			return prev;
 		});
 	}
 
@@ -31,7 +33,17 @@ function createBatchParticipantStore() {
 
 	async function createBatchParticipant(batchId: number, payload) {
 		setLoading();
-		await batchParticipants.createBatchParticipant(batchId, payload);
+		const { errorMessage, status } = await batchParticipants.createBatchParticipant(
+			batchId,
+			payload
+		);
+
+		update((prev) => {
+			prev.errorData.errorMessage = errorMessage;
+			prev.errorData.status = status;
+			return prev;
+		});
+
 		await getBatchParticipants(batchId);
 	}
 

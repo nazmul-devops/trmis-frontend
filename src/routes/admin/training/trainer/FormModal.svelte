@@ -116,7 +116,7 @@
 		designation: yup.number().required().typeError('Select Designation'),
 		organization: yup.number().required().typeError('Select Organization'),
 		division: yup.number().required().typeError('Select Division'),
-		address: yup.string().nullable(),
+		address: yup.string().nullable(true),
 		district: yup.number().required().typeError('Select District'),
 		sub_district: yup.number().required().typeError('Select Sub District'),
 		hris: yup.number()
@@ -135,10 +135,14 @@
 
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
+			const payload = {
+				...data,
+				address: data.address.length == 0 ? null : data.address
+			};
 			if (trainer.id) {
-				await trainers.updateTrainer({ ...data, id: trainer.id });
+				await trainers.updateTrainer({ ...payload, id: trainer.id });
 			} else {
-				await trainers.createTrainer({ ...data });
+				await trainers.createTrainer({ ...payload });
 			}
 			open = false;
 			reset();
