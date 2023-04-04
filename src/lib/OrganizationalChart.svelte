@@ -23,7 +23,7 @@
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: labels.map((label) => label),
+		labels: labels,
 		datasets: [
 			{
 				data: data,

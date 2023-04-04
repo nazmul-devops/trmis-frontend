@@ -15,6 +15,7 @@
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { goto } from '$app/navigation';
+	import BulkUploadForm from './BulkUploadForm.svelte';
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
@@ -32,13 +33,15 @@
 	let deleteModal = false;
 	let bulkUpModal = false;
 	let batch;
+	let batchId;
 
 	function openModalForm(row) {
 		open = true;
 		batch = row;
 	}
 
-	function openBulkForm() {
+	function openBulkForm(rowId) {
+		batchId = rowId;
 		bulkUpModal = true;
 	}
 
@@ -66,10 +69,7 @@
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
 				<OverflowMenu flipped direction="top" size="sm">
-					<OverflowMenuItem
-						on:click={() => goto(`/adminbatch/${row.id}/upload-excel/`)}
-						text="Bulk Upload"
-					/>
+					<OverflowMenuItem on:click={() => openBulkForm(row.id)} text="Bulk Upload" />
 					<OverflowMenuItem
 						on:click={() => goto(`/admin/training/batch/${row.id}/participants`)}
 						text="Participants"
@@ -100,4 +100,5 @@
 {/if}
 
 <FormModal bind:open bind:batch />
+<BulkUploadForm bind:open={bulkUpModal} {batchId} />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />

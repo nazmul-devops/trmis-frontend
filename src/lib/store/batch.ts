@@ -43,11 +43,12 @@ function createBatchStore() {
 		getBatches();
 	}
 
-	async function uploadExel(payload, id) {
+	async function uploadExel(id, payload) {
 		setLoading();
 
 		const { errorMessage, errorRows, status, successRows } = await batchServieces.uploadExel(
-			payload, id
+			id,
+			payload,
 		);
 
 		update((prev) => {

@@ -36,16 +36,22 @@
 	});
 
 	$: {
-		dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
-		dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
-		dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
-		dashboardData.getPlannedBatch(yearId, startMonthId, endMonthId);
-		dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+		if (yearId != null && startMonthId != null && endMonthId != null) {
+			dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
+			dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
+			dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
+			dashboardData.getPlannedBatch(yearId, startMonthId, endMonthId);
+			dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+		} else if (startMonthId == null && endMonthId == null) {
+			dashboardData.getParticipantsFromOrganization(yearId);
+			dashboardData.getTrainingStatus(yearId);
+			dashboardData.getGenderWiseTraining(yearId);
+			dashboardData.getPlannedBatch(yearId);
+			dashboardData.getParticipantFromCategories(yearId);
+		}
 	}
 
-	onMount(() => {
-		
-	});
+	onMount(() => {});
 </script>
 
 <div>
@@ -66,6 +72,7 @@
 					<div class="t-my-4 md:t-my-0 t-col-span-3 customDatePicker">
 						<div class="t-flex">
 							<ComboBox
+								disabled={!yearId}
 								bind:selectedId={startMonthId}
 								titleText="From Month"
 								placeholder="Choose Month"
@@ -73,10 +80,11 @@
 								{shouldFilterItem}
 							/>
 							<ComboBox
+							disabled={!startMonthId}
 								bind:selectedId={endMonthId}
 								titleText="To Month"
 								placeholder="Choose Month"
-								items={MONTH_NAME}
+								items={MONTH_NAME.map((item) => ({ ...item, disabled: item.id <= startMonthId }))}
 								{shouldFilterItem}
 							/>
 						</div>

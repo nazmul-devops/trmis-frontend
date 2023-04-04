@@ -17,7 +17,7 @@ function createCompletedCourseStore() {
 			loading: false,
 			trainee: resp.trainee,
 			data:
-				resp.data.length == 0
+				resp.data.length == 0	
 					? []
 					: resp.data.map((item, index) => ({
 							...item,

@@ -24,7 +24,8 @@ export async function getCourseCategory(id) {
 		};
 	} catch (err) {
 		return Promise.resolve({
-			status: 400
+			status: 400,
+			data: null
 		});
 	}
 }
