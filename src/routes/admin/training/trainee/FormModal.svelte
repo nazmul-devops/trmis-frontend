@@ -57,6 +57,7 @@
 		email: null,
 		gender: null,
 		designation: null,
+		bmdc_code: null,
 		organization: null,
 		division: null,
 		address: null,
@@ -75,7 +76,7 @@
 			setData('designation', trainee.designation);
 			setData('organization', trainee.organization);
 			setData('address', trainee.address);
-
+			setData('bmdc_code', trainee.bmdc_code);
 			sleep(0)
 				.then(() => {
 					setData('division', trainee.division);
@@ -133,7 +134,7 @@
 				address: data.address.length == 0 ? null : data.address
 			};
 			if (trainee.id) {
-				await trainees.updateTrainee({...payload, id: trainee.id});
+				await trainees.updateTrainee({ ...payload, id: trainee.id });
 			} else {
 				await trainees.createTrainee(payload);
 			}
@@ -148,6 +149,15 @@
 	function Cancel() {
 		open = false;
 		reset();
+	}
+
+	let isDoctor = false;
+
+	$: {
+		let index = Designations.findIndex((item) => item.id == $data.designation);
+		if (index >= 0) {
+			isDoctor = Designations[index].name.toLowerCase() == 'doctor';
+		}
 	}
 
 	onMount(async () => {
@@ -275,6 +285,21 @@
 					<p class=" t-text-red-500 ">{$errors.designation}</p>
 				{/if}
 			</div>
+			{#if isDoctor == true}
+				<div>
+					<TextInput
+						type="number"
+						bind:value={$data.bmdc_code}
+						invalid={$errors.bmdc_code != null}
+						name="bmdc_code"
+						labelText="Personal BMDC Code"
+						placeholder="Enter BMDC Code..."
+					/>
+					{#if $errors.bmdc_code}
+						<p class=" t-text-red-500 ">{$errors.bmdc_code}</p>
+					{/if}
+				</div>
+			{/if}
 			<div>
 				<ComboBox
 					invalid={$errors.organization != null}

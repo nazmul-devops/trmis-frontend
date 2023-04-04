@@ -5,6 +5,7 @@
 	import { trainingCourses } from '$lib/store/trainingCourse';
 	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -16,7 +17,7 @@
 		id: null,
 		title: null,
 		description: null,
-		code: null,
+		code: null
 	};
 
 	$: {
@@ -32,7 +33,7 @@
 	const schema = yup.object({
 		title: yup.string().required('Title is required.'),
 		description: yup.string().required('Desription is required.'),
-		code: yup.string().required('Code is required.'),
+		code: yup.string().required('Code is required.')
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({
@@ -48,13 +49,12 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (trainingCourse.id) {
-				await trainingCourses.updateTrainingCourse(
-					{ ...data, id:  trainingCourse.id}
-				);
+				await trainingCourses.updateTrainingCourse({ ...data, id: trainingCourse.id });
 			} else {
-				await trainingCourses.createTrainingCourse(
-					{ ...data }
-				);
+				await trainingCourses.createTrainingCourse({
+					...data,
+					course_category: $page.params.coursesId
+				});
 			}
 			open = false;
 			reset();

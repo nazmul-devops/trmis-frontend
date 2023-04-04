@@ -68,8 +68,9 @@ function dcreateDashboardStore() {
 
 	async function getParticipantFromCategories(year, start_month = null, end_month = null) {
 		const resp = await dashboardService.getParticipantFromCategories(year, start_month, end_month);
+		console.log(resp.data);
 		update((prev) => {
-			prev.participantFromCategory = resp.data;
+			prev.participantFromCategory = resp.data.top_four_course_category_name;
 			prev.loading = false;
 			return prev;
 		});

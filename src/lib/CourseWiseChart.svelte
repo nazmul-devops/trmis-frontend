@@ -44,8 +44,8 @@
 		}
 	};
 
-	let courseLabels = [];
-	let courseData = [];
+	export let courseLabels = [];
+	export let courseData = [];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {

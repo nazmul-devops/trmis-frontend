@@ -27,7 +27,7 @@
 	$: statusData =
 		$dashboardData.trainingStatus.length == 0
 			? [0, 0, 0]
-			: $dashboardData.trainingStatus.map((item) => item.value + 8);
+			: $dashboardData.trainingStatus.map((item) => item.value);
 
 	//Gender Wise Chart
 
@@ -41,7 +41,7 @@
 			? [0, 0]
 			: $dashboardData.genderWiseTraining.map((item) => item.value);
 
-	//Number Of Participant From Diffrent Categories Chart
+	//Planned Vs Completed Batch
 
 	$: plannedLabels =
 		$dashboardData.planedBatch.length == 0
@@ -51,13 +51,27 @@
 	$: plannedData =
 		$dashboardData.planedBatch.length == 0
 			? [0, 0]
-			: $dashboardData.planedBatch.map((item) => item.value + 8);
+			: $dashboardData.planedBatch.map((item) => item.value);
+
+	//Number Of Participant From Diffrent Categories Chart
+
+	$: courseLabels =
+		$dashboardData.participantFromCategory.length == 0
+			? ['---', '---']
+			: $dashboardData.planedBatch.map((item) => item.training_course_category);
+
+	$: courseData =
+		$dashboardData.participantFromCategory.length == 0
+			? [0, 0]
+			: $dashboardData.planedBatch.map((item) => item.particpant);
 </script>
 
-<div class="t-grid t-grid-cols-1 md:t-grid-cols-3 lg:t-grid-cols-5 t-gap-4 t-content-center t-items-center t-mb-6">
+<div
+	class="t-grid t-grid-cols-1 md:t-grid-cols-3 lg:t-grid-cols-5 t-gap-4 t-content-center t-items-center t-mb-6"
+>
 	<OrganizationalChart Class={'md:t-col-span-2 lg:t-col-span-3 '} {labels} {data} />
 	<TrainingStatusChart Class={'md:t-col-span-1 lg:t-col-span-2'} {status} {statusData} />
 	<GenderWiseChart Class={'md:t-col-span-1 lg:t-col-span-2'} {genderName} {genderData} />
 	<PlannedChart Class={'md:t-col-span-2 lg:t-col-span-3'} {plannedLabels} {plannedData} />
-	<CourseWiseChart Class={'md:t-col-span-3 lg:t-col-span-5'} />
+	<CourseWiseChart Class={'md:t-col-span-3 lg:t-col-span-5'} {courseLabels} {courseData} />
 </div>
