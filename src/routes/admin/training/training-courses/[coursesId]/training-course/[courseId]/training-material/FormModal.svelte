@@ -7,10 +7,7 @@
 	import {
 		Modal,
 		FileUploader,
-		TextInput,
-		Select,
-		SelectItem,
-		ComboBox
+		TextInput
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
@@ -32,7 +29,6 @@
 	}
 
 	$: {
-		// formSetFieldsForFile();
 		if (courseMaterial.id != null) {
 			formSetFields();
 		} else {
@@ -121,8 +117,8 @@
 			<div>
 				<FileUploader
 					bind:this={fileUploader}
-					labelTitle="Upload files"
-					buttonLabel="Add files"
+					labelTitle="Upload file"
+					buttonLabel="Add file"
 					bind:files
 					status="complete"
 					type="file"

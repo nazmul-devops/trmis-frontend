@@ -4,7 +4,6 @@
 	import * as yup from 'yup';
 	import { trainees } from '$lib/store/trainee';
 	import { FileUploader, Modal } from 'carbon-components-svelte';
-	import { onMount } from 'svelte';
 
 	export let open = true;
 	export let confirmModal = false;
@@ -53,8 +52,8 @@
 		<div>
 			<FileUploader
 				bind:this={fileUploader}
-				labelTitle="Upload files"
-				buttonLabel="Add files"
+				labelTitle="Upload file"
+				buttonLabel="Add file"
 				bind:files={excel_file}
 				status="complete"
 				type="file"
@@ -63,8 +62,6 @@
 		{#if $errors.files}
 			<p>{$errors.files}</p>
 		{/if}
-		<p>{JSON.stringify($data)}</p>
-		<p>{JSON.stringify($errors)}</p>
 	</form>
 </Modal>
 

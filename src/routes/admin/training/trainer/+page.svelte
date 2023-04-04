@@ -16,7 +16,7 @@
 	import DeleteModal from '$lib/DeleteModal.svelte';
 	import { designations } from '$lib/store/designations';
 	import { organizations } from '$lib/store/organization';
-	import BulkUploadForm from '../trainee/BulkUploadForm.svelte';
+	import BulkUploadForm from '../trainer/BulkUploadForm.svelte';
 
 	let filteredRowIds = [];
 	let headers = [

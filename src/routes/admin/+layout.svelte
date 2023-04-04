@@ -17,6 +17,7 @@
 		Modal
 	} from 'carbon-components-svelte';
 	import Grid from 'carbon-icons-svelte/lib/Grid.svelte';
+	import Calender from 'carbon-icons-svelte/lib/Calendar.svelte'
 	import Events from 'carbon-icons-svelte/lib/Events.svelte';
 	import Event from 'carbon-icons-svelte/lib/Event.svelte';
 	import ReportData from 'carbon-icons-svelte/lib/ReportData.svelte';
@@ -49,7 +50,7 @@
 			setupAuthHeader();
 		}
 	}
-	function openUserDetailsModal(){
+	function openUserDetailsModal() {
 		changeUserDetailsModal = true;
 	}
 	function openPassModal() {
@@ -95,7 +96,9 @@
 					<HeaderPanelLinks class=" t-h-[30vh]">
 						<!-- <HeaderPanelDivider>Switcher subject 1</HeaderPanelDivider> -->
 						<HeaderPanelLink
-						on:click={openUserDetailsModal} class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium">
+							on:click={openUserDetailsModal}
+							class="t-px-4 t-text-[#2D2D2D] hover:t-text-white t-font-medium"
+						>
 							Edit Details
 						</HeaderPanelLink>
 						<HeaderPanelLink
@@ -148,10 +151,6 @@
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/training/training-calendar">Training Calendar</a>
-				</SideNavLink>
-				<SideNavDivider />
-				<SideNavLink>
 					<a href="/admin/training/batch">Batch</a>
 				</SideNavLink>
 			</SideNavMenu>
@@ -172,35 +171,35 @@
 			<SideNavDivider />
 			<SideNavMenu icon={ReportData} text="Reports">
 				<SideNavLink class="t-mt-3">
-					<a href="/admin/reports/organization-wise-trainee">Organization Wise Trainee</a>
+					<a href="/admin/reports/organization-wise-trainee">Organization Wise Participants</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/reports/designation-wise-trainee">Designation wise Trainee</a>
+					<a href="/admin/reports/designation-wise-trainee">Designation wise Participants</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/reports/course-wise-trainee">Course wise Trainee</a>
+					<a href="/admin/reports/course-wise-trainee">Training wise Participants</a>
 				</SideNavLink>
 				<!-- <SideNavDivider />
 				<SideNavLink>
 					<a href="/admin/reports/trainee-attendence">Trainee Attendance</a>
 				</SideNavLink> -->
 				<SideNavDivider />
-				<SideNavLink>
-					<a href="/admin/reports/training-course-curriculum">Training Course Curriculum</a>
+				<!-- <SideNavLink>
+					<a href="/admin/reports/training-course-curriculum">Training Curriculum</a>
 				</SideNavLink>
-				<SideNavDivider />
+				<SideNavDivider /> -->
 				<SideNavLink>
 					<a href="/admin/reports/training-schedule">Training Schedule</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/reports/training-name-list">Trainee Name List</a>
+					<a href="/admin/reports/training-name-list">Participants Name List</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
-					<a href="/admin/reports/trainer-report">Trainer Report</a>
+					<a href="/admin/reports/trainer-report">Resource Person Report</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>
@@ -262,6 +261,10 @@
 					<a href="/admin/mis-settings/group">Groups</a>
 				</SideNavLink>
 			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavLink icon={Calender}>
+				<a href="/admin/training-calendar">Training Calendar</a>
+			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink icon={Location}>
 				<a href="/admin/map" class="t-text-[#808083]">Map</a>

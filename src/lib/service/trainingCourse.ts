@@ -19,8 +19,6 @@ export async function getTrainingCourses(courseCategory = null) {
 	}
 }
 
-
-
 export async function updateTrainingCourse(payload) {
 	try {
 		const { data } = await http.put(`training-course/${payload.id}/`, payload);

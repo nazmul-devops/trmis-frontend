@@ -312,3 +312,8 @@ input[type='number'] {
 .categoryDatatable .bx--data-table--short tbody tr {
 	cursor: pointer;
 }
+
+/*File Upload */
+.bx--label-description{
+	display: none;
+}
