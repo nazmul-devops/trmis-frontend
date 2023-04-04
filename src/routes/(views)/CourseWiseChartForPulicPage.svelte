@@ -2,9 +2,17 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
+	import { httpWeb } from '$lib/service/auth';
 
-	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF'];
+	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9'];
 
+	let trainingData = [];
+
+	async function getCourse() {
+		let { data } = await httpWeb.get('training-course/');
+
+		trainingData = data;
+	}
 	export let Class = '';
 	const plugin = {
 		id: 'customCanvasBackgroundColor',
@@ -18,17 +26,17 @@
 		}
 	};
 
-	export let plannedLabels = [];
-	export let plannedData = [];
+	let courseLabels = [];
+	let courseData = [];
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
-		labels: plannedLabels,
+		labels: courseLabels,
 		datasets: [
 			{
 				label: '',
-				data: plannedData,
-				backgroundColor: ['#FFEFE2', '#EFFCEF']
+				data: courseData,
+				backgroundColor: BACKGROUND_COLOR
 			}
 		]
 	};
@@ -37,10 +45,10 @@
 
 	$: {
 		if (chart) {
-			chart.data.labels = plannedLabels;
+			chart.data.labels = courseLabels;
 			chart.data.datasets = [
 				{
-					data: plannedData,
+					data: courseData,
 					backgroundColor: BACKGROUND_COLOR
 				}
 			];
@@ -68,20 +76,20 @@
 							// ticks: { color: 'hsl(43 100% 52% )' }
 							title: {
 								display: true,
-								text: '',
+								text: 'Training Category',
 								color: '#808083',
 								font: { size: 16 }
 							}
 						},
 						y: {
-							beginAtZero: true,
+							beginAtZero: false,
 							// ticks: { color: 'hsl(43 100% 52% )', font: { size: 18 } },
 							grid: {
 								color: '#ffffff'
 							},
 							title: {
 								display: true,
-								text: 'No of batch',
+								text: 'No of participants',
 								// color: '#808083',
 								font: { size: 16 }
 							}
@@ -91,14 +99,16 @@
 				plugins: [plugin]
 			});
 		}
+
+		getCourse();
 	});
 </script>
 
 <main class={Class}>
-	<section class="t-bg-white t-h-[30vh] lg:t-h-[50vh] t-flex t-justify-center t-items-center">
-		<canvas class="t-w-full" bind:this={barChartElement} />
+	<section class="t-bg-white t-h-[30vh] lg:t-h-[50vh] t-flex t-justify-center t-items-center t-py-3">
+		<canvas class="t-w-full " bind:this={barChartElement} />
 	</section>
-	<p class="t-mx-auto t-text-center t-py-1 lg:t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
-		Planned Vs Completed Batch
+	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
+		Number of Participants for Different Training Categories
 	</p>
 </main>

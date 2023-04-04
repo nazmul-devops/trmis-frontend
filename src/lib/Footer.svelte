@@ -1,4 +1,4 @@
-<footer class="t-bg-[#2C2C2C]">
+<footer class="t-bg-[#2C3E36]">
 	<div class="sm:t-px-4 md:t-px-4 lg:t-px-10 xl:t-px-12 2xl:t-px-16">
 		<div
 			class=" t-min-h-[30vh] t-grid lg:t-grid-cols-5 md:t-place-items-center md:t-place-content-center md:t-grid-cols-2 sm:t-py-4"
@@ -21,7 +21,7 @@
 		</div>
 	</div>
 	<div>
-		<div class="t-grid t-grid-cols-1 t-py-3 t-bg-[#2C2C2C]">
+		<div class="t-grid t-grid-cols-1 t-py-3">
 			<div class="t-text-center">
 				<p class="t-text-white">
 					Powered by <span
