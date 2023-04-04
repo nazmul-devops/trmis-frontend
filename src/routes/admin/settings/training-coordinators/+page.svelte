@@ -66,7 +66,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -78,11 +78,16 @@
 					/>
 				</OverflowMenu>
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1 }
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:coordinator />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'coordinator'} />
+<DeleteModal
+	bind:open={deleteModal}
+	textContent={'If you delete this coordinator, any corresponding batches and events will also be deleted if they are associated with this coordinator.'}
+	on:deleteConfirm={doDelete}
+	name={'coordinator'}
+/>

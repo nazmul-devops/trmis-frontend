@@ -101,4 +101,9 @@
 
 <FormModal bind:open bind:batch />
 <BulkUploadForm bind:open={bulkUpModal} {batchId} />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'batch'} />
+<DeleteModal
+	textContent={'If you delete this batch, any corresponding Session details, Participant and Resource Persons will also be deleted if they are associated with this batch.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'batch'}
+/>

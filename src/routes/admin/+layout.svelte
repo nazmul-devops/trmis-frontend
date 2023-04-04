@@ -144,7 +144,7 @@
 				<a href="/admin/training-course/1/course-prerequisite">Course Prerequisite</a>
 			</SideNavLink> -->
 				<SideNavLink>
-					<a href="/admin/training/training-course/1/training-schedule">Training Schedule</a>
+					<a href="/admin/training/training-courses/1/training-schedule">Training Schedule</a>
 				</SideNavLink>
 				<SideNavDivider />
 				<SideNavLink>

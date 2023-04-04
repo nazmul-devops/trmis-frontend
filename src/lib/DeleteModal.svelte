@@ -13,11 +13,12 @@
 		bind:open
 		size="sm"
 		modalHeading="Do you want to delete this {name} record?"
-		textContent='{textContent}'
 		primaryButtonText="Delete"
 		secondaryButtonText="Cancel"
 		on:click:button--secondary={() => (open = false)}
 		on:close
 		on:submit={() => dispatch('deleteConfirm')}
-	/>
+	>
+		<p class="t-text-[#da1e28] t-px-5 t-pt-3 t-text-sm t-font-light">{textContent}</p>
+	</Modal>
 </div>

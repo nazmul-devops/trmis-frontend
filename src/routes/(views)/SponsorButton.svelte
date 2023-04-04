@@ -38,10 +38,10 @@
 	{#each sponsorcards as { name, links, icon }}
 		<a href={links} target="_blank" rel="noreferrer">
 			<button
-				class="t-flex t-justify-between t-items-center t-bg-[#2A332F] t-rounded t-text-white t-px-3 t-py-4 lg:t-px-5 lg:t-py-6 t-mb-10 lg:t-mb-4 t-mr-4"
+				class="t-flex t-justify-between t-items-center t-bg-[#2A332F] t-rounded t-text-white t-px-3 t-py-4 lg:t-px-4 lg:t-py-6 t-mb-10 lg:t-mb-4 t-mr-4"
 			>
 				<div>
-					<img class="t-w-6 t-h-6 t-mr-8" src={icon} alt="" />
+					<img class="t-w-6 t-h-6 t-mr-4 xl:t-mr-8" src={icon} alt="" />
 				</div>
 				<div>
 					<p class="t-text-sm t-font-medium">{name}</p>

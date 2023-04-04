@@ -70,7 +70,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem
 						on:click={() => goto(`/admin/training/trainee/${row.id}/completed-course`)}
 						text="Completed Training"
@@ -98,4 +98,9 @@
 
 <FormModal bind:open bind:trainee />
 <BulkUploadForm bind:open={bulkUpModal} />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'participants'} />
+<DeleteModal
+	textContent={'If you delete this participant, any corresponding batch participant will also be deleted if they are associated with this participant.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'participants'}
+/>

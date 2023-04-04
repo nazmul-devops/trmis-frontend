@@ -17,7 +17,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: 'Serial No.'},
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
 		{ key: 'division_name', value: 'Division' },
 		{ key: 'district_name', value: 'Zilla' },
@@ -59,8 +59,7 @@
 		<Toolbar size="sm">
 			<ToolbarContent>
 				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Training Venue</Button
-				>
+				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Training Venue</Button>
 			</ToolbarContent>
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
@@ -77,12 +76,17 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-				{:else if cell.key === 'rowNumber'}
-					{rowIndex + 1}
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:trainingCenter />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"Training Venue"} />
+<DeleteModal
+	textContent={'If you delete this training venue, any corresponding training schedules and event schedules will also be deleted if they are associated with this training venue.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'Training Venue'}
+/>

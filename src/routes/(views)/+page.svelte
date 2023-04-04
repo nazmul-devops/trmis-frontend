@@ -69,13 +69,13 @@
 
 <div class="t-bg-white">
 	<div
-		class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24 t-min-h-[80vh]"
+		class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24 t-min-h-[50vh]"
 	>
 		<div class="t-grid t-grid-cols-1 md:t-grid-cols-12 lg:t-gap-4 t-place-content-center">
 			<div class="t-col-span-4 t-bg-[#F2F5F7] t-px-4 t-rounded-md">
 				<div class="t-my-5">
 					<h3 class=" t-text-[#111] t-text-[20px] t-font-medium t-py-2">Notice Board</h3>
-					<div class="t-h-[20vh] md:t-h-[70vh] t-overflow-y-scroll t-px-3">
+					<div class="t-h-[20vh] md:t-h-[110vh] lg:t-h-[130vh] t-overflow-y-scroll t-px-3">
 						<NoticeBoard />
 					</div>
 				</div>
