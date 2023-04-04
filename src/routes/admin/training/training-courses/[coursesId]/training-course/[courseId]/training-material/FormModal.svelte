@@ -7,10 +7,7 @@
 	import {
 		Modal,
 		FileUploader,
-		TextInput,
-		Select,
-		SelectItem,
-		ComboBox
+		TextInput
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
@@ -32,7 +29,6 @@
 	}
 
 	$: {
-		// formSetFieldsForFile();
 		if (courseMaterial.id != null) {
 			formSetFields();
 		} else {
