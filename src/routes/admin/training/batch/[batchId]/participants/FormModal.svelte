@@ -7,22 +7,22 @@
 	import { Modal, ComboBox, NumberInput, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { TextIndent } from 'carbon-icons-svelte';
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
+	export let errorModal = false;
 	export let open = true;
 
 	const schema = yup.object({
-		trainee: yup.number().required("Trainee is required."),
+		trainee: yup.number().required('Trainee is required.'),
 		pre_test_mark: yup.number().nullable(),
 		post_test_mark: yup.number().nullable()
 	});
 
-	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
+	const { form, reset, createSubmitHandler, errors, data } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -33,14 +33,12 @@
 			});
 			open = false;
 			reset();
+			errorModal = true;
 		}
 	});
 
 	$: traineesList = $trainees.data.map((item) => ({ ...item, text: item.name }));
 
-	$: {
-		console.log(traineesList);
-	}
 
 	onMount(async () => {
 		trainees.getTrainees();
@@ -91,4 +89,8 @@
 			<!-- <p>{JSON.stringify($data)}</p> -->
 		</div>
 	</form>
+</Modal>
+
+<Modal passiveModal bind:open={errorModal} modalHeading="" on:open on:close>
+	<p class=" t-text-red-500 t-text-lg ">{$batchParticipantsList.errorData.errorMessage}</p>
 </Modal>

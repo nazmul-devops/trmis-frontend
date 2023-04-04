@@ -42,11 +42,15 @@ export async function createBatchSession(batchId, payload) {
 		const { data } = await http.post(`batch/${batchId}/session-details/`, payload);
 		return {
 			status: 201,
-			data
+			data,
+			errorMessage: null
 		};
 	} catch (err) {
+		console.log(err.response.data.data);
 		return Promise.resolve({
-			status: 403
+			status: 403,
+			errorMessage: err.response.data.data,
+			data: []
 		});
 	}
 }

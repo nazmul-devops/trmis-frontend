@@ -121,8 +121,8 @@
 			<div>
 				<FileUploader
 					bind:this={fileUploader}
-					labelTitle="Upload files"
-					buttonLabel="Add files"
+					labelTitle="Upload file"
+					buttonLabel="Add file"
 					bind:files
 					status="complete"
 					type="file"

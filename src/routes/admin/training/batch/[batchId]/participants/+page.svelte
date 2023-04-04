@@ -8,7 +8,8 @@
 		DataTableSkeleton,
 		OverflowMenu,
 		OverflowMenuItem,
-		Row
+		Row,
+		Modal
 	} from 'carbon-components-svelte';
 
 	import FormModal from './FormModal.svelte';
@@ -47,6 +48,10 @@
 			batchParticipantsList.getBatchParticipants(parseInt($page.params.batchId));
 		}
 	}
+
+	$: {
+		console.log($batchParticipantsList.errorData);
+	}
 </script>
 
 {#if $batchParticipantsList.loading}
@@ -67,7 +72,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem
 						on:click={() => {
 							participant = { ...row };
@@ -90,3 +95,4 @@
 
 <FormModal bind:open />
 <DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name="participant" />
+

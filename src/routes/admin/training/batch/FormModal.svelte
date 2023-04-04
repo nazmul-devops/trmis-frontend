@@ -51,7 +51,7 @@
 		duration: yup.number().required('Duration is required.'),
 		initial_cost: yup.number().required('Initial cost is required.'),
 		final_cost: yup.number(),
-		coordinator: yup.number().required('Coordinator is required.'),
+		coordinator: yup.number().required(),
 		organization: yup.number().required('Organization is required.'),
 		source_of_fund: yup.number().required('Source of fund is required.'),
 		training_course_schedule: yup.number().required('Training course schedule is required.')

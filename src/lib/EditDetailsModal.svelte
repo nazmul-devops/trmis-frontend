@@ -4,10 +4,8 @@
 	import * as yup from 'yup';
 	import { getDetails, changeDetails } from '$lib/service/changeDetails';
 	import { Modal, TextInput } from 'carbon-components-svelte';
-	import { onMount } from 'svelte';
-	import { string } from 'yup/lib/locale';
 
-	export let open = true;
+	export let open = false;
 	export let userDetails = {
 		id: null,
 		first_name: null,
@@ -45,19 +43,19 @@
 			await changeDetails({ ...data });
 			open = false;
 			reset();
-			getDetails();
 		}
 	});
-	 
+
 	$: {
-		getDetails().then(resp => {
-			userDetails = resp.data[0];
-		})
-		
+		if (open) {
+			getDetails().then((resp) => {
+				userDetails = resp.data[0];
+			});
+		}
 	}
 
 	// onMount(async () => {
-		
+
 	// });
 </script>
 

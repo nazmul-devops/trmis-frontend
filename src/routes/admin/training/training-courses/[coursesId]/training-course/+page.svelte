@@ -31,7 +31,7 @@
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'title', value: 'Title' },
-		{ key: 'code', value: 'Code' },
+		{ key: 'code', value: 'Course Code' },
 		{ key: 'course_category_name', value: 'Course Category' },
 		{ key: 'action', value: 'Action' }
 	];

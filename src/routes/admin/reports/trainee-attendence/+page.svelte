@@ -79,7 +79,7 @@
 
 <div class="">
 	<div class=" t-my-5">
-		<h4>Trainee Attendence Report</h4>
+		<h4>Participants Attendence Report</h4>
 	</div>
 	<form use:form>
 		<div class="t-flex t-gap-4 t-items-end  ">

@@ -92,4 +92,4 @@
 {/if}
 
 <FormModal bind:open bind:courseMaterial />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'Training Material'} />
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'training material'} />

@@ -119,6 +119,15 @@
 		});
 	}
 
+	// $: {
+	// 	if(!$data.viewType){
+	// 		locations= [];
+	// 		zilaOptions = [];
+	// 		upazilaOptions = [];
+	// 		trainingCenter = null;
+	// 	}
+	// }
+
 	$: {
 		if (selectedDivisionId) {
 			let index = locations.findIndex((item) => item.id === selectedDivisionId);
@@ -193,18 +202,18 @@
 				<ComboBox
 					disabled={!selectedDivisionId}
 					bind:selectedId={selectedZilaId}
-					titleText="Training District"
-					placeholder={selectedDivisionId ? 'Select District' : 'Select Division first'}
+					titleText="Zilla"
+					placeholder="Select Zilla"
 					items={zilaOptions}
 					{shouldFilterItem}
 				/>
 			</div>
 			<div class="t-my-2">
 				<ComboBox
-					disabled={!selectedUpazilaId}
-					bind:selectedId={$data.sub_district}
-					titleText="Training Sub-District"
-					placeholder={selectedZilaId ? 'Select Sub-District' : 'Select District first'}
+					disabled={!selectedZilaId}
+					bind:selectedId={selectedUpazilaId}
+					titleText="Upazilla"
+					placeholder="Select Upazilla"
 					items={upazilaOptions}
 					{shouldFilterItem}
 				/>

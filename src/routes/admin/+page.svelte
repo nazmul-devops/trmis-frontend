@@ -36,6 +36,15 @@
 	});
 
 	$: {
+		if (yearId == null) {
+			startMonthId = null;
+			endMonthId = null;
+		} else if (startMonthId == null) {
+			endMonthId = null;
+		}
+	}
+
+	$: {
 		if (yearId != null && startMonthId != null && endMonthId != null) {
 			dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
 			dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
@@ -80,7 +89,7 @@
 								{shouldFilterItem}
 							/>
 							<ComboBox
-							disabled={!startMonthId}
+								disabled={!startMonthId}
 								bind:selectedId={endMonthId}
 								titleText="To Month"
 								placeholder="Choose Month"
