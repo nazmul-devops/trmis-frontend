@@ -1,9 +1,47 @@
 <script lang="ts">
-	import CourseWiseChart from '$lib/CourseWiseChart.svelte';
 	import TrainingStatusChart from '$lib/TrainingStatusChart.svelte';
 	import GenderWiseChart from '$lib/GenderWiseChart.svelte';
 	import AboutContent from './AboutContent.svelte';
 	import NoticeBoard from './NoticeBoard.svelte';
+	import SponsorButton from './SponsorButton.svelte';
+	import CourseWiseChartForPulicPage from './CourseWiseChartForPulicPage.svelte';
+	import { dashboardData } from '$lib/store/dashboard';
+
+	let yearId;
+	let startMonthId;
+	let endMonthId;
+
+	//Training Status Chart
+
+	$: status =
+		$dashboardData.trainingStatus.length == 0
+			? ['---', '---', '---']
+			: $dashboardData.trainingStatus.map((item) => item.name);
+
+	$: statusData =
+		$dashboardData.trainingStatus.length == 0
+			? [0, 0, 0]
+			: $dashboardData.trainingStatus.map((item) => item.value + 8);
+
+	//Gender Wise Chart
+
+	$: genderName =
+		$dashboardData.genderWiseTraining.length == 0
+			? ['---', '---']
+			: $dashboardData.genderWiseTraining.map((item) => item.name);
+
+	$: genderData =
+		$dashboardData.genderWiseTraining.length == 0
+			? [0, 0]
+			: $dashboardData.genderWiseTraining.map((item) => item.value);
+
+	
+	$: {
+		dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
+		dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
+		dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+	}
+
 
 	interface homeCard {
 		name: string;
@@ -30,12 +68,14 @@
 </script>
 
 <div class="t-bg-white">
-	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24 t-min-h-[80vh]">
+	<div
+		class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24 t-min-h-[50vh]"
+	>
 		<div class="t-grid t-grid-cols-1 md:t-grid-cols-12 lg:t-gap-4 t-place-content-center">
-			<div class="t-col-span-4 t-bg-[#F2F5F7] t-px-4 t-rounded-md ">
+			<div class="t-col-span-4 t-bg-[#F2F5F7] t-px-4 t-rounded-md">
 				<div class="t-my-5">
 					<h3 class=" t-text-[#111] t-text-[20px] t-font-medium t-py-2">Notice Board</h3>
-					<div class="t-h-[20vh] md:t-h-[70vh] t-overflow-y-scroll t-px-3">
+					<div class="t-h-[20vh] md:t-h-[110vh] lg:t-h-[130vh] t-overflow-y-scroll t-px-3">
 						<NoticeBoard />
 					</div>
 				</div>
@@ -51,7 +91,7 @@
 </div>
 <div class="t-bg-[#F2F5F7]">
 	<div
-		class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-min-h-screen t-py-10"
+		class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-6 lg:t-py-10"
 	>
 		<div class="t-bg-[#F2F5F7]">
 			<div class=" t-p-10 t-mb-5">
@@ -65,12 +105,8 @@
 						>
 							<div class="t-bg-white t-rounded-md t-py-4 t-px-2">
 								<div class="t-text-center">
-									<div
-										class="t-rounded"
-									>
-										<p
-											class="t-text-[32px] t-text-[#111111] t-font-bold"
-										>
+									<div class="t-rounded">
+										<p class="t-text-[32px] t-text-[#111111] t-font-bold">
 											{card.count}
 										</p>
 									</div>
@@ -84,17 +120,22 @@
 						</div>
 					{/each}
 				</div>
-				<CourseWiseChart />
+				<CourseWiseChartForPulicPage />
 			</div>
 
-			<div class="t-grid t-grid-cols-2 t-gap-4 t-px-10 t-mb-5">
+			<div class="t-grid t-grid-cols-2 t-gap-4 t-px-10 t-mb-2 lg:t-mb-5">
 				<div>
-					<TrainingStatusChart />
+					<TrainingStatusChart {status} {statusData} />
 				</div>
 				<div>
-					<GenderWiseChart />
+					<GenderWiseChart {genderName} {genderData} />
 				</div>
 			</div>
 		</div>
+	</div>
+</div>
+<div class="t-bg-white">
+	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-py-32">
+		<SponsorButton />
 	</div>
 </div>

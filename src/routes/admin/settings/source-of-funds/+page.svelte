@@ -84,4 +84,4 @@
 {/if}
 
 <FormModal bind:open bind:sourceOfFound />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"source of fund"} />
+<DeleteModal textContent={"If you delete this source-of-fund, any corresponding batches and events will also be deleted if they are associated with this source-of-fund."} bind:open={deleteModal} on:deleteConfirm={doDelete} name={"source of fund"} />

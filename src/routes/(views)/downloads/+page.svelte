@@ -26,17 +26,16 @@
 		return fileType;
 	}
 	const handledropdownClick = () => (dropdown = !dropdown);
-	
-	let searchTerm = "";
+
+	let searchTerm = '';
 	let filteredDownloads = [];
 
-
-	const searchDownload = () =>{
-		return filteredDownloads = courses.filter(course =>{
+	const searchDownload = () => {
+		return (filteredDownloads = courses.filter((course) => {
 			let courseTitle = course.title.toLowerCase();
 			return courseTitle.includes(searchTerm.toLowerCase());
-		}) 
-	}
+		}));
+	};
 
 	onMount(() => {
 		getCourses();
@@ -49,64 +48,68 @@
 		Title="Downloads"
 		desc="To download the content, simply click on the download button after selecting the training course from the sidebar."
 	/>
-	<div class="md:t-container sm:t-px-4  md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-32">
-		<div class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 t-mb-3 lg:t-gap-4 sm:t-gap-0">
-			<div class="">
-				<form on:submit|preventDefault class="">
-					<input 
-					class="t-px-4 t-py-3 t-rounded-md t-w-full t-border-spacing-0 t-border-none t-outline-none" 
-					type="text" 
-					name="searchField" 
-					id="searchField" 
-					placeholder="Enter Search Term"
-					autocomplete="off"
-					bind:value={searchTerm}
-					on:input={searchDownload}
-				/>
-				</form>
-			</div>
-		</div>
-		<div class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 lg:t-gap-4 sm:t-gap-0 ">
+	<div class="md:t-container sm:t-px-4 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-32">
+		<div
+			class="t-grid sm:t-grid-cols-1 lg:t-grid-cols-4 lg:t-gap-4 sm:t-gap-0 sm:t-bg-white lg:t-bg-transparent"
+		>
 			<div class="sm:t-col-span-1">
 				<div
-					class={`t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-rounded-md t-pt-1 t-shadow-lg  lg:t-relative sm:t-absolute lg:t-block sm:t-inset-0  ${
+					class={` sm:t-bg-white lg:t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] t-rounded-md t-pt-1 t-shadow-lg  lg:t-relative sm:t-absolute lg:t-block sm:t-inset-0  ${
 						dropdown ? 't-block' : 't-hidden'
 					}`}
 				>
-					<div class="t-rounded-md t-bg-white ">
+					<div class="t-bg-white lg:t-mb-4">
 						<ul
-							class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-11 lg:t-py-0`}
+							class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-24 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
 						>
-
-						{#if searchTerm && filteredDownloads.length === 0}
-							<p class="t-px-3 t-py-2"><strong>No Result</strong> try again!</p>
-						{:else if filteredDownloads.length > 0}
-							{#each filteredDownloads as filteredDownload}
-								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
-									<li
-										on:click={() => getCourseMaterials(filteredDownload.id)}
-										on:keypress={() => getCourseMaterials(filteredDownload.id)}
-										class="t-py-5 t-px-4 t-cursor-pointer "
-									>
-										{filteredDownload.title}
-									</li>
-									<hr />
+							<li>
+								<div class="t-relative t-py-2 t-px-4 t-block">
+									<span class="t-absolute t-inset-y-0 t-left-5 t-flex t-items-center t-pl-2">
+										<i
+											class="las la-search t-text-xl t-text-gray-400 -t-rotate-90"
+										/>
+									</span>
+									<input
+											class="placeholder:t-italic placeholder:t-text-slate-400 t-block t-bg-white t-w-full t-border t-border-slate-300 t-rounded-md t-py-2 t-pl-11 t-pr-3 t-shadow-sm focus:t-outline-none focus:t-border-sky-500 focus:t-ring-sky-500 focus:t-ring-1 sm:t-text-sm"
+											type="text"
+											name="searchField"
+											id="searchField"
+											placeholder="Search Term..."
+											autocomplete="off"
+											bind:value={searchTerm}
+											on:input={searchDownload}
+										/>
 								</div>
-							{/each}
-						{:else}
-							{#each courses as course}
-								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
-									<li
-										on:click={() => getCourseMaterials(course.id)}
-										on:keypress={() => getCourseMaterials(course.id)}
-										class="t-py-5 t-px-4 t-cursor-pointer "
-									>
-										{course.title}
-									</li>
-									<hr />
-								</div>
-							{/each}
-						{/if}
+							</li>
+							{#if searchTerm && filteredDownloads.length === 0}
+								<p class="t-px-3 t-py-5"><strong>No Result</strong> try again!</p>
+							{:else if filteredDownloads.length > 0}
+								{#each filteredDownloads as filteredDownload}
+									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
+										<li
+											on:click={() => getCourseMaterials(filteredDownload.id)}
+											on:keypress={() => getCourseMaterials(filteredDownload.id)}
+											class="t-py-5 t-px-4 t-cursor-pointer"
+										>
+											{filteredDownload.title}
+										</li>
+										<hr />
+									</div>
+								{/each}
+							{:else}
+								{#each courses as course}
+									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
+										<li
+											on:click={() => getCourseMaterials(course.id)}
+											on:keypress={() => getCourseMaterials(course.id)}
+											class="t-py-5 t-px-4 t-cursor-pointer"
+										>
+											{course.title}
+										</li>
+										<hr />
+									</div>
+								{/each}
+							{/if}
 							<!-- {#each courses as course}
 								<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
 									<li
@@ -124,7 +127,7 @@
 				</div>
 				<div
 					class={`  sm:t-block lg:t-hidden t-py-6 t-px-4 t-mb-2 t-rounded-md ${
-						dropdown ? 't-absolute t-top-0 t-left-2' : 't-relative t-bg-white t-shadow-lg'
+						dropdown ? 't-absolute t-top-0 t-right-5' : 't-relative t-bg-white t-shadow-lg'
 					}`}
 					on:click={handledropdownClick}
 					on:keypress={handledropdownClick}

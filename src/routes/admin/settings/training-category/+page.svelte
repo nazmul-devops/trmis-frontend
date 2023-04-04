@@ -63,7 +63,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -82,4 +82,9 @@
 {/if}
 
 <FormModal bind:open bind:courseCategory />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'training category'} />
+<DeleteModal
+	textContent={'If you delete this training category, any corresponding training course will also be deleted if they are associated with this training category.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'training category'}
+/>

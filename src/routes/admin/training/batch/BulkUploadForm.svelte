@@ -8,7 +8,7 @@
 	export let confirmModal = false;
 	let fileUploader;
 	let excel_file = [];
-	export let batchId;
+	export let batchId:any;
 
 	const schema = yup.object({
 		excel_file: yup

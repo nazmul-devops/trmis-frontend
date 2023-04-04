@@ -138,7 +138,7 @@
 				</form>
 			</div>
 		</div>
-		<canvas class="t-w-full " bind:this={barChartElement} />
+		<canvas class="t-w-full t-py-3" bind:this={barChartElement} />
 	</section>
 	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
 		Number of Participants for Different Training Categories

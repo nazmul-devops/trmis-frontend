@@ -48,8 +48,8 @@
 	const schema = yup.object({
 		status: yup.number().required('Status is required.'),
 		name: yup.string().required('Name is required.'),
-		duration: yup.number().required('Duration is required.'),
-		initial_cost: yup.number().required('Initial cost is required.'),
+		duration: yup.number().required().typeError('Duration is required.'),
+		initial_cost: yup.number().required().typeError('Initial cost is required.'),
 		final_cost: yup.number(),
 		coordinator: yup.number().required(),
 		organization: yup.number().required('Organization is required.'),
@@ -118,7 +118,6 @@
 			<div>
 				<TextInput
 					invalid={$errors.name != null}
-					invalidText={$errors.name}
 					name="name"
 					labelText="Name"
 					placeholder="Enter Name..."
@@ -131,7 +130,6 @@
 				<ComboBox
 					name="status"
 					invalid={$errors.status != null}
-					invalidText={$errors.status}
 					titleText="Status"
 					placeholder="Choose Status"
 					bind:selectedId={$data.status}
@@ -148,7 +146,6 @@
 			<div>
 				<TextInput
 					invalid={$errors.duration != null}
-					invalidText={$errors.duration}
 					name="duration"
 					labelText="Duration"
 					placeholder="Enter Duration..."
@@ -160,7 +157,6 @@
 			<div>
 				<TextInput
 					invalid={$errors.initial_cost != null}
-					invalidText={$errors.initial_cost}
 					name="initial_cost"
 					labelText="Initial Cost"
 					placeholder="Enter Initial Cost..."
@@ -171,8 +167,6 @@
 			</div>
 			<div>
 				<TextInput
-					invalid={$errors.final_cost != null}
-					invalidText={$errors.final_cost}
 					name="final_cost"
 					labelText="Final Cost"
 					placeholder="Enter Final Cost..."
@@ -181,7 +175,6 @@
 			<div>
 				<ComboBox
 					invalid={$errors.coordinator != null}
-					invalidText={$errors.coordinator}
 					name="coordinator"
 					titleText="Coordinator"
 					placeholder="Choose Coordinator"
@@ -195,7 +188,6 @@
 			<div>
 				<ComboBox
 					invalid={$errors.organization != null}
-					invalidText={$errors.organization}
 					direction="top"
 					name="organization"
 					titleText="Organization"
@@ -210,7 +202,6 @@
 			<div>
 				<ComboBox
 					invalid={$errors.source_of_fund != null}
-					invalidText={$errors.source_of_fund}
 					direction="top"
 					name="source_of_fund"
 					titleText="Source Of Fund"
@@ -225,7 +216,6 @@
 			<div>
 				<ComboBox
 					invalid={$errors.training_course_schedule != null}
-					invalidText={$errors.training_course_schedule}
 					direction="top"
 					name="training_course_schedule"
 					titleText="Training Schedule"

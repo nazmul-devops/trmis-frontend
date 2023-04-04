@@ -95,10 +95,10 @@
 </script>
 
 <main class={Class}>
-	<section class="t-bg-white t-h-[50vh] t-flex t-justify-center t-items-center">
+	<section class="t-bg-white t-h-[30vh] lg:t-h-[50vh] t-flex t-justify-center t-items-center t-py-3">
 		<canvas class="" bind:this={barChartElement} />
 	</section>
-	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
+	<p class="t-mx-auto t-text-center t-py-1 lg:t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
 		Gender Wise Training
 	</p>
 </main>

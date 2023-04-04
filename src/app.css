@@ -164,6 +164,7 @@ input::-webkit-inner-spin-button {
 }
 .bx--data-table-container {
 	background: white;
+	padding: 30px 0px;
 }
 /* Table data design */
 
@@ -301,6 +302,7 @@ input[type='number'] {
 .bx--file__selected-file .bx--file-filename {
 	color: #0f62fe;
 }
+
 
 @media screen and (min-width: 1024px) {
 	.bx--modal-content {

@@ -102,6 +102,7 @@
 <FormModal bind:open bind:trainer />
 <BulkUploadForm bind:open={bulkUpModal} />
 <DeleteModal
+	textContent={"If you delete this resource person, any corresponding Events and Batch Resource Person will also be deleted if they are associated with this resource person"}
 	bind:open={deleteModal}
 	on:deleteConfirm={doDelete}
 	name={'Resource Person / Facilitator'}

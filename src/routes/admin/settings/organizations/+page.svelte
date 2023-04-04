@@ -20,7 +20,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{key: 'rowNumber', value: 'Serial No.' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
 		// { key: 'serial_no', value: 'Serial No' },
 		// { key: 'remarks', value: 'Remarks' },
@@ -59,7 +59,7 @@
 		</Toolbar>
 		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction='top'>
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -71,11 +71,16 @@
 					/>
 				</OverflowMenu>
 			{:else if cell.key === 'rowNumber'}
-				{ rowIndex + 1}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"organization"} />
+<DeleteModal
+	textContent={'If you delete this organization, any corresponding Batch, Participant, Resource Person and events will also be deleted if they were associated with this organization.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'organization'}
+/>

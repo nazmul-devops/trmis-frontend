@@ -18,7 +18,7 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'rowNumber', value: 'Serial No.'},
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'training_course_name', value: 'Training Course' },
 		{ key: 'training_center_name', value: 'Training Venues' },
 		{ key: 'start_date', value: 'Start Date' },
@@ -75,12 +75,17 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
-			{:else if cell.key ==='rowNumber'}
-				{ rowIndex + 1 }
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:schedule />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={"Training Schedule"}/>
+<DeleteModal
+	textContent={'If you delete this training-schedule, any corresponding batches will also be deleted if they are associated with this training-schedule.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'Training Schedule'}
+/>

@@ -102,4 +102,9 @@
 {/if}
 
 <FormModal bind:open bind:trainingCourse />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'training'} />
+<DeleteModal
+	textContent={'If you delete this training course, any corresponding Training Schedule and Training Material will also be deleted if they are associated with this training course.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'training'}
+/>

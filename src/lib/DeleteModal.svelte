@@ -3,6 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	export let open = false;
 	export let name;
+	export let textContent=""
 	const dispatch = createEventDispatcher();
 </script>
 
@@ -17,5 +18,7 @@
 		on:click:button--secondary={() => (open = false)}
 		on:close
 		on:submit={() => dispatch('deleteConfirm')}
-	/>
+	>
+		<p class="t-text-[#da1e28] t-px-5 t-pt-3 t-text-sm t-font-light">{textContent}</p>
+	</Modal>
 </div>
