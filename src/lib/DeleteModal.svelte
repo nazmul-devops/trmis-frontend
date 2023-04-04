@@ -3,6 +3,7 @@
 	import { createEventDispatcher } from 'svelte';
 	export let open = false;
 	export let name;
+	export let textContent=""
 	const dispatch = createEventDispatcher();
 </script>
 
@@ -12,6 +13,7 @@
 		bind:open
 		size="sm"
 		modalHeading="Do you want to delete this {name} record?"
+		textContent='{textContent}'
 		primaryButtonText="Delete"
 		secondaryButtonText="Cancel"
 		on:click:button--secondary={() => (open = false)}
