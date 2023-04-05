@@ -121,13 +121,26 @@ export async function getParticipantFromCategories(year, startMonth, endMonth) {
 	}
 }
 
-export async function getSpeceficCategories(selectedCourseCategory) {
+export async function getSpeceficCategories() {
 	try {
-		const { data } = await http.get('dashboard/specific-training-course-category/', {
-			params: {
-				selected_course_category: selectedCourseCategory
-			}
+		const { data } = await http.get('dashboard/specific-training-course-category/');
+		return {
+			status: 201,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
 		});
+	}
+}
+
+export async function getSpeceficCategoryData(id) {
+	try {
+		const { data } = await http.get(
+			`dashboard/specific-training-course-category-and-participant/${id}/`
+		);
 		return {
 			status: 201,
 			data

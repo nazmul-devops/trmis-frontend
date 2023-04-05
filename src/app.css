@@ -153,6 +153,17 @@ input::-webkit-inner-spin-button {
 }
 
 /* Data table header button */
+/* .bx--data-table thead tr td:last-child .bx--table-header-label {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+}
+.bx--data-table tbody tr td:last-child {
+	display: flex;
+	justify-content: end;
+	align-items: center;
+} */
+
 .bx--data-table-container {
 	overflow-x: auto;
 }
@@ -303,7 +314,6 @@ input[type='number'] {
 	color: #0f62fe;
 }
 
-
 @media screen and (min-width: 1024px) {
 	.bx--modal-content {
 		padding: 50px 20px 10px;
@@ -316,6 +326,6 @@ input[type='number'] {
 }
 
 /*File Upload */
-.bx--label-description{
+.bx--label-description {
 	display: none;
 }

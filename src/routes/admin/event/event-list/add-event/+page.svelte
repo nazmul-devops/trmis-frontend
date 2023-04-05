@@ -35,8 +35,6 @@
 		participants: yup.array().min(1),
 		description: yup.string().required('Description is required.'),
 		budget: yup.number().required().typeError('Budget is required.'),
-		source_of_fund: yup.number().required('Source Of fund is require'),
-		expenditure: yup.number().typeError('Expenditure is required'),
 		type: yup.number().required('Type is required.'),
 		organization: yup.number().required('Organization is required.'),
 		coordinator: yup.number().required('Coordinator is required.'),
@@ -67,7 +65,7 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			await createEvent({ ...data });
-			goto('/admin/event');
+			goto('/admin/event/event-list');
 		}
 	});
 
@@ -172,6 +170,31 @@
 		</div>
 		<div>
 			<ComboBox
+				invalid={$errors.source_of_fund != null}
+				bind:selectedId={$data.source_of_fund}
+				titleText="Source Of Fund"
+				placeholder="Choose Source Of Fund"
+				items={sourceFunds}
+				{shouldFilterItem}
+			/>
+			{#if $errors.source_of_fund}
+				<p class="t-text-red-500">{$errors.source_of_fund}</p>
+			{/if}
+		</div>
+		<div>
+			<TextInput
+				type="number"
+				labelText="Expenditure"
+				invalid={$errors.expenditure != null}
+				name="expenditure"
+				placeholder="Enter Expendoiture"
+			/>
+			{#if $errors.expenditure}
+				<p class="t-text-red-500">{$errors.expenditure}</p>
+			{/if}
+		</div>
+		<div>
+			<ComboBox
 				invalid={$errors.status != null}
 				bind:selectedId={$data.status}
 				titleText="Status"
@@ -229,31 +252,6 @@
 			/>
 			{#if $errors.coordinator}
 				<p class="t-text-red-500">{$errors.coordinator}</p>
-			{/if}
-		</div>
-		<div>
-			<ComboBox
-				invalid={$errors.source_of_fund != null}
-				bind:selectedId={$data.source_of_fund}
-				titleText="Source Of Fund"
-				placeholder="Choose Source Of Fund"
-				items={sourceFunds}
-				{shouldFilterItem}
-			/>
-			{#if $errors.source_of_fund}
-				<p class="t-text-red-500">{$errors.source_of_fund}</p>
-			{/if}
-		</div>
-		<div>
-			<TextInput
-				type="number"
-				labelText="Expenditure"
-				invalid={$errors.expenditure != null}
-				name="expenditure"
-				placeholder="Enter Expendoiture"
-			/>
-			{#if $errors.expenditure}
-				<p class="t-text-red-500">{$errors.expenditure}</p>
 			{/if}
 		</div>
 		<div>

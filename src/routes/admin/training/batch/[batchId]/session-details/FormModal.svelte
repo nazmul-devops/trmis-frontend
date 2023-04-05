@@ -50,7 +50,7 @@
 	}
 
 	const schema = yup.object({
-		session_day: yup.string().required('Session day is required.'),
+		session_day: yup.number().required('Session day is required.'),
 		session_date: yup.string().required(),
 		from_time: yup.string().required('Start time is required.'),
 		to_time: yup.string().required('End time is required.'),
@@ -99,8 +99,8 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Session Details"
-	primaryButtonText="ADD"
+	modalHeading={sessionDetail.id == null ? 'Create Session Detail' : 'Edit Session Detail'}
+	primaryButtonText={sessionDetail.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
 	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
@@ -111,6 +111,7 @@
 			<div>
 				<div class="t-col-span-2">
 					<TextInput
+						type="number"
 						invalid={$errors.session_day != null}
 						bind:value={$data.session_day}
 						name="session_day"

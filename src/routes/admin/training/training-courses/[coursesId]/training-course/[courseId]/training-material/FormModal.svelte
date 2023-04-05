@@ -44,7 +44,7 @@
 	const schema = yup.object({
 		title: yup.string().required('Title is required.'),
 		description: yup.string().required('Description is required.'),
-		files: yup.mixed().required()
+		files: yup.mixed()
 	});
 
 	const { form, reset, createSubmitHandler, setFields, errors, data } = createForm({

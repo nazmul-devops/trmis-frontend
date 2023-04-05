@@ -10,7 +10,8 @@ function dcreateDashboardStore() {
 		genderWiseTraining: [],
 		planedBatch: [],
 		participantFromCategory: [],
-		speceficCategories: []
+		speceficCategories: [],
+		speceficCategoryData: []
 	});
 	function setLoading() {
 		update((prev) => ({
@@ -76,11 +77,20 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getSpeceficCategories(selectedCourseCategory) {
-		const resp = await dashboardService.getSpeceficCategories(selectedCourseCategory);
+	async function getSpeceficCategories() {
+		const resp = await dashboardService.getSpeceficCategories();
 		update((prev) => {
 			prev.loading = false;
 			prev.speceficCategories = resp.data.specific_training_course_category;
+			return prev;
+		});
+	}
+
+	async function getSpeceficCategoryData(id) {
+		const resp = await dashboardService.getSpeceficCategoryData(id);
+		update((prev) => {
+			prev.loading = false;
+			prev.speceficCategoryData = resp.data.specific_training_course_category;
 			return prev;
 		});
 	}
@@ -93,7 +103,8 @@ function dcreateDashboardStore() {
 		getGenderWiseTraining,
 		getParticipantFromCategories,
 		getPlannedBatch,
-		getSpeceficCategories
+		getSpeceficCategories,
+		getSpeceficCategoryData
 	};
 }
 

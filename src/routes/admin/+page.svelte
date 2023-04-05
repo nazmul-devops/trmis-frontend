@@ -51,12 +51,14 @@
 			dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
 			dashboardData.getPlannedBatch(yearId, startMonthId, endMonthId);
 			dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+			dashboardData.getSpeceficCategories();
 		} else if (startMonthId == null && endMonthId == null) {
 			dashboardData.getParticipantsFromOrganization(yearId);
 			dashboardData.getTrainingStatus(yearId);
 			dashboardData.getGenderWiseTraining(yearId);
 			dashboardData.getPlannedBatch(yearId);
 			dashboardData.getParticipantFromCategories(yearId);
+			dashboardData.getSpeceficCategories();
 		}
 	}
 

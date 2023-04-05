@@ -298,7 +298,7 @@
 						bind:value={$data.bmdc_code}
 						invalid={$errors.bmdc_code != null}
 						name="bmdc_code"
-						labelText="Personal BMDC Code"
+						labelText="BMDC Code"
 						placeholder="Enter BMDC Code..."
 					/>
 					{#if $errors.bmdc_code}

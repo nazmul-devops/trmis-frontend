@@ -112,7 +112,7 @@
 				{/if}
 			</div>
 		</div>
-		{JSON.stringify($errors)}
-		{JSON.stringify($data)}
+		<!-- {JSON.stringify($errors)}
+		{JSON.stringify($data)} -->
 	</form>
 </Modal>

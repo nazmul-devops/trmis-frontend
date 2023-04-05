@@ -5,10 +5,9 @@
 	import * as yup from 'yup';
 	import { notices } from '$lib/store/notice';
 	import { Checkbox, FileUploader, Modal, TextInput } from 'carbon-components-svelte';
-	import axios from 'axios';
 
 	let fileUploader;
-	let files = [];
+	export let files = [];
 	export let open = true;
 	export let notice = {
 		id: null,
@@ -28,13 +27,6 @@
 		} else {
 			reset();
 		}
-	}
-
-	$: {
-		console.log(notice.files);
-		axios.get(notice.files).then((resp) => {
-			console.log(resp);
-		});
 	}
 
 	$: {
@@ -130,7 +122,7 @@
 			</div>
 		</div>
 		<div class="t-mt-2">
-			<Checkbox name="show_in_home_page" labelText=" Show Public Website ?" />
+			<Checkbox bind:checked={$data.show_in_home_page} name="show_in_home_page" labelText=" Show Public Website ?" />
 		</div>
 	</form>
 	<!-- {JSON.stringify($data)} -->

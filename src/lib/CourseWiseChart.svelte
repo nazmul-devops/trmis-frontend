@@ -38,9 +38,6 @@
 
 	export let courseLabels = [];
 	export let courseData = [];
-	$: {
-		// console.log(courseData)
-	}
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
@@ -72,7 +69,9 @@
 	$: courseList = $dashboardData.speceficCategories.map((item) => ({ ...item, text: item.title }));
 
 	$: {
-		dashboardData.getSpeceficCategories($data.selectedCategory);
+		if ($data.selectedCategory) {
+			dashboardData.getSpeceficCategoryData($data.selectedCategory);
+		}
 	}
 
 	onMount(() => {
