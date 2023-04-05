@@ -8,7 +8,7 @@
 	import { onMount } from 'svelte';
 	import { httpWeb } from '$lib/service/auth';
 
-	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9'];
+	const BACKGROUND_COLOR = ['#FFDCBF', '#BDFCBD', '#BBECF9', '#F9BBBB', '#D7C7F9'];
 
 	let trainingData = [];
 

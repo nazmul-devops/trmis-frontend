@@ -13,9 +13,9 @@
 
 	<div class=" t-py-32 t-overflow-hidden t-z-10 ">
 		<div
-			class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-grid lg:t-grid-cols-4 t-items-center lg:t-flex "
+			class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-grid lg:t-grid-cols-4 t-gap-4 t-place-items-center"
 		>
-			<div class=" t-mb-12 lg:t-mb-0 t-col-span-2">
+			<div class=" t-mb-12 lg:t-mb-0 t-col-span-2 t-px-4">
 				<h2
 					class="
 						t-text-dark

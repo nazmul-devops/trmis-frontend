@@ -9,7 +9,9 @@
 			<div class="t-grid t-col-span-1 t-place-items-center t-place-content-center sm:t-py-3">
 				<img src="/assets/jsi.png" alt="ntp" class="t-w-32 t-h-fit" />
 			</div>
-			<div class="t-grid lg:t-col-span-1 md:t-col-span-2 t-place-items-center t--place-content-center">
+			<div
+				class="t-grid lg:t-col-span-1 md:t-col-span-2 t-place-items-center t--place-content-center"
+			>
 				<p class="t-text-4xl t-text-white t-font-medium sm:t-py-3">Sponsored by</p>
 			</div>
 			<div class="t-grid t-col-span-1 t-place-items-center t--place-content-center sm:t-py-3">
@@ -24,10 +26,14 @@
 		<div class="t-grid t-grid-cols-1 t-py-3">
 			<div class="t-text-center">
 				<p class="t-text-white">
-					Powered by <span
-						class="t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#087EE1] t-to-[#05E8BA] t-font-bold"
-						>inneed.cloud</span
-					>
+					Powered by
+					<a href="https://inneed.cloud" target="_blank">
+						<span
+							class="t-text-transparent t-bg-clip-text t-bg-gradient-to-r t-from-[#087EE1] t-to-[#05E8BA] t-font-bold"
+							>
+							inneed.cloud
+						</span>
+					</a>
 				</p>
 			</div>
 		</div>

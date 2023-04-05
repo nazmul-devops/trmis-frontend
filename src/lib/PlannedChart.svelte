@@ -3,7 +3,7 @@
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
 
-	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF'];
+	const BACKGROUND_COLOR = ['#FFDCBF', '#BDFCBD'];
 
 	export let Class = '';
 	const plugin = {

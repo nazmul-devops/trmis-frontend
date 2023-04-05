@@ -153,9 +153,7 @@ input::-webkit-inner-spin-button {
 }
 
 /* Data table header button */
-.bx--data-table-container {
-	overflow-x: auto;
-}
+
 .bx--btn--primary {
 	background: #57aaf7;
 }
@@ -163,8 +161,14 @@ input::-webkit-inner-spin-button {
 	margin-bottom: 10px;
 }
 .bx--data-table-container {
+	overflow-x: auto;
 	background: white;
-	padding: 30px 0px;
+	padding: 50px 10px;
+	border-radius: 10px;
+}
+
+.customBatch .bx--data-table-container{
+	padding: 70px 0px;
 }
 /* Table data design */
 
@@ -302,14 +306,6 @@ input[type='number'] {
 .bx--file__selected-file .bx--file-filename {
 	color: #0f62fe;
 }
-
-
-@media screen and (min-width: 1024px) {
-	.bx--modal-content {
-		padding: 50px 20px 10px;
-	}
-}
-
 /*Datatabele Cursor*/
 .categoryDatatable .bx--data-table--short tbody tr {
 	cursor: pointer;
@@ -319,3 +315,11 @@ input[type='number'] {
 .bx--label-description{
 	display: none;
 }
+
+
+@media screen and (min-width: 1024px) {
+	.bx--modal-content {
+		padding: 50px 20px 10px;
+	}
+}
+

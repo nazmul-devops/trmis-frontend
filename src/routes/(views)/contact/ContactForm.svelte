@@ -126,7 +126,7 @@
 					<p>Please enter a 11 digit valid phone number</p>
 				{/if}
 			</div>
-			<div class="t-mb-4">
+			<div class="t-mb-4 t-col-span-2">
 				<input
 					name="company_name"
 					type="text"
@@ -169,7 +169,7 @@
 					<p>Message can't be empty</p>
 				{/if}
 			</div>
-			<div>
+			<div class="t-col-span-2">
 				<button
 					type="submit"
 					class="
