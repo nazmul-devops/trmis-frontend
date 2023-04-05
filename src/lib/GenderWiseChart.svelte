@@ -4,7 +4,7 @@
 	import { onMount } from 'svelte';
 	export let Class = '';
 
-	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF'];
+	const BACKGROUND_COLOR = ['#BBECF9', '#F9BBBB'];
 
 	const plugin = {
 		id: 'customCanvasBackgroundColor',

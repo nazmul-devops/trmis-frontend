@@ -9,7 +9,7 @@
 		<div class=" t-flex t-rounded-md t-h-full  t-justify-between t-items-center t-bg-white t-px-4 ">
 			<div class="t-flex t-items-center t-gap-2">
 				<div>
-					<img src="/assets/trainingCategoryIcon.svg" alt="course" class="t-h-12 t-w-12 t-mr-4" />
+					<img src="/assets/trainingCategoryIcon.svg" alt="course" class="t-h-12 t-w-12 t-mr-6" />
 				</div>
 				<div><p>{course}</p></div>
 			</div>

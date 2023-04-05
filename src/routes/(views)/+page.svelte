@@ -21,7 +21,7 @@
 	$: statusData =
 		$dashboardData.trainingStatus.length == 0
 			? [0, 0, 0]
-			: $dashboardData.trainingStatus.map((item) => item.value + 8);
+			: $dashboardData.trainingStatus.map((item) => item.value );
 
 	//Gender Wise Chart
 
@@ -135,7 +135,7 @@
 	</div>
 </div>
 <div class="t-bg-white">
-	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-py-32">
+	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-pt-6 lg:t-py-32">
 		<SponsorButton />
 	</div>
 </div>

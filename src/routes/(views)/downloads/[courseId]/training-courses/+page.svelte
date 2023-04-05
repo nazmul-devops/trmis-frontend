@@ -1,20 +1,23 @@
 <script>
 	import { httpWeb } from '$lib/service/auth';
 	import { trainingCourses } from '$lib/store/trainingCourse';
-	import { courseCategories } from '$lib/store/courseCategory';
-	import { getTrainingCourses } from '$lib/service/trainingCourse';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { onMount } from 'svelte';
+	import { page } from '$app/stores';
+	import { courseCategories } from '$lib/store/courseCategory';
 	import DownloadCard from '$lib/DownloadCard.svelte';
+	import NotFound from './NotFound.svelte';
 
-	let categories = [];
-	let courseMaterials = [];
 	let courses = [];
+	let courseMaterials = [];
 	let dropdown = false;
+	let categories = [];
+	let filteredCategories;
 
-	$: categories = $courseCategories.data;
+	$: categories = $trainingCourses.data;
+
 	$: courses = $trainingCourses.data;
-	
+
 	async function getCourseMaterials(id) {
 		let { data } = await httpWeb.get(`training-course/course-material/`, {
 			params: { training_course_id: id }
@@ -32,19 +35,16 @@
 	let filteredDownloads = [];
 
 	const searchDownload = () => {
-		return (filteredDownloads = categories.filter((course) => {
+		return (filteredDownloads = courses.filter((course) => {
 			let courseTitle = course.title.toLowerCase();
 			return courseTitle.includes(searchTerm.toLowerCase());
 		}));
 	};
 
+
 	onMount(() => {
-		trainingCourses.getTrainingCourses()
-		courseCategories.getCourseCategories();
+		trainingCourses.getTrainingCourses();
 		getCourseMaterials();
-		getTrainingCourses().then((resp)=>{
-			console.log(resp.data)
-		})
 	});
 </script>
 
@@ -64,13 +64,19 @@
 					}`}
 				>
 					<div class="t-bg-white lg:t-mb-4">
-						<div class="t-relative t-py-2 t-px-3 t-block">
-							<span class="t-absolute t-inset-y-0 t-left-5 t-flex t-items-center t-pl-2">
-								<i
-									class="las la-search t-text-xl t-text-gray-400 -t-rotate-90"
-								/>
-							</span>
-							<input
+						<div class="t-flex t-justify-between t-items-center t-pr-2">
+							<div class="t-ml-4 t-cursor-pointer t-bg-[#44835C] t-rounded-full t-px-2 t-py-1">
+								<div
+									class=" t-font-semibold t-text-transparent t-bg-clip-text t-bg-white hover:t-scale-110"
+								>
+									<i class="las la-angle-left t-text-2xl" title="go back" />
+								</div>
+							</div>
+							<div class="t-relative t-py-2 t-px-3 t-block">
+								<span class="t-absolute t-inset-y-0 t-left-5 t-flex t-items-center t-pl-2">
+									<i class="las la-search t-text-xl t-text-gray-400 -t-rotate-90" />
+								</span>
+								<input
 									class="placeholder:t-italic placeholder:t-text-slate-400 t-block t-bg-white t-w-full t-border t-border-slate-300 t-rounded-md t-py-2 t-pl-11 t-pr-3 t-shadow-sm focus:t-outline-none focus:t-border-sky-500 focus:t-ring-sky-500 focus:t-ring-1 sm:t-text-sm"
 									type="text"
 									name="searchField"
@@ -80,10 +86,11 @@
 									bind:value={searchTerm}
 									on:input={searchDownload}
 								/>
+							</div>
 						</div>
-						<p class="t-px-4 t-py-2 t-border-b-[1px] t-border-solid t-border-b-[#44835C] ">Training categories</p>
+						<p class="t-px-4 t-py-2 t-border-b-[1px] t-border-solid t-border-b-[#44835C] ">Training courses</p>
 						<ul
-							class={`t-leading-normal t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-24 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
+							class={`t-leading-normal t-overflow-x-hidden t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-24 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
 						>
 							{#if searchTerm && filteredDownloads.length === 0}
 								<p class="t-px-3 t-py-5"><strong>No Result</strong> try again!</p>
@@ -93,32 +100,36 @@
 										<li
 											on:click={() => getCourseMaterials(filteredDownload.id)}
 											on:keypress={() => getCourseMaterials(filteredDownload.id)}
-											class="t-py-5 t-px-4"
+											class="t-py-5 t-px-4 t-cursor-pointer t-flex t-justify-between t-items-center"
 										>
-											<a class="t-flex t-justify-between t-items-center t-text-black" href={`/downloads/${filteredDownload.id}/training-courses`}>
-												{filteredDownload.title}
-											<span class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110">
+											{filteredDownload.title}
+											<span
+												class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110"
+											>
 												<i class="las la-angle-right t-text-2xl" />
 											</span>
-											</a>
 										</li>
 										<hr />
 									</div>
 								{/each}
 							{:else}
-								{#each categories as category}
-									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)} class="">
+								{#each courses as course}
+									<div
+										on:click={() => (dropdown = false)}
+										on:keypress={() => (dropdown = false)}
+										class=""
+									>
 										<li
-											on:click={() => getCourseMaterials(category.id)}
-											on:keypress={() => getCourseMaterials(category.id)}
-											class="t-py-5 t-px-4 t-cursor-pointer"
+											on:click={() => getCourseMaterials(course.id)}
+											on:keypress={() => getCourseMaterials(course.id)}
+											class="t-py-5 t-px-4 t-cursor-pointer t-flex t-justify-between t-items-center"
 										>
-										<a class="t-flex t-justify-between t-items-center t-text-black" href={`/downloads/${category.id}/training-courses`}>
-										{category.title}
-										<span class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110">
-											<i class="las la-angle-right t-text-2xl" />
-										</span>
-										</a>
+											{course.title}
+											<span
+												class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110"
+											>
+												<i class="las la-angle-right t-text-2xl" />
+											</span>
 										</li>
 										<hr />
 									</div>
@@ -157,16 +168,26 @@
 
 			<div class="sm:t-col-span-1 md:t-col-span-3">
 				<div>
-					{#each courseMaterials as materials}
-						<DownloadCard
-							materialTitle={materials.title}
-							desc={materials.description}
-							fileType={getFileType(materials.title)}
-							link={materials.files}
-						/>
-					{/each}
+					{#if courseMaterials.length > 0 }
+						{#each courseMaterials as materials}
+							<DownloadCard
+								materialTitle={materials.title}
+								desc={materials.description}
+								fileType={getFileType(materials.title)}
+								link={materials.files}
+							/>
+						{/each}
+						{:else}
+						<NotFound />
+					{/if}
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.active {
+		color: red;
+	}
+</style>
