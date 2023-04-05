@@ -56,49 +56,50 @@
 	});
 </script>
 
-{#if $batchs.loading}
-	<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
-{:else}
-	<DataTable size="short" title="Batch" description="" {headers} rows={$batchs.data}>
-		<Toolbar size="sm">
-			<ToolbarContent>
-				<ToolbarSearch shouldFilterRows bind:filteredRowIds />
-				<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Batch</Button>
-			</ToolbarContent>
-		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
-			{#if cell.key === 'action'}
-				<OverflowMenu flipped direction="top" size="sm">
-					<OverflowMenuItem on:click={() => openBulkForm(row.id)} text="Bulk Upload" />
-					<OverflowMenuItem
-						on:click={() => goto(`/admin/training/batch/${row.id}/participants`)}
-						text="Participants"
-					/>
-					<OverflowMenuItem
-						on:click={() => goto(`/admin/training/batch/${row.id}/resources`)}
-						text="Resources"
-					/>
-					<OverflowMenuItem
-						on:click={() => goto(`/admin/training/batch/${row.id}/session-details`)}
-						text="Session Details"
-					/>
-					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
-					<OverflowMenuItem
-						on:click={() => {
-							batch = { ...row };
-							deleteModal = true;
-						}}
-						danger
-						text="Delete"
-					/>
-				</OverflowMenu>
-			{:else if cell.key === 'rowNumber'}
-				{rowIndex + 1}
-			{:else}{cell.value}{/if}
-		</svelte:fragment>
-	</DataTable>
-{/if}
-
+<div class="customBatch">
+	{#if $batchs.loading}
+		<DataTableSkeleton showHeader={false} showToolbar={false} {headers} />
+	{:else}
+		<DataTable size="short" title="Batch" description="" {headers} rows={$batchs.data}>
+			<Toolbar size="sm">
+				<ToolbarContent>
+					<ToolbarSearch shouldFilterRows bind:filteredRowIds />
+					<Button on:click={() => openModalForm({ name: null, nid: null })}>Add Batch</Button>
+				</ToolbarContent>
+			</Toolbar>
+			<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
+				{#if cell.key === 'action'}
+					<OverflowMenu flipped direction="top" size="sm">
+						<OverflowMenuItem on:click={() => openBulkForm(row.id)} text="Bulk Upload" />
+						<OverflowMenuItem
+							on:click={() => goto(`/admin/training/batch/${row.id}/participants`)}
+							text="Participants"
+						/>
+						<OverflowMenuItem
+							on:click={() => goto(`/admin/training/batch/${row.id}/resources`)}
+							text="Resources"
+						/>
+						<OverflowMenuItem
+							on:click={() => goto(`/admin/training/batch/${row.id}/session-details`)}
+							text="Session Details"
+						/>
+						<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
+						<OverflowMenuItem
+							on:click={() => {
+								batch = { ...row };
+								deleteModal = true;
+							}}
+							danger
+							text="Delete"
+						/>
+					</OverflowMenu>
+				{:else if cell.key === 'rowNumber'}
+					{rowIndex + 1}
+				{:else}{cell.value}{/if}
+			</svelte:fragment>
+		</DataTable>
+	{/if}
+</div>
 <FormModal bind:open bind:batch />
 <BulkUploadForm bind:open={bulkUpModal} {batchId} />
 <DeleteModal

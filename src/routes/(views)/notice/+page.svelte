@@ -40,11 +40,11 @@
 						</p>
 						<a
 							href={files}
-							class="t-text-xl t-font-bold  t-text-[#44835C] t-flex t-justify-center"
+							class="t-text-xl t-font-bold  t-text-[#44835C] t-flex t-justify-center t-items-center"
 							target="_blank"
 							rel="noreferrer"
 						>
-							Open here! <i class="las la-arrow-right t-text-[#F94646] t-font-bold t-text-2xl" />
+							Download Now! <i class="las la-arrow-right t-text-[#F94646] t-ml-3 t-font-bold t-text-2xl" />
 						</a>
 					</div>
 				</div>

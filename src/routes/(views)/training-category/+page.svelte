@@ -1,26 +1,24 @@
-<script>
-	import { httpWeb } from '$lib/service/auth';
+<script lang="ts">
+	import { courseCategories } from '$lib/store/courseCategory';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { onMount } from 'svelte';
-	import TrainingCard from './TrainingCard.svelte';
+	import TrainingCard from '$lib/TrainingCard.svelte';
 
 	let trainingData = [];
 
-	async function getCourse() {
-		let { data } = await httpWeb.get('training-course/');
-
-		trainingData = data;
+	$: {
+		trainingData = $courseCategories.data
 	}
-
-	onMount(() => {
-		getCourse();
+	
+	onMount(async () => {
+		courseCategories.getCourseCategories();
 	});
 </script>
 
 <div>
 	<div>
 		<PageTitle
-			Title="Training"
+			Title="Training Category"
 			desc="Explore our list of training courses to find the one that best suits your needs and interests. "
 		/>
 		<div
@@ -28,7 +26,14 @@
 		>
 			<div class="t-grid md:t-grid-cols-2 sm:t-grid-cols-1 t-gap-4">
 				{#each trainingData as { title, id }}
-					<a href={`/training/${id}`} class="t-text-gray-500"> <TrainingCard course={title} /></a>
+					<a 
+						href={`/training-category/${id}/training-course`} 
+						class="t-text-gray-500" 
+					> 
+						<TrainingCard 
+							course={title} 
+						/>
+					</a>
 				{/each}
 			</div>
 		</div>

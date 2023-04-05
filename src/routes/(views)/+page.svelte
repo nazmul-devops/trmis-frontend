@@ -21,7 +21,7 @@
 	$: statusData =
 		$dashboardData.trainingStatus.length == 0
 			? [0, 0, 0]
-			: $dashboardData.trainingStatus.map((item) => item.value + 8);
+			: $dashboardData.trainingStatus.map((item) => item.value );
 
 	//Gender Wise Chart
 
@@ -75,7 +75,7 @@
 			<div class="t-col-span-4 t-bg-[#F2F5F7] t-px-4 t-rounded-md">
 				<div class="t-my-5">
 					<h3 class=" t-text-[#111] t-text-[20px] t-font-medium t-py-2">Notice Board</h3>
-					<div class="t-h-[20vh] md:t-h-[110vh] lg:t-h-[130vh] t-overflow-y-scroll t-px-3">
+					<div class="t-h-[20vh] md:t-h-[110vh] lg:t-h-[130vh] t-overflow-y-auto t-px-3">
 						<NoticeBoard />
 					</div>
 				</div>
@@ -135,7 +135,7 @@
 	</div>
 </div>
 <div class="t-bg-white">
-	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-py-32">
+	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-pt-6 lg:t-py-32">
 		<SponsorButton />
 	</div>
 </div>
