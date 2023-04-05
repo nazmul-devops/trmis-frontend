@@ -13,7 +13,8 @@
 		DataTable,
 		Button,
 		MultiSelect,
-		ComboBox
+		ComboBox,
+		NumberInput
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { createEvent } from '$lib/service/event';
@@ -27,10 +28,15 @@
 	const schema = yup.object({
 		status: yup.number().required('Status is required.'),
 		name: yup.string().required('Name is required.'),
-		number_of_participants: yup.number().required().typeError('Number of participants is required.'),
+		number_of_participants: yup
+			.number()
+			.required()
+			.typeError('Number of participants is required.'),
 		participants: yup.array().min(1),
 		description: yup.string().required('Description is required.'),
 		budget: yup.number().required().typeError('Budget is required.'),
+		source_of_fund: yup.number().required('Source Of fund is require'),
+		expenditure: yup.number().typeError('Expenditure is required'),
 		type: yup.number().required('Type is required.'),
 		organization: yup.number().required('Organization is required.'),
 		coordinator: yup.number().required('Coordinator is required.'),
@@ -159,12 +165,7 @@
 			{/if}
 		</div>
 		<div>
-			<TextInput
-				labelText="Budget"
-				invalid={$errors.budget}
-				name="budget"
-				placeholder="Budget"
-			/>
+			<TextInput labelText="Budget" invalid={$errors.budget} name="budget" placeholder="Budget" />
 			{#if $errors.budget}
 				<p class="t-text-red-500">{$errors.budget}</p>
 			{/if}
@@ -228,6 +229,31 @@
 			/>
 			{#if $errors.coordinator}
 				<p class="t-text-red-500">{$errors.coordinator}</p>
+			{/if}
+		</div>
+		<div>
+			<ComboBox
+				invalid={$errors.source_of_fund != null}
+				bind:selectedId={$data.source_of_fund}
+				titleText="Source Of Fund"
+				placeholder="Choose Source Of Fund"
+				items={sourceFunds}
+				{shouldFilterItem}
+			/>
+			{#if $errors.source_of_fund}
+				<p class="t-text-red-500">{$errors.source_of_fund}</p>
+			{/if}
+		</div>
+		<div>
+			<TextInput
+				type="number"
+				labelText="Expenditure"
+				invalid={$errors.expenditure != null}
+				name="expenditure"
+				placeholder="Enter Expendoiture"
+			/>
+			{#if $errors.expenditure}
+				<p class="t-text-red-500">{$errors.expenditure}</p>
 			{/if}
 		</div>
 		<div>
