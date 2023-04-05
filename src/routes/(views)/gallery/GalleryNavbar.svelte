@@ -6,18 +6,33 @@
 	};
 </script>
 
-<div id="myBtnContainer">
+<div id="myBtnContainer" class="t-flex t-justify-between">
 	{#each categories as category}
-		<button
-			class:active={selected === category}
-			class={`" t-px-4 t-py-2 ${
-				selected == category.id ? ' t-text-red-600 t-bg-green-500' : '  '
-			}"`}
-			on:click={() => filterSelect(category.id)}
-		>
-			{category.title}
-		</button>
+		<div class="t-mr-3 last-of-type:t-mr-0">
+			<button
+				class:active={selected === category.id}
+				class=" t-px-4 t-py-2"
+				on:click={() => filterSelect(category.id)}
+			>
+				{category.title}
+			</button>
+			<div 
+				class:activated={selected === category.id}
+			/>
+		</div>
 	{/each}
 </div>
 
 <!-- [&.active]:t-border-b-4 [&.active]:t-border-[#44835C] -->
+
+<style>
+	.active {
+		color: #44835C;
+	}
+	.activated {
+		height: 4px;
+		width: 100%;
+		border-radius: 10px;
+		background: #44835C;
+		}
+</style>
