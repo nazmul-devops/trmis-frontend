@@ -75,7 +75,7 @@
 			<div class="t-col-span-4 t-bg-[#F2F5F7] t-px-4 t-rounded-md">
 				<div class="t-my-5">
 					<h3 class=" t-text-[#111] t-text-[20px] t-font-medium t-py-2">Notice Board</h3>
-					<div class="t-h-[20vh] md:t-h-[110vh] lg:t-h-[130vh] t-overflow-y-scroll t-px-3">
+					<div class="t-h-[20vh] md:t-h-[110vh] lg:t-h-[130vh] t-overflow-y-auto t-px-3">
 						<NoticeBoard />
 					</div>
 				</div>

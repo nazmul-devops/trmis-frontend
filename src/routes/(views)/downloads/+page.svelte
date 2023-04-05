@@ -60,10 +60,10 @@
 				>
 					<div class="t-bg-white lg:t-mb-4">
 						<ul
-							class={`t-leading-normal t-overflow-y-scroll scrollbar lg:t-max-h-[65vh] sm:t-py-24 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
+							class={`t-leading-normal t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-24 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
 						>
 							<li>
-								<div class="t-relative t-py-2 t-px-4 t-block">
+								<div class="t-relative t-py-2 t-px-3 t-block">
 									<span class="t-absolute t-inset-y-0 t-left-5 t-flex t-items-center t-pl-2">
 										<i
 											class="las la-search t-text-xl t-text-gray-400 -t-rotate-90"
@@ -89,22 +89,28 @@
 										<li
 											on:click={() => getCourseMaterials(filteredDownload.id)}
 											on:keypress={() => getCourseMaterials(filteredDownload.id)}
-											class="t-py-5 t-px-4 t-cursor-pointer"
+											class="t-py-5 t-px-4 t-cursor-pointer t-flex t-justify-between t-items-center"
 										>
 											{filteredDownload.title}
+											<span class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110">
+												<i class="las la-angle-right t-text-2xl" />
+											</span>
 										</li>
 										<hr />
 									</div>
 								{/each}
 							{:else}
 								{#each courses as course}
-									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
+									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)} class="">
 										<li
 											on:click={() => getCourseMaterials(course.id)}
 											on:keypress={() => getCourseMaterials(course.id)}
-											class="t-py-5 t-px-4 t-cursor-pointer"
+											class="t-py-5 t-px-4 t-cursor-pointer t-flex t-justify-between t-items-center"
 										>
 											{course.title}
+											<span class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110">
+												<i class="las la-angle-right t-text-2xl" />
+											</span>
 										</li>
 										<hr />
 									</div>
