@@ -33,6 +33,7 @@
 			}
 		} else {
 			zilaOptions = [];
+			$data.district = null;
 		}
 	}
 
@@ -46,6 +47,7 @@
 			}
 		} else {
 			upazilaOptions = [];
+			$data.sub_district = null;
 		}
 	}
 

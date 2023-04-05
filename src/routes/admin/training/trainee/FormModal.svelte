@@ -10,6 +10,9 @@
 	import { onMount } from 'svelte';
 	import { sleep } from '$lib/service/utilities';
 
+	let selectedDivisionId;
+	let selectedZilaId;
+	let selectedUpazilaId;
 	let zilaOptions = [];
 	let upazilaOptions = [];
 	let locations = [];
@@ -26,24 +29,22 @@
 	}
 
 	$: {
-		if ($data.division) {
-			let index = locations.findIndex((item) => item.id === $data.division);
+		if (selectedDivisionId) {
+			let index = locations.findIndex((item) => item.id === selectedDivisionId);
 			zilaOptions = locations[index]?.zilas;
 		} else {
 			zilaOptions = [];
+			selectedZilaId = null;
 		}
 	}
 
 	$: {
-		if ($data.district) {
-			let index = zilaOptions.findIndex((item) => item.id === $data.district);
-			if (index >= 0) {
-				upazilaOptions = zilaOptions[index]?.upazilas;
-			} else {
-				upazilaOptions = [];
-			}
+		if (selectedZilaId) {
+			let index = zilaOptions.findIndex((item) => item.id === selectedZilaId);
+			upazilaOptions = zilaOptions[index]?.upazilas;
 		} else {
 			upazilaOptions = [];
+			selectedUpazilaId = null;
 		}
 	}
 
@@ -79,15 +80,15 @@
 			setData('bmdc_code', trainee.bmdc_code);
 			sleep(0)
 				.then(() => {
-					setData('division', trainee.division);
+					setData('division', selectedDivisionId);
 					return sleep(100);
 				})
 				.then(() => {
-					setData('district', trainee.district);
+					setData('district', selectedZilaId);
 					return sleep(100);
 				})
 				.then(() => {
-					setData('sub_district', trainee.sub_district);
+					setData('sub_district', selectedUpazilaId);
 				});
 		} else {
 			reset();
@@ -318,10 +319,9 @@
 			</div>
 			<div>
 				<ComboBox
-					name="division"
 					direction="top"
 					invalid={$errors.division != null}
-					bind:selectedId={$data.division}
+					bind:selectedId={selectedDivisionId}
 					titleText="Division"
 					placeholder="Select Division"
 					items={locations}
@@ -335,10 +335,9 @@
 
 			<div>
 				<ComboBox
-					disabled={!$data.division}
+					disabled={!selectedDivisionId}
 					direction="top"
-					name="district"
-					bind:selectedId={$data.district}
+					bind:selectedId={selectedZilaId}
 					titleText="Zilla"
 					placeholder="Select Zilla"
 					items={zilaOptions}
@@ -347,10 +346,9 @@
 			</div>
 			<div>
 				<ComboBox
-					disabled={!$data.district}
+					disabled={!selectedZilaId}
 					direction="top"
-					name="sub_district"
-					bind:selectedId={$data.sub_district}
+					bind:selectedId={selectedUpazilaId}
 					titleText="Upazilla"
 					placeholder="Select Upazilla"
 					items={upazilaOptions}

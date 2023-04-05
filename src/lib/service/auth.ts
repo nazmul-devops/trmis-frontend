@@ -10,21 +10,24 @@ http.interceptors.response.use(
 	async (err) => {
 		const originalConfig = err.config;
 		if (err.response) {
-			if (err.response.status === 401 && !originalConfig._retry) {
+			if (err.response.status === 401 && !originalConfig?.sent) {
 				originalConfig._retry = true;
 				try {
 					const rs = await refresh();
 					const { access } = rs.data;
 					localStorage.setItem('accessToken', access);
-					http.defaults.headers.common = {
-						Authorization: `Bearer ${access}`
-					};
-					const config = {
-						...originalConfig,
-						_retry: true,
-						Authorization: `Bearer ${access}`
-					};
-					return http(config);
+					// http.defaults.headers.common = {
+					// 	Authorization: `Bearer ${access}`
+					// };
+
+					originalConfig.headers['Authorization'] = `Bearer ${access}`;
+					return http(originalConfig);
+					// const config = {
+					// 	...originalConfig,
+					// 	_retry: true,
+					// 	Authorization: `Bearer ${access}`
+					// };
+					// return http(config);
 				} catch (_error) {
 					if (_error.response && _error.response.data) {
 						return Promise.reject(_error.response.data);

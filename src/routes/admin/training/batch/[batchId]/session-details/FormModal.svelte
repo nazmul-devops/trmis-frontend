@@ -13,7 +13,6 @@
 	} from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
-	import { createBatchSession, updateBatchSession } from '$lib/service/batch-sessions-detail';
 	import { batchSession } from '$lib/store/batch-sessions-detail';
 
 	function shouldFilterItem(item, value) {
@@ -85,7 +84,9 @@
 			open = false;
 			dispatch('update-list');
 			reset();
-			errorModal = true;
+			if ($batchSession.errorData.status == 403) {
+				errorModal = true;
+			}
 		}
 	});
 

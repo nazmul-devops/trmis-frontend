@@ -120,3 +120,18 @@ export async function getParticipantFromCategories(year, startMonth, endMonth) {
 		});
 	}
 }
+
+export async function getSpeceficCategories() {
+	try {
+		const { data } = await http.get('dashboard/specific-training-course-category/');
+		return {
+			status: 201,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}

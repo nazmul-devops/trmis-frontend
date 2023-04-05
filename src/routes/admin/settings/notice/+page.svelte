@@ -5,11 +5,8 @@
 		Toolbar,
 		ToolbarContent,
 		ToolbarSearch,
-		ToolbarMenu,
-		ToolbarMenuItem,
 		Button,
 		DataTableSkeleton,
-		Loading,
 		OverflowMenu,
 		OverflowMenuItem,
 		Toggle
@@ -18,13 +15,12 @@
 	import { onMount } from 'svelte';
 	import FormModal from './FormModal.svelte';
 	import DeleteModal from '$lib/DeleteModal.svelte';
-	import { CellTower } from 'carbon-icons-svelte';
 
 	let filteredRowIds = [];
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'title', value: 'Tilte' },
-		{ key: 'description', value: 'Description' },
+		// { key: 'description', value: 'Description' },
 		{ key: 'files', value: 'Notice File' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -32,7 +28,6 @@
 	let open = false;
 	let deleteModal = false;
 
-	let Notices: any = [];
 
 	let notice;
 
@@ -45,11 +40,6 @@
 		await notices.deleteNotice(notice.id);
 		deleteModal = false;
 	}
-
-	// async function getNoticeList() {
-	// 	const { data } = await getNotices();
-	// 	Notices = data;
-	// }
 
 	onMount(async () => {
 		notices.getNotices();

@@ -6,17 +6,9 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-	import { httpWeb } from '$lib/service/auth';
+	import { dashboardData } from '$lib/store/dashboard';
 
 	const BACKGROUND_COLOR = ['#FFEFE2', '#EFFCEF', '#E6F5F9', '#F9C7C7', '#D7C7F9'];
-
-	let trainingData = [];
-
-	async function getCourse() {
-		let { data } = await httpWeb.get('training-course/');
-
-		trainingData = data;
-	}
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -27,7 +19,7 @@
 		distance: yup.string()
 	});
 
-	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
+	const { form, data } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -46,6 +38,9 @@
 
 	export let courseLabels = [];
 	export let courseData = [];
+	$:{
+		// console.log(courseData)
+	}
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
 	const chartData = {
@@ -74,7 +69,7 @@
 		}
 	}
 
-	$: courseList = trainingData.map((item) => ({ ...item, text: item.title }));
+	$: courseList = $dashboardData.speceficCategories.map((item) => ({ ...item, text: item.title }));
 
 	onMount(() => {
 		if (browser) {
@@ -119,8 +114,7 @@
 				plugins: [plugin]
 			});
 		}
-
-		getCourse();
+		dashboardData.getSpeceficCategories();
 	});
 </script>
 
@@ -140,7 +134,9 @@
 		</div>
 		<canvas class="t-w-full t-py-3" bind:this={barChartElement} />
 	</section>
-	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
+	<p
+		class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold"
+	>
 		Number of Participants for Different Training Categories
 	</p>
 </main>

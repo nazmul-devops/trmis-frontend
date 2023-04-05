@@ -49,7 +49,7 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (trainingCourse.id) {
-				await trainingCourses.updateTrainingCourse({ ...data, id: trainingCourse.id });
+				await trainingCourses.updateTrainingCourse({ ...data, id: trainingCourse.id, course_category: $page.params.coursesId });
 			} else {
 				await trainingCourses.createTrainingCourse({
 					...data,

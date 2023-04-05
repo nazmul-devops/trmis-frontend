@@ -31,7 +31,7 @@
 		end_month: yup.string()
 	});
 
-	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
+	const { form } = createForm({
 		extend: validator({ schema })
 	});
 
