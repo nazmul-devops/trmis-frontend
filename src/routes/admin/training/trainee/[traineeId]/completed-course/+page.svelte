@@ -18,7 +18,7 @@
 		{ key: 'training_center_name', value: 'Training Venue' },
 		{ key: 'start_date', value: 'Start Date' },
 		{ key: 'end_date', value: 'End Date' },
-		{ key: 'org_name', value: 'Organization' }
+		{ key: 'org_name', value: 'Implementor Organization' }
 	];
 
 	onMount(async () => {

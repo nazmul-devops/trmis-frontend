@@ -46,7 +46,7 @@ export async function createBatchSession(batchId, payload) {
 			errorMessage: null
 		};
 	} catch (err) {
-		console.log(err.response.data.data);
+		console.log(err.response.data.status);
 		return Promise.resolve({
 			status: 403,
 			errorMessage: err.response.data.data,

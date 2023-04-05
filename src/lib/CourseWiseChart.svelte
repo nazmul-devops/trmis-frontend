@@ -6,17 +6,9 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-	import { httpWeb } from '$lib/service/auth';
+	import { dashboardData } from '$lib/store/dashboard';
 
 	const BACKGROUND_COLOR = ['#FFDCBF', '#BDFCBD', '#BBECF9', '#F9BBBB', '#D7C7F9'];
-
-	let trainingData = [];
-
-	async function getCourse() {
-		let { data } = await httpWeb.get('training-course/');
-
-		trainingData = data;
-	}
 
 	function shouldFilterItem(item, value) {
 		if (!value) return true;
@@ -24,10 +16,10 @@
 	}
 
 	const schema = yup.object({
-		distance: yup.string()
+		selectedCategory: yup.string()
 	});
 
-	const { form, reset, createSubmitHandler, setData, errors, data } = createForm({
+	const { form, data } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -74,7 +66,13 @@
 		}
 	}
 
-	$: courseList = trainingData.map((item) => ({ ...item, text: item.title }));
+	$: courseList = $dashboardData.speceficCategories.map((item) => ({ ...item, text: item.title }));
+
+	$: {
+		if ($data.selectedCategory) {
+			dashboardData.getSpeceficCategoryData($data.selectedCategory);
+		}
+	}
 
 	onMount(() => {
 		if (browser) {
@@ -102,7 +100,7 @@
 							}
 						},
 						y: {
-							beginAtZero: false,
+							beginAtZero: true,
 							// ticks: { color: 'hsl(43 100% 52% )', font: { size: 18 } },
 							grid: {
 								color: '#ffffff'
@@ -119,8 +117,6 @@
 				plugins: [plugin]
 			});
 		}
-
-		getCourse();
 	});
 </script>
 
@@ -130,7 +126,7 @@
 			<div class="t-col-start-2 md:t-col-start-3 t-px-2 md:t-px-10 t-mb-3">
 				<form use:form>
 					<ComboBox
-						bind:selectedId={$data.distance}
+						bind:selectedId={$data.selectedCategory}
 						placeholder="Choose Specific Training Category"
 						items={courseList}
 						{shouldFilterItem}
@@ -140,7 +136,9 @@
 		</div>
 		<canvas class="t-w-full t-py-3" bind:this={barChartElement} />
 	</section>
-	<p class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold">
+	<p
+		class="t-mx-auto t-text-center t-py-3 t-text-sm md:t-text-base lg:t-text-2xl t-text-black t-font-bold"
+	>
 		Number of Participants for Different Training Categories
 	</p>
 </main>

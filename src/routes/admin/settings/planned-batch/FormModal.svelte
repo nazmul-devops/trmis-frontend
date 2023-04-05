@@ -57,7 +57,7 @@
 	<form use:form>
 		<div class="custom t-grid t-grid-cols-2 t-gap-4">
 			<div>
-				<DatePicker datePickerType="single" bind:value={$data.year} dateFormat="Y-m-d" on:change>
+				<DatePicker datePickerType="single" bind:value={$data.year} dateFormat="Y" on:change>
 					<DatePickerInput
 						labelText="Year"
 						invalid={$errors.year != null}

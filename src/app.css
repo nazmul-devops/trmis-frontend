@@ -306,13 +306,20 @@ input[type='number'] {
 .bx--file__selected-file .bx--file-filename {
 	color: #0f62fe;
 }
+
+@media screen and (min-width: 1024px) {
+	.bx--modal-content {
+		padding: 50px 20px 10px;
+	}
+}
+
 /*Datatabele Cursor*/
 .categoryDatatable .bx--data-table--short tbody tr {
 	cursor: pointer;
 }
 
 /*File Upload */
-.bx--label-description{
+.bx--label-description {
 	display: none;
 }
 

@@ -28,9 +28,14 @@
 	$: {
 		if ($data.division) {
 			let index = locations.findIndex((item) => item.id === $data.division);
-			zilaOptions = locations[index]?.zilas;
+			if (index >= 0) {
+				zilaOptions = locations[index]?.zilas;
+			} else {
+				zilaOptions = [];
+			}
 		} else {
 			zilaOptions = [];
+			$data.district = null;
 		}
 	}
 
@@ -44,6 +49,7 @@
 			}
 		} else {
 			upazilaOptions = [];
+			$data.sub_district = null;
 		}
 	}
 
@@ -292,7 +298,7 @@
 						bind:value={$data.bmdc_code}
 						invalid={$errors.bmdc_code != null}
 						name="bmdc_code"
-						labelText="Personal BMDC Code"
+						labelText="BMDC Code"
 						placeholder="Enter BMDC Code..."
 					/>
 					{#if $errors.bmdc_code}
@@ -320,7 +326,6 @@
 				<ComboBox
 					name="division"
 					direction="top"
-					invalid={$errors.division != null}
 					bind:selectedId={$data.division}
 					titleText="Division"
 					placeholder="Select Division"

@@ -17,7 +17,7 @@
 		Modal
 	} from 'carbon-components-svelte';
 	import Grid from 'carbon-icons-svelte/lib/Grid.svelte';
-	import Calender from 'carbon-icons-svelte/lib/Calendar.svelte'
+	import Calender from 'carbon-icons-svelte/lib/Calendar.svelte';
 	import Events from 'carbon-icons-svelte/lib/Events.svelte';
 	import Event from 'carbon-icons-svelte/lib/Event.svelte';
 	import ReportData from 'carbon-icons-svelte/lib/ReportData.svelte';
@@ -261,6 +261,10 @@
 					<a href="/admin/mis-settings/group">Groups</a>
 				</SideNavLink>
 			</SideNavMenu>
+			<SideNavDivider />
+			<SideNavLink icon={Location}>
+				<a href="/admin/contact" class="t-text-[#808083]">Contact</a>
+			</SideNavLink>
 			<SideNavDivider />
 			<SideNavLink icon={Calender}>
 				<a href="/admin/training-calendar">Training Calendar</a>

@@ -23,7 +23,7 @@
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'title', value: 'Tilte' },
-		{ key: 'description', value: 'Description' },
+		// { key: 'description', value: 'Description' },
 		{ key: 'images', value: 'Image Url' },
 		{ key: 'action', value: 'Action' }
 	];

@@ -18,6 +18,7 @@
 	import { trainers } from '$lib/store/trainer';
 	import { getEventSchedules } from '$lib/service/schedule-events';
 	import { getEvent, updateEvent } from '$lib/service/event';
+	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 
@@ -43,10 +44,15 @@
 	const schema = yup.object({
 		status: yup.number().required('Status is required.'),
 		name: yup.string().required('Name is required.'),
-		number_of_participants: yup.number().required().typeError('Number of participants is required.'),
+		number_of_participants: yup
+			.number()
+			.required()
+			.typeError('Number of participants is required.'),
 		participants: yup.array().min(1),
 		description: yup.string().required('Description is required.'),
 		budget: yup.number().required().typeError('Budget is required.'),
+		source_of_fund: yup.number().required('Source Of fund is require'),
+		expenditure: yup.number().typeError('Expenditure is required'),
 		type: yup.number().required('Type is required.'),
 		organization: yup.number().required('Organization is required.'),
 		coordinator: yup.number().required('Coordinator is required.'),
@@ -76,7 +82,7 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			await updateEvent({ ...data, id: eventDetails.id });
-			goto('/admin/event');
+			goto('/admin/event/event-list');
 		}
 	});
 
@@ -126,6 +132,7 @@
 	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 	$: coordinatorList = $coordinators.data.map((item) => ({ ...item, text: item.name }));
 	$: schedules = eventSchedule.map((item) => ({ ...item, text: item.event_venue_name }));
+	$: sourceFunds = $sourceOfFounds.data.map((item) => ({ ...item, text: item.name }));
 
 	onMount(async () => {
 		trainers.getTrainers();
@@ -185,6 +192,31 @@
 			/>
 			{#if $errors.budget}
 				<p class="t-text-red-500">{$errors.budget}</p>
+			{/if}
+		</div>
+		<div>
+			<ComboBox
+				invalid={$errors.source_of_fund != null}
+				bind:selectedId={$data.source_of_fund}
+				titleText="Source Of Fund"
+				placeholder="Choose Source Of Fund"
+				items={sourceFunds}
+				{shouldFilterItem}
+			/>
+			{#if $errors.source_of_fund}
+				<p class="t-text-red-500">{$errors.source_of_fund}</p>
+			{/if}
+		</div>
+		<div>
+			<TextInput
+				type="number"
+				labelText="Expenditure"
+				invalid={$errors.expenditure != null}
+				name="expenditure"
+				placeholder="Enter Expendoiture"
+			/>
+			{#if $errors.expenditure}
+				<p class="t-text-red-500">{$errors.expenditure}</p>
 			{/if}
 		</div>
 		<div>
@@ -308,7 +340,7 @@
 
 <MultiSelect
 	bind:selectedIds={$data.facilitator}
-	direction='top'
+	direction="top"
 	titleText="Facilators"
 	placeholder="Select Facilators..."
 	filterable={true}
@@ -323,10 +355,9 @@
 		<Button kind="danger">Cancel</Button>
 	</div>
 	<div>
-		<Button on:click={submitHandler}>submit</Button>
+		<Button on:click={submitHandler}>Submit</Button>
 	</div>
 </div>
 
 <!-- <p>{JSON.stringify($errors)}</p> -->
 <!-- <p>{JSON.stringify($data)}</p> -->
-
