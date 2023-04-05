@@ -57,18 +57,17 @@
 
 	$: courseLabels =
 		$dashboardData.participantFromCategory.length == 0
-			? ['---', '---']
+			? ['---', '---', '---', '---']
 			: $dashboardData.participantFromCategory.map((item) => item.training_course_category);
 
 	$: courseData =
 		$dashboardData.participantFromCategory.length == 0
-			? [0, 0]
+			? [0, 0, 0, 0]
 			: $dashboardData.participantFromCategory.map((item) => item.particpant);
 
-	$:{
-		console.log(courseData)
+	$: {
+		console.log(courseData);
 	}
-
 </script>
 
 <div

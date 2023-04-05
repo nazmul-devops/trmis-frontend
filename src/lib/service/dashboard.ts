@@ -121,9 +121,13 @@ export async function getParticipantFromCategories(year, startMonth, endMonth) {
 	}
 }
 
-export async function getSpeceficCategories() {
+export async function getSpeceficCategories(selectedCourseCategory) {
 	try {
-		const { data } = await http.get('dashboard/specific-training-course-category/');
+		const { data } = await http.get('dashboard/specific-training-course-category/', {
+			params: {
+				selected_course_category: selectedCourseCategory
+			}
+		});
 		return {
 			status: 201,
 			data

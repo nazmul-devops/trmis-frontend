@@ -33,12 +33,13 @@
 			});
 			open = false;
 			reset();
-			errorModal = true;
+			if ($batchParticipantsList.errorData.status == 403) {
+				errorModal = true;
+			}
 		}
 	});
 
 	$: traineesList = $trainees.data.map((item) => ({ ...item, text: item.name }));
-
 
 	onMount(async () => {
 		trainees.getTrainees();

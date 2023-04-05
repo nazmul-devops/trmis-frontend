@@ -16,7 +16,7 @@
 	}
 
 	const schema = yup.object({
-		distance: yup.string()
+		selectedCategory: yup.string()
 	});
 
 	const { form, data } = createForm({
@@ -38,7 +38,7 @@
 
 	export let courseLabels = [];
 	export let courseData = [];
-	$:{
+	$: {
 		// console.log(courseData)
 	}
 	Chart.register(...registerables);
@@ -71,6 +71,10 @@
 
 	$: courseList = $dashboardData.speceficCategories.map((item) => ({ ...item, text: item.title }));
 
+	$: {
+		dashboardData.getSpeceficCategories($data.selectedCategory);
+	}
+
 	onMount(() => {
 		if (browser) {
 			chart = new Chart(barChartElement, {
@@ -97,7 +101,7 @@
 							}
 						},
 						y: {
-							beginAtZero: false,
+							beginAtZero: true,
 							// ticks: { color: 'hsl(43 100% 52% )', font: { size: 18 } },
 							grid: {
 								color: '#ffffff'
@@ -114,7 +118,6 @@
 				plugins: [plugin]
 			});
 		}
-		dashboardData.getSpeceficCategories();
 	});
 </script>
 
@@ -124,7 +127,7 @@
 			<div class="t-col-start-2 md:t-col-start-3 t-px-2 md:t-px-10 t-mb-3">
 				<form use:form>
 					<ComboBox
-						bind:selectedId={$data.distance}
+						bind:selectedId={$data.selectedCategory}
 						placeholder="Choose Specific Training Category"
 						items={courseList}
 						{shouldFilterItem}

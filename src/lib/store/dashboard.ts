@@ -76,8 +76,8 @@ function dcreateDashboardStore() {
 		});
 	}
 
-	async function getSpeceficCategories() {
-		const resp = await dashboardService.getSpeceficCategories();
+	async function getSpeceficCategories(selectedCourseCategory) {
+		const resp = await dashboardService.getSpeceficCategories(selectedCourseCategory);
 		update((prev) => {
 			prev.loading = false;
 			prev.speceficCategories = resp.data.specific_training_course_category;
