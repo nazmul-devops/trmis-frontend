@@ -63,8 +63,8 @@
 						dropdown ? 't-block' : 't-hidden'
 					}`}
 				>
-					<div class="t-bg-white lg:t-mb-4">
-						<div class="t-flex t-justify-between t-items-center t-pr-2">
+					<div class="t-bg-white t-mt-20 lg:t-mt-0 lg:t-mb-4">
+						<div class="t-flex t-justify-between t-items-center t-px-8 lg:t-px-0 lg:t-pr-2">
 							<div class="t-ml-4 t-cursor-pointer t-bg-[#44835C] t-rounded-full t-px-2 t-py-1">
 								<div
 									class=" t-font-semibold t-text-transparent t-bg-clip-text t-bg-white hover:t-scale-110"
@@ -140,7 +140,7 @@
 				</div>
 				<div
 					class={`  sm:t-block lg:t-hidden t-py-6 t-px-4 t-mb-2 t-rounded-md ${
-						dropdown ? 't-absolute t-top-0 t-right-5' : 't-relative t-bg-white t-shadow-lg'
+						dropdown ? 't-absolute t-top-0 t-left-2' : 't-relative t-bg-white t-shadow-lg'
 					}`}
 					on:click={handledropdownClick}
 					on:keypress={handledropdownClick}
