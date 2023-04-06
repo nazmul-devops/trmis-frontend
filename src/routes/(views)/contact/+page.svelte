@@ -37,7 +37,7 @@
 
 				<ContactInfo
 					title={'Our Location'}
-					description="Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+					description="Leprosy Hospital Compound, TB Gate, Mohakhali, Dhaka"
 					iconClass={'las la-home'}
 				/>
 
@@ -45,11 +45,6 @@
 					title={'Phone Number'}
 					description={'(+00)00 000 000 0000'}
 					iconClass={'las la-phone-volume'}
-				/>
-				<ContactInfo
-					title={'Email Address'}
-					description={'info@inneed.cloud'}
-					iconClass={'lar la-envelope'}
 				/>
 			</div>
 			<div class=" t-px-4 t-col-span-2 t-w-full">
