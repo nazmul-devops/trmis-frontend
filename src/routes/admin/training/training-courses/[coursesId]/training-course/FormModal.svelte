@@ -12,6 +12,7 @@
 		return item.text.toLowerCase().includes(value.toLowerCase());
 	}
 
+	export let errorModal = false;
 	export let open = true;
 	export let trainingCourse = {
 		id: null,
@@ -49,7 +50,11 @@
 	const submitHandler = createSubmitHandler({
 		onSubmit: async (data) => {
 			if (trainingCourse.id) {
-				await trainingCourses.updateTrainingCourse({ ...data, id: trainingCourse.id, course_category: $page.params.coursesId });
+				await trainingCourses.updateTrainingCourse({
+					...data,
+					id: trainingCourse.id,
+					course_category: $page.params.coursesId
+				});
 			} else {
 				await trainingCourses.createTrainingCourse({
 					...data,
@@ -58,6 +63,9 @@
 			}
 			open = false;
 			reset();
+			if ($trainingCourses.errorData.status == 403) {
+				errorModal = true;
+			}
 		}
 	});
 
@@ -115,4 +123,17 @@
 		<!-- {JSON.stringify($errors)}
 		{JSON.stringify($data)} -->
 	</form>
+</Modal>
+
+<Modal passiveModal bind:open={errorModal} modalHeading="" on:open on:close>
+	<p class=" t-text-red-500 t-text-lg ">
+		{#if $trainingCourses.errorData.errorMessageForCode != null}
+			Code : {$trainingCourses.errorData.errorMessageForCode}
+		{/if}
+	</p>
+	<p class=" t-text-red-500 t-text-lg ">
+		{#if $trainingCourses.errorData.errorMessageForTitle != null}
+			Title : {$trainingCourses.errorData.errorMessageForTitle}
+		{/if}
+	</p>
 </Modal>

@@ -24,11 +24,15 @@ export async function updateTrainingCourse(payload) {
 		const { data } = await http.put(`training-course/${payload.id}/`, payload);
 		return {
 			status: 200,
-			data
+			data,
+			errorMessageForCode: null,
+			errorMessageForTitle: null
 		};
 	} catch (err) {
 		return Promise.resolve({
-			status: 403
+			status: 403,
+			errorMessageForCode: err.response.data.code,
+			errorMessageForTitle: err.response.data.title
 		});
 	}
 }
@@ -38,11 +42,16 @@ export async function createTrainingCourse(payload) {
 		const { data } = await http.post(`training-course/`, payload);
 		return {
 			status: 200,
-			data
+			data,
+			errorMessageForCode: null,
+			errorMessageForTitle: null
 		};
 	} catch (err) {
+		console.log(err);
 		return Promise.resolve({
-			status: 403
+			status: 403,
+			errorMessageForCode: err.response.data.code,
+			errorMessageForTitle: err.response.data.title
 		});
 	}
 }

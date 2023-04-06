@@ -6,7 +6,7 @@
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
 	import { onMount } from 'svelte';
-	import { dashboardData } from '$lib/store/dashboard';
+	import { dashboardSpeceficCategories, dashboardSpeceficCategoryData } from '$lib/store/dashboard';
 
 	const BACKGROUND_COLOR = ['#FFDCBF', '#BDFCBD', '#BBECF9', '#F9BBBB', '#D7C7F9'];
 
@@ -66,13 +66,13 @@
 		}
 	}
 
-	$: courseList = $dashboardData.speceficCategories.map((item) => ({ ...item, text: item.title }));
+	// $: courseList = $dashboardSpeceficCategories.data.map((item) => ({ ...item, text: item.title }));
 
-	$: {
-		if ($data.selectedCategory) {
-			dashboardData.getSpeceficCategoryData($data.selectedCategory);
-		}
-	}
+	// $: {
+	// 	if ($data.selectedCategory) {
+	// 		dashboardSpeceficCategoryData.getSpeceficCategoryData($data.selectedCategory);
+	// 	}
+	// }
 
 	onMount(() => {
 		if (browser) {
@@ -122,7 +122,7 @@
 
 <main class={Class}>
 	<section class="t-bg-white t-py-4">
-		<div class="t-grid t-grid-cols-2 md:t-grid-cols-3 t-gap-4">
+		<!-- <div class="t-grid t-grid-cols-2 md:t-grid-cols-3 t-gap-4">
 			<div class="t-col-start-2 md:t-col-start-3 t-px-2 md:t-px-10 t-mb-3">
 				<form use:form>
 					<ComboBox
@@ -133,7 +133,7 @@
 					/>
 				</form>
 			</div>
-		</div>
+		</div> -->
 		<canvas class="t-w-full t-py-3" bind:this={barChartElement} />
 	</section>
 	<p

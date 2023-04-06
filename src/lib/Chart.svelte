@@ -1,5 +1,11 @@
 <script>
-	import { dashboardData } from '$lib/store/dashboard';
+	import {
+		dashboardOrganization,
+		dashboardGenderWiseTraining,
+		dashboardPlannedBatch,
+		dashboardCategoryParticipant,
+		dashboardTrainingStatus
+	} from '$lib/store/dashboard';
 	import OrganizationalChart from './OrganizationalChart.svelte';
 	import TrainingStatusChart from './TrainingStatusChart.svelte';
 	import GenderWiseChart from './GenderWiseChart.svelte';
@@ -8,66 +14,63 @@
 
 	//Organization Chart
 	$: labels =
-		$dashboardData.participantFromOrganization.length == 0
+		$dashboardOrganization.data.length == 0
 			? ['---', '---', '---', '---', '---']
-			: $dashboardData.participantFromOrganization.map((item) => item.organization_name);
+			: $dashboardOrganization.data.map((item) => item.organization_name);
 
 	$: data =
-		$dashboardData.participantFromOrganization.length == 0
+		$dashboardOrganization.data.length == 0
 			? [0, 0, 0, 0, 0]
-			: $dashboardData.participantFromOrganization.map((item) => item.participant);
+			: $dashboardOrganization.data.map((item) => item.participant);
 
 	//Training Status Chart
 
 	$: status =
-		$dashboardData.trainingStatus.length == 0
+		$dashboardTrainingStatus.data.length == 0
 			? ['---', '---', '---']
-			: $dashboardData.trainingStatus.map((item) => item.name);
+			: $dashboardTrainingStatus.data.map((item) => item.name);
 
 	$: statusData =
-		$dashboardData.trainingStatus.length == 0
+		$dashboardTrainingStatus.data.length == 0
 			? [0, 0, 0]
-			: $dashboardData.trainingStatus.map((item) => item.value);
+			: $dashboardTrainingStatus.data.map((item) => item.value);
 
 	//Gender Wise Chart
 
 	$: genderName =
-		$dashboardData.genderWiseTraining.length == 0
+		$dashboardGenderWiseTraining.data.length == 0
 			? ['---', '---']
-			: $dashboardData.genderWiseTraining.map((item) => item.name);
+			: $dashboardGenderWiseTraining.data.map((item) => item.name);
 
 	$: genderData =
-		$dashboardData.genderWiseTraining.length == 0
+		$dashboardGenderWiseTraining.data.length == 0
 			? [0, 0]
-			: $dashboardData.genderWiseTraining.map((item) => item.value);
+			: $dashboardGenderWiseTraining.data.map((item) => item.value);
 
 	//Planned Vs Completed Batch
 
 	$: plannedLabels =
-		$dashboardData.planedBatch.length == 0
+		$dashboardPlannedBatch.data.length == 0
 			? ['---', '---']
-			: $dashboardData.planedBatch.map((item) => item.name);
+			: $dashboardPlannedBatch.data.map((item) => item.name);
 
 	$: plannedData =
-		$dashboardData.planedBatch.length == 0
+		$dashboardPlannedBatch.data.length == 0
 			? [0, 0]
-			: $dashboardData.planedBatch.map((item) => item.value);
+			: $dashboardPlannedBatch.data.map((item) => item.value);
 
 	//Number Of Participant From Diffrent Categories Chart
 
 	$: courseLabels =
-		$dashboardData.participantFromCategory.length == 0
+		$dashboardCategoryParticipant.data.length == 0
 			? ['---', '---', '---', '---']
-			: $dashboardData.participantFromCategory.map((item) => item.training_course_category);
+			: $dashboardCategoryParticipant.data.map((item) => item.training_course_category);
 
 	$: courseData =
-		$dashboardData.participantFromCategory.length == 0
+		$dashboardCategoryParticipant.data.length == 0
 			? [0, 0, 0, 0]
-			: $dashboardData.participantFromCategory.map((item) => item.particpant);
+			: $dashboardCategoryParticipant.data.map((item) => item.particpant);
 
-	$: {
-		console.log(courseData);
-	}
 </script>
 
 <div

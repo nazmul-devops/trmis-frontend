@@ -39,13 +39,11 @@ function createBatchSessionStore() {
 	}
 
 	async function createBatchSession(batchId: number, payload) {
-		console.log("createBatchSession");
 		setLoading();
 		const { errorMessage, status } = await batchSessionsService.createBatchSession(
 			batchId,
 			payload
 		);
-		console.log(errorMessage);
 		update((prev) => {
 			prev.errorData.errorMessage = errorMessage;
 			prev.errorData.status = status;

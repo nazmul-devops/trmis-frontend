@@ -7,7 +7,15 @@
 	import Count from './Count.svelte';
 	import { MONTH_NAME } from '$lib/constants';
 	import { onMount } from 'svelte';
-	import { dashboardData } from '$lib/store/dashboard';
+	import {
+		dashboardCategoryParticipant,
+		dashboardGenderWiseTraining,
+		dashboardOrganization,
+		dashboardPlannedBatch,
+		dashboardSpeceficCategories,
+		dashboardSpeceficCategoryData,
+		dashboardTrainingStatus
+	} from '$lib/store/dashboard';
 
 	let yearId;
 	let startMonthId;
@@ -46,19 +54,19 @@
 
 	$: {
 		if (yearId != null && startMonthId != null && endMonthId != null) {
-			dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
-			dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
-			dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
-			dashboardData.getPlannedBatch(yearId, startMonthId, endMonthId);
-			dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
-			dashboardData.getSpeceficCategories();
+			dashboardOrganization.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
+			dashboardTrainingStatus.getTrainingStatus(yearId, startMonthId, endMonthId);
+			dashboardGenderWiseTraining.getGenderWiseTraining(yearId, startMonthId, endMonthId);
+			dashboardPlannedBatch.getPlannedBatch(yearId, startMonthId, endMonthId);
+			dashboardCategoryParticipant.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+			dashboardSpeceficCategories.getSpeceficCategories();
 		} else if (startMonthId == null && endMonthId == null) {
-			dashboardData.getParticipantsFromOrganization(yearId);
-			dashboardData.getTrainingStatus(yearId);
-			dashboardData.getGenderWiseTraining(yearId);
-			dashboardData.getPlannedBatch(yearId);
-			dashboardData.getParticipantFromCategories(yearId);
-			dashboardData.getSpeceficCategories();
+			dashboardOrganization.getParticipantsFromOrganization(yearId);
+			dashboardTrainingStatus.getTrainingStatus(yearId);
+			dashboardGenderWiseTraining.getGenderWiseTraining(yearId);
+			dashboardPlannedBatch.getPlannedBatch(yearId);
+			dashboardCategoryParticipant.getParticipantFromCategories(yearId);
+			dashboardSpeceficCategories.getSpeceficCategories();
 		}
 	}
 

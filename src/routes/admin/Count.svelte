@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { dashboardData } from '$lib/store/dashboard';
+	import { dashboardParticipantAndResource } from '$lib/store/dashboard';
 	import { InlineLoading } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 	interface CountNum {
@@ -9,10 +9,10 @@
 
 	let CountList;
 
-	$: CountList = $dashboardData.participantAndResource;
+	$: CountList = $dashboardParticipantAndResource.data;
 
 	onMount(async () => {
-		dashboardData.getParticipantsAndResources();
+		dashboardParticipantAndResource.getParticipantsAndResources();
 	});
 </script>
 
@@ -20,7 +20,7 @@
 	<div class="t-py-2">
 		<div class="t-bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] t-py-6 t-rounded-lg">
 			<div class="t-text-center t-font-semibold t-py-2">
-				{#if $dashboardData.loading}
+				{#if $dashboardParticipantAndResource.loading}
 					<InlineLoading class=" t-block " />
 				{:else}
 					<span class="t-text-[32px]">{CountList.total_participant_enrolled}</span>
@@ -34,7 +34,7 @@
 	<div class="t-py-2">
 		<div class="t-bg-white shadow-[0_35px_60px_-15px_rgba(0,0,0,0.9)] t-py-6 t-rounded-lg">
 			<div class="t-text-center t-font-semibold t-py-2">
-				{#if $dashboardData.loading}
+				{#if $dashboardParticipantAndResource.loading}
 					<InlineLoading class=" t-block " />
 				{:else}
 					<span class="t-text-[32px]">{CountList.total_resource_person}</span>
