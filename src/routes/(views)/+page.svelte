@@ -5,12 +5,23 @@
 	import NoticeBoard from './NoticeBoard.svelte';
 	import SponsorButton from './SponsorButton.svelte';
 	import CourseWiseChartForPulicPage from './CourseWiseChartForPulicPage.svelte';
+	import OrganizationalChart from '$lib/OrganizationalChart.svelte';
 	import { dashboardData } from '$lib/store/dashboard';
 
 	let yearId;
 	let startMonthId;
 	let endMonthId;
 
+	//organizational chart
+	$: labels =
+		$dashboardData.participantFromOrganization.length == 0
+			? ['---', '---', '---', '---', '---']
+			: $dashboardData.participantFromOrganization.map((item) => item.organization_name);
+
+	$: data =
+		$dashboardData.participantFromOrganization.length == 0
+			? [0, 0, 0, 0, 0]
+			: $dashboardData.participantFromOrganization.map((item) => item.participant);
 	//Training Status Chart
 
 	$: status =
@@ -37,6 +48,7 @@
 
 	
 	$: {
+		dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
 		dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
 		dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
 		dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
@@ -120,7 +132,7 @@
 						</div>
 					{/each}
 				</div>
-				<CourseWiseChartForPulicPage />
+				<OrganizationalChart {labels} {data}/>
 			</div>
 
 			<div class="t-grid t-grid-cols-2 t-gap-4 t-px-10 t-mb-2 lg:t-mb-5">
