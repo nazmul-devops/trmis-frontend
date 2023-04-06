@@ -65,14 +65,19 @@
 <header class="t-sticky t-top-0 t-z-50">
 	<div class="t-bg-white">
 		<div
-			class="sm:t-px-7 md:t-px-6 xl:t-px-10 2xl:t-px-24  t-flex t-justify-between t-items-center sm:t-relative t-py-4"
+			class="sm:t-px-4 md:t-px-6 xl:t-px-10 2xl:t-px-24  t-flex t-justify-between t-items-center sm:t-relative t-py-4"
 		>
 			<div class="lg:t-ml-0 sm:t-ml-[10px] t-mr-4 xl:t-mr-12  ">
 				<a href="/"
 					><div
 						class=""
 					>
-						<img src="/assets/icon.png" alt="" class="t-mr-2" />
+						<div class="md:t-hidden">
+							<img src="/assets/LogoSM.png" alt="" class="t-ml-1 t-mr-2" />
+						</div>
+						<div class="t-hidden md:t-block">
+							<img src="/assets/LogoXL.png" alt="" class="t-mr-2" />
+						</div>
 					</div>
 				</a>
 			</div>

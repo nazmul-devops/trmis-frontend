@@ -35,5 +35,5 @@
 			</div>
 		</div>
 	</div>
-	<img class=" t-rounded-lg t-w-full t-h-full" src="assets/ETU.jpg" alt="" />
+	<img class=" t-rounded-lg t-w-full t-h-full" src="assets/Diagram.png" alt="" />
 </div>

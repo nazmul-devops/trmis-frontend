@@ -42,9 +42,6 @@
 		trainingCourses.getTrainingCourses()
 		courseCategories.getCourseCategories();
 		getCourseMaterials();
-		getTrainingCourses().then((resp)=>{
-			console.log(resp.data)
-		})
 	});
 </script>
 
@@ -63,9 +60,9 @@
 						dropdown ? 't-block' : 't-hidden'
 					}`}
 				>
-					<div class="t-bg-white lg:t-mb-4">
-						<div class="t-relative t-py-2 t-px-3 t-block">
-							<span class="t-absolute t-inset-y-0 t-left-5 t-flex t-items-center t-pl-2">
+					<div class="t-bg-white t-mt-20 lg:t-mt-0 lg:t-mb-4">
+						<div class="t-relative t-py-2 t-px-8 lg:t-px-3 t-block">
+							<span class="t-absolute t-inset-y-0 t-left-8 lg:t-left-5 t-flex t-items-center t-pl-2">
 								<i
 									class="las la-search t-text-xl t-text-gray-400 -t-rotate-90"
 								/>
@@ -83,7 +80,7 @@
 						</div>
 						<p class="t-px-4 t-py-2 t-border-b-[1px] t-border-solid t-border-b-[#44835C] ">Training categories</p>
 						<ul
-							class={`t-leading-normal t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-24 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
+							class={`t-leading-normal t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-8 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
 						>
 							{#if searchTerm && filteredDownloads.length === 0}
 								<p class="t-px-3 t-py-5"><strong>No Result</strong> try again!</p>
@@ -129,7 +126,7 @@
 				</div>
 				<div
 					class={`  sm:t-block lg:t-hidden t-py-6 t-px-4 t-mb-2 t-rounded-md ${
-						dropdown ? 't-absolute t-top-0 t-right-5' : 't-relative t-bg-white t-shadow-lg'
+						dropdown ? 't-absolute t-top-0 t-left-2' : 't-relative t-bg-white t-shadow-lg'
 					}`}
 					on:click={handledropdownClick}
 					on:keypress={handledropdownClick}
