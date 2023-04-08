@@ -15,8 +15,12 @@
 	};
 	let groups = [];
 
-	$: {
-		groups = group.permissions ? group.permissions.map((item) => item.permission) : [];
+	// $: {
+	// 	groups = group.permissions ? group.permissions.map((item) => item.permission) : [];
+	// }
+
+	$:{
+		console.log($data)
 	}
 
 	$: {
@@ -74,7 +78,6 @@
 		</div>
 		<div>
 			<MultiSelect
-				direction="top"
 				selectedIds={groups}
 				titleText="Permission"
 				label="Select Permission..."
