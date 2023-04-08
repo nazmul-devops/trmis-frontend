@@ -1,18 +1,9 @@
 import { writable } from 'svelte/store';
 import * as dashboardService from '../service/dashboard';
 
-function dcreateDashboardStore() {
-	const { subscribe, update } = writable({
-		loading: true,
-		participantAndResource: [],
-		participantFromOrganization: [],
-		trainingStatus: [],
-		genderWiseTraining: [],
-		planedBatch: [],
-		participantFromCategory: [],
-		speceficCategories: [],
-		speceficCategoryData: []
-	});
+function createDashboardParticipantAndResourceStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
 	function setLoading() {
 		update((prev) => ({
 			...prev,
@@ -23,89 +14,178 @@ function dcreateDashboardStore() {
 	async function getParticipantsAndResources() {
 		setLoading();
 		const resp = await dashboardService.getParticipantsAndResources();
-		update((prev) => {
-			prev.participantAndResource = resp.data;
-			prev.loading = false;
-			return prev;
-		});
+		set({ loading: false, data: resp.data });
 	}
+
+	return {
+		subscribe,
+		getParticipantsAndResources
+	};
+}
+
+function createDashboardOrganizationstore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
 	async function getParticipantsFromOrganization(year, start_month = null, end_month = null) {
+		setLoading();
 		const resp = await dashboardService.getParticipantsFromOrganization(
 			year,
 			start_month,
 			end_month
 		);
-		update((prev) => {
-			prev.participantFromOrganization = resp.data.top_five_organizations;
-			prev.loading = false;
-			return prev;
-		});
-	}
-
-	async function getTrainingStatus(year, start_month = null, end_month = null) {
-		const resp = await dashboardService.getTraininjgStatus(year, start_month, end_month);
-		update((prev) => {
-			prev.trainingStatus = resp.data;
-			prev.loading = false;
-			return prev;
-		});
-	}
-
-	async function getGenderWiseTraining(year, start_month = null, end_month = null) {
-		const resp = await dashboardService.getGenderWiseTraining(year, start_month, end_month);
-		update((prev) => {
-			prev.genderWiseTraining = resp.data;
-			prev.loading = false;
-			return prev;
-		});
-	}
-	async function getPlannedBatch(year, start_month = null, end_month = null) {
-		const resp = await dashboardService.getPlannedBatch(year, start_month, end_month);
-		update((prev) => {
-			prev.planedBatch = resp.data;
-			prev.loading = false;
-			return prev;
-		});
-	}
-
-	async function getParticipantFromCategories(year, start_month = null, end_month = null) {
-		const resp = await dashboardService.getParticipantFromCategories(year, start_month, end_month);
-		update((prev) => {
-			prev.participantFromCategory = resp.data.top_four_course_category_name;
-			prev.loading = false;
-			return prev;
-		});
-	}
-
-	async function getSpeceficCategories() {
-		const resp = await dashboardService.getSpeceficCategories();
-		update((prev) => {
-			prev.loading = false;
-			prev.speceficCategories = resp.data.specific_training_course_category;
-			return prev;
-		});
-	}
-
-	async function getSpeceficCategoryData(id) {
-		const resp = await dashboardService.getSpeceficCategoryData(id);
-		update((prev) => {
-			prev.loading = false;
-			prev.speceficCategoryData = resp.data.specific_training_course_category;
-			return prev;
-		});
+		set({ loading: false, data: resp.data.top_five_organizations });
 	}
 
 	return {
 		subscribe,
-		getParticipantsAndResources,
-		getParticipantsFromOrganization,
-		getTrainingStatus,
-		getGenderWiseTraining,
-		getParticipantFromCategories,
-		getPlannedBatch,
-		getSpeceficCategories,
+		getParticipantsFromOrganization
+	};
+}
+
+function createDashboardTrainingStatusStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
+	async function getTrainingStatus(year, start_month = null, end_month = null) {
+		setLoading();
+		const resp = await dashboardService.getTraininjgStatus(year, start_month, end_month);
+		set({ loading: false, data: resp.data });
+	}
+
+	return {
+		subscribe,
+		getTrainingStatus
+	};
+}
+
+function createDashboardGenderWiseTrainingStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
+	async function getGenderWiseTraining(year, start_month = null, end_month = null) {
+		setLoading();
+		const resp = await dashboardService.getGenderWiseTraining(year, start_month, end_month);
+		set({ loading: false, data: resp.data });
+	}
+
+	return {
+		subscribe,
+		getGenderWiseTraining
+	};
+}
+
+function createDashboardPlannedBatchStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
+	async function getPlannedBatch(year, start_month = null, end_month = null) {
+		setLoading();
+		const resp = await dashboardService.getPlannedBatch(year, start_month, end_month);
+		set({ loading: false, data: resp.data });
+	}
+
+	return {
+		subscribe,
+		getPlannedBatch
+	};
+}
+
+function createDashboardCategoryParticipantsStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
+	async function getParticipantFromCategories(year, start_month = null, end_month = null) {
+		setLoading();
+		const resp = await dashboardService.getParticipantFromCategories(year, start_month, end_month);
+		set({ loading: false, data: resp.data.top_four_course_category_name });
+	}
+
+	return {
+		subscribe,
+		getParticipantFromCategories
+	};
+}
+
+function createDashboardSpeceficCategoriesStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
+	async function getSpeceficCategories() {
+		setLoading();
+		const resp = await dashboardService.getSpeceficCategories();
+		set({ loading: false, data: resp.data });
+	}
+
+	return {
+		subscribe,
+		getSpeceficCategories
+	};
+}
+
+function createDashboardSpeceficCategoryDataStore() {
+	const { subscribe, set, update } = writable({ loading: true, data: [] });
+
+	function setLoading() {
+		update((prev) => ({
+			...prev,
+			loading: true
+		}));
+	}
+
+	async function getSpeceficCategoryData(id) {
+		setLoading();
+		const resp = await dashboardService.getSpeceficCategoryData(id);
+		set({ loading: false, data: resp.data });
+	}
+
+	return {
+		subscribe,
 		getSpeceficCategoryData
 	};
 }
 
-export const dashboardData = dcreateDashboardStore();
+export const dashboardParticipantAndResource = createDashboardParticipantAndResourceStore();
+export const dashboardOrganization = createDashboardOrganizationstore();
+export const dashboardTrainingStatus = createDashboardTrainingStatusStore();
+export const dashboardGenderWiseTraining = createDashboardGenderWiseTrainingStore();
+export const dashboardPlannedBatch = createDashboardPlannedBatchStore();
+export const dashboardCategoryParticipant = createDashboardCategoryParticipantsStore();
+export const dashboardSpeceficCategories = createDashboardSpeceficCategoriesStore();
+export const dashboardSpeceficCategoryData = createDashboardSpeceficCategoryDataStore();
