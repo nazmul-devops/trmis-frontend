@@ -35,11 +35,13 @@ export async function updateCourseCategory(payload) {
 		const { data } = await http.put(`training-course/course-category/${payload.id}/`, payload);
 		return {
 			status: 200,
-			data
+			data,
+			errorMessageForTitle: null
 		};
 	} catch (err) {
 		return Promise.resolve({
-			status: 403
+			status: 403,
+			errorMessageForTitle: err.response.data.title
 		});
 	}
 }
@@ -49,11 +51,13 @@ export async function createCourseCategory(payload) {
 		const { data } = await http.post(`training-course/course-category/`, payload);
 		return {
 			status: 200,
-			data
+			data,
+			errorMessageForTitle: null
 		};
 	} catch (err) {
 		return Promise.resolve({
-			status: 403
+			status: 403,
+			errorMessageForTitle: err.response.data.title
 		});
 	}
 }

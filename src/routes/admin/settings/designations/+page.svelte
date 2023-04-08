@@ -77,9 +77,4 @@
 {/if}
 
 <FormModal bind:open bind:designation />
-<DeleteModal
-	textContent={'If you delete this designation, any corresponding Participant and Resource Person will also be deleted if they are associated with this designation.'}
-	bind:open={deleteModal}
-	on:deleteConfirm={doDelete}
-	name={'designation'}
-/>
+<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} name={'designation'} />

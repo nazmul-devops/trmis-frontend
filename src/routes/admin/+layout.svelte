@@ -252,7 +252,7 @@
 			</SideNavMenu>
 			<SideNavDivider />
 
-			<SideNavMenu icon={UserSettings} text="MIS Settings">
+			<SideNavMenu icon={UserSettings} text="User Settings">
 				<SideNavLink class="t-mt-3">
 					<a href="/admin/mis-settings/users">Users</a>
 				</SideNavLink>

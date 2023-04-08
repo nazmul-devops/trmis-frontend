@@ -147,8 +147,8 @@
 				<TextInput
 					invalid={$errors.duration != null}
 					name="duration"
-					labelText="Duration"
-					placeholder="Enter Duration..."
+					labelText="Duration (Days)"
+					placeholder="Enter Duration (Days)..."
 				/>
 				{#if $errors.duration}
 					<p class="t-text-red-500">{$errors.duration}</p>
@@ -158,19 +158,15 @@
 				<TextInput
 					invalid={$errors.initial_cost != null}
 					name="initial_cost"
-					labelText="Initial Cost"
-					placeholder="Enter Initial Cost..."
+					labelText="Budget"
+					placeholder="Enter Budget..."
 				/>
 				{#if $errors.initial_cost}
 					<p class="t-text-red-500">{$errors.initial_cost}</p>
 				{/if}
 			</div>
 			<div>
-				<TextInput
-					name="final_cost"
-					labelText="Final Cost"
-					placeholder="Enter Final Cost..."
-				/>
+				<TextInput name="final_cost" labelText="Expentidure" placeholder="Enter Expentidure..." />
 			</div>
 			<div>
 				<ComboBox

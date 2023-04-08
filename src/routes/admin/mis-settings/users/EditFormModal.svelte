@@ -25,6 +25,10 @@
 	}
 
 	$: {
+		console.log(user.groups);
+	}
+
+	$: {
 		setData('username', user.username);
 		setData('first_name', user.first_name);
 		setData('last_name', user.last_name);
@@ -35,8 +39,8 @@
 	}
 
 	const schema = yup.object({
-		username: yup.string().required("Username is required."),
-		email: yup.string().email().required("Email is required."),
+		username: yup.string().required('Username is required.'),
+		email: yup.string().email().required('Email is required.'),
 		first_name: yup.string(),
 		last_name: yup.string(),
 		is_staff: yup.boolean(),
@@ -129,7 +133,6 @@
 		<!-- <p>{JSON.stringify($errors)}</p> -->
 	</form>
 	<MultiSelect
-		direction="top"
 		selectedIds={Groups}
 		titleText="Groups"
 		label="Select Group..."

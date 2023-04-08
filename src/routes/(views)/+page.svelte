@@ -4,9 +4,14 @@
 	import AboutContent from './AboutContent.svelte';
 	import NoticeBoard from './NoticeBoard.svelte';
 	import SponsorButton from './SponsorButton.svelte';
-	import CourseWiseChartForPulicPage from './CourseWiseChartForPulicPage.svelte';
 	import OrganizationalChart from '$lib/OrganizationalChart.svelte';
-	import { dashboardData } from '$lib/store/dashboard';
+	import {
+		dashboardOrganization,
+		dashboardGenderWiseTraining,
+		dashboardPlannedBatch,
+		dashboardCategoryParticipant,
+		dashboardTrainingStatus	
+	} from  '$lib/store/dashboard';
 
 	let yearId;
 	let startMonthId;
@@ -14,44 +19,44 @@
 
 	//organizational chart
 	$: labels =
-		$dashboardData.participantFromOrganization.length == 0
+		$dashboardOrganization.data.length == 0
 			? ['---', '---', '---', '---', '---']
-			: $dashboardData.participantFromOrganization.map((item) => item.organization_name);
+			: $dashboardOrganization.data.map((item) => item.organization_name);
 
 	$: data =
-		$dashboardData.participantFromOrganization.length == 0
+		$dashboardOrganization.data.length == 0
 			? [0, 0, 0, 0, 0]
-			: $dashboardData.participantFromOrganization.map((item) => item.participant);
+			: $dashboardOrganization.data.map((item) => item.participant);
 	//Training Status Chart
 
 	$: status =
-		$dashboardData.trainingStatus.length == 0
+		$dashboardTrainingStatus.data.length == 0
 			? ['---', '---', '---']
-			: $dashboardData.trainingStatus.map((item) => item.name);
+			: $dashboardTrainingStatus.data.map((item) => item.name);
 
 	$: statusData =
-		$dashboardData.trainingStatus.length == 0
+		$dashboardTrainingStatus.data.length == 0
 			? [0, 0, 0]
-			: $dashboardData.trainingStatus.map((item) => item.value );
+			: $dashboardTrainingStatus.data.map((item) => item.value );
 
 	//Gender Wise Chart
 
 	$: genderName =
-		$dashboardData.genderWiseTraining.length == 0
+		$dashboardGenderWiseTraining.data.length == 0
 			? ['---', '---']
-			: $dashboardData.genderWiseTraining.map((item) => item.name);
+			: $dashboardGenderWiseTraining.data.map((item) => item.name);
 
 	$: genderData =
-		$dashboardData.genderWiseTraining.length == 0
+		$dashboardGenderWiseTraining.data.length == 0
 			? [0, 0]
-			: $dashboardData.genderWiseTraining.map((item) => item.value);
+			: $dashboardGenderWiseTraining.data.map((item) => item.value);
 
 	
 	$: {
-		dashboardData.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
-		dashboardData.getTrainingStatus(yearId, startMonthId, endMonthId);
-		dashboardData.getGenderWiseTraining(yearId, startMonthId, endMonthId);
-		dashboardData.getParticipantFromCategories(yearId, startMonthId, endMonthId);
+		dashboardOrganization.getParticipantsFromOrganization(yearId, startMonthId, endMonthId);
+		dashboardTrainingStatus.getTrainingStatus(yearId, startMonthId, endMonthId);
+		dashboardGenderWiseTraining.getGenderWiseTraining(yearId, startMonthId, endMonthId);
+		dashboardCategoryParticipant.getParticipantFromCategories(yearId, startMonthId, endMonthId);
 	}
 
 
@@ -132,7 +137,7 @@
 						</div>
 					{/each}
 				</div>
-				<OrganizationalChart {labels} {data}/>
+				<OrganizationalChart {labels} {data} />
 			</div>
 
 			<div class="t-grid t-grid-cols-2 t-gap-4 t-px-10 t-mb-2 lg:t-mb-5">
@@ -147,7 +152,9 @@
 	</div>
 </div>
 <div class="t-bg-white">
-	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-pt-6 lg:t-py-32">
+	<div
+		class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-12 xl:t-px-16 2xl:t-px-20 t-pt-6 lg:t-py-32"
+	>
 		<SponsorButton />
 	</div>
 </div>

@@ -20,7 +20,7 @@
 	let headers = [
 		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'duration', value: 'Duration' },
+		{ key: 'duration', value: 'Duration (Days)' },
 		{ key: 'coordinator', value: 'Training Coordinators' },
 		{ key: 'organization', value: 'Organizations' },
 		{ key: 'source_of_fund', value: 'Sources Of Fund' },

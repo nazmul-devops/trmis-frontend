@@ -3,8 +3,6 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import {
-		Select,
-		SelectItem,
 		TextInput,
 		TextArea,
 		DataTable,
@@ -16,7 +14,7 @@
 	import { organizations } from '$lib/store/organization';
 	import { coordinators } from '$lib/store/coordinators';
 	import { trainers } from '$lib/store/trainer';
-	import { getEventSchedules } from '$lib/service/schedule-events';
+	import { scheduleEventsLists } from '$lib/store/schedule-events';
 	import { getEvent, updateEvent } from '$lib/service/event';
 	import { sourceOfFounds } from '$lib/store/source-of-found';
 	import { goto } from '$app/navigation';
@@ -37,7 +35,8 @@
 		setData('organization', eventDetails?.organization);
 		setData('coordinator', eventDetails?.coordinator);
 		setData('schedule', eventDetails?.schedule);
-
+		setData('expenditure', eventDetails?.expenditure);
+		setData('source_of_fund', eventDetails?.source_of_fund);
 		setData('facilitator', eventDetails?.facilitator);
 	}
 
@@ -60,20 +59,14 @@
 		facilitator: yup.array().min(1)
 	});
 
-	const { form, reset, createSubmitHandler, setFields, errors, data, setData } = createForm({
+	const { form, createSubmitHandler, errors, data, setData } = createForm({
 		initialValues: { facilitator: [] },
 		transform: (values: any) => {
 			return {
 				...values,
 				number_of_participants: values.number_of_participants
 					? parseInt(values.number_of_participants)
-					: null,
-				budget: values.budget ? parseInt(values.budget) : null,
-				status: parseInt(values.status),
-				type: parseInt(values.type),
-				organization: parseInt(values.organization),
-				coordinator: parseInt(values.coordinator),
-				schedule: parseInt(values.schedule)
+					: null
 			};
 		},
 		extend: validator({ schema })
@@ -104,7 +97,6 @@
 		participantsName = '';
 		participantsPhone = '';
 		participantsEmail = '';
-		// participantsList = event.participants;
 	}
 
 	function deleteParticipants(id) {
@@ -125,21 +117,20 @@
 		participantsList = eventDetails?.participants;
 	}
 
-	let eventSchedule = [];
 
 	let eventDetails;
 
 	$: organizationsList = $organizations.data.map((item) => ({ ...item, text: item.name }));
 	$: coordinatorList = $coordinators.data.map((item) => ({ ...item, text: item.name }));
-	$: schedules = eventSchedule.map((item) => ({ ...item, text: item.event_venue_name }));
+	$: schedules = $scheduleEventsLists.data.map((item) => ({ ...item, text: item.event_venue_name }));
 	$: sourceFunds = $sourceOfFounds.data.map((item) => ({ ...item, text: item.name }));
 
 	onMount(async () => {
 		trainers.getTrainers();
 		organizations.getOrganizations();
 		coordinators.getCoordinators();
-		const resp = await getEventSchedules();
-		eventSchedule = resp.data;
+		sourceOfFounds.getSourceOfFounds();
+		scheduleEventsLists.getEventSchedules();
 	});
 </script>
 
@@ -210,6 +201,7 @@
 		<div>
 			<TextInput
 				type="number"
+				bind:value={$data.expenditure}
 				labelText="Expenditure"
 				invalid={$errors.expenditure != null}
 				name="expenditure"
