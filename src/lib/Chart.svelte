@@ -4,7 +4,7 @@
 		dashboardGenderWiseTraining,
 		dashboardPlannedBatch,
 		dashboardCategoryParticipant,
-		dashboardTrainingStatus
+		dashboardTrainingStatus	
 	} from '$lib/store/dashboard';
 	import OrganizationalChart from './OrganizationalChart.svelte';
 	import TrainingStatusChart from './TrainingStatusChart.svelte';
@@ -70,7 +70,6 @@
 		$dashboardCategoryParticipant.data.length == 0
 			? [0, 0, 0, 0]
 			: $dashboardCategoryParticipant.data.map((item) => item.particpant);
-
 </script>
 
 <div

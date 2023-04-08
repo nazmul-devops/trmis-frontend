@@ -6,6 +6,7 @@
 	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
+	export let errorModal = false;
 	export let open = true;
 	export let courseCategory = {
 		id: null,
@@ -40,6 +41,9 @@
 			}
 			open = false;
 			reset();
+			if ($courseCategories.errorData.status == 403) {
+				errorModal = true;
+			}
 		}
 	});
 
@@ -83,4 +87,12 @@
 			</div>
 		</div>
 	</form>
+</Modal>
+
+<Modal passiveModal bind:open={errorModal} modalHeading="" on:open on:close>
+	<p class=" t-text-red-500 t-text-lg ">
+		{#if $courseCategories.errorData.errorMessageForTitle != null}
+			{$courseCategories.errorData.errorMessageForTitle}
+		{/if}
+	</p>
 </Modal>
