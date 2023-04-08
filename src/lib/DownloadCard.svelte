@@ -43,9 +43,9 @@
 			>
 				<a
 					href={link}
-					class="t-text-align-center t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] "
+					class="t-text-align-center t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-black "
 				>
-					<i class="las la-download t-text-4xl t-font-semibold" />
+					<i class="las la-download t-text-2xl t-font-semibold" />
 				</a>
 			</div>
 		</div>
