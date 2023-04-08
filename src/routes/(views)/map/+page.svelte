@@ -74,7 +74,7 @@
 </script>
 
 <div class="t-container t-py-11">
-	<div class="t-grid t-grid-cols-4 t-gap-4 t-mb-4 ">
+	<div class="t-grid t-grid-cols-1 md:t-grid-cols-2 lg:t-grid-cols-4 t-gap-4 t-mb-4">
 		<!-- <ComboBox
 			invalid={$errors.organization != null}
 			invalidText={$errors.organization}
@@ -127,7 +127,8 @@
 			</div>
 		{/if}
 	</div>
-
+</div>
+<div class="t-px-8 md:t-px-14 lg:t-px-20 xl:t-px-32 2xl:t-px-40 t-py-10">
 	<Map
 		bind:district={$data.district}
 		bind:division={$data.division}
