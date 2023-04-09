@@ -65,14 +65,29 @@
 	</form>
 </Modal>
 
-<Modal passiveModal bind:open={confirmModal} modalHeading="IBM Cloudant" on:open on:close>
-	<p>
-		=> Successfully Upload {$trainees.upload.successRows} Participants
-	</p>
-	<p>
-		=> {$trainees.upload.errorMessage}
-	</p>
-	<p>
-		=> Error At Row Number {$trainees.upload.errorRows} From Excel File.
-	</p>
+<Modal passiveModal bind:open={confirmModal} modalHeading="Bulk Upload (participants)" on:open on:close>
+	<div class="t-flex t-items-center">
+		<div class="t-bg-clip-text t-text-transparent t-bg-#0F62FE">
+			<i class="las la-user-graduate t-text-xl"></i>
+		</div>
+		<p>
+			Successfully Upload {$trainees.upload.successRows} Participants
+		</p>
+	</div>
+	<div class="t-flex t-items-center">
+		<div class="t-bg-clip-text t-text-transparent t-bg-[#FEAD0F]">
+			<i class="las la-exclamation-traiangle t-text-xl"></i>
+		</div>
+		<p>
+			{$trainees.upload.errorMessage}
+		</p>
+	</div>
+	<div class="t-flex t-items-center">
+		<div class="t-bg-clip-text t-text-transparent t-bg-[#FE0F0F]">
+			<i class="las la-exclamation-circle t-text-xl"></i>
+		</div>
+		<p>
+			Error At Row Number {$trainees.upload.errorRows} From Excel File.
+		</p>
+	</div>
 </Modal>

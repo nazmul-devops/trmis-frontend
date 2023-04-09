@@ -1,25 +1,75 @@
-<script>
+<script lang="ts">
 	import { httpWeb } from '$lib/service/auth';
-	import { trainingCourses } from '$lib/store/trainingCourse';
-	import { courseCategories } from '$lib/store/courseCategory';
-	import { getTrainingCourses } from '$lib/service/trainingCourse';
 	import PageTitle from '$lib/PageTitle.svelte';
 	import { onMount } from 'svelte';
 	import DownloadCard from '$lib/DownloadCard.svelte';
+	import NotFound from './NotFound.svelte';
 
-	let categories = [];
 	let courseMaterials = [];
-	let courses = [];
 	let dropdown = false;
+	let groupedCourses = [];
+	let selectedCategoryId = null;
 
-	$: categories = $courseCategories.data;
-	$: courses = $trainingCourses.data;
-	
-	async function getCourseMaterials(id) {
+	type View = 'category' | 'course';
+	let view: View = 'category';
+
+	function groupBy(items, key) {
+		return items.reduce(
+			(result, item) => ({
+				...result,
+				[item[key]]: [...(result[item[key]] || []), item]
+			}),
+			{}
+		);
+	}
+
+	let searchTermCategory = '';
+	let searchTermCourse = '';
+
+	$: groupedCoursesFiltered = groupedCourses.filter((item) =>
+		item.title.toLowerCase().includes(searchTermCategory.toLowerCase())
+	);
+
+	$: courses =
+		groupedCourses.filter((item) => item.id == selectedCategoryId).length > 0
+			? groupedCourses.filter((item) => item.id == selectedCategoryId)[0].courses
+			: [];
+
+	$: coursesFiltered = courses.filter((item) =>
+		item.title.toLowerCase().includes(searchTermCourse.toLowerCase())
+	);
+
+	async function getCourses() {
+		let { data } = await httpWeb.get('training-course/');
+		courses = data;
+		groupedCourses = Object.entries(groupBy(data, 'course_category')).map((item) => ({
+			id: item[0],
+			courses: item[1],
+			title: item[1][0].course_category_name
+		}));
+		getCourseMaterials();
+	}
+
+	let seclectedCourseId;
+
+	async function getCourseMaterials(id = null) {
+		seclectedCourseId = id;
 		let { data } = await httpWeb.get(`training-course/course-material/`, {
 			params: { training_course_id: id }
 		});
 		courseMaterials = data;
+	}
+
+	function categoryClickHandler(categoryId) {
+		view = 'course';
+		selectedCategoryId = categoryId;
+		searchTermCategory = ''
+	}
+
+	function backButtonClickHandler() {
+		view = 'category';
+		getCourseMaterials();
+		searchTermCourse = ''	
 	}
 
 	function getFileType(name) {
@@ -28,19 +78,10 @@
 	}
 	const handledropdownClick = () => (dropdown = !dropdown);
 
-	let searchTerm = '';
 	let filteredDownloads = [];
 
-	const searchDownload = () => {
-		return (filteredDownloads = categories.filter((course) => {
-			let courseTitle = course.title.toLowerCase();
-			return courseTitle.includes(searchTerm.toLowerCase());
-		}));
-	};
-
 	onMount(() => {
-		trainingCourses.getTrainingCourses()
-		courseCategories.getCourseCategories();
+		getCourses();
 		getCourseMaterials();
 	});
 </script>
@@ -60,73 +101,113 @@
 						dropdown ? 't-block' : 't-hidden'
 					}`}
 				>
-					<div class="t-bg-white t-mt-20 lg:t-mt-0 lg:t-mb-4">
-						<div class="t-relative t-py-2 t-px-8 lg:t-px-3 t-block">
-							<span class="t-absolute t-inset-y-0 t-left-8 lg:t-left-5 t-flex t-items-center t-pl-2">
-								<i
-									class="las la-search t-text-xl t-text-gray-400 -t-rotate-90"
-								/>
+					<div class="t-bg-white t-mt-24 lg:t-mt-0 lg:t-mb-4">
+						<div class="t-relative t-py-2 t-px-3 t-block">
+							<span class="t-absolute t-inset-y-0 t-left-5 t-flex t-items-center t-pl-2">
+								<i class="las la-search t-text-xl t-text-gray-400 -t-rotate-90" />
 							</span>
-							<input
+
+							{#if view == 'category'}
+								<input
 									class="placeholder:t-italic placeholder:t-text-slate-400 t-block t-bg-white t-w-full t-border t-border-slate-300 t-rounded-md t-py-2 t-pl-11 t-pr-3 t-shadow-sm focus:t-outline-none focus:t-border-sky-500 focus:t-ring-sky-500 focus:t-ring-1 sm:t-text-sm"
 									type="text"
 									name="searchField"
 									id="searchField"
 									placeholder="Search Term..."
 									autocomplete="off"
-									bind:value={searchTerm}
-									on:input={searchDownload}
+									bind:value={searchTermCategory}
 								/>
+							{:else}
+								<input
+									class="placeholder:t-italic placeholder:t-text-slate-400 t-block t-bg-white t-w-full t-border t-border-slate-300 t-rounded-md t-py-2 t-pl-11 t-pr-3 t-shadow-sm focus:t-outline-none focus:t-border-sky-500 focus:t-ring-sky-500 focus:t-ring-1 sm:t-text-sm"
+									type="text"
+									name="searchField"
+									id="searchField"
+									placeholder="Search Term..."
+									autocomplete="off"
+									bind:value={searchTermCourse}
+								/>
+							{/if}
 						</div>
-						<p class="t-px-4 t-py-2 t-border-b-[1px] t-border-solid t-border-b-[#44835C] ">Training categories</p>
+						{#if view == 'course'}
+							<div class="">
+								<button
+									class="t-mx-3 t-flex t-my-3 t-py-2 t-items-center t-cursor-pointer t-bg-[#44835C] t-rounded t-px-4 hover:t-bg-[#2A332F]"
+									on:click={backButtonClickHandler}
+									on:keypress={backButtonClickHandler}
+								>
+									<span
+										class=" t-font-semibold t-text-transparent t-bg-clip-text t-bg-white hover:t-scale-110"
+									>
+										<i class="las la-angle-left t-text-2xl" />
+									</span>
+									<p class="t-text-white t-px-2">Back</p>
+								</button>
+							</div>
+							<div class="t-my-4 t-border-b-[1px] t-border-solid t-border-b-[#44835C]">
+								<p class="t-text-[#5E856E] t-px-3">Training Course</p>
+							</div>
+							{:else}
+							<div class="t-my-3 t-px-2 t-border-b-[1px] t-border-solid t-border-b-[#44835C]">
+								<p class="t-text-[#5E856E] t-px-1 t-py-2">Training Category</p>
+							</div>
+						{/if}
 						<ul
-							class={`t-leading-normal t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-8 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
+							class={`t-leading-normal t-overflow-y-auto lg:t-max-h-[65vh] sm:t-py-6 lg:t-py-0 sm:t-px-6 lg:t-px-0`}
 						>
-							{#if searchTerm && filteredDownloads.length === 0}
-								<p class="t-px-3 t-py-5"><strong>No Result</strong> try again!</p>
-							{:else if filteredDownloads.length > 0}
-								{#each filteredDownloads as filteredDownload}
-									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)}>
-										<li
-											on:click={() => getCourseMaterials(filteredDownload.id)}
-											on:keypress={() => getCourseMaterials(filteredDownload.id)}
-											class="t-py-5 t-px-4"
+							{#if view == 'category'}
+								{#if groupedCoursesFiltered.length > 0}
+									{#each groupedCoursesFiltered as categroy}
+										<div
+											on:click={() => (dropdown = false)}
+											on:keypress={() => (dropdown = false)}
+											class="t-overflow-x-hidden"
 										>
-											<a class="t-flex t-justify-between t-items-center t-text-black" href={`/downloads/${filteredDownload.id}/training-courses`}>
-												{filteredDownload.title}
-											<span class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110">
-												<i class="las la-angle-right t-text-2xl" />
-											</span>
-											</a>
+											<li
+												class="t-py-5 t-px-4 t-cursor-pointer t-flex t-justify-between t-items-center t-text-sm"
+												on:click={() => categoryClickHandler(categroy.id)}
+												on:keypress={() => categoryClickHandler(categroy.id)}
+											>
+												{categroy.title}
+												<span
+													class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-black hover:t-scale-110"
+												>
+													<i class="las la-angle-right t-text-xl" />
+												</span>
+											</li>
+											<hr />
+										</div>
+									{/each}
+								{:else}
+									<p class="t-py-5 t-px-4 t-text-center">No Data Found</p>
+								{/if}
+							{:else if coursesFiltered.length > 0}
+								{#each coursesFiltered as course}
+									<div
+										on:click={() => (dropdown = false)}
+										on:keypress={() => (dropdown = false)}
+										class="t-overflow-x-hidden"
+									>
+										<li
+											class="t-py-5 t-px-4 t-cursor-pointer t-flex t-justify-between t-items-center t-text-sm"
+											on:click={() => getCourseMaterials(course.id)}
+											on:keypress={() => getCourseMaterials(course.id)}
+											class:active={course.id === seclectedCourseId}
+										>
+											{course.title}
 										</li>
 										<hr />
 									</div>
 								{/each}
 							{:else}
-								{#each categories as category}
-									<div on:click={() => (dropdown = false)} on:keypress={() => (dropdown = false)} class="">
-										<li
-											on:click={() => getCourseMaterials(category.id)}
-											on:keypress={() => getCourseMaterials(category.id)}
-											class="t-py-5 t-px-4 t-cursor-pointer"
-										>
-										<a class="t-flex t-justify-between t-items-center t-text-black" href={`/downloads/${category.id}/training-courses`}>
-										{category.title}
-										<span class="t-ml-5 t-font-semibold t-text-transparent t-text-xl t-bg-clip-text t-bg-gradient-to-r t-from-[#F94646] t-to-[#44835C] hover:t-scale-110">
-											<i class="las la-angle-right t-text-2xl" />
-										</span>
-										</a>
-										</li>
-										<hr />
-									</div>
-								{/each}
+								<p class="t-py-5 t-px-4 t-text-center">No Data Found</p>
 							{/if}
 						</ul>
 					</div>
 				</div>
 				<div
 					class={`  sm:t-block lg:t-hidden t-py-6 t-px-4 t-mb-2 t-rounded-md ${
-						dropdown ? 't-absolute t-top-0 t-left-2' : 't-relative t-bg-white t-shadow-lg'
+						dropdown ? 't-absolute t-top-0 t-right-5' : 't-relative t-bg-white t-shadow-lg'
 					}`}
 					on:click={handledropdownClick}
 					on:keypress={handledropdownClick}
@@ -154,16 +235,26 @@
 
 			<div class="sm:t-col-span-1 md:t-col-span-3">
 				<div>
-					{#each courseMaterials as materials}
-						<DownloadCard
-							materialTitle={materials.title}
-							desc={materials.description}
-							fileType={getFileType(materials.title)}
-							link={materials.files}
-						/>
-					{/each}
+					{#if courseMaterials.length > 0}
+						{#each courseMaterials as materials}
+							<DownloadCard
+								materialTitle={materials.title}
+								desc={materials.description}
+								fileType={getFileType(materials.title)}
+								link={materials.files}
+							/>
+						{/each}
+					{:else}
+						<NotFound />
+					{/if}
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+
+<style>
+	.active {
+		color: rgb(13, 145, 30);
+	}
+</style>
