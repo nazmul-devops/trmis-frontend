@@ -4,14 +4,21 @@ const config = {
 	important: true,
 
 	theme: {
-		extend: {},
+		extend: {
+			borderWidth:{
+				'1.5px': '1.5px'
+			},
+			borderColor:{
+				'customColor': '#CED0D6'
+			}
+		},
 		
         screens: {
             sm: "375px",
 
             md: "768px",
 
-            lg: "1024px",
+            lg: "1100px",
 
             xl: "1280px",
 

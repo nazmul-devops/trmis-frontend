@@ -1,40 +1,40 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import * as CourseMaterialsService from '../service/courseMaterial';
 
 function createCourseMaterialsStore() {
-	const { subscribe, set, update } = writable({ loading: true, data: [] });
+	const material = writable({ loading: true, data: [], trainingCourseId: null });
 	function setLoading() {
-		update((prev) => ({
+		material.update((prev) => ({
 			...prev,
 			loading: true
 		}));
 	}
 
-	async function getCourseMaterials() {
+	async function getCourseMaterials(trainingCourse) {
 		setLoading();
-		const resp = await CourseMaterialsService.getCourseMaterials();
-		set({ loading: false, data: resp.data });
+		const resp = await CourseMaterialsService.getCourseMaterials(trainingCourse);
+		material.set({ loading: false, data: resp.data, trainingCourseId: trainingCourse });
 	}
 
 	async function deleteCourseMaterial(id: number) {
 		setLoading();
 		await CourseMaterialsService.deleteCourseMaterial(id);
-		await getCourseMaterials();
+		await getCourseMaterials(get(material).trainingCourseId);
 	}
 
 	async function updateCourseMaterial(courseCategory) {
 		setLoading();
 		await CourseMaterialsService.updateCourseMaterial(courseCategory);
-		await getCourseMaterials();
+		await getCourseMaterials(get(material).trainingCourseId);
 	}
 	async function createCourseMaterial(courseCategory) {
 		setLoading();
 		await CourseMaterialsService.createCourseMaterial(courseCategory);
-		await getCourseMaterials();
+		await getCourseMaterials(get(material).trainingCourseId);
 	}
 
 	return {
-		subscribe,
+		subscribe: material.subscribe,
 		getCourseMaterials,
 		deleteCourseMaterial,
 		updateCourseMaterial,

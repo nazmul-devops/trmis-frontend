@@ -3,34 +3,30 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { designations } from '$lib/store/designations';
-	import { Modal, NumberInput, TextInput } from 'carbon-components-svelte';
+	import { Modal, TextInput } from 'carbon-components-svelte';
 	import { onMount } from 'svelte';
 
 	export let open = true;
 	export let designation = {
 		id: null,
-		name: null,
-		serial_no: null
+		name: null
+		// serial_no: null
 	};
 
 	$: {
-		setFields('name', designation.name);
-		setFields('serial_no', designation.serial_no);
+		if (designation.id != null) {
+			setFields('name', designation.name);
+			// setFields('serial_no', designation.serial_no);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		serial_no: yup.number().required()
+		name: yup.string().required('Nama is required')
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
-		transform: (values: any) => {
-			return {
-				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
-
-			}
-		},
+	const { form, reset, createSubmitHandler, setFields, data,errors } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -53,14 +49,28 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Designations"
+	size="xs"
+	modalHeading={designation.id == null ? 'Create Designations' : 'Edit Designations'}
 	primaryButtonText={designation.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
+		<div class="t-grid t-grid-cols-1 t-gap-4">
+			<div>
+				<TextInput
+					invalid={$errors.name != null}
+					bind:value={$data.name}
+					name="name"
+					labelText="Name"
+					placeholder="Enter  name..."
+				/>
+				{#if $errors.name}
+					<p class="t-text-red-500">{$errors.name}</p>
+				{/if}
+			</div>
+		</div>
 	</form>
 </Modal>

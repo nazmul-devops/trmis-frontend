@@ -3,7 +3,6 @@
 	import { validator } from '@felte/validator-yup';
 	import * as yup from 'yup';
 	import { createContact } from '$lib/service/contact';
-	import { ToastNotification } from 'carbon-components-svelte';
 
 	let message = null;
 
@@ -47,7 +46,7 @@
 				<input
 					name="first_name"
 					type="text"
-					placeholder="Your Name"
+					placeholder="First Name"
 					class="
                     t-w-full
                     t-rounded
@@ -61,14 +60,14 @@
                 "
 				/>
 				{#if $errors.first_name}
-					<p>{$errors.first_name}</p>
+					<p>First name is required</p>
 				{/if}
 			</div>
 			<div class="t-mb-4">
 				<input
 					name="last_name"
 					type="text"
-					placeholder="Your Name"
+					placeholder="Last Name"
 					class="
                     t-w-full
                     t-rounded
@@ -82,7 +81,7 @@
                 "
 				/>
 				{#if $errors.last_name}
-					<p>{$errors.last_name}</p>
+					<p>Last name is required</p>
 				{/if}
 			</div>
 			<div class="t-mb-4">
@@ -124,10 +123,10 @@
                 "
 				/>
 				{#if $errors.phone}
-					<p>{$errors.phone}</p>
+					<p>Please enter a 11 digit valid phone number</p>
 				{/if}
 			</div>
-			<div class="t-mb-4">
+			<div class="t-mb-4 t-col-span-2">
 				<input
 					name="company_name"
 					type="text"
@@ -145,7 +144,7 @@
                 "
 				/>
 				{#if $errors.company_name}
-					<p>{$errors.company_name}</p>
+					<p>Company name is required</p>
 				{/if}
 			</div>
 			<div class="t-mb-4 t-col-span-2">
@@ -166,8 +165,11 @@
                     t-focus:border-primary
                 "
 				/>
+				{#if $errors.message}
+					<p>Message can't be empty</p>
+				{/if}
 			</div>
-			<div>
+			<div class="t-col-span-2">
 				<button
 					type="submit"
 					class="

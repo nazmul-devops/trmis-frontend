@@ -20,11 +20,9 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		// { key: 'id', value: 'ID' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'code', value: 'Code' },
 		{ key: 'phone', value: 'Phone' },
-		{ key: 'alt_phone', value: 'Alt Phone' },
 		{ key: 'email', value: 'Email' },
 		{ key: 'action', value: 'Action' }
 	];
@@ -66,10 +64,9 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Coordinator</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped>
-					<OverflowMenuItem text="View" />
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -80,10 +77,17 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:coordinator />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal
+	bind:open={deleteModal}
+	textContent={'If you delete this coordinator, any corresponding batches and events will also be deleted if they are associated with this coordinator.'}
+	on:deleteConfirm={doDelete}
+	name={'coordinator'}
+/>

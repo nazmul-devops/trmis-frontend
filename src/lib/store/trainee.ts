@@ -2,7 +2,11 @@ import { writable } from 'svelte/store';
 import * as traineeService from '$lib/service/trainee';
 
 function createTraineesStore() {
-	const { subscribe, set, update } = writable({ loading: true, data: [] });
+	const { subscribe, update } = writable({
+		loading: true,
+		data: [],
+		upload: { status: null, errorRows: [], errorMessage: null, successRows: null }
+	});
 	function setLoading() {
 		update((prev) => ({
 			...prev,
@@ -13,7 +17,12 @@ function createTraineesStore() {
 	async function getTrainees() {
 		setLoading();
 		const resp = await traineeService.getTrainees();
-		set({ loading: false, data: resp.data });
+
+		update((prev) => {
+			prev.loading = false;
+			prev.data = resp.data;
+			return prev;
+		});
 	}
 
 	async function deleteTrainee(id: number) {
@@ -33,12 +42,31 @@ function createTraineesStore() {
 		await getTrainees();
 	}
 
+	async function uploadExel(payload) {
+		setLoading();
+
+		const { errorMessage, errorRows, status, successRows } = await traineeService.uploadExel(
+			payload
+		);
+
+		update((prev) => {
+			prev.upload.errorMessage = errorMessage;
+			prev.upload.errorRows = errorRows;
+			prev.upload.status = status;
+			prev.upload.successRows = successRows;
+			return prev;
+		});
+
+		await getTrainees();
+	}
+
 	return {
 		subscribe,
 		getTrainees,
 		deleteTrainee,
 		updateTrainee,
-		createTrainee
+		createTrainee,
+		uploadExel
 	};
 }
 

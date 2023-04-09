@@ -5,7 +5,7 @@
 	let noticeData = [];
 
 	async function getNotice() {
-		let { data } = await httpWeb.get('notice/home-page-notice/');
+		let { data } = await httpWeb.get('notice/');
 		noticeData = data;
 	}
 
@@ -16,14 +16,11 @@
 
 <div>
 	<div>
-		<PageTitle
-			Title="Notice"
-			desc="Lorem ipsum dolor sit amet consectetur adipisicing elit. Perferendis at natus quibusdam earum blanditiis aliquam!"
-		/>
+		<PageTitle Title="Notice" desc="Checkout all the notices..." />
 	</div>
 	<div class="md:t-container sm:t-px-6 md:t-px-8 lg:t-px-16 xl:t-px-20 2xl:t-px-24 t-py-24">
 		{#each noticeData as { title, description, date, files }}
-			<a href={files} class="t-text-gray-500" target="_blank">
+			<a href={files} class="t-text-gray-500" target="_blank" rel="noreferrer">
 				<div
 					class="t-relative t-p-8 t-overflow-hidden t-border t-bg-white t-border-slate-100 t-rounded-lg t-mt-4 t-shadow-lg"
 				>
@@ -34,7 +31,6 @@
 					<div class="t-justify-between t-sm:flex">
 						<div>
 							<h5 class="t-text-xl t-font-bold t-text-slate-900">{title}</h5>
-							<p class="t-mt-1 t-text-xs t-font-medium t-text-slate-600">{date}</p>
 						</div>
 					</div>
 
@@ -44,10 +40,11 @@
 						</p>
 						<a
 							href={files}
-							class="t-text-xl t-font-bold  t-text-[#44835C] t-flex t-justify-center"
+							class="t-text-xl t-font-bold  t-text-[#44835C] t-flex t-justify-center t-items-center"
 							target="_blank"
+							rel="noreferrer"
 						>
-							Open here! <i class="las la-arrow-right t-text-[#F94646] t-font-bold t-text-2xl" />
+							Download Now! <i class="las la-arrow-right t-text-[#F94646] t-ml-3 t-font-bold t-text-2xl" />
 						</a>
 					</div>
 				</div>

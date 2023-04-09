@@ -64,3 +64,18 @@ export async function deleteTrainingSchedule(id: number) {
 		return Promise.resolve();
 	}
 }
+
+export async function getApprovedSchedules() {
+	try {
+		const { data } = await http.get('training-course/training-schedule/title-combo/');
+		return {
+			status: 200,
+			data
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 400,
+			data: []
+		});
+	}
+}

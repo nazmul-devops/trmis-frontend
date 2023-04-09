@@ -12,3 +12,7 @@ export async function generateFromData(payload) {
 	});
 	return formData;
 }
+
+export function sleep(ms) {
+	return new Promise((resolve) => setTimeout(resolve, ms));
+}

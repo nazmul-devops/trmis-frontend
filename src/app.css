@@ -1,0 +1,332 @@
+.leaflet-marker-icon.leaflet-interactive,
+.leaflet-image-layer.leaflet-interactive,
+.leaflet-pane > svg path.leaflet-interactive,
+svg.leaflet-image-layer.leaflet-interactive path {
+	border: none;
+	background-color: transparent;
+}
+
+/*Admin panel sidebar link color */
+.bx--side-nav__submenu-title,
+.bx--side-nav__link-text a {
+	font-size: 14px;
+	color: #808083 !important;
+	font-weight: 500 !important;
+}
+
+.bx--side-nav__icon svg {
+	height: 50px !important;
+}
+
+.bx--side-nav__item.bx--side-nav__item--icon a.bx--side-nav__link {
+	padding-left: 40px;
+	font-size: 14px;
+}
+
+.bx--side-nav__overlay-active {
+	background: none;
+}
+/* Admin panel Header */
+
+.bx--header {
+	border-bottom: none;
+	background-color: white;
+}
+
+.bx--header__global {
+	background: white;
+}
+.bx--header__menu-toggle {
+	background-color: black;
+}
+
+.avatar .bx--header__action {
+	margin: 0 25px 0 0;
+	padding: 5px;
+}
+
+.avatar .bx--header__action:hover {
+	background: none;
+}
+
+.bx--header__global button svg {
+	background: black !important;
+	height: 100% !important;
+	width: 56px !important;
+	border-radius: 50% !important;
+}
+/* header user icon */
+.bx--header-panel {
+	background-color: white;
+	max-height: 150px;
+	border: none;
+	right: 5px;
+	box-shadow: 0px 4px 20px 5px rgba(6, 55, 124, 0.24);
+}
+.bx--switcher__item span {
+	color: black !important;
+}
+*/
+
+
+/* Dashboard date-picker width */
+
+
+.bx--date-picker {
+	display: block;
+}
+.flatpickr-wrapper,
+.flatpickr-calendar.static.open {
+	width: 100%;
+}
+.bx--date-picker,
+.bx--date-picker.bx--date-picker--single .bx--date-picker__input {
+	width: 100% !important;
+}
+.datePicker1 .flatpickr-input {
+	border-top-left-radius: 8px;
+	border-bottom-left-radius: 8px;
+	border: 1px solid #525252;
+	border-right: none;
+}
+.datePicker2 .flatpickr-input {
+	border-top-right-radius: 8px;
+	border-bottom-right-radius: 8px;
+	border: 1px solid #525252;
+}
+/*ComboBox */
+
+.customComboBox .bx--list-box__wrapper {
+	margin-right: 24px;
+	border-radius: 8px;
+}
+
+.bx--combo-box {
+	border-bottom: none;
+	background: transparent;
+}
+
+.bx--text-input:disabled {
+	border: none;
+}
+
+.bx--combo-box[data-invalid] .bx--text-input:focus {
+	outline: 2px solid #da1e28;
+}
+.bx--list-box--expanded {
+	padding-top: 0 !important;
+}
+/* All input field design */
+.bx--text-input input {
+	background: white;
+}
+
+.custom .bx--date-picker__input,
+.bx--text-input,
+.bx--text-area,
+.bx--select-input,
+.bx--modal .bx--multi-select {
+	border-radius: 8px;
+	border: 1px solid #525252;
+	background: white !important;
+}
+.custom .bx--date-picker-container {
+	width: 100%;
+}
+.bx--multi-select--filterable.bx--combo-box .bx--text-input {
+	border: 1px solid #525252;
+}
+.bx--text-area {
+	resize: none;
+}
+
+.bx--list-box--expanded {
+	background: white !important;
+	padding-top: 0px !important;
+}
+
+/* Number Input inner icon hidden*/
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+	display: none;
+}
+
+/* Data table header button */
+
+.bx--btn--primary {
+	background: #57aaf7;
+}
+.bx--table-toolbar--small {
+	margin-bottom: 10px;
+}
+.bx--data-table-container {
+	overflow-x: auto;
+	background: white;
+	padding: 50px 10px;
+	border-radius: 10px;
+}
+
+.customBatch .bx--data-table-container{
+	padding: 70px 0px;
+}
+/* Table data design */
+
+.bx--data-table thead {
+	background: #57aaf7;
+}
+.bx--data-table th {
+	background: transparent;
+	color: white;
+}
+.bx--data-table--short tbody tr:nth-child(odd) {
+	background: #f0f4f7;
+}
+
+.bx--data-table td {
+	background: transparent;
+	color: #2d2d2d;
+}
+
+/* Modal view design */
+.bx--modal-container {
+	height: auto;
+	top: auto;
+}
+.bx--modal-content {
+	padding: 10px;
+}
+
+/* Delete Modal */
+.deleteModal .bx--modal-content {
+	padding: 0;
+}
+
+input[type='number'] {
+	font-family: inherit;
+}
+/* change password modal */
+
+.changePasswordModal .bx--modal-content {
+	overflow-y: hidden !important;
+	padding: 10px 40px;
+	overflow-x: hidden;
+	margin-bottom: 1.5rem;
+}
+
+.changePasswordModal .bx--text-input {
+	border-radius: 0;
+	border: none;
+	border-bottom: 1px solid #57aaf7;
+}
+
+.changePasswordModal .bx--text-input:focus {
+	outline: none;
+	border-bottom: 1px solid green;
+}
+
+.changePasswordModal .bx--text-input--invalid {
+	outline: none;
+	border-bottom: 2px solid #da1e28 !important;
+}
+
+.changePasswordModal input[data-invalid]:not(:focus),
+.changePasswordModal
+	.bx--text-input__field-wrapper[data-invalid]
+	> .bx--text-input--invalid:not(:focus) {
+	outline: none;
+}
+
+/*Change Details Modal */
+
+.changeDetailsModal .bx--modal-content {
+	overflow-y: hidden !important;
+	padding: 10px 40px;
+	overflow-x: hidden;
+	margin-bottom: 1.5rem;
+}
+
+.changeDetailsModal .bx--text-input {
+	margin: 10px 0px;
+	border-radius: 0;
+	border: none;
+	border-bottom: 1px solid #57aaf7;
+}
+
+.changeDetailsModal .bx--text-input:focus {
+	outline: none;
+	border-bottom: 1px solid green;
+}
+
+.changeDetailsModal .bx--text-input--invalid {
+	outline: none;
+	border-bottom: 2px solid #da1e28 !important;
+}
+
+.changeDetailsModal input[data-invalid]:not(:focus),
+.changeDetailsModal
+	.bx--text-input__field-wrapper[data-invalid]
+	> .bx--text-input--invalid:not(:focus) {
+	outline: none;
+}
+
+/* Public registration design */
+
+.registrationPanel .bx--text-input,
+.registrationPanel .bx--text-area,
+.registrationPanel .bx--select-input {
+	border-radius: 5px;
+	border: 2px solid #808083 !important;
+	background: white !important;
+}
+
+.registrationPanel .bx--list-box--disabled .bx--text-input:disabled {
+	border: none !important;
+}
+.bx--text-input {
+	padding: 15px 20px;
+}
+
+/*Add event Data Table */
+
+.customDataTable .bx--data-table thead {
+	background: #bedcf7;
+}
+
+.customDataTable .bx--data-table th {
+	background-color: transparent;
+	color: #2d2d2d;
+}
+
+/*File uploader selected file field*/
+.bx--modal-content p {
+	color: #525252;
+	font-size: 12px;
+}
+.bx--file__selected-file .bx--file-filename {
+	color: #0f62fe;
+}
+
+@media screen and (min-width: 1024px) {
+	.bx--modal-content {
+		padding: 50px 20px 10px;
+	}
+}
+
+/*Datatabele Cursor*/
+.categoryDatatable .bx--data-table--short tbody tr {
+	cursor: pointer;
+}
+
+/*File Upload */
+.bx--label-description {
+	display: none;
+}
+
+
+@media screen and (min-width: 1024px) {
+	.bx--modal-content {
+		padding: 50px 20px 10px;
+	}
+}
+

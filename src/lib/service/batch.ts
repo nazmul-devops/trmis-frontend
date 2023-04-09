@@ -1,4 +1,5 @@
 import { http } from '$lib/service/auth';
+import { generateFromData } from '$lib/service/utilities';
 
 export async function getBatches() {
 	try {
@@ -62,6 +63,31 @@ export async function createBatch(payload) {
 	} catch (err) {
 		return Promise.resolve({
 			status: 403
+		});
+	}
+}
+
+export async function uploadExel(id, payload) {
+	try {
+		const formData = await generateFromData(payload);
+		const { data } = await http({
+			method: 'POST',
+			url: `batch/${id}/upload-excel/`,
+			data: formData,
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return {
+			status: 201,
+			errorRows: data.error,
+			errorMessage: data.error_msg,
+			successRows: data.success
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 403,
+			errorRows: [],
+			errorMessage: 'No Message',
+			successRows: 0
 		});
 	}
 }

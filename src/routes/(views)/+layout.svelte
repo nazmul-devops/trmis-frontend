@@ -4,7 +4,7 @@
 </script>
 
 <Header />
-<main class="t-bg-[#ECFDF1]">
+<main class="t-bg-[#F5FDF8]">
 	<div class=" t-min-h-[100vh]   ">
 		<slot />
 	</div>

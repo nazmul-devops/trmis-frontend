@@ -10,34 +10,31 @@
 	export let coordinator = {
 		id: null,
 		name: null,
-		code: null,
 		phone: null,
-		alt_phone: null,
 		email: null
 	};
 
 	$: {
-		setFields('name', coordinator.name);
-		setFields('code', coordinator.code);
-		setFields('phone', coordinator.phone);
-		setFields('alt_phone', coordinator.alt_phone);
-		setFields('email', coordinator.email);
+		if (coordinator.id != null) {
+			setFields('name', coordinator.name);
+			setFields('phone', coordinator.phone);
+			setFields('email', coordinator.email);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		code: yup.string().required(),
-		phone: yup.number().required(),
-		alt_phone: yup.number(),
-		email: yup.string().email().required()
+		name: yup.string().required('Name is required'),
+		phone: yup.number().required().typeError('Phone number is required.'),
+		email: yup.string().email().required("Email is required.")
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
+	const { form, reset,data, errors, createSubmitHandler, setFields } = createForm({
 		transform: (values: any) => {
 			return {
 				...values,
-				phone: values.phone ? parseInt(values.phone) : null,
-				alt_phone: values.alt_phone ? parseInt(values.alt_phone) : null
+				phone: values.phone ? parseInt(values.phone) : null
 			};
 		},
 		extend: validator({ schema })
@@ -62,17 +59,55 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Training Coordinator"
+	modalHeading={coordinator.id == null
+		? 'Create Training Coordinator'
+		: 'Edit Training Coordinator'}
 	primaryButtonText={coordinator.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="code" labelText=" Code" placeholder="Enter  code..." />
-		<TextInput name="phone" labelText="phone" placeholder="Enter  phone..." />
-		<TextInput name="alt_phone" labelText="alt_phone" placeholder="Enter  alt_phone..." />
-		<TextInput name="email" labelText="Email" placeholder="Enter  Email..." />
+		<div class="t-grid t-grid-cols-2 t-gap-4">
+			<div>
+				<TextInput
+					invalid={$errors.name}
+					bind:value={$data.name}
+					name="name"
+					labelText="Name"
+					placeholder="Enter  name..."
+				/>
+				{#if $errors.name}
+					<p class="t-text-red-500">{$errors.name}</p>
+				{/if}
+			</div>
+
+			<div>
+				<TextInput
+					invalid={$errors.phone}
+					bind:value={$data.phone}
+					name="phone"
+					labelText="Phone"
+					placeholder="Enter  phone..."
+				/>
+				{#if $errors.phone}
+					<p class="t-text-red-500">{$errors.phone}</p>
+				{/if}
+			</div>
+
+			<div>
+				<TextInput
+					invalid={$errors.email}
+					bind:value={$data.email}
+					name="email"
+					labelText="Email"
+					placeholder="Enter  Email..."
+				/>
+				{#if $errors.email}
+					<p class="t-text-red-500">{$errors.email}</p>
+				{/if}
+			</div>
+		</div>
 	</form>
 </Modal>

@@ -20,9 +20,10 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'serial_no', value: 'Serial No' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'remarks', value: 'Remarks' },
+		// { key: 'serial_no', value: 'Serial No' },
+		// { key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -56,10 +57,9 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Organization</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped>
-					<OverflowMenuItem text="View" />
+				<OverflowMenu flipped direction="top">
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -70,10 +70,17 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{rowIndex + 1}
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:organization />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal
+	textContent={'If you delete this organization, any corresponding Batch, Participant, Resource Person and events will also be deleted if they were associated with this organization.'}
+	bind:open={deleteModal}
+	on:deleteConfirm={doDelete}
+	name={'organization'}
+/>

@@ -1,25 +1,18 @@
-# Use an official Node runtime as a parent image
-FROM node:14-alpine
+FROM node:lts-alpine3.16 as build
 
-# Set the working directory to /app
 WORKDIR /app
 
-# Copy package.json and package-lock.json to the container
-COPY package*.json ./
+RUN npm i -g pnpm
 
-# Install dependencies
-RUN npm install -g pnpm
-RUN pnpm install
+COPY package.json ./
+COPY pnpm-lock.yaml ./
+RUN pnpm i
+COPY . ./
+RUN pnpm build
 
-# Copy the rest of the application code to the container
-COPY . .
+FROM nginx:1.23-alpine
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Build the Svelte app
-RUN npm run build
-
-# Expose the port that the app will run on
-EXPOSE 3000
-
-# Start the app
-CMD ["npm", "start"]
-
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]

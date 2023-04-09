@@ -12,7 +12,7 @@
 
 	onMount(async () => {
 		currentDate = DateTime.local();
-	});
+	});today
 </script>
 
 <table>

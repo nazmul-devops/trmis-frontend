@@ -20,9 +20,10 @@
 
 	let filteredRowIds = [];
 	let headers = [
-		{ key: 'serial_no', value: 'Serial No' },
+		{ key: 'rowNumber', value: 'Serial No.' },
 		{ key: 'name', value: 'Name' },
-		{ key: 'remarks', value: 'Remarks' },
+		// { key: 'serial_no', value: 'Serial No' },
+		// { key: 'remarks', value: 'Remarks' },
 		{ key: 'action', value: 'Action' }
 	];
 
@@ -62,10 +63,9 @@
 				<Button on:click={() => openModalForm({ name: null, id: null })}>Add Source Of fund</Button>
 			</ToolbarContent>
 		</Toolbar>
-		<svelte:fragment slot="cell" let:cell let:row>
+		<svelte:fragment slot="cell" let:cell let:row let:rowIndex>
 			{#if cell.key === 'action'}
-				<OverflowMenu flipped>
-					<OverflowMenuItem text="View" />
+				<OverflowMenu flipped direction='top'>
 					<OverflowMenuItem on:click={() => openModalForm(row)} text="Edit" />
 					<OverflowMenuItem
 						on:click={() => {
@@ -76,10 +76,12 @@
 						text="Delete"
 					/>
 				</OverflowMenu>
+			{:else if cell.key === 'rowNumber'}
+				{ rowIndex + 1 }
 			{:else}{cell.value}{/if}
 		</svelte:fragment>
 	</DataTable>
 {/if}
 
 <FormModal bind:open bind:sourceOfFound />
-<DeleteModal bind:open={deleteModal} on:deleteConfirm={doDelete} />
+<DeleteModal textContent={"If you delete this source-of-fund, any corresponding batches and events will also be deleted if they are associated with this source-of-fund."} bind:open={deleteModal} on:deleteConfirm={doDelete} name={"source of fund"} />

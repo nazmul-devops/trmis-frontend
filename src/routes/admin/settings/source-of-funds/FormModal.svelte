@@ -10,30 +10,22 @@
 	export let sourceOfFound = {
 		id: null,
 		name: null,
-		serial_no: null,
-		remarks: null
+	
 	};
 
 	$: {
-		setFields('name', sourceOfFound.name);
-		setFields('serial_no', sourceOfFound.serial_no);
-		setFields('remarks', sourceOfFound.remarks	);
+		if (sourceOfFound.id) {
+			setFields('name', sourceOfFound.name);
+		} else {
+			reset();
+		}
 	}
 
 	const schema = yup.object({
-		name: yup.string().required(),
-		serial_no: yup.number().required(),
-		remarks: yup.string().required()
+		name: yup.string().required('Organization name is required'),
 	});
 
-	const { form, reset, createSubmitHandler, setFields } = createForm({
-		transform: (values: any) => {
-			return {
-				...values,
-				serial_no: values.serial_no ? parseInt(values.serial_no) : null,
-
-			}
-		},
+	const { form, touched,data, reset, errors, createSubmitHandler, setFields } = createForm({
 		extend: validator({ schema })
 	});
 
@@ -56,15 +48,29 @@
 
 <Modal
 	bind:open
-	modalHeading="Create Source Of Fund"
+	size="xs"
+	modalHeading={sourceOfFound.id == null ? 'Create Source Of Fund' : 'Edit Source Of Fund'}
 	primaryButtonText={sourceOfFound.id == null ? 'Create' : 'Edit'}
 	secondaryButtonText="Cancel"
+	preventCloseOnClickOutside
 	on:click:button--secondary={() => (open = false)}
 	on:submit={submitHandler}
 >
 	<form use:form>
-		<TextInput name="name" labelText=" name" placeholder="Enter  name..." />
-		<TextInput name="serial_no" labelText="Serial_No" placeholder="Enter  serial_no..." />
-		<TextInput name="remarks" labelText=" Remarks" placeholder="Enter  Remarks..." />
+		<div class="t-grid t-grid-cols-1 t-gap-4">
+			<div>
+				<TextInput
+					invalid={$errors.name != null}
+					bind:value={$data.name}
+					name="name"
+					labelText="Name"
+					placeholder="Enter  name..."
+				/>
+				{#if $errors.name}
+					<p class="t-text-red-500">{$errors.name}</p>
+				{/if}
+			</div>
+		</div>
+		<!-- {JSON.stringify($touched)} -->
 	</form>
 </Modal>

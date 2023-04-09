@@ -1,8 +1,12 @@
-import {  writable } from 'svelte/store';
+import { writable } from 'svelte/store';
 import * as CourseCategoriesService from '../service/courseCategory';
 
 function createCourseCategoriesStore() {
-	const { subscribe, set, update } = writable({ loading: true, data: [] });
+	const { subscribe, update } = writable({
+		loading: true,
+		data: [],
+		errorData: { status: null, errorMessageForTitle: null }
+	});
 	function setLoading() {
 		update((prev) => ({
 			...prev,
@@ -13,7 +17,11 @@ function createCourseCategoriesStore() {
 	async function getCourseCategories() {
 		setLoading();
 		const resp = await CourseCategoriesService.getCourseCategories();
-		set({ loading: false, data: resp.data });
+		update((prev) => {
+			prev.loading = false;
+			prev.data = resp.data;
+			return prev;
+		});
 	}
 
 	async function deleteCourseCategory(id: number) {
@@ -24,12 +32,26 @@ function createCourseCategoriesStore() {
 
 	async function updateCourseCategory(courseCategory) {
 		setLoading();
-		await CourseCategoriesService.updateCourseCategory(courseCategory);
+		const { status, errorMessageForTitle } = await CourseCategoriesService.updateCourseCategory(
+			courseCategory
+		);
+		update((prev) => {
+			prev.errorData.status = status;
+			prev.errorData.errorMessageForTitle = errorMessageForTitle;
+			return prev;
+		});
 		await getCourseCategories();
 	}
 	async function createCourseCategory(courseCategory) {
 		setLoading();
-		await CourseCategoriesService.createCourseCategory(courseCategory);
+		const { status, errorMessageForTitle } = await CourseCategoriesService.createCourseCategory(
+			courseCategory
+		);
+		update((prev) => {
+			prev.errorData.status = status;
+			prev.errorData.errorMessageForTitle = errorMessageForTitle;
+			return prev;
+		});
 		await getCourseCategories();
 	}
 

@@ -1,4 +1,5 @@
 import { http } from '$lib/service/auth';
+import { generateFromData } from '$lib/service/utilities';
 
 export async function getTrainers() {
 	try {
@@ -6,7 +7,7 @@ export async function getTrainers() {
 
 		return {
 			status: 200,
-			data: data.map((item, index) => ({ ...item, id: index }))
+			data
 		};
 	} catch (err) {
 		return Promise.resolve({
@@ -41,7 +42,7 @@ export async function deleteTrainer(id: number) {
 
 export async function updateTrainer(payload) {
 	try {
-		const { data } = await http.put(`trainer/${payload.phone}/`, payload);
+		const { data } = await http.put(`trainer/${payload.id}/`, payload);
 		return {
 			status: 204,
 			data
@@ -63,6 +64,31 @@ export async function createTrainer(payload) {
 	} catch (err) {
 		return Promise.resolve({
 			status: 403
+		});
+	}
+}
+
+export async function uploadExel(payload) {
+	try {
+		const formData = await generateFromData(payload);
+		const { data } = await http({
+			method: 'POST',
+			url: 'trainer/upload-excel/',
+			data: formData,
+			headers: { 'Content-Type': 'multipart/form-data' }
+		});
+		return {
+			status: 201,
+			errorRows: data.error,
+			errorMessage: data.error_msg,
+			successRows: data.success
+		};
+	} catch (err) {
+		return Promise.resolve({
+			status: 403,
+			errorRows: [],
+			errorMessage: 'No Message',
+			successRows: 0
 		});
 	}
 }

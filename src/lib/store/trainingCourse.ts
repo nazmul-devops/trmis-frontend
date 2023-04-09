@@ -1,40 +1,65 @@
-import { writable } from 'svelte/store';
+import { writable, get } from 'svelte/store';
 import * as trainingCoursesService from '../service/trainingCourse';
 
 function createTrainingCoursesStore() {
-	const { subscribe, set, update } = writable({ loading: true, data: [] });
+	const training = writable({
+		loading: true,
+		data: [],
+		trainingCategory: null,
+		errorData: { status: null, errorMessageForCode: null, errorMessageForTitle: null }
+	});
 	function setLoading() {
-		update((prev) => ({
+		training.update((prev) => ({
 			...prev,
 			loading: true
 		}));
 	}
 
-	async function getTrainingCourses() {
+	async function getTrainingCourses(courseCategory = null) {
 		setLoading();
-		const resp = await trainingCoursesService.getTrainingCourses();
-		set({ loading: false, data: resp.data });
+		const resp = await trainingCoursesService.getTrainingCourses(courseCategory);
+		training.update((prev) => {
+			prev.loading = false;
+			prev.trainingCategory = courseCategory;
+			prev.data = resp.data;
+			return prev;
+		});
 	}
 
 	async function deleteTrainingCourse(id: number) {
 		setLoading();
 		await trainingCoursesService.deleteTrainingCourse(id);
-		await getTrainingCourses();
+		await getTrainingCourses(get(training).trainingCategory);
 	}
 
 	async function updateTrainingCourse(trainigCourse) {
 		setLoading();
-		await trainingCoursesService.updateTrainingCourse(trainigCourse);
-		await getTrainingCourses();
+		const { status, errorMessageForCode, errorMessageForTitle } = await trainingCoursesService.updateTrainingCourse(trainigCourse);
+		training.update((prev) => {
+			prev.errorData.errorMessageForCode = errorMessageForCode;
+			prev.errorData.errorMessageForTitle = errorMessageForTitle;
+			prev.errorData.status = status;
+			return prev;
+		});
+		await getTrainingCourses(get(training).trainingCategory);
 	}
-	async function createTrainingCourse(trainigCourse) {
+	async function createTrainingCourse(payload) {
 		setLoading();
-		await trainingCoursesService.createTrainingCourse(trainigCourse);
-		await getTrainingCourses();
+		const { status, errorMessageForCode, errorMessageForTitle } =
+			await trainingCoursesService.createTrainingCourse(payload);
+
+		training.update((prev) => {
+			prev.errorData.errorMessageForCode = errorMessageForCode;
+			prev.errorData.errorMessageForTitle = errorMessageForTitle;
+			prev.errorData.status = status;
+			return prev;
+		});
+
+		await getTrainingCourses(get(training).trainingCategory);
 	}
 
 	return {
-		subscribe,
+		subscribe: training.subscribe,
 		getTrainingCourses,
 		deleteTrainingCourse,
 		updateTrainingCourse,
